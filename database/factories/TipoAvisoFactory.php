@@ -8,8 +8,8 @@ $factory->define(AvisoNavAPI\TipoAviso::class, function (Faker $faker) {
     $idioma = Idioma::all()->first();
 
     return [
-        'nombre'    => $faker->unique()->words,
-        //'cod_ide'   => $faker->randomLetter,
-        //'idioma_id' => 1,
+        'nombre'    =>  $faker->name,
+        'cod_ide'   =>  $faker->randomLetter,
+        'idioma_id' =>  $idioma->idioma_id,
     ];
 });

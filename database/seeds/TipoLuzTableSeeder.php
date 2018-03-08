@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class TipoAvisoTableSeeder extends Seeder
+class TipoLuzTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,11 +11,11 @@ class TipoAvisoTableSeeder extends Seeder
      */
     public function run()
     {
-        $cod_ide = 0;        
-        factory(AvisoNavAPI\TipoAviso::class, 8)->create()->each(function ($item, $key) use (&$cod_ide){
+        $cod_ide = 0;
+        factory(AvisoNavAPI\TipoLuz::class, 10)->create()->each(function ($item, $key) use (&$cod_ide){
             
             if($key % 2 == 0){
-                $cod_ide = $item->tipo_aviso_id;
+                $cod_ide = $item->tipo_luz_id;
             }
 
             if(($key+1) % 2 == 0){
@@ -24,6 +24,6 @@ class TipoAvisoTableSeeder extends Seeder
             
             $item->cod_ide = $cod_ide;
             $item->save();
-        });     
+        }); 
     }
 }
