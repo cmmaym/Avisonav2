@@ -49,7 +49,7 @@ class CreateAvisoTable extends Migration
                   ->onDelete('cascade');
 
 
-            $table->index(['num_aviso', 'periodo', 'idioma_id'], 'num_aviso_periodo_idioma_UNIQUE');
+            $table->unique(['num_aviso', 'periodo', 'idioma_id'], 'num_aviso_periodo_idioma_UNIQUE');
         });
     }
 
