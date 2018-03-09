@@ -16,8 +16,9 @@ class AvisoTableSeeder extends Seeder
             
             $item->periodo = $item->fecha->format('Ym');
 
-            if($key % 2 == 0){                                
-                $num_aviso = $item->num_aviso;            
+            if($key % 2 == 0){
+                $num_aviso = $item->aviso_id;
+                $item->num_aviso = $num_aviso;
             }
 
             if(($key+1) % 2 == 0){
