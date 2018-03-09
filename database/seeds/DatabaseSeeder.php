@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         DB::statement('TRUNCATE TABLE tipo_caracter;');
         DB::statement('TRUNCATE TABLE carta;');
         DB::statement('TRUNCATE TABLE aviso;');
+        DB::statement('TRUNCATE TABLE ayuda;');
         
         // $this->call(UsersTableSeeder::class);
         $this->call(IdiomaTableSeeder::class);
@@ -35,6 +36,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TipoCaracterTableSeeder::class);
         $this->call(CartaTableSeeder::class);
         $this->call(AvisoTableSeeder::class);
+        $this->call(AyudaTableSeeder::class);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

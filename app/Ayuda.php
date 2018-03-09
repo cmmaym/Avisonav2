@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ayuda extends Model
 {
-    protected $table    = 'ayuda';
-    protected $id       = 'ayuda_id';
-    protected $fillable = [
+    protected $table        = 'ayuda';
+    protected $primaryKey   = 'ayuda_id';
+    protected $fillable     = [
         'numero',
         'nombre',
         'latitud',

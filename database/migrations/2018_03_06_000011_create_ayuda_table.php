@@ -21,10 +21,12 @@ class CreateAyudaTable extends Migration
             $table->string('longitud', 100);
             $table->timestamps();
             $table->integer('cantidad')->nullable()->comment('Cantidad de ayudas');
+            $table->integer('altitud')->nullable()->comment('Altitud de ayuda');
             $table->integer('alcance')->nullable()->comment('Alcance nominal');
             $table->mediumText('descripcion')->nullable()->comment('Descripcion del soporte y la altura');
             $table->mediumText('observacion')->nullable()->comment('Datos complementarios relacionados con la ayuda');
             $table->enum('estado', array('A','I'))->default('A')->comment('Estado de la ayuda. Puede ser Activo, Inactivo');
+            $table->integer('version')->comment('Numero de version de la ayuda');
             $table->integer('user_id')->unsigned()->comment('Usuario que creo o actualizo el regitro');
             $table->integer('aviso_id')->unsigned();
             $table->integer('ubicacion_id')->unsigned();

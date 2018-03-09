@@ -6,5 +6,6 @@ $factory->define(AvisoNavAPI\Ubicacion::class, function (Faker $faker) {
     return [
         'ubicacion'     => $faker->city,
         'sub_ubicacion' => $faker->streetName,
+        'zona_id'       => 1,
     ];
 });

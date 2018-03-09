@@ -19,6 +19,11 @@ class CreateUbicacionTable extends Migration
             $table->string('sub_ubicacion')->nullable()->comment('Nombre de la sub ubicacion es decir la ubicacion mas espesifica donde se encuentra la ayuda');
             $table->timestamps();
             $table->enum('estado', array('A', 'I'))->default('A')->comment('Estado de la ubicacion. Puede ser Activo, Inactivo');
+            $table->integer('zona_id')->unsigned();
+
+            $table->foreign('zona_id')
+                  ->references('zona_id')->on('zona')
+                  ->onDelete('cascade');
         });
     }
 

@@ -15,15 +15,14 @@ $factory->define(AvisoNavAPI\Aviso::class, function (Faker $faker) {
     
     return [
         'num_aviso'     => $faker->randomDigit,
-        'fecha'         => $faker->dateTimeBetween($startDate = '-2 years'),
+        'fecha'         => $faker->dateTimeBetween($startDate = '-1 days'),
         'observacion'   => $faker->paragraph,
         'periodo'       => $faker->unique->year,
-        'entidad_id'    => $entidad->entidad_id,
-        'tipo_carac_id' => $tipoCaracter->tipo_carac_id,
-        'tipo_aviso_id' => $tipoAviso->tipo_aviso_id,
+        'entidad_id'    => 1,
+        'tipo_carac_id' => 1,
+        'tipo_aviso_id' => 1,
         'idioma_id'     => 1,
-        'carta_id'      => $carta->carta_id,
+        'carta_id'      => 1,
         'user_id'       => 1,
-        'created_at'     => '2018-03-08 15:00:00'
     ];
 });
