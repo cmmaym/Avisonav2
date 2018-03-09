@@ -2,11 +2,15 @@
 
 namespace AvisoNavAPI\Http\Controllers;
 
+use AvisoNavAPI\Aviso;
 use Illuminate\Http\Request;
 
 class AvisoController extends Controller
 {
     public function index(){
-        return "Hello prueba";
+
+        $aviso = Aviso::all();
+
+        return $aviso;
     }
 }

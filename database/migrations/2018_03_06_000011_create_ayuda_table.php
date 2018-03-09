@@ -53,6 +53,8 @@ class CreateAyudaTable extends Migration
             $table->foreign('idioma_id')
                   ->references('idioma_id')->on('idioma')
                   ->onDelete('cascade');
+
+            $table->unique(['numero', 'aviso_id', 'ubicacion_id', 'idioma_id'], 'numero_aviso_ubicacion_idioma_UNIQUE');
         });
     }
 

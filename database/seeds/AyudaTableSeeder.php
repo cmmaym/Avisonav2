@@ -15,16 +15,17 @@ class AyudaTableSeeder extends Seeder
         $numero = 0;
         factory(AvisoNavAPI\Ayuda::class, 6)->create()->each(function ($item, $key) use (&$numero){
 
-            if($key % 2 == 0){                                
-                $numero = $item->ayuda_id;            
-            }
-
-            if(($key+1) % 2 == 0){
-                $item->idioma_id = 2;
+            if($key % 2 == 0){
+                $numero = $item->ayuda_id;
                 $item->numero = $numero;
             }
             
-            $item->numero = $numero;
+            if(($key+1) % 2 == 0){
+                $item->idioma_id = 2;
+                $item->numero = $numero;
+                $item->ubicacion_id = 2;
+            }
+            
             $item->save();
         }); 
     }

@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(AvisoNavAPI\Ayuda::class, function (Faker $faker) {
     return [
-        'numero'        => $faker->numberBetween($min = 1, $max = 6),
+        'numero'        => $faker->unique->numberBetween($min = 1, $max = 1000),
         'nombre'        => $faker->word,
         'latitud'       => $faker->latitude,
         'longitud'      => $faker->longitude,
