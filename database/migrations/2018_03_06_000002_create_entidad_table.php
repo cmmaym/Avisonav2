@@ -19,6 +19,8 @@ class CreateEntidadTable extends Migration
             $table->string('alias', 45)->comment('Alias o nombre corto de la entidad o usuario');
             $table->timestamps();
             $table->enum('estado', array('A','I'))->default('A')->comment('Estado de la entidad. Puede ser Activo, Inactivo');
+
+            $table->unique(['nombre', 'alias'], 'nombre_alias_UNIQUE');
         });
     }
 
