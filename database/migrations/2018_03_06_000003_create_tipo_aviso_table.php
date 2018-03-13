@@ -24,6 +24,8 @@ class CreateTipoAvisoTable extends Migration
             $table->foreign('idioma_id')
                   ->references('idioma_id')->on('idioma')
                   ->onDelete('cascade');
+
+            $table->unique(['nombre', 'idioma_id'], 'nombre_idioma_UNIQUE');
         });
     }
 
