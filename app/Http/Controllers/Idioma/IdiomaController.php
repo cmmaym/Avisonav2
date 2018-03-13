@@ -5,8 +5,8 @@ namespace AvisoNavAPI\Http\Controllers\Idioma;
 use Validator;
 use AvisoNavAPI\Idioma;
 use Illuminate\Http\Request;
-use AvisoNavAPI\Http\Requests\StoreIdioma;
-use AvisoNavAPI\Http\Requests\UpdateIdioma;
+use AvisoNavAPI\Http\Requests\Idioma\StoreIdioma;
+use AvisoNavAPI\Http\Requests\Idioma\UpdateIdioma;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\IdiomaResource;
 
@@ -78,7 +78,16 @@ class IdiomaController extends Controller
      */
     public function update(UpdateIdioma $request, Idioma $idioma)
     {
-        $idioma->fill($request->all());
+        $idioma->fill($request->only([
+            'nombre',
+            'alias',
+            'estado',
+        ]));
+
+        if($idioma->isClean()){
+            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+        }
+
         $idioma->save();
 
         return new IdiomaResource($idioma);

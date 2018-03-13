@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Requests;
+namespace AvisoNavAPI\Http\Requests\Idioma;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreIdioma extends FormRequest
+class UpdateIdioma extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class StoreIdioma extends FormRequest
     public function rules()
     {
         return [
-            'nombre'    => 'required|max:45',
-            'alias'     => 'required|max:45',
+            'nombre'    => 'sometimes|required|max:45',
+            'alias'     => 'sometimes|required|max:45',
             'estado'    => 'sometimes|required|in:A,I',
         ];
     }

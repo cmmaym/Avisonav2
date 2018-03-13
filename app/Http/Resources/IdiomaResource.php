@@ -20,6 +20,7 @@ class IdiomaResource extends JsonResource
             'alias'             => $this->alias,
             'fecha_creacion'    => $this->created_at->format('Y-m-d'),
             'fecha_edicion'     => $this->updated_at->format('Y-m-d'),
+            'estado'            => $this->estado,
             'links'             => [
                 'self'  =>  route('idioma.show', ['id' => $this->idioma_id]),
             ],
