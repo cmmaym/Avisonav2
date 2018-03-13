@@ -19,6 +19,8 @@ class CreateIdiomaTable extends Migration
             $table->string('alias', 45)->comment('Alias o nombre corto del idioma');
             $table->timestamps();
             $table->enum('estado', array('A','I'))->default('A')->comment('Estado del idioma. Puede ser Activo, Inactivo');
+
+            $table->unique(['nombre', 'alias'], 'nombre_alias_UNIQUE');
         });
     }
 
