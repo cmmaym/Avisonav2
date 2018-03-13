@@ -6,6 +6,7 @@ use Validator;
 use AvisoNavAPI\Idioma;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Http\Requests\StoreIdioma;
+use AvisoNavAPI\Http\Requests\UpdateIdioma;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\IdiomaResource;
 
@@ -75,9 +76,12 @@ class IdiomaController extends Controller
      * @param  \AvisoNavAPI\Idioma  $idioma
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Idioma $idioma)
+    public function update(UpdateIdioma $request, Idioma $idioma)
     {
-        
+        $idioma->fill($request->all());
+        $idioma->save();
+
+        return new IdiomaResource($idioma);
     }
 
     /**
