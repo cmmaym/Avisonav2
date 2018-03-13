@@ -2,8 +2,10 @@
 
 namespace AvisoNavAPI\Http\Controllers\Idioma;
 
+use Validator;
 use AvisoNavAPI\Idioma;
 use Illuminate\Http\Request;
+use AvisoNavAPI\Http\Requests\StoreIdioma;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\IdiomaResource;
 
@@ -37,12 +39,11 @@ class IdiomaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreIdioma $request)
     {
-        //$idioma = Idioma::create($request->all());
+        $idioma = Idioma::create($request->all());
 
-        dd($request->all());
-
+        return new IdiomaResource($idioma);
     }
 
     /**
@@ -76,7 +77,7 @@ class IdiomaController extends Controller
      */
     public function update(Request $request, Idioma $idioma)
     {
-        //
+        
     }
 
     /**
@@ -87,6 +88,8 @@ class IdiomaController extends Controller
      */
     public function destroy(Idioma $idioma)
     {
-        //
+        $idioma->delete();
+
+        return new IdiomaResource($idioma);
     }
 }
