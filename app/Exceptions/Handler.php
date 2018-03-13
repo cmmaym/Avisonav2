@@ -3,8 +3,13 @@
 namespace AvisoNavAPI\Exceptions;
 
 use Exception;
+use Illuminate\Database\QueryException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -51,7 +56,35 @@ class Handler extends ExceptionHandler
     {
 
         if($exception instanceof NotFoundHttpException){
-            return response()->json(['error' => ['title' => 'El recurso solicitado no fue encontrado.', 'status' => $exception->getStatusCode()]]);
+            return response()->json(['error' => ['title' => 'El recurso solicitado no fue encontrado', 'status' => 404]], 404);
+        }
+        
+        if($exception instanceof MethodNotAllowedHttpException){
+            return response()->json(['error' => ['title' => 'El metodo no esta permitido', 'status' => 405]], 405);
+        }
+        
+        if($exception instanceof ModelNotFoundException){
+            $model  =   strtolower(class_basename($exception->getModel()));
+            return response()->json(['error' => ['title' => "No existe ninguna instancia de $model para el id espesificado", 'status' => 404]], 404);
+        }
+
+        if($exception instanceof ValidationException){
+            return response()->json(['error' => $exception->errors(), 'status' => 422], 422);
+        }
+        
+        if($exception instanceof QueryException){
+            $code = $exception->errorInfo[1];
+
+            switch($code){
+                case 1062: 
+                    return response()->json(['error' => ['title' => 'No se puede ingresar el registro porque ya existe uno igual'], 'status' => 409], 409);
+                default:
+                    return response()->json(['error' => ['title' => 'No se pudo realizar la operación'], 'status' => 409], 409);
+            }
+        }
+
+        if($exception instanceof HttpException){
+            return response()->json(['error' => ['title' => 'Ha ocurrido un error inesperado', 'status' => 500]], 500);
         }
 
         return parent::render($request, $exception);
