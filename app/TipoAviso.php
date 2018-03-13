@@ -2,6 +2,7 @@
 
 namespace AvisoNavAPI;
 
+use AvisoNavAPI\Idioma;
 use Illuminate\Database\Eloquent\Model;
 
 class TipoAviso extends Model
@@ -11,6 +12,6 @@ class TipoAviso extends Model
     protected $fillable     = ['nombre', 'estado', 'idioma_id'];
 
     public function idioma(){
-        return $this->hasMany('App\Idioma', 'idioma_id', 'idioma_id');
+        return $this->hasMany(Idioma::class, 'idioma_id', 'idioma_id');
     }
 }

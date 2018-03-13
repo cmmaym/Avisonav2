@@ -19,3 +19,4 @@ use Illuminate\Http\Request;
 
 Route::resource('idioma', 'Idioma\IdiomaController', ['except' => ['create', 'edit']]);
 Route::resource('entidad', 'Entidad\EntidadController', ['except' => ['create', 'edit']]);
+Route::resource('tipoAviso', 'TipoAviso\TipoAvisoController', ['except' => ['create', 'edit']]);
