@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVersionTable extends Migration
+class CreateConsecutivoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateVersionTable extends Migration
      */
     public function up()
     {
-        Schema::create('version_ayuda', function (Blueprint $table) {
-            $table->increments('version_id');
-            $table->integer('numero_ayuda');
-            $table->integer('ubicacion');
-            $table->integer('version');
+        Schema::create('consecutivo', function (Blueprint $table) {
+            $table->increments('consecutivo_id');
+            $table->string('nombre');
+            $table->integer('numero');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateVersionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('version_ayuda');
+        Schema::dropIfExists('consecutivo');
     }
 }
