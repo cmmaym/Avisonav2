@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CartaTableSeeder::class);
         $this->call(AvisoTableSeeder::class);
         $this->call(AyudaTableSeeder::class);
+        $this->call(ConsecutivoTableSeeder::class);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
