@@ -17,13 +17,11 @@ class TipoAvisoResource extends JsonResource
     {
         return [
             'id'                => (string) $this->tipo_aviso_id,
-            'nombre'            => $this->nombre,            
+            'nombre'            => $this->nombre,
             'fecha_creacion'    => $this->created_at->format('Y-m-d'),
             'fecha_edicion'     => $this->updated_at->format('Y-m-d'),
-            'estado'            => $this->estado,            
-            'links'             => [
-                'self'  =>  route('tipoAviso.show', ['id' => $this->idioma_id]),
-            ],
+            'estado'            => $this->estado,
+            'idioma'            => new IdiomaResource($this->idioma()->first()),
         ];
     }
 }

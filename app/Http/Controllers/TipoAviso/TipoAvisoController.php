@@ -4,8 +4,11 @@ namespace AvisoNavAPI\Http\Controllers\TipoAviso;
 
 use AvisoNavAPI\TipoAviso;
 use Illuminate\Http\Request;
+use AvisoNavAPI\Consecutivo;
+use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\TipoAvisoResource;
+use AvisoNavAPI\Http\Requests\TipoAviso\StoreTipoAviso;
 
 class TipoAvisoController extends Controller
 {
@@ -37,9 +40,25 @@ class TipoAvisoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTipoAviso $request)
     {
-        //
+        //$tipoAviso = TipoAviso::create($request->all());
+        DB::transaction(function () use ($request) {
+            $consecutivo = Consecutivo::where('nombre', 'tipo_aviso')->first();            
+            $tipoAviso = new TipoAviso();
+    
+            $tipoAviso->cod_ide = $consecutivo->numero;
+            $tipoAviso->nombre = $request->get('nombre');
+            $tipoAviso->estado = $request->get('estado');
+            $tipoAviso->idioma_id = $request->get('idioma_id');
+    
+            $consecutivo->numero = $consecutivo->numero + 1;
+            $consecutivo->save();
+
+            $tipoAviso->save();
+    
+            //dd($tipoAviso);
+        });
     }
 
     /**
@@ -50,10 +69,6 @@ class TipoAvisoController extends Controller
      */
     public function show(TipoAviso $tipoAviso)
     {
-        //return TipoAviso::has('idioma')->get();
-       
-        //return $tipoAviso->idioma()->get();
-
         return new TipoAvisoResource($tipoAviso);
     }
 
