@@ -102,14 +102,16 @@ class TipoAvisoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(StoreTipoAviso $request, $cod_ide)
-    {       
+    {      
+        
         $data = DB::transaction(function () use ($request, $cod_ide) {
             
-            $currentCollection = TipoAviso::where('cod_ide', $cod_ide)->get();
+            $currentCollection = TipoAviso::where('cod_ide', $cod_ide)->get();            
             $newCollection = new Collection();
             $collectionHasChange = false;
 
-            foreach($request->get('tipoAviso') as $item){
+            //Actualizamos o agregamos un nuevo tipo aviso
+            foreach($request->input('tipoAviso') as $item){
                 $entity = null;
                 if(isset($item['tipo_aviso_id'])){
                     $entity = $currentCollection->where('tipo_aviso_id', $item['tipo_aviso_id'])->first();
@@ -133,12 +135,21 @@ class TipoAvisoController extends Controller
                     $entity->estado = $item['estado'];
                     $entity->idioma_id = $item['idioma_id'];
                     $entity->cod_ide = $cod_ide;
-                    $collectionHasChange = false;
+                    $collectionHasChange = true;
                 }
                 
                 $newCollection->push($entity);
                 $entity->save();
             }
+
+            //Eliminamos un tipo aviso si no esta presentse en el el array de tipo aviso que viene en el request            
+            $currentCollection->each(function($entity) use ($request, $collectionHasChange){
+                if(!in_array($entity->tipo_aviso_id, $request->input('tipoAviso.*.tipo_aviso_id'))){
+                    $entity->delete();
+                    $collectionHasChange = true;
+                }
+            });
+
             
             if(!$collectionHasChange){
                 return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
@@ -157,11 +168,15 @@ class TipoAvisoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \AvisoNavAPI\TipoAviso  $tipoAviso
+     * @param  string $cod_ide
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TipoAviso $tipoAviso)
-    {
-        //
+    public function destroy(Request $request, $cod_ide)
+    {        
+        $currentCollection = TipoAviso::where('cod_ide', $cod_ide)->get();
+
+        $currentCollection->each(function($entity){
+                $entity->delete();
+        });
     }
 }

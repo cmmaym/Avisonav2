@@ -16,7 +16,7 @@ class TipoAvisoResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'                => (string) $this->tipo_aviso_id,
+            'tipo_aviso_id'                => (string) $this->tipo_aviso_id,
             'nombre'            => $this->nombre,
             'cod_ide'           => $this->cod_ide,
             'fecha_creacion'    => $this->created_at->format('Y-m-d'),
