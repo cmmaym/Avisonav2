@@ -27,6 +27,8 @@ class CreateTipoLuzTable extends Migration
             $table->foreign('idioma_id')
                   ->references('idioma_id')->on('idioma')
                   ->onDelete('cascade');
+
+            $table->unique(['clase', 'alias', 'idioma_id'], 'clase_alias_idioma_UNIQUE');
         });
     }
 
