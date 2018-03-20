@@ -25,6 +25,8 @@ class CreateZonaTable extends Migration
             $table->foreign('idioma_id')
                   ->references('idioma_id')->on('idioma')
                   ->onDelete('cascade');
+
+            $table->unique(['nombre', 'alias', 'idioma_id'], 'nombre_alias_idoma_UNIQUE');
         });
     }
 
