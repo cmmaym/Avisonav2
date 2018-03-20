@@ -143,7 +143,7 @@ class TipoAvisoController extends Controller
             }
 
             //Eliminamos un tipo aviso si no esta presentse en el el array de tipo aviso que viene en el request            
-            $currentCollection->each(function($entity) use ($request, $collectionHasChange){
+            $currentCollection->each(function($entity) use ($request, &$collectionHasChange){
                 if(!in_array($entity->tipo_aviso_id, $request->input('tipoAviso.*.tipo_aviso_id'))){
                     $entity->delete();
                     $collectionHasChange = true;
