@@ -18,6 +18,7 @@ class TipoAvisoResource extends JsonResource
         return [
             'id'                => (string) $this->tipo_aviso_id,
             'nombre'            => $this->nombre,
+            'cod_ide'           => $this->cod_ide,
             'fecha_creacion'    => $this->created_at->format('Y-m-d'),
             'fecha_edicion'     => $this->updated_at->format('Y-m-d'),
             'estado'            => $this->estado,

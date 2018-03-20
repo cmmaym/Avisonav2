@@ -24,9 +24,10 @@ class StoreTipoAviso extends FormRequest
     public function rules()
     {
         return [
-            'nombre'    => 'required|max:45',
-            'idioma_id'    => 'required|exists:idioma',
-            'estado'    => 'required|in:A,I',
+            'tipoAviso.*.nombre'    => 'required|max:100',
+            'tipoAviso.*.estado'    => 'required|required|in:A,I',
+            'tipoAviso.*.idioma_id' => 'required|exists:idioma',
+            'tipoAviso'             => 'idioma_duplicate',
         ];
     }
 
@@ -38,9 +39,11 @@ class StoreTipoAviso extends FormRequest
     public function messages()
     {
         return [
-            'required'  =>  'El campo :attribute es requerido',
-            'max'       =>  'El campo :attribute debe tener maximo :max caracteres',
-            'in'        =>  'El valor seleccionado para el campo :attribute es invalido',
+            'required'              =>  'El campo :attribute es requerido',
+            'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
+            'in'                    =>  'El valor seleccionado para el campo :attribute es invalido',
+            'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
+            'idioma_duplicate'      =>  'Registros con idioma duplicado',
         ];
     }
 }
