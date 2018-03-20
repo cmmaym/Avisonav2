@@ -2,6 +2,7 @@
 
 namespace AvisoNavAPI;
 
+use AvisoNavAPI\Idioma;
 use Illuminate\Database\Eloquent\Model;
 
 class TipoColor extends Model
@@ -11,6 +12,6 @@ class TipoColor extends Model
     protected $fillable     = ['color', 'alias', 'estado'];
 
     public function idioma(){
-        return $this->hasMany('App\Idioma', 'idioma_id', 'idioma_id');
+        return $this->hasMany(Idioma::class, 'idioma_id', 'idioma_id');
     }
 }

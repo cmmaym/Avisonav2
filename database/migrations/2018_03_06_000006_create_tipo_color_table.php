@@ -25,6 +25,8 @@ class CreateTipoColorTable extends Migration
             $table->foreign('idioma_id')
                   ->references('idioma_id')->on('idioma')
                   ->onDelete('cascade');
+
+            $table->unique(['color', 'alias', 'idioma_id'], 'color_alias_idioma_UNIQUE');
         });
     }
 
