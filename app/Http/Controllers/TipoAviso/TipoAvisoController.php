@@ -133,5 +133,7 @@ class TipoAvisoController extends Controller
     public function destroy(Request $request, TipoAviso $tipoAviso)
     {        
         $tipoAviso->delete();
+
+        return new TipoAvisoResource($tipoAviso);
     }
 }
