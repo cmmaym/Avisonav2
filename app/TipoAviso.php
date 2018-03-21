@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoAviso extends Model
 {
-    protected $table        = 'tipo_aviso';    
+    protected $table        = 'tipo_aviso';
     protected $fillable     = ['nombre', 'estado', 'idioma_id'];
 
     public function idioma(){
-        return $this->hasMany(Idioma::class, 'idioma_id', 'id');
+        return $this->hasMany(Idioma::class, 'id', 'idioma_id');
     }
     
     public function tipoAviso(){

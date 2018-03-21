@@ -26,7 +26,7 @@ class StoreTipoAviso extends FormRequest
         return [
             'tipoAviso.*.nombre'    => 'required|max:100',
             'tipoAviso.*.estado'    => 'required|required|in:A,I',
-            'tipoAviso.*.idioma_id' => 'required|exists:idioma',
+            'tipoAviso.*.idioma_id' => 'required|exists:idioma,id',
             'tipoAviso'             => 'idioma_duplicate',
         ];
     }
