@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Carta extends Model
 {
-    protected $table        = 'carta';
-    protected $primaryKey   = 'carta_id';
+    protected $table        = 'carta';    
     protected $fillable     = ['numero', 'edicion', 'ano', 'estado'];
 }

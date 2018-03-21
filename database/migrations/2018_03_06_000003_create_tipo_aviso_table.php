@@ -14,16 +14,20 @@ class CreateTipoAvisoTable extends Migration
     public function up()
     {
         Schema::create('tipo_aviso', function (Blueprint $table) {
-            $table->increments('tipo_aviso_id')->unsigned();
+            $table->increments('id')->unsigned();
             $table->string('nombre', 100)->comment('Nombre del tipo de aviso');
-            $table->timestamps();
-            $table->string('cod_ide', 45)->comment('Codigo que identifica a un grupo de registros que unicamente se diferencian por el lenguaje pero que son iguales');
+            $table->timestamps();            
             $table->enum('estado', array('A','I'))->default('A')->comment('Estado del tipo. Puede ser Activo, Inactivo');
             $table->integer('idioma_id')->unsigned();
+            $table->integer('parent_id')->unsigned()->nullable();
 
             $table->foreign('idioma_id')
-                  ->references('idioma_id')->on('idioma')
+                  ->references('id')->on('idioma')
                   ->onDelete('cascade');
+
+            $table->foreign('parent_id')
+                  ->references('id')->on('tipo_aviso')
+                  ->onDelete('cascade');            
 
             $table->unique(['nombre', 'idioma_id'], 'nombre_idioma_UNIQUE');
         });

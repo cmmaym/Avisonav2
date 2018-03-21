@@ -15,7 +15,7 @@ class UbicacionResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'ubicacion_id'      =>  $this->ubicacion_id,
+            'id'                =>  $this->id,
             'ubicacion'         =>  $this->ubicacion,
             'sub_ubicacion'     =>  $this->sub_ubicacion,
             'fecha_creacion'    =>  $this->created_at->format('Y-m-d'),

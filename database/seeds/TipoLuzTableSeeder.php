@@ -14,15 +14,11 @@ class TipoLuzTableSeeder extends Seeder
         $cod_ide = 0;
         factory(AvisoNavAPI\TipoLuz::class, 10)->create()->each(function ($item, $key) use (&$cod_ide){
             
-            if($key % 2 == 0){
-                $cod_ide = $item->tipo_luz_id;
-            }
 
             if(($key+1) % 2 == 0){
                 $item->idioma_id = 2;
             }
             
-            $item->cod_ide = $cod_ide;
             $item->save();
         }); 
     }

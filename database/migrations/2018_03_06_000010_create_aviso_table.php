@@ -14,7 +14,7 @@ class CreateAvisoTable extends Migration
     public function up()
     {
         Schema::create('aviso', function (Blueprint $table) {
-            $table->increments('aviso_id')->unsigned();
+            $table->increments('id')->unsigned();
             $table->string('num_aviso', 100)->comment('Numero del aviso');
             $table->dateTime('fecha')->comment('Fecha en la que se genero el aviso');
             $table->timestamps();
@@ -29,23 +29,23 @@ class CreateAvisoTable extends Migration
             $table->integer('carta_id')->unsigned();
             
             $table->foreign('entidad_id')
-                  ->references('entidad_id')->on('entidad')
+                  ->references('id')->on('entidad')
                   ->onDelete('cascade');
 
             $table->foreign('tipo_carac_id')
-                  ->references('tipo_carac_id')->on('tipo_caracter')
+                  ->references('id')->on('tipo_caracter')
                   ->onDelete('cascade');
             
             $table->foreign('tipo_aviso_id')
-                  ->references('tipo_aviso_id')->on('tipo_aviso')
+                  ->references('id')->on('tipo_aviso')
                   ->onDelete('cascade');
 
             $table->foreign('idioma_id')
-                  ->references('idioma_id')->on('idioma')
+                  ->references('id')->on('idioma')
                   ->onDelete('cascade');
 
             $table->foreign('carta_id')
-                  ->references('carta_id')->on('carta')
+                  ->references('id')->on('carta')
                   ->onDelete('cascade');
 
 

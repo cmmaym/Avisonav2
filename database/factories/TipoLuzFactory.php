@@ -10,8 +10,7 @@ $factory->define(AvisoNavAPI\TipoLuz::class, function (Faker $faker) {
     return [
         'clase'         => $faker->word,
         'alias'         => $faker->word,
-        'descripcion'   => $faker->sentence(),
-        'cod_ide'       => $faker->randomLetter,
-        'idioma_id'     => $idioma->idioma_id,
+        'descripcion'   => $faker->sentence(),        
+        'idioma_id'     => $idioma->id,
     ];
 });

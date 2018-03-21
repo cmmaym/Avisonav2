@@ -6,13 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Idioma extends Model
 {
-    protected $table        = 'idioma';
-    protected $primaryKey   = 'idioma_id';
+    protected $table        = 'idioma';    
     protected $fillable     = ['nombre', 'alias', 'estado'];
-
-    public function getRouteKeyName()
-    {
-        return 'idioma_id';
-    }
-
 }

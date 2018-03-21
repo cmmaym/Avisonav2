@@ -23,7 +23,7 @@ class TipoAvisoController extends Controller
      */
     public function index()
     {
-        $tiposAviso = TipoAviso::all();
+        $tiposAviso = TipoAviso::where('parent_id', null)->get();
 
         return TipoAvisoResource::collection($tiposAviso);
     }
@@ -44,32 +44,26 @@ class TipoAvisoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTipoAviso $request)
-    {
-        $tipoAviso = DB::transaction(function () use ($request) {
-            $consecutivo = Consecutivo::where('nombre', 'tipo_aviso')->first();
-            $collection = new Collection();
+    public function store(Request $request)
+    {        
+        $data = DB::transaction(function () use ($request) {
+            $collection = collect($request->input('tipoAviso'));
 
-            foreach($request->get('tipoAviso') as $item){
-                $tipoAviso = new TipoAviso();
-        
-                $tipoAviso->cod_ide = $consecutivo->numero;
-                $tipoAviso->nombre = $item['nombre'];
-                $tipoAviso->estado = $item['estado'];
-                $tipoAviso->idioma_id = $item['idioma_id'];
+            //Sacamos el primer elemento de la coleccion el cual sera el tipoAviso principal(master)
+            $masterItem = $collection->shift();
 
-                $tipoAviso->save();
+            //Creamos el tipo aviso principal(master)
+            $entity = TipoAviso::create($masterItem);
 
-                $collection->push($tipoAviso);
-            }
+            //Le asignamos al tipoAviso principal los otros tipoAviso que tendra asociado
+            $collection->each(function($subItem) use ($entity){
+                $entity->tipoAviso()->create($subItem);
+            });
             
-            $consecutivo->numero = $consecutivo->numero + 1;
-            $consecutivo->save();
-
-            return $collection;
+            return $entity;
         });
 
-        return TipoAvisoResource::collection($tipoAviso);
+        return new TipoAvisoResource($data);
     }
 
     /**

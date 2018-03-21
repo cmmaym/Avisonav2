@@ -14,18 +14,17 @@ class CreateTipoLuzTable extends Migration
     public function up()
     {
         Schema::create('tipo_luz', function (Blueprint $table) {
-            $table->increments('tipo_luz_id')->unsigned();
+            $table->increments('id')->unsigned();
             $table->string('clase', 100)->comment('Clase de luz');
             $table->string('alias', 45)->comment('Abreviatura de la clase');
             $table->mediumText('descripcion')->comment('Descripcion breve de la clase de luz');
-            $table->string('illustracion', 45)->nullable()->comment('Imagen de la clase de luz');
-            $table->string('cod_ide', 45)->comment('Codigo que identifica a un grupo de registros que unicamente se diferencian por el lenguaje pero que son iguales');
+            $table->string('illustracion', 45)->nullable()->comment('Imagen de la clase de luz');            
             $table->timestamps();
             $table->enum('estado', array('A','I'))->default('A')->comment('Estado del tipo luz. Puede ser Activo, Inactivo');
             $table->integer('idioma_id')->unsigned();
 
             $table->foreign('idioma_id')
-                  ->references('idioma_id')->on('idioma')
+                  ->references('id')->on('idioma')
                   ->onDelete('cascade');
 
             $table->unique(['clase', 'alias', 'idioma_id'], 'clase_alias_idioma_UNIQUE');

@@ -9,8 +9,7 @@ $factory->define(AvisoNavAPI\Zona::class, function (Faker $faker) {
 
     return [
         'nombre'  => $faker->state,
-        'alias'   => $faker->stateAbbr,
-        'cod_ide' => $faker->randomLetter,
-        'idioma_id' => $idioma->idioma_id,
+        'alias'   => $faker->stateAbbr,        
+        'idioma_id' => $idioma->id,
     ];
 });

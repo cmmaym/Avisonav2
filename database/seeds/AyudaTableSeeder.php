@@ -16,7 +16,7 @@ class AyudaTableSeeder extends Seeder
         factory(AvisoNavAPI\Ayuda::class, 6)->create()->each(function ($item, $key) use (&$numero){
 
             if($key % 2 == 0){
-                $numero = $item->ayuda_id;
+                $numero = $item->id;
                 $item->numero = $numero;
             }
             

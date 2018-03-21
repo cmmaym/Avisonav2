@@ -14,7 +14,7 @@ class CreateAyudaTable extends Migration
     public function up()
     {
         Schema::create('ayuda', function (Blueprint $table) {
-            $table->increments('ayuda_id')->unsigned();
+            $table->increments('id')->unsigned();
             $table->integer('numero')->comment('Numero nacional - Es un numero dependiendo de la situacion geografica');
             $table->string('nombre', 45)->comment('Tipo de la ayuda o luz');
             $table->string('latitud', 100);
@@ -35,23 +35,23 @@ class CreateAyudaTable extends Migration
             $table->integer('idioma_id')->unsigned();
 
             $table->foreign('aviso_id')
-                  ->references('aviso_id')->on('aviso')
+                  ->references('id')->on('aviso')
                   ->onDelete('cascade');
             
             $table->foreign('ubicacion_id')
-                  ->references('ubicacion_id')->on('ubicacion')
+                  ->references('id')->on('ubicacion')
                   ->onDelete('cascade');
 
             $table->foreign('tipo_luz_id')
-                  ->references('tipo_luz_id')->on('tipo_luz')
+                  ->references('id')->on('tipo_luz')
                   ->onDelete('cascade');
 
             $table->foreign('tipo_color_id')
-                  ->references('tipo_color_id')->on('tipo_color')
+                  ->references('id')->on('tipo_color')
                   ->onDelete('cascade');
 
             $table->foreign('idioma_id')
-                  ->references('idioma_id')->on('idioma')
+                  ->references('id')->on('idioma')
                   ->onDelete('cascade');
 
             $table->unique(['numero', 'aviso_id', 'ubicacion_id', 'idioma_id'], 'numero_aviso_ubicacion_idioma_UNIQUE');

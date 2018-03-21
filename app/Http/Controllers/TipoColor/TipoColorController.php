@@ -111,8 +111,8 @@ class TipoColorController extends Controller
             //Actualizamos o agregamos un nuevo tipo color
             foreach($request->input('tipoColor') as $item){
                 $entity = null;
-                if(isset($item['tipo_color_id'])){
-                    $entity = $currentCollection->where('tipo_color_id', $item['tipo_color_id'])->first();
+                if(isset($item['id'])){
+                    $entity = $currentCollection->where('id', $item['id'])->first();
 
                     if(!$entity){
                         $e = new ModelNotFoundException();
@@ -143,7 +143,7 @@ class TipoColorController extends Controller
 
             //Eliminamos un tipo color si no esta presentse en el el array de tipo color que viene en el request            
             $currentCollection->each(function($entity) use ($request, &$collectionHasChange){
-                if(!in_array($entity->tipo_color_id, $request->input('tipoColor.*.tipo_color_id'))){
+                if(!in_array($entity->id, $request->input('tipoColor.*.id'))){
                     $entity->delete();
                     $collectionHasChange = true;
                 }

@@ -113,8 +113,8 @@ class TipoLuzController extends Controller
             //Actualizamos o agregamos un nuevo tipo color
             foreach($request->input('tipoLuz') as $item){
                 $entity = null;
-                if(isset($item['tipo_luz_id'])){
-                    $entity = $currentCollection->where('tipo_luz_id', $item['tipo_luz_id'])->first();
+                if(isset($item['id'])){
+                    $entity = $currentCollection->where('id', $item['id'])->first();
 
                     if(!$entity){
                         $e = new ModelNotFoundException();
@@ -147,7 +147,7 @@ class TipoLuzController extends Controller
 
             //Eliminamos un tipo luz si no esta presentse en el el array de tipo luz que viene en el request            
             $currentCollection->each(function($entity) use ($request, &$collectionHasChange){
-                if(!in_array($entity->tipo_luz_id, $request->input('tipoLuz.*.tipo_luz_id'))){
+                if(!in_array($entity->id, $request->input('tipoLuz.*.id'))){
                     $entity->delete();
                     $collectionHasChange = true;
                 }

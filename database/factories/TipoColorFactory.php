@@ -10,7 +10,6 @@ $factory->define(AvisoNavAPI\TipoColor::class, function (Faker $faker) {
     return [
         'color'     => $faker->colorName,
         'alias'     => $faker->safeColorName,
-        'cod_ide'   => $faker->randomLetter,
-        'idioma_id' => $idioma->idioma_id,
+        'idioma_id' => $idioma->id,
     ];
 });

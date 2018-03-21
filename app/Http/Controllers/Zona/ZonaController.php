@@ -111,8 +111,8 @@ class ZonaController extends Controller
             //Actualizamos o agregamos una nueva zona
             foreach($request->input('zona') as $item){
                 $entity = null;
-                if(isset($item['zona_id'])){
-                    $entity = $currentCollection->where('zona_id', $item['zona_id'])->first();
+                if(isset($item['id'])){
+                    $entity = $currentCollection->where('id', $item['id'])->first();
 
                     if(!$entity){                        
                         $e = new ModelNotFoundException();
@@ -132,8 +132,7 @@ class ZonaController extends Controller
                     $entity->nombre = $item['nombre'];
                     $entity->alias = $item['alias'];
                     $entity->estado = $item['estado'];
-                    $entity->idioma_id = $item['idioma_id'];
-                    $entity->cod_ide = $cod_ide;
+                    $entity->idioma_id = $item['idioma_id'];                    
                     $collectionHasChange = true;
                 }
                 
@@ -143,7 +142,7 @@ class ZonaController extends Controller
 
             //Eliminamos una zona si no esta presentse en el el array de zonas que viene en el request            
             $currentCollection->each(function($entity) use ($request, &$collectionHasChange){
-                if(!in_array($entity->zona_id, $request->input('zona.*.zona_id'))){
+                if(!in_array($entity->id, $request->input('zona.*.id'))){
                     $entity->delete();
                     $collectionHasChange = true;
                 }

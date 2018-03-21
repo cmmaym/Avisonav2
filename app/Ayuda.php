@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ayuda extends Model
 {
-    protected $table        = 'ayuda';
-    protected $primaryKey   = 'ayuda_id';
+    protected $table        = 'ayuda';    
     protected $fillable     = [
         'numero',
         'nombre',
@@ -26,22 +25,22 @@ class Ayuda extends Model
     ];
 
     public function aviso(){
-        return $this->hasMany('App\Aviso', 'aviso_id', 'aviso_id');
+        return $this->hasMany('App\Aviso', 'aviso_id', 'id');
     }
 
     public function ubicacion(){
-        return $this->hasMany('App\Ubicacion', 'ubicacion_id', 'ubicacion_id');
+        return $this->hasMany('App\Ubicacion', 'ubicacion_id', 'id');
     }
 
     public function tipo_luz(){
-        return $this->hasMany('App\TipoLuz', 'tipo_luz_id', 'tipo_luz_id');
+        return $this->hasMany('App\TipoLuz', 'tipo_luz_id', 'id');
     }
 
     public function tipo_color(){
-        return $this->hasMany('App\TipoColor', 'tipo_color_id', 'tipo_color_id');
+        return $this->hasMany('App\TipoColor', 'tipo_color_id', 'id');
     }
 
     public function idioma(){
-        return $this->hasMany('App\Idioma', 'idioma_id', 'idioma_id');
+        return $this->hasMany('App\Idioma', 'idioma_id', 'id');
     }
 }

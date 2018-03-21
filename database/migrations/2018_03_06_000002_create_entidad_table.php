@@ -14,7 +14,7 @@ class CreateEntidadTable extends Migration
     public function up()
     {
         Schema::create('entidad', function (Blueprint $table) {
-            $table->increments('entidad_id')->unsigned();
+            $table->increments('id')->unsigned();
             $table->string('nombre', 100)->comment('Nombre de la entidad o usuario que reporto el aviso');
             $table->string('alias', 45)->comment('Alias o nombre corto de la entidad o usuario');
             $table->timestamps();

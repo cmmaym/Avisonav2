@@ -14,7 +14,7 @@ class CreateUbicacionTable extends Migration
     public function up()
     {
         Schema::create('ubicacion', function (Blueprint $table) {
-            $table->increments('ubicacion_id')->unsigned();
+            $table->increments('id')->unsigned();
             $table->string('ubicacion', 100)->comment('Nombre de la ubicacion de la ayuda');
             $table->string('sub_ubicacion', 100)->nullable()->comment('Nombre de la sub ubicacion es decir la ubicacion mas espesifica donde se encuentra la ayuda');
             $table->timestamps();
@@ -22,7 +22,7 @@ class CreateUbicacionTable extends Migration
             $table->integer('zona_id')->unsigned();
 
             $table->foreign('zona_id')
-                  ->references('zona_id')->on('zona')
+                  ->references('id')->on('zona')
                   ->onDelete('cascade');
 
             $table->unique(['ubicacion', 'zona_id'], 'ubicacion_zona_UNIQUE');

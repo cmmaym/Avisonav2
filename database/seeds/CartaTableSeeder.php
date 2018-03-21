@@ -12,8 +12,7 @@ class CartaTableSeeder extends Seeder
     public function run()
     {
         $cod_ide = 0;        
-        factory(AvisoNavAPI\Carta::class, 20)->create()->each(function ($item, $key) use (&$cod_ide){            
-            $item->cod_ide = $item->carta_id;
+        factory(AvisoNavAPI\Carta::class, 20)->create()->each(function ($item, $key) use (&$cod_ide){                        
             $item->save();
         }); 
     }

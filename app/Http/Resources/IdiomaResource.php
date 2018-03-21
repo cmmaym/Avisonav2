@@ -15,15 +15,12 @@ class IdiomaResource extends JsonResource
     public function toArray($request)
     {        
         return [
-            'id'                => (string) $this->idioma_id,
+            'id'                => (string) $this->id,
             'nombre'            => $this->nombre,
             'alias'             => $this->alias,
             'fecha_creacion'    => $this->created_at->format('Y-m-d'),
             'fecha_edicion'     => $this->updated_at->format('Y-m-d'),
             'estado'            => $this->estado,
-            'links'             => [
-                'self'  =>  route('idioma.show', ['id' => $this->idioma_id]),
-            ],
         ];
     }
 }

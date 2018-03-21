@@ -110,8 +110,8 @@ class TipoCaracterController extends Controller
             //Actualizamos o agregamos un nuevo tipo caracter
             foreach($request->input('tipoCaracter') as $item){
                 $entity = null;
-                if(isset($item['tipo_carac_id'])){
-                    $entity = $currentCollection->where('tipo_carac_id', $item['tipo_carac_id'])->first();
+                if(isset($item['id'])){
+                    $entity = $currentCollection->where('id', $item['id'])->first();
 
                     if(!$entity){
                         $e = new ModelNotFoundException();
@@ -141,7 +141,7 @@ class TipoCaracterController extends Controller
 
             //Eliminamos un tipo caracter si no esta presentse en el el array de tipo caracter que viene en el request            
             $currentCollection->each(function($entity) use ($request, &$collectionHasChange){
-                if(!in_array($entity->tipo_carac_id, $request->input('tipoCaracter.*.tipo_carac_id'))){
+                if(!in_array($entity->id, $request->input('tipoCaracter.*.id'))){
                     $entity->delete();
                     $collectionHasChange = true;
                 }

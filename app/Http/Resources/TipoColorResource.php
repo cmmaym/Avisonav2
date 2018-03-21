@@ -16,10 +16,9 @@ class TipoColorResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'tipo_color_id'     =>  $this->tipo_color_id,
+            'id'                =>  $this->id,
             'color'             =>  $this->color,
-            'alias'             =>  $this->alias,
-            'cod_ide'           =>  $this->cod_ide,
+            'alias'             =>  $this->alias,            
             'fecha_creacion'    =>  $this->created_at->format('Y-m-d'),
             'fecha_edicion'     =>  $this->updated_at->format('Y-m-d'),
             'estado'            =>  $this->estado,

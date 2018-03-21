@@ -15,12 +15,11 @@ class TipoLuzResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'tipo_luz_id'       =>  $this->tipo_luz_id,
+            'id'                =>  $this->id,
             'clase'             =>  $this->clase,
             'alias'             =>  $this->alias,
             'descripcion'       =>  $this->descripcion,
-            'illustracion'      =>  $this->illustracion,
-            'cod_ide'           =>  $this->cod_ide,
+            'illustracion'      =>  $this->illustracion,            
             'fecha_creacion'    =>  $this->created_at->format('Y-m-d'),
             'fecha_edicion'     =>  $this->updated_at->format('Y-m-d'),
             'estado'            =>  $this->estado,

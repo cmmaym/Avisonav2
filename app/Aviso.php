@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Aviso extends Model
 {
-    protected $table        = 'aviso';
-    protected $primaryKey   = 'aviso_id';
+    protected $table        = 'aviso';    
     protected $fillable     = [
         'num_aviso',
         'fecha',
@@ -22,22 +21,22 @@ class Aviso extends Model
     ];
 
     public function entidad(){
-        return $this->hasMany('App\Entidad', 'entidad_id', 'entidad_id');
+        return $this->hasMany('App\Entidad', 'entidad_id', 'id');
     }
 
     public function tipo_carac(){
-        return $this->hasMany('App\TipoCaracter', 'tipo_carac_id', 'tipo_carac_id');
+        return $this->hasMany('App\TipoCaracter', 'tipo_carac_id', 'id');
     }
 
     public function tipo_aviso(){
-        return $this->hasMany('App\TipoAviso', 'tipo_aviso_id', 'tipo_aviso_id');
+        return $this->hasMany('App\TipoAviso', 'tipo_aviso_id', 'id');
     }
 
     public function idioma(){
-        return $this->hasMany('App\Idioma', 'idioma_id', 'idioma_id');
+        return $this->hasMany('App\Idioma', 'idioma_id', 'id');
     }
 
     public function carta(){
-        return $this->hasMany('App\Carta', 'carta_id', 'carta_id');
+        return $this->hasMany('App\Carta', 'carta_id', 'id');
     }
 }
