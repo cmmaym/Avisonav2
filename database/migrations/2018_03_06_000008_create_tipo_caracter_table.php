@@ -19,9 +19,14 @@ class CreateTipoCaracterTable extends Migration
             $table->timestamps();
             $table->enum('estado', array('A','I'))->default('A')->comment('Estado del tipo. Puede ser Activo, Inactivo');
             $table->integer('idioma_id')->unsigned();
+            $table->integer('parent_id')->unsigned()->nullable();
 
             $table->foreign('idioma_id')
                   ->references('id')->on('idioma')
+                  ->onDelete('cascade');
+
+            $table->foreign('parent_id')
+                  ->references('id')->on('tipo_caracter')
                   ->onDelete('cascade');
 
             $table->unique(['nombre', 'idioma_id'], 'nombre_idioma_UNIQUE');

@@ -17,12 +17,12 @@ class TipoCaracterResource extends JsonResource
     {
         return [
             'id'                => (string) $this->id,
-            'nombre'            => $this->nombre,
-            'cod_ide'           => $this->cod_ide,
+            'nombre'            => $this->nombre,            
             'fecha_creacion'    => $this->created_at->format('Y-m-d'),
             'fecha_edicion'     => $this->updated_at->format('Y-m-d'),
             'estado'            => $this->estado,
             'idioma'            => new IdiomaResource($this->idioma()->first()),
+            'sub_tipo_caracter' => TipoCaracterResource::collection($this->tipoCaracter()->get()),
         ];
     }
 }

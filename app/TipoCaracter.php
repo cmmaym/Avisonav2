@@ -11,6 +11,14 @@ class TipoCaracter extends Model
     protected $fillable     = ['nombre', 'estado', 'idioma_id'];
 
     public function idioma(){
-        return $this->hasMany(Idioma::class, 'idioma_id', 'id');
+        return $this->hasMany(Idioma::class, 'id', 'idioma_id');
+    }
+
+    public function tipoCaracter(){
+        return $this->hasMany(TipoCaracter::class, 'parent_id');
+    }
+
+    public function parent(){
+        return $this->belongsTo(TipoCaracter::class);
     }
 }

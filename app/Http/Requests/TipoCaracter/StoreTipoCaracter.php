@@ -26,7 +26,7 @@ class StoreTipoCaracter extends FormRequest
         return [
             'tipoCaracter.*.nombre'    => 'required|max:100',
             'tipoCaracter.*.estado'    => 'required|required|in:A,I',
-            'tipoCaracter.*.idioma_id' => 'required|exists:idioma',
+            'tipoCaracter.*.idioma_id' => 'required|exists:idioma,id',
             'tipoCaracter'             => 'idioma_duplicate',
         ];
     }

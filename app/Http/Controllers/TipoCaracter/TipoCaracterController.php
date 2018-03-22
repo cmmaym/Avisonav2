@@ -3,11 +3,9 @@
 namespace AvisoNavAPI\Http\Controllers\TipoCaracter;
 
 use Illuminate\Http\Request;
-use AvisoNavAPI\Consecutivo;
 use AvisoNavAPI\TipoCaracter;
 use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\Collection;
 use AvisoNavAPI\Http\Resources\TipoCaracterResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use AvisoNavAPI\Http\Requests\TipoCaracter\StoreTipoCaracter;
@@ -17,64 +15,48 @@ class TipoCaracterController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\TipoCaracterResource
      */
     public function index()
     {
-        $tipoCaracter = TipoCaracter::all();
+        $collection = TipoCaracter::where('parent_id', null)->get();
 
-        return TipoCaracterResource::collection($tipoCaracter);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return TipoCaracterResource::collection($collection);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \AvisoNavAPI\Http\Requests\TipoCaracter\StoreTipoCaracter  $request
+     * @return \AvisoNavAPI\Http\Resources\TipoCaracterResource
      */
     public function store(StoreTipoCaracter $request)
     {
         $data = DB::transaction(function () use ($request) {
-            $consecutivo = Consecutivo::where('nombre', 'tipo_caracter')->first();
-            $collection = new Collection();
+            $collection = collect($request->input('tipoCaracter'));
 
-            foreach($request->get('tipoCaracter') as $item){
-                $tipoCaracter = new TipoCaracter();
-        
-                $tipoCaracter->cod_ide = $consecutivo->numero;
-                $tipoCaracter->nombre = $item['nombre'];
-                $tipoCaracter->estado = $item['estado'];
-                $tipoCaracter->idioma_id = $item['idioma_id'];
+            //Sacamos el primer elemento de la coleccion el cual sera el registro principal(master)
+            $masterItem = $collection->shift();
 
-                $tipoCaracter->save();
+            //Creamos la instancia del registro principal(master)
+            $entity = TipoCaracter::create($masterItem);
 
-                $collection->push($tipoCaracter);
-            }
+            //Le asignamos al registro principal los otros subregistros que tendra asociado
+            $collection->each(function($subItem) use ($entity){
+                $entity->tipoCaracter()->create($subItem);
+            });
             
-            $consecutivo->numero = $consecutivo->numero + 1;
-            $consecutivo->save();
-
-            return $collection;
+            return $entity;
         });
-
-        return TipoCaracterResource::collection($data);
+        
+        return new TipoCaracterResource($data);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \AvisoNavAPI\TipoCaracter  $tipoCaracter
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\TipoCaracterResource
      */
     public function show(TipoCaracter $tipoCaracter)
     {
@@ -82,37 +64,39 @@ class TipoCaracterController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \AvisoNavAPI\TipoCaracter  $tipoCaracter
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TipoCaracter $tipoCaracter)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string $cod_ide
-     * @return \Illuminate\Http\Response
+     * @param  \AvisoNavAPI\Http\Requests\TipoCaracter\StoreTipoCaracter  $request
+     * @param  \AvisoNavAPI\TipoCaracter $tipoCaracter
+     * @return \AvisoNavAPI\Http\Resources\TipoCaracterResource
      */
-    public function update(StoreTipoCaracter $request, $cod_ide)
+    public function update(StoreTipoCaracter $request, TipoCaracter $tipoCaracter)
     {
-        $data = DB::transaction(function () use ($request, $cod_ide) {
+        $data = DB::transaction(function () use ($request, $tipoCaracter) {
+            $collection = collect($request->input('tipoCaracter'));
+            $entityHasChange = false;
             
-            $currentCollection = TipoCaracter::where('cod_ide', $cod_ide)->get();            
-            $newCollection = new Collection();
-            $collectionHasChange = false;
+            /*Hacemos una copia de la instancia actual de la coleccion de los subtipoAviso
+              que nos servira para hacer la aliminacion*/
+            $currentCollection =  $tipoCaracter->tipoCaracter()->get()->toBase();
 
-            //Actualizamos o agregamos un nuevo tipo caracter
-            foreach($request->input('tipoCaracter') as $item){
-                $entity = null;
-                if(isset($item['id'])){
-                    $entity = $currentCollection->where('id', $item['id'])->first();
+            //Sacamos el primer elemento de la coleccion el cual sera el registro principal(master)
+            $masterItem = $collection->shift();
 
+            //Agregamos los datos al registro principal(master)
+            $tipoCaracter->fill($masterItem);
+
+            //Verificamos si el registro se mantuvo igual o no, es decir, si fue actualizado o no
+            if(!$tipoCaracter->isClean()){
+                $entityHasChange = true;
+            }
+
+            //Agregamos los datos a cada uno de los subregistros que estan asociados
+            $collection->each(function($subItem) use ($tipoCaracter, &$entityHasChange){
+                if(isset($subItem['id'])){
+                    $entity = $tipoCaracter->tipoCaracter()->where('id', $subItem['id'])->first();
+
+                    //Si en el request viene un id que no exite lanzamos una excepcion
                     if(!$entity){
                         $e = new ModelNotFoundException();
                         $e->setModel('TipoCaracter');
@@ -120,60 +104,57 @@ class TipoCaracterController extends Controller
                         throw $e;
                     }
 
-                    $entity->fill($item);
-                    
-                    if(!$entity->isClean()){
-                        $collectionHasChange = true;
-                    }
-                    
-                }else{
-                    $entity = new TipoCaracter();
-                    $entity->nombre = $item['nombre'];
-                    $entity->estado = $item['estado'];
-                    $entity->idioma_id = $item['idioma_id'];
-                    $entity->cod_ide = $cod_ide;
-                    $collectionHasChange = true;
-                }
-                
-                $newCollection->push($entity);
-                $entity->save();
-            }
+                    $entity->fill($subItem);
 
-            //Eliminamos un tipo caracter si no esta presentse en el el array de tipo caracter que viene en el request            
-            $currentCollection->each(function($entity) use ($request, &$collectionHasChange){
-                if(!in_array($entity->id, $request->input('tipoCaracter.*.id'))){
-                    $entity->delete();
-                    $collectionHasChange = true;
+                    //Verificamos si el subregistro se mantuvo igual o no, es decir, si fue actualizado o no
+                    if(!$entity->isClean()){                        
+                        $entityHasChange = true;
+                    }
+
+                }else{
+                    $entity = TipoCaracter::create($subItem);
+                    $entityHasChange = true;
                 }
+
+                $tipoCaracter->tipoCaracter()->save($entity);
             });
 
             
-            if(!$collectionHasChange){
-                return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
-            }
+            //Eliminamos los subregistros que si existan en la base de datos pero que no vengan en el request
+            $arrayIds = $collection->pluck('id')->toArray();
+            $currentCollection->each(function($entity) use ($arrayIds, &$entityHasChange){
+                if(!in_array($entity->id, $arrayIds)){
+                    $entity->delete();
+                    $entityHasChange = true;
+                }
+            });
 
-            return $newCollection;
+            if(!$entityHasChange){
+                return response()->json(['error' => ['title' => 'Debe por lo menos realizar un cambio para actualizar', 'status' => 422]], 422);
+            }
+            
+            $tipoCaracter->save();
+
+            return $tipoCaracter;
         });
 
-        if(!$data instanceof Collection){
+        if(!$data instanceof TipoCaracter){
             return $data;
         }
 
-        return TipoCaracterResource::collection($data);
+       return new TipoCaracterResource($data);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  string $cod_ide
-     * @return \Illuminate\Http\Response
+     * @param  \AvisoNavAPI\TipoCaracter $tipoCaracter
+     * @return \AvisoNavAPI\Http\Resources\TipoCaracterResource
      */
-    public function destroy($cod_ide)
+    public function destroy(TipoCaracter $tipoCaracter)
     {
-        $currentCollection = TipoCaracter::where('cod_ide', $cod_ide)->get();
+        $tipoCaracter->delete();
 
-        $currentCollection->each(function($entity){
-                $entity->delete();
-        });
+        return new TipoCaracterResource($tipoCaracter);
     }
 }

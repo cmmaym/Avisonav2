@@ -24,4 +24,4 @@ Route::resource('zona', 'Zona\ZonaController');
 Route::resource('ubicacion', 'Ubicacion\UbicacionController');
 Route::resource('tipoColor', 'TipoColor\TipoColorController');
 Route::resource('tipoLuz', 'TipoLuz\TipoLuzController');
-Route::resource('tipoCaracter', 'TipoCaracter\TipoCaracterController', ['except' => ['create', 'edit']]);
+Route::resource('tipoCaracter', 'TipoCaracter\TipoCaracterController');
