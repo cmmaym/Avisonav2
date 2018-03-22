@@ -11,7 +11,7 @@ class Ubicacion extends Model
     protected $fillable     = ['ubicacion', 'sub_ubicacion', 'estado', 'zona_id'];
 
     public function zona(){
-        return $this->hasMany(Zona::class, 'zona_id', 'id');
+        return $this->hasMany(Zona::class, 'id', 'zona_id');
     }
 
 }

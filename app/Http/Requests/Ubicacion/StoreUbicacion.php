@@ -25,9 +25,9 @@ class StoreUbicacion extends FormRequest
     {
         return [
             'ubicacion'         => 'required|max:100',
-            'sub_ubicacion'     => 'sometimes|max:100',
+            'sub_ubicacion'     => 'nullable|max:100',
             'estado'            => 'required|in:A,I',
-            'zona_id'           => 'required|exists:zona'
+            'zona_id'           => 'required|exists:zona,id'
         ];
     }
 

@@ -13,34 +13,24 @@ class UbicacionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\UbicacionResource
      */
     public function index()
     {
-        $ubicacion = Ubicacion::all();
+        $collection = Ubicacion::all();
         
-        return UbicacionResource::collection($ubicacion);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return UbicacionResource::collection($collection);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \AvisoNavAPI\Http\Requests\Ubicacion\StoreUbicacion  $request
+     * @return \AvisoNavAPI\Http\Resources\UbicacionResource
      */
     public function store(StoreUbicacion $request)
     {
-        $ubicacion = Ubicacion::create($request->all());
+        $ubicacion = Ubicacion::create($request->only(['ubicacion','sub_ubicacion','estado','zona_id']));
 
         return new UbicacionResource($ubicacion);
     }
@@ -49,7 +39,7 @@ class UbicacionController extends Controller
      * Display the specified resource.
      *
      * @param  \AvisoNavAPI\Ubicacion  $ubicacion
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\UbicacionResource
      */
     public function show(Ubicacion $ubicacion)
     {
@@ -57,34 +47,18 @@ class UbicacionController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \AvisoNavAPI\Ubicacion  $ubicacion
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Ubicacion $ubicacion)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \AvisoNavAPI\Http\Requests\Ubicacion\StoreUbicacion  $request
      * @param  \AvisoNavAPI\Ubicacion  $ubicacion
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\UbicacionResource
      */
     public function update(StoreUbicacion $request, Ubicacion $ubicacion)
     {
-        $ubicacion->fill($request->only([
-            'ubicacion',
-            'sub_ubicacion',
-            'estado',
-            'zona_id',
-        ]));
+        $ubicacion->fill($request->only(['ubicacion','sub_ubicacion','estado','zona_id']));
 
         if($ubicacion->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+            return response()->json(['error' => ['title' => 'Debe por lo menos realizar un cambio para actualizar', 'status' => 422]], 422);
         }
 
         $ubicacion->save();
@@ -96,7 +70,7 @@ class UbicacionController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \AvisoNavAPI\Ubicacion  $ubicacion
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\UbicacionResource
      */
     public function destroy(Ubicacion $ubicacion)
     {

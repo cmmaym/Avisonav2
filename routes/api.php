@@ -21,7 +21,7 @@ Route::resource('idioma', 'Idioma\IdiomaController');
 Route::resource('entidad', 'Entidad\EntidadController');
 Route::resource('tipoAviso', 'TipoAviso\TipoAvisoController');
 Route::resource('zona', 'Zona\ZonaController');
-Route::resource('ubicacion', 'Ubicacion\UbicacionController', ['except' => ['create', 'edit']]);
+Route::resource('ubicacion', 'Ubicacion\UbicacionController');
 Route::resource('tipoColor', 'TipoColor\TipoColorController', ['except' => ['create', 'edit']]);
 Route::resource('tipoLuz', 'TipoLuz\TipoLuzController', ['except' => ['create', 'edit']]);
 Route::resource('tipoCaracter', 'TipoCaracter\TipoCaracterController', ['except' => ['create', 'edit']]);
