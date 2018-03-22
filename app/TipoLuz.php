@@ -3,6 +3,7 @@
 namespace AvisoNavAPI;
 
 use AvisoNavAPI\Idioma;
+use AvisoNavAPI\TipoLuz;
 use Illuminate\Database\Eloquent\Model;
 
 class TipoLuz extends Model
@@ -11,6 +12,14 @@ class TipoLuz extends Model
     protected $fillable     = ['clase', 'alias', 'descripcion', 'illustracion', 'estado', 'idioma_id'];
 
     public function idioma(){
-        return $this->hasMany(Idioma::class, 'idioma_id', 'id');
+        return $this->hasMany(Idioma::class, 'id', 'idioma_id');
+    }
+
+    public function tipoLuz(){
+        return $this->hasMany(TipoLuz::class, 'parent_id');
+    }
+
+    public function parent(){
+        return $this->belongsTo(TipoLuz::class);
     }
 }

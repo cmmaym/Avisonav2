@@ -27,9 +27,9 @@ class StoreTipoLuz extends FormRequest
             'tipoLuz.*.clase'           => 'required|max:100',
             'tipoLuz.*.alias'           => 'required|max:45',
             'tipoLuz.*.descripcion'     => 'required',
-            'tipoLuz.*.illustracion'    => 'sometimes',
+            'tipoLuz.*.illustracion'    => 'nullable',
             'tipoLuz.*.estado'          => 'required|in:A,I',
-            'tipoLuz.*.idioma_id'       => 'required|exists:idioma',
+            'tipoLuz.*.idioma_id'       => 'required|exists:idioma,id',
             'tipoLuz'                   => 'idioma_duplicate',
         ];
     }

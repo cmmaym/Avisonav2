@@ -4,10 +4,8 @@ namespace AvisoNavAPI\Http\Controllers\TipoLuz;
 
 use AvisoNavAPI\TipoLuz;
 use Illuminate\Http\Request;
-use AvisoNavAPI\Consecutivo;
 use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\Collection;
 use AvisoNavAPI\Http\Resources\TipoLuzResource;
 use AvisoNavAPI\Http\Requests\TipoLuz\StoreTipoLuz;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -17,67 +15,48 @@ class TipoLuzController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\TipoLuzResource
      */
     public function index()
     {
-        $tipoLuz = TipoLuz::all();
+        $collection = TipoLuz::where('parent_id', null)->get();
 
-        return TipoLuzResource::collection($tipoLuz);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return TipoLuzResource::collection($collection);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \AvisoNavAPI\Http\Requests\TipoLuz\StoreTipoLuz  $request
+     * @return \AvisoNavAPI\Http\Resources\TipoLuzResource
      */
     public function store(StoreTipoLuz $request)
     {
-        $entity = DB::transaction(function () use ($request) {
-            $consecutivo = Consecutivo::where('nombre', 'tipo_luz')->first();
-            $collection = new Collection();
+        $data = DB::transaction(function () use ($request) {
+            $collection = collect($request->input('tipoLuz'));
 
-            foreach($request->get('tipoLuz') as $item){
-                $entity = new TipoLuz();
-        
-                $entity->cod_ide = $consecutivo->numero;
-                $entity->clase = $item['clase'];
-                $entity->alias = $item['alias'];
-                $entity->descripcion = $item['descripcion'];
-                $entity->illustracion = $item['illustracion'];
-                $entity->estado = $item['estado'];
-                $entity->idioma_id = $item['idioma_id'];
+            //Sacamos el primer elemento de la coleccion el cual sera el registro principal(master)
+            $masterItem = $collection->shift();
 
-                $entity->save();
+            //Creamos la instancia del registro principal(master)
+            $entity = TipoLuz::create($masterItem);
 
-                $collection->push($entity);
-            }
+            //Le asignamos al registro principal los otros subregistros que tendra asociado
+            $collection->each(function($subItem) use ($entity){
+                $entity->tipoLuz()->create($subItem);
+            });
             
-            $consecutivo->numero = $consecutivo->numero + 1;
-            $consecutivo->save();
-
-            return $collection;
+            return $entity;
         });
-
-        return TipoLuzResource::collection($entity);
+        
+        return new TipoLuzResource($data); 
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \AvisoNavAPI\TipoLuz  $tipoLuz
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\TipoLuzResource
      */
     public function show(TipoLuz $tipoLuz)
     {
@@ -85,37 +64,39 @@ class TipoLuzController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \AvisoNavAPI\TipoLuz  $tipoLuz
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TipoLuz $tipoLuz)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string $cod_ide
-     * @return \Illuminate\Http\Response
+     * @param  \AvisoNavAPI\Http\Requests\TipoLuz\StoreTipoLuz  $request
+     * @param  \AvisoNavAPI\TipoLuz $tipoLuz
+     * @return \AvisoNavAPI\Http\Resources\TipoLuzResource
      */
-    public function update(StoreTipoLuz $request, $cod_ide)
+    public function update(StoreTipoLuz $request, TipoLuz $tipoLuz)
     {
-        $data = DB::transaction(function () use ($request, $cod_ide) {
+        $data = DB::transaction(function () use ($request, $tipoLuz) {
+            $collection = collect($request->input('tipoLuz'));
+            $entityHasChange = false;
             
-            $currentCollection = TipoLuz::where('cod_ide', $cod_ide)->get();
-            $newCollection = new Collection();
-            $collectionHasChange = false;
+            /*Hacemos una copia de la instancia actual de la coleccion de los subtipoAviso
+              que nos servira para hacer la aliminacion*/
+            $currentCollection =  $tipoLuz->tipoLuz()->get()->toBase();
 
-            //Actualizamos o agregamos un nuevo tipo color
-            foreach($request->input('tipoLuz') as $item){
-                $entity = null;
-                if(isset($item['id'])){
-                    $entity = $currentCollection->where('id', $item['id'])->first();
+            //Sacamos el primer elemento de la coleccion el cual sera el registro principal(master)
+            $masterItem = $collection->shift();
 
+            //Agregamos los datos al registro principal(master)
+            $tipoLuz->fill($masterItem);
+
+            //Verificamos si el registro se mantuvo igual o no, es decir, si fue actualizado o no
+            if(!$tipoLuz->isClean()){
+                $entityHasChange = true;
+            }
+
+            //Agregamos los datos a cada uno de los subregistros que estan asociados
+            $collection->each(function($subItem) use ($tipoLuz, &$entityHasChange){
+                if(isset($subItem['id'])){
+                    $entity = $tipoLuz->tipoLuz()->where('id', $subItem['id'])->first();
+
+                    //Si en el request viene un id que no exite lanzamos una excepcion
                     if(!$entity){
                         $e = new ModelNotFoundException();
                         $e->setModel('TipoLuz');
@@ -123,63 +104,58 @@ class TipoLuzController extends Controller
                         throw $e;
                     }
 
-                    $entity->fill($item);
-                    
-                    if(!$entity->isClean()){
-                        $collectionHasChange = true;
-                    }
-                    
-                }else{
-                    $entity = new TipoLuz();
-                    $entity->clase = $item['clase'];
-                    $entity->alias = $item['alias'];
-                    $entity->descripcion = $item['descripcion'];
-                    $entity->illustracion = $item['illustracion'];
-                    $entity->estado = $item['estado'];
-                    $entity->idioma_id = $item['idioma_id'];
-                    $entity->cod_ide = $cod_ide;
-                    $collectionHasChange = true;
-                }
-                
-                $newCollection->push($entity);
-                $entity->save();
-            }
+                    $entity->fill($subItem);
 
-            //Eliminamos un tipo luz si no esta presentse en el el array de tipo luz que viene en el request            
-            $currentCollection->each(function($entity) use ($request, &$collectionHasChange){
-                if(!in_array($entity->id, $request->input('tipoLuz.*.id'))){
+                    //Verificamos si el subregistro se mantuvo igual o no, es decir, si fue actualizado o no
+                    if(!$entity->isClean()){                        
+                        $entityHasChange = true;
+                    }
+
+                }else{
+                    $entity = TipoLuz::create($subItem);
+                    $entityHasChange = true;
+                }
+
+                $tipoLuz->tipoLuz()->save($entity);
+            });
+
+            
+            //Eliminamos los subregistros que si existan en la base de datos pero que no vengan en el request
+            $arrayIds = $collection->pluck('id')->toArray();
+            $currentCollection->each(function($entity) use ($arrayIds, &$entityHasChange){
+                if(!in_array($entity->id, $arrayIds)){
                     $entity->delete();
-                    $collectionHasChange = true;
+                    $entityHasChange = true;
                 }
             });
 
-            if(!$collectionHasChange){
-                return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+            if(!$entityHasChange){
+                return response()->json(['error' => ['title' => 'Debe por lo menos realizar un cambio para actualizar', 'status' => 422]], 422);
             }
+            
+            $tipoLuz->save();
 
-            return $newCollection;
+            return $tipoLuz;
         });
 
-        if(!$data instanceof Collection){
+        if(!$data instanceof TipoLuz){
             return $data;
         }
 
-        return TipoLuzResource::collection($data);
+        return new TipoLuzResource($data);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  string
-     * @return \Illuminate\Http\Response
+     * @param  \AvisoNavAPI\TipoLuz $tipoLuz
+     * @return \AvisoNavAPI\Http\Resources\TipoLuzResource
      */
-    public function destroy($cod_ide)
+    public function destroy(TipoLuz $tipoLuz)
     {
-        $currentCollection = TipoLuz::where('cod_ide', $cod_ide)->get();
+        $tipoLuz->delete();
 
-        $currentCollection->each(function($entity){
-                $entity->delete();
-        });
+        return new TipoLuzResource($tipoLuz);
     }
     
 }

@@ -2,6 +2,7 @@
 
 namespace AvisoNavAPI\Http\Resources;
 
+use AvisoNavAPI\Http\Resources\IdiomaResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TipoLuzResource extends JsonResource
@@ -24,6 +25,7 @@ class TipoLuzResource extends JsonResource
             'fecha_edicion'     =>  $this->updated_at->format('Y-m-d'),
             'estado'            =>  $this->estado,
             'idioma'            =>  new IdiomaResource($this->idioma()->first()),
+            'sub_tipo_luz'      =>  TipoLuzResource::collection($this->tipoLuz()->get()),
         ];
     }
 }

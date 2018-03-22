@@ -22,9 +22,14 @@ class CreateTipoLuzTable extends Migration
             $table->timestamps();
             $table->enum('estado', array('A','I'))->default('A')->comment('Estado del tipo luz. Puede ser Activo, Inactivo');
             $table->integer('idioma_id')->unsigned();
+            $table->integer('parent_id')->unsigned()->nullable();
 
             $table->foreign('idioma_id')
                   ->references('id')->on('idioma')
+                  ->onDelete('cascade');
+
+            $table->foreign('parent_id')
+                  ->references('id')->on('tipo_luz')
                   ->onDelete('cascade');
 
             $table->unique(['clase', 'alias', 'idioma_id'], 'clase_alias_idioma_UNIQUE');
