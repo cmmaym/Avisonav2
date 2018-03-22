@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-Route::resource('idioma', 'Idioma\IdiomaController', ['except' => ['create', 'edit']]);
+Route::resource('idioma', 'Idioma\IdiomaController');
 Route::resource('entidad', 'Entidad\EntidadController', ['except' => ['create', 'edit']]);
 Route::resource('tipoAviso', 'TipoAviso\TipoAvisoController', ['except' => ['create', 'edit']]);
 Route::resource('zona', 'Zona\ZonaController', ['except' => ['create', 'edit']]);

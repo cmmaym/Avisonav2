@@ -2,11 +2,9 @@
 
 namespace AvisoNavAPI\Http\Controllers\Idioma;
 
-use Validator;
 use AvisoNavAPI\Idioma;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Http\Requests\Idioma\StoreIdioma;
-use AvisoNavAPI\Http\Requests\Idioma\UpdateIdioma;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\IdiomaResource;
 
@@ -15,30 +13,20 @@ class IdiomaController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return AvisoNavAPI\Http\Resources\IdiomaResource
      */
     public function index()
     {
-        $idiomas = Idioma::all();
+        $collection = Idioma::all();
         
-        return IdiomaResource::collection($idiomas);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        //
+        return IdiomaResource::collection($collection);
     }
     
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  AvisoNavAPI\Http\Requests\Idioma\StoreIdioma  $request
+     * @return AvisoNavAPI\Http\Resources\IdiomaResource
      */
     public function store(StoreIdioma $request)
     {
@@ -51,7 +39,7 @@ class IdiomaController extends Controller
      * Display the specified resource.
      *
      * @param  \AvisoNavAPI\Idioma  $idioma
-     * @return \Illuminate\Http\Response
+     * @return AvisoNavAPI\Http\Resources\IdiomaResource
      */
     public function show(Idioma $idioma)
     {
@@ -59,30 +47,15 @@ class IdiomaController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \AvisoNavAPI\Idioma  $idioma
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Idioma $idioma)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  AvisoNavAPI\Http\Requests\Idioma\StoreIdioma  $request
      * @param  \AvisoNavAPI\Idioma  $idioma
-     * @return \Illuminate\Http\Response
+     * @return AvisoNavAPI\Http\Resources\IdiomaResource
      */
-    public function update(UpdateIdioma $request, Idioma $idioma)
+    public function update(StoreIdioma $request, Idioma $idioma)
     {
-        $idioma->fill($request->only([
-            'nombre',
-            'alias',
-            'estado',
-        ]));
+        $idioma->fill($request->only(['nombre','alias','estado',]));
 
         if($idioma->isClean()){
             return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
@@ -97,7 +70,7 @@ class IdiomaController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \AvisoNavAPI\Idioma  $idioma
-     * @return \Illuminate\Http\Response
+     * @return AvisoNavAPI\Http\Resources\IdiomaResource
      */
     public function destroy(Idioma $idioma)
     {
