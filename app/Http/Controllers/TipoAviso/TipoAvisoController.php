@@ -6,7 +6,6 @@ use AvisoNavAPI\TipoAviso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\Collection;
 use AvisoNavAPI\Http\Resources\TipoAvisoResource;
 use AvisoNavAPI\Http\Requests\TipoAviso\StoreTipoAviso;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -16,20 +15,20 @@ class TipoAvisoController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\TipoAvisoResource
      */
     public function index()
     {
-        $tiposAviso = TipoAviso::where('parent_id', null)->get();
+        $collection = TipoAviso::where('parent_id', null)->get();
 
-        return TipoAvisoResource::collection($tiposAviso);
+        return TipoAvisoResource::collection($collection);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \AvisoNavAPI\Http\Requests\TipoAviso\StoreTipoAviso  $request
+     * @return \AvisoNavAPI\Http\Resources\TipoAvisoResource
      */
     public function store(StoreTipoAviso $request)
     {        
@@ -57,7 +56,7 @@ class TipoAvisoController extends Controller
      * Display the specified resource.
      *
      * @param  \AvisoNavAPI\TipoAviso  $tipoAviso
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\TipoAvisoResource
      */
     public function show(TipoAviso $tipoAviso)
     {        
@@ -67,14 +66,15 @@ class TipoAvisoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \AvisoNavAPI\Http\Requests\TipoAviso\StoreTipoAviso  $request
      * @param  AvisoNavAPI\TipoAviso    $tipoAviso
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\TipoAvisoResource
      */
     public function update(StoreTipoAviso $request, TipoAviso $tipoAviso)
     {        
         $data = DB::transaction(function () use ($request, $tipoAviso) {
             $collection = collect($request->input('tipoAviso'));
+            $entityHasChange = false;
             
             /*Hacemos una copia de la instancia actual de la coleccion de los subtipoAviso
               que nos servira para hacer la aliminacion*/
@@ -86,8 +86,13 @@ class TipoAvisoController extends Controller
             //Agregamos los datos al registro principal(master)
             $tipoAviso->fill($masterItem);
 
+            //Verificamos si el registro se mantuvo igual o no, es decir, si fue actualizado o no
+            if(!$tipoAviso->isClean()){
+                $entityHasChange = true;
+            }
+
             //Agregamos los datos a cada uno de los subregistros que estan asociados
-            $collection->each(function($subItem) use ($tipoAviso){
+            $collection->each(function($subItem) use ($tipoAviso, &$entityHasChange){
                 if(isset($subItem['id'])){
                     $entity = $tipoAviso->tipoAviso()->where('id', $subItem['id'])->first();
 
@@ -100,8 +105,15 @@ class TipoAvisoController extends Controller
                     }
 
                     $entity->fill($subItem);
+
+                    //Verificamos si el subregistro se mantuvo igual o no, es decir, si fue actualizado o no
+                    if(!$entity->isClean()){                        
+                        $entityHasChange = true;
+                    }
+
                 }else{
                     $entity = TipoAviso::create($subItem);
+                    $entityHasChange = true;
                 }
 
                 $tipoAviso->tipoAviso()->save($entity);
@@ -110,25 +122,34 @@ class TipoAvisoController extends Controller
             
             //Eliminamos los subregistros que si existan en la base de datos pero que no vengan en el request
             $arrayIds = $collection->pluck('id')->toArray();
-            $currentCollection->each(function($entity) use ($arrayIds){
+            $currentCollection->each(function($entity) use ($arrayIds, &$entityHasChange){
                 if(!in_array($entity->id, $arrayIds)){
                     $entity->delete();
+                    $entityHasChange = true;
                 }
             });
+
+            if(!$entityHasChange){
+                return response()->json(['error' => ['title' => 'Debe por lo menos realizar un cambio para actualizar', 'status' => 422]], 422);
+            }
             
             $tipoAviso->save();
 
             return $tipoAviso;
         });
 
-        return new TipoAvisoResource($data);
+        if(!$data instanceof TipoAviso){
+            return $data;
+        }
+
+       return new TipoAvisoResource($data);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  AvisoNavAPI\TipoAviso    $tipoAviso
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\TipoAvisoResource
      */
     public function destroy(Request $request, TipoAviso $tipoAviso)
     {        
