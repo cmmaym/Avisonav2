@@ -21,9 +21,6 @@ class EntidadResource extends JsonResource
             'fecha_creacion'    => $this->created_at->format('Y-m-d'),
             'fecha_edicion'     => $this->updated_at->format('Y-m-d'),
             'estado'            => $this->estado,
-            'links'             => [
-                'self'  =>  route('entidad.show', ['id' => $this->entidad_id]),
-            ],
         ];
     }
 }

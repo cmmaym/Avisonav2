@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 // });
 
 Route::resource('idioma', 'Idioma\IdiomaController');
-Route::resource('entidad', 'Entidad\EntidadController', ['except' => ['create', 'edit']]);
+Route::resource('entidad', 'Entidad\EntidadController');
 Route::resource('tipoAviso', 'TipoAviso\TipoAvisoController', ['except' => ['create', 'edit']]);
 Route::resource('zona', 'Zona\ZonaController', ['except' => ['create', 'edit']]);
 Route::resource('ubicacion', 'Ubicacion\UbicacionController', ['except' => ['create', 'edit']]);

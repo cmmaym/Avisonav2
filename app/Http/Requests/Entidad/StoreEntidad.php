@@ -24,7 +24,7 @@ class StoreEntidad extends FormRequest
     public function rules()
     {
         return [
-            'nombre'    => 'required|max:45',
+            'nombre'    => 'required|max:100',
             'alias'     => 'required|max:45',
             'estado'    => 'required|in:A,I',
         ];
