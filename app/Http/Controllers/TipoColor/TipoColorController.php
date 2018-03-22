@@ -4,10 +4,8 @@ namespace AvisoNavAPI\Http\Controllers\TipoColor;
 
 use AvisoNavAPI\TipoColor;
 use Illuminate\Http\Request;
-use AvisoNavAPI\Consecutivo;
 use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\Collection;
 use AvisoNavAPI\Http\Resources\TipoColorResource;
 use AvisoNavAPI\Http\Requests\TipoColor\StoreTipoColor;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -17,65 +15,48 @@ class TipoColorController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\TipoColorResource
      */
     public function index()
     {
-        $tipoColor = TipoColor::all();
+        $collection = TipoColor::where('parent_id', null)->get();
 
-        return TipoColorResource::collection($tipoColor);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return TipoColorResource::collection($collection);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \AvisoNavAPI\Http\Requests\TipoColor\StoreTipoColor  $request
+     * @return \AvisoNavAPI\Http\Resources\TipoColorResource
      */
     public function store(StoreTipoColor $request)
     {
-        $entity = DB::transaction(function () use ($request) {
-            $consecutivo = Consecutivo::where('nombre', 'tipo_color')->first();
-            $collection = new Collection();
+        $data = DB::transaction(function () use ($request) {
+            $collection = collect($request->input('tipoColor'));
 
-            foreach($request->get('tipoColor') as $item){
-                $entity = new TipoColor();
-        
-                $entity->cod_ide = $consecutivo->numero;
-                $entity->color = $item['color'];
-                $entity->alias = $item['alias'];
-                $entity->estado = $item['estado'];
-                $entity->idioma_id = $item['idioma_id'];
+            //Sacamos el primer elemento de la coleccion el cual sera el registro principal(master)
+            $masterItem = $collection->shift();
 
-                $entity->save();
+            //Creamos la instancia del registro principal(master)
+            $entity = TipoColor::create($masterItem);
 
-                $collection->push($entity);
-            }
+            //Le asignamos al registro principal los otros subregistros que tendra asociado
+            $collection->each(function($subItem) use ($entity){
+                $entity->tipoColor()->create($subItem);
+            });
             
-            $consecutivo->numero = $consecutivo->numero + 1;
-            $consecutivo->save();
-
-            return $collection;
+            return $entity;
         });
-
-        return TipoColorResource::collection($entity);
+        
+        return new TipoColorResource($data);        
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \AvisoNavAPI\TipoColor  $tipoColor
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\TipoColorResource
      */
     public function show(TipoColor $tipoColor)
     {
@@ -83,37 +64,39 @@ class TipoColorController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \AvisoNavAPI\TipoColor  $tipoColor
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TipoColor $tipoColor)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string $cod_ide
-     * @return \Illuminate\Http\Response
+     * @param  \AvisoNavAPI\Http\Requests\TipoColor\StoreTipoColor  $request
+     * @param  \AvisoNavAPI\TipoColor $tipoColor
+     * @return \AvisoNavAPI\Http\Resources\TipoColorResource
      */
-    public function update(StoreTipoColor $request, $cod_ide)
+    public function update(StoreTipoColor $request, TipoColor $tipoColor)
     {
-        $data = DB::transaction(function () use ($request, $cod_ide) {
+        $data = DB::transaction(function () use ($request, $tipoColor) {
+            $collection = collect($request->input('tipoColor'));
+            $entityHasChange = false;
             
-            $currentCollection = TipoColor::where('cod_ide', $cod_ide)->get();
-            $newCollection = new Collection();
-            $collectionHasChange = false;
+            /*Hacemos una copia de la instancia actual de la coleccion de los subtipoAviso
+              que nos servira para hacer la aliminacion*/
+            $currentCollection =  $tipoColor->tipoColor()->get()->toBase();
 
-            //Actualizamos o agregamos un nuevo tipo color
-            foreach($request->input('tipoColor') as $item){
-                $entity = null;
-                if(isset($item['id'])){
-                    $entity = $currentCollection->where('id', $item['id'])->first();
+            //Sacamos el primer elemento de la coleccion el cual sera el registro principal(master)
+            $masterItem = $collection->shift();
 
+            //Agregamos los datos al registro principal(master)
+            $tipoColor->fill($masterItem);
+
+            //Verificamos si el registro se mantuvo igual o no, es decir, si fue actualizado o no
+            if(!$tipoColor->isClean()){
+                $entityHasChange = true;
+            }
+
+            //Agregamos los datos a cada uno de los subregistros que estan asociados
+            $collection->each(function($subItem) use ($tipoColor, &$entityHasChange){
+                if(isset($subItem['id'])){
+                    $entity = $tipoColor->tipoColor()->where('id', $subItem['id'])->first();
+
+                    //Si en el request viene un id que no exite lanzamos una excepcion
                     if(!$entity){
                         $e = new ModelNotFoundException();
                         $e->setModel('TipoColor');
@@ -121,60 +104,57 @@ class TipoColorController extends Controller
                         throw $e;
                     }
 
-                    $entity->fill($item);
-                    
-                    if(!$entity->isClean()){
-                        $collectionHasChange = true;
-                    }
-                    
-                }else{
-                    $entity = new TipoColor();
-                    $entity->color = $item['color'];
-                    $entity->alias = $item['alias'];
-                    $entity->estado = $item['estado'];
-                    $entity->idioma_id = $item['idioma_id'];
-                    $entity->cod_ide = $cod_ide;
-                    $collectionHasChange = true;
-                }
-                
-                $newCollection->push($entity);
-                $entity->save();
-            }
+                    $entity->fill($subItem);
 
-            //Eliminamos un tipo color si no esta presentse en el el array de tipo color que viene en el request            
-            $currentCollection->each(function($entity) use ($request, &$collectionHasChange){
-                if(!in_array($entity->id, $request->input('tipoColor.*.id'))){
+                    //Verificamos si el subregistro se mantuvo igual o no, es decir, si fue actualizado o no
+                    if(!$entity->isClean()){                        
+                        $entityHasChange = true;
+                    }
+
+                }else{
+                    $entity = TipoColor::create($subItem);
+                    $entityHasChange = true;
+                }
+
+                $tipoColor->tipoColor()->save($entity);
+            });
+
+            
+            //Eliminamos los subregistros que si existan en la base de datos pero que no vengan en el request
+            $arrayIds = $collection->pluck('id')->toArray();
+            $currentCollection->each(function($entity) use ($arrayIds, &$entityHasChange){
+                if(!in_array($entity->id, $arrayIds)){
                     $entity->delete();
-                    $collectionHasChange = true;
+                    $entityHasChange = true;
                 }
             });
 
-            if(!$collectionHasChange){
-                return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+            if(!$entityHasChange){
+                return response()->json(['error' => ['title' => 'Debe por lo menos realizar un cambio para actualizar', 'status' => 422]], 422);
             }
+            
+            $tipoColor->save();
 
-            return $newCollection;
+            return $tipoColor;
         });
 
-        if(!$data instanceof Collection){
+        if(!$data instanceof TipoColor){
             return $data;
         }
 
-        return TipoColorResource::collection($data);
+        return new TipoColorResource($data);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  string $cod_ide
-     * @return \Illuminate\Http\Response
+     * @param  \AvisoNavAPI\TipoColor $tipoColor
+     * @return \AvisoNavAPI\Http\Resources\TipoColorResource
      */
-    public function destroy($cod_ide)
+    public function destroy(TipoColor $tipoColor)
     {
-        $currentCollection = TipoColor::where('cod_ide', $cod_ide)->get();
+        $tipoColor->delete();
 
-        $currentCollection->each(function($entity){
-                $entity->delete();
-        });
+        return new TipoColorResource($tipoColor);
     }
 }

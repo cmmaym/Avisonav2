@@ -20,9 +20,14 @@ class CreateTipoColorTable extends Migration
             $table->timestamps();
             $table->enum('estado', array('A','I'))->comment('Estado del tipo color. Puede ser Activo, Inactivo');
             $table->integer('idioma_id')->unsigned();
+            $table->integer('parent_id')->unsigned()->nullable();
 
             $table->foreign('idioma_id')
                   ->references('id')->on('idioma')
+                  ->onDelete('cascade');
+
+            $table->foreign('parent_id')
+                  ->references('id')->on('tipo_color')
                   ->onDelete('cascade');
 
             $table->unique(['color', 'alias', 'idioma_id'], 'color_alias_idioma_UNIQUE');

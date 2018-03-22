@@ -27,7 +27,7 @@ class StoreTipoColor extends FormRequest
             'tipoColor.*.color'     => 'required|max:100',
             'tipoColor.*.alias'     =>  'required|max:45',
             'tipoColor.*.estado'    => 'required|required|in:A,I',
-            'tipoColor.*.idioma_id' => 'required|exists:idioma',
+            'tipoColor.*.idioma_id' => 'required|exists:idioma,id',
             'tipoColor'             => 'idioma_duplicate',
         ];
     }

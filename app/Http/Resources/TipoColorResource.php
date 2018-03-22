@@ -4,6 +4,7 @@ namespace AvisoNavAPI\Http\Resources;
 
 use AvisoNavAPI\Http\Resources\IdiomaResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use AvisoNavAPI\Http\Resources\TipoAvisoResource;
 
 class TipoColorResource extends JsonResource
 {
@@ -15,6 +16,7 @@ class TipoColorResource extends JsonResource
      */
     public function toArray($request)
     {
+        
         return [
             'id'                =>  $this->id,
             'color'             =>  $this->color,
@@ -23,6 +25,7 @@ class TipoColorResource extends JsonResource
             'fecha_edicion'     =>  $this->updated_at->format('Y-m-d'),
             'estado'            =>  $this->estado,
             'idioma'            =>  new IdiomaResource($this->idioma()->first()),
+            'sub_tipo_color'    =>  TipoColorResource::collection($this->tipoColor()->get()),
         ];
     }
 }
