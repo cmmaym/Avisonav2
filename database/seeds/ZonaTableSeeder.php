@@ -20,6 +20,7 @@ class ZonaTableSeeder extends Seeder
 
             if(($key+1) % 2 == 0){
                 $item->idioma_id = 2;
+                $item->parent_id = $cod_ide;
             }            
             
             $item->save();

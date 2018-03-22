@@ -2,6 +2,7 @@
 
 namespace AvisoNavAPI\Http\Resources;
 
+use AvisoNavAPI\Http\Resources\ZonaResource;
 use AvisoNavAPI\Http\Resources\IdiomaResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,12 +19,12 @@ class ZonaResource extends JsonResource
         return [
             'id'                =>  $this->id,
             'nombre'            =>  $this->nombre,
-            'alias'             =>  $this->alias,
-            'cod_ide'           =>  $this->cod_ide,
+            'alias'             =>  $this->alias,            
             'fecha_creacion'    =>  $this->created_at->format('Y-m-d'),
             'fecha_edicion'     => $this->updated_at->format('Y-m-d'),
             'estado'            => $this->estado,
             'idioma'            => new IdiomaResource($this->idioma()->first()),
+            'sub_zona'          => ZonaResource::collection($this->zona()->get()),
         ];
     }
 }

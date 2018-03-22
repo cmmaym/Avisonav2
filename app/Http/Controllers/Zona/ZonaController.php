@@ -4,7 +4,6 @@ namespace AvisoNavAPI\Http\Controllers\Zona;
 
 use AvisoNavAPI\Zona;
 use Illuminate\Http\Request;
-use AvisoNavAPI\Consecutivo;
 use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\ZonaResource;
@@ -17,65 +16,48 @@ class ZonaController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\ZonaResource
      */
     public function index()
     {
-        $zona = Zona::all();
+        $collection = Zona::where('parent_id', null)->get();        
 
-        return ZonaResource::collection($zona);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return ZonaResource::collection($collection);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \AvisoNavAPI\Http\Requests\Zona\StoreZona  $request
+     * @return \AvisoNavAPI\Http\Resources\ZonaResource
      */
     public function store(StoreZona $request)
-    {
-        $entity = DB::transaction(function () use ($request) {
-            $consecutivo = Consecutivo::where('nombre', 'zona')->first();
-            $collection = new Collection();
+    {        
+        $data = DB::transaction(function () use ($request) {
+            $collection = collect($request->input('zona'));
 
-            foreach($request->get('zona') as $item){
-                $entity = new Zona();
-        
-                $entity->cod_ide = $consecutivo->numero;
-                $entity->nombre = $item['nombre'];
-                $entity->alias = $item['alias'];
-                $entity->estado = $item['estado'];
-                $entity->idioma_id = $item['idioma_id'];
+            //Sacamos el primer elemento de la coleccion el cual sera el registro principal(master)
+            $masterItem = $collection->shift();
 
-                $entity->save();
+            //Creamos la instancia del registro principal(master)
+            $entity = Zona::create($masterItem);
 
-                $collection->push($entity);
-            }
+            //Le asignamos al registro principal los otros subregistros que tendra asociado
+            $collection->each(function($subItem) use ($entity){
+                $entity->zona()->create($subItem);
+            });
             
-            $consecutivo->numero = $consecutivo->numero + 1;
-            $consecutivo->save();
-
-            return $collection;
+            return $entity;
         });
 
-        return ZonaResource::collection($entity);
+        return new ZonaResource($data);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \AvisoNavAPI\Zona  $zona
-     * @return \Illuminate\Http\Response
+     * @return \AvisoNavAPI\Http\Resources\ZonaResource
      */
     public function show(Zona $zona)
     {
@@ -83,98 +65,97 @@ class ZonaController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \AvisoNavAPI\Zona  $zona
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Zona $zona)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string $cod_ide
-     * @return \Illuminate\Http\Response
+     * @param  \AvisoNavAPI\Http\Requests\Zona\StoreZona  $request
+     * @param  \AvisoNavAPI\Zona  $zona
+     * @return \AvisoNavAPI\Http\Resources\ZonaResource
      */
-    public function update(StoreZona $request, $cod_ide)
+    public function update(StoreZona $request, Zona $zona)
     {
-        $data = DB::transaction(function () use ($request, $cod_ide) {
+        $data = DB::transaction(function () use ($request, $zona) {
+            $collection = collect($request->input('zona'));
+            $entityHasChange = false;
             
-            $currentCollection = Zona::where('cod_ide', $cod_ide)->get();
-            $newCollection = new Collection();
-            $collectionHasChange = false;
+            /*Hacemos una copia de la instancia actual de la coleccion de los subtipoAviso
+              que nos servira para hacer la aliminacion*/
+              $currentCollection =  $zona->zona()->get()->toBase();
 
-            //Actualizamos o agregamos una nueva zona
-            foreach($request->input('zona') as $item){
-                $entity = null;
-                if(isset($item['id'])){
-                    $entity = $currentCollection->where('id', $item['id'])->first();
+            //Sacamos el primer elemento de la coleccion el cual sera el registro principal(master)
+            $masterItem = $collection->shift();
+            
+            //Agregamos los datos al registro principal(master)
+            $zona->fill($masterItem);
 
-                    if(!$entity){                        
+            //Verificamos si el registro se mantuvo igual o no, es decir, si fue actualizado o no
+            if(!$zona->isClean()){
+                $entityHasChange = true;
+            }
+
+            //Agregamos los datos a cada uno de los subregistros que estan asociados
+            $collection->each(function($subItem) use ($zona, &$entityHasChange){
+                if(isset($subItem['id'])){
+                    $entity = $zona->zona()->where('id', $subItem['id'])->first();
+
+                    //Si en el request viene un id que no exite lanzamos una excepcion
+                    if(!$entity){
                         $e = new ModelNotFoundException();
                         $e->setModel('Zona');
 
                         throw $e;
                     }
 
-                    $entity->fill($item);
-                    
-                    if(!$entity->isClean()){
-                        $collectionHasChange = true;
-                    }
-                    
-                }else{
-                    $entity = new Zona();
-                    $entity->nombre = $item['nombre'];
-                    $entity->alias = $item['alias'];
-                    $entity->estado = $item['estado'];
-                    $entity->idioma_id = $item['idioma_id'];                    
-                    $collectionHasChange = true;
-                }
-                
-                $newCollection->push($entity);
-                $entity->save();
-            }
+                    $entity->fill($subItem);
 
-            //Eliminamos una zona si no esta presentse en el el array de zonas que viene en el request            
-            $currentCollection->each(function($entity) use ($request, &$collectionHasChange){
-                if(!in_array($entity->id, $request->input('zona.*.id'))){
-                    $entity->delete();
-                    $collectionHasChange = true;
+                    //Verificamos si el subregistro se mantuvo igual o no, es decir, si fue actualizado o no
+                    if(!$entity->isClean()){                        
+                        $entityHasChange = true;
+                    }
+
+                }else{
+                    $entity = Zona::create($subItem);
+                    $entityHasChange = true;
                 }
+
+                $zona->zona()->save($entity);
             });
 
             
-            if(!$collectionHasChange){
-                return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
-            }
+            //Eliminamos los subregistros que si existan en la base de datos pero que no vengan en el request
+            $arrayIds = $collection->pluck('id')->toArray();
+            $currentCollection->each(function($entity) use ($arrayIds, &$entityHasChange){
+                if(!in_array($entity->id, $arrayIds)){
+                    $entity->delete();
+                    $entityHasChange = true;
+                }
+            });
 
-            return $newCollection;
+            if(!$entityHasChange){
+                return response()->json(['error' => ['title' => 'Debe por lo menos realizar un cambio para actualizar', 'status' => 422]], 422);
+            }
+            
+            $zona->save();
+
+            return $zona;
         });
 
-        if(!$data instanceof Collection){
+        if(!$data instanceof Zona){
             return $data;
         }
 
-        return ZonaResource::collection($data);
+        return new ZonaResource($data);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  string $cod_ide
-     * @return \Illuminate\Http\Response
+     * @param  \AvisoNavAPI\Zona  $zona
+     * @return \AvisoNavAPI\Http\Resources\ZonaResource
      */
-    public function destroy($cod_ide)
+    public function destroy(Zona $zona)
     {
-        $currentCollection = Zona::where('cod_ide', $cod_ide)->get();
+        $zona->delete();
 
-        $currentCollection->each(function($entity){
-                $entity->delete();
-        });
+        return new ZonaResource($zona);
     }
 }

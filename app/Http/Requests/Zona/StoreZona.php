@@ -27,7 +27,7 @@ class StoreZona extends FormRequest
             'zona.*.nombre'    => 'required|max:100',
             'zona.*.alias'    =>  'required|max:45',
             'zona.*.estado'    => 'required|required|in:A,I',
-            'zona.*.idioma_id' => 'required|exists:idioma',
+            'zona.*.idioma_id' => 'required|exists:idioma,id',
             'zona'             => 'idioma_duplicate',
         ];
     }

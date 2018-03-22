@@ -20,7 +20,7 @@ use Illuminate\Http\Request;
 Route::resource('idioma', 'Idioma\IdiomaController');
 Route::resource('entidad', 'Entidad\EntidadController');
 Route::resource('tipoAviso', 'TipoAviso\TipoAvisoController');
-Route::resource('zona', 'Zona\ZonaController', ['except' => ['create', 'edit']]);
+Route::resource('zona', 'Zona\ZonaController');
 Route::resource('ubicacion', 'Ubicacion\UbicacionController', ['except' => ['create', 'edit']]);
 Route::resource('tipoColor', 'TipoColor\TipoColorController', ['except' => ['create', 'edit']]);
 Route::resource('tipoLuz', 'TipoLuz\TipoLuzController', ['except' => ['create', 'edit']]);
