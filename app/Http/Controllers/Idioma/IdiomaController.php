@@ -30,7 +30,7 @@ class IdiomaController extends Controller
      */
     public function store(StoreIdioma $request)
     {
-        $idioma = Idioma::create($request->all());
+        $idioma = Idioma::create($request->only(['nombre','alias','estado']));
 
         return new IdiomaResource($idioma);
     }
@@ -55,7 +55,7 @@ class IdiomaController extends Controller
      */
     public function update(StoreIdioma $request, Idioma $idioma)
     {
-        $idioma->fill($request->only(['nombre','alias','estado',]));
+        $idioma->fill($request->only(['nombre','alias','estado']));
 
         if($idioma->isClean()){
             return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
