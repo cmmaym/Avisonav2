@@ -3,11 +3,9 @@
 namespace AvisoNavAPI\Http\Controllers\Zona;
 
 use AvisoNavAPI\Zona;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\ZonaResource;
-use Illuminate\Database\Eloquent\Collection;
 use AvisoNavAPI\Http\Requests\Zona\StoreZona;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

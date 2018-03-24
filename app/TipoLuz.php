@@ -2,8 +2,6 @@
 
 namespace AvisoNavAPI;
 
-use AvisoNavAPI\Idioma;
-use AvisoNavAPI\TipoLuz;
 use Illuminate\Database\Eloquent\Model;
 
 class TipoLuz extends Model

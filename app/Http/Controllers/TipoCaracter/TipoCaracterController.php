@@ -2,7 +2,6 @@
 
 namespace AvisoNavAPI\Http\Controllers\TipoCaracter;
 
-use Illuminate\Http\Request;
 use AvisoNavAPI\TipoCaracter;
 use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;

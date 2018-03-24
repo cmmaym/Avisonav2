@@ -2,8 +2,6 @@
 
 namespace AvisoNavAPI;
 
-use AvisoNavAPI\Idioma;
-use AvisoNavAPI\TipoAviso;
 use Illuminate\Database\Eloquent\Model;
 
 class TipoAviso extends Model

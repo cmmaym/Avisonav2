@@ -2,8 +2,6 @@
 
 namespace AvisoNavAPI\Http\Resources;
 
-use AvisoNavAPI\Http\Resources\ZonaResource;
-use AvisoNavAPI\Http\Resources\IdiomaResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ZonaResource extends JsonResource

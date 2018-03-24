@@ -2,9 +2,7 @@
 
 namespace AvisoNavAPI\Http\Resources;
 
-use AvisoNavAPI\Http\Resources\IdiomaResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use AvisoNavAPI\Http\Resources\TipoAvisoResource;
 
 class TipoColorResource extends JsonResource
 {

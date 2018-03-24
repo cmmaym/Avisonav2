@@ -2,7 +2,6 @@
 
 namespace AvisoNavAPI;
 
-use AvisoNavAPI\Zona;
 use Illuminate\Database\Eloquent\Model;
 
 class Ubicacion extends Model

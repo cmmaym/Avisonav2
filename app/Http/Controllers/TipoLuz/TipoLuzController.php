@@ -3,7 +3,6 @@
 namespace AvisoNavAPI\Http\Controllers\TipoLuz;
 
 use AvisoNavAPI\TipoLuz;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\TipoLuzResource;

@@ -3,17 +3,16 @@
 namespace AvisoNavAPI\Http\Controllers\Idioma;
 
 use AvisoNavAPI\Idioma;
-use Illuminate\Http\Request;
-use AvisoNavAPI\Http\Requests\Idioma\StoreIdioma;
+use \AvisoNavAPI\Http\Requests\Idioma\StoreIdioma;
 use AvisoNavAPI\Http\Controllers\Controller;
-use AvisoNavAPI\Http\Resources\IdiomaResource;
+use \AvisoNavAPI\Http\Resources\IdiomaResource;
 
 class IdiomaController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return AvisoNavAPI\Http\Resources\IdiomaResource
+     * @return \AvisoNavAPI\Http\Resources\IdiomaResource
      */
     public function index()
     {
@@ -25,8 +24,8 @@ class IdiomaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  AvisoNavAPI\Http\Requests\Idioma\StoreIdioma  $request
-     * @return AvisoNavAPI\Http\Resources\IdiomaResource
+     * @param  \AvisoNavAPI\Http\Requests\Idioma\StoreIdioma  $request
+     * @return \AvisoNavAPI\Http\Resources\IdiomaResource
      */
     public function store(StoreIdioma $request)
     {
@@ -39,7 +38,7 @@ class IdiomaController extends Controller
      * Display the specified resource.
      *
      * @param  \AvisoNavAPI\Idioma  $idioma
-     * @return AvisoNavAPI\Http\Resources\IdiomaResource
+     * @return \AvisoNavAPI\Http\Resources\IdiomaResource
      */
     public function show(Idioma $idioma)
     {
@@ -49,9 +48,9 @@ class IdiomaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  AvisoNavAPI\Http\Requests\Idioma\StoreIdioma  $request
+     * @param  \AvisoNavAPI\Http\Requests\Idioma\StoreIdioma  $request
      * @param  \AvisoNavAPI\Idioma  $idioma
-     * @return AvisoNavAPI\Http\Resources\IdiomaResource
+     * @return \AvisoNavAPI\Http\Resources\IdiomaResource
      */
     public function update(StoreIdioma $request, Idioma $idioma)
     {
@@ -70,7 +69,7 @@ class IdiomaController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \AvisoNavAPI\Idioma  $idioma
-     * @return AvisoNavAPI\Http\Resources\IdiomaResource
+     * @return \AvisoNavAPI\Http\Resources\IdiomaResource
      */
     public function destroy(Idioma $idioma)
     {

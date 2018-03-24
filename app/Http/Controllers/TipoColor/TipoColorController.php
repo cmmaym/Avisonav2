@@ -3,7 +3,6 @@
 namespace AvisoNavAPI\Http\Controllers\TipoColor;
 
 use AvisoNavAPI\TipoColor;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\TipoColorResource;

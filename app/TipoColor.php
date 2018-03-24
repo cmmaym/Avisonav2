@@ -2,8 +2,6 @@
 
 namespace AvisoNavAPI;
 
-use AvisoNavAPI\Idioma;
-use AvisoNavAPI\TipoColor;
 use Illuminate\Database\Eloquent\Model;
 
 class TipoColor extends Model

@@ -2,7 +2,6 @@
 
 namespace AvisoNavAPI\Http\Resources;
 
-use AvisoNavAPI\Http\Resources\IdiomaResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TipoLuzResource extends JsonResource

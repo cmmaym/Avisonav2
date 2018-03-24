@@ -67,7 +67,7 @@ class TipoAvisoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \AvisoNavAPI\Http\Requests\TipoAviso\StoreTipoAviso  $request
-     * @param  AvisoNavAPI\TipoAviso    $tipoAviso
+     * @param  \AvisoNavAPI\TipoAviso    $tipoAviso
      * @return \AvisoNavAPI\Http\Resources\TipoAvisoResource
      */
     public function update(StoreTipoAviso $request, TipoAviso $tipoAviso)
@@ -148,7 +148,7 @@ class TipoAvisoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  AvisoNavAPI\TipoAviso    $tipoAviso
+     * @param  \AvisoNavAPI\TipoAviso    $tipoAviso
      * @return \AvisoNavAPI\Http\Resources\TipoAvisoResource
      */
     public function destroy(Request $request, TipoAviso $tipoAviso)

@@ -2,7 +2,6 @@
 
 namespace AvisoNavAPI;
 
-use AvisoNavAPI\Idioma;
 use Illuminate\Database\Eloquent\Model;
 
 class Zona extends Model

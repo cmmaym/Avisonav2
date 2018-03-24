@@ -3,7 +3,6 @@
 namespace AvisoNavAPI\Http\Controllers\Ubicacion;
 
 use AvisoNavAPI\Ubicacion;
-use Illuminate\Http\Request;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\UbicacionResource;
 use AvisoNavAPI\Http\Requests\Ubicacion\StoreUbicacion;

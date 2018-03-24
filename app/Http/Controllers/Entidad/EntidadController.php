@@ -3,7 +3,6 @@
 namespace AvisoNavAPI\Http\Controllers\Entidad;
 
 use AvisoNavAPI\Entidad;
-use Illuminate\Http\Request;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\EntidadResource;
 use AvisoNavAPI\Http\Requests\Entidad\StoreEntidad;
