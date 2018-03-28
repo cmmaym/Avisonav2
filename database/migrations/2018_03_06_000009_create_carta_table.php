@@ -20,6 +20,8 @@ class CreateCartaTable extends Migration
             $table->year('ano')->comment('Año de publicacion de la carta');            
             $table->timestamps();
             $table->enum('estado', array('A','I'))->default('A')->comment('Estado del registro. Puede ser Activo, Inactivo');
+            
+            $table->unique(['numero', 'edicion', 'ano'], 'numero_edicion_ano_UNIQUE');
         });
     }
 

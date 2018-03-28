@@ -26,3 +26,4 @@ Route::resource('ubicacion', 'Ubicacion\UbicacionController');
 Route::resource('tipoColor', 'TipoColor\TipoColorController');
 Route::resource('tipoLuz', 'TipoLuz\TipoLuzController');
 Route::resource('tipoCaracter', 'TipoCaracter\TipoCaracterController');
+Route::resource('aviso', 'Aviso\AvisoController');
