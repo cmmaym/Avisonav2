@@ -2,6 +2,7 @@
 
 namespace AvisoNavAPI;
 
+use AvisoNavAPI\AvisoDetalle;
 use Illuminate\Database\Eloquent\Model;
 
 class Aviso extends Model
@@ -23,4 +24,9 @@ class Aviso extends Model
     public function carta(){
         return $this->belongsToMany(Carta::class)->withTimestamps();
     }
+
+    public function avisoDetalle(){
+        return $this->hasMany(AvisoDetalle::class, 'aviso_id');
+    }
+
 }

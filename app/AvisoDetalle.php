@@ -2,13 +2,14 @@
 
 namespace AvisoNavAPI;
 
+use AvisoNavAPI\Aviso;
 use Illuminate\Database\Eloquent\Model;
 
 class AvisoDetalle extends Model
 {
     protected $table        = 'aviso_detalle';
     protected $fillable     = [
-        'aviso_id',
+        //'aviso_id',
         'observacion',
         'estado',
         'tipo_aviso_id',
@@ -26,5 +27,9 @@ class AvisoDetalle extends Model
 
     public function idioma(){
         return $this->hasMany(Idioma::class, 'id', 'idioma_id');
+    }
+
+    public function aviso(){
+        return $this->belongsTo(Aviso::class);
     }
 }

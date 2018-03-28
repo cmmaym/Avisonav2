@@ -3,9 +3,10 @@
 namespace AvisoNavAPI\Http\Controllers\Aviso;
 
 use AvisoNavAPI\Aviso;
-use AvisoNavAPI\Http\Resources\AvisoResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Resources\AvisoResource;
 
 class AvisoController extends Controller
 {
@@ -16,12 +17,11 @@ class AvisoController extends Controller
      */
     public function index()
     {
-        $collection = Aviso::where('idioma_id', 2)
-                            ->with('tipoAviso.idioma')
-                            //->where('idioma_id', 2)
-                            ->get();
+        $collection = Aviso::with('avisoDetalle.tipoAviso')
+                           ->with('carta')
+                           ->get();
 
-        return AvisoResource::collection($collection);
+       return AvisoResource::collection($collection);
     }
 
     /**
@@ -32,7 +32,21 @@ class AvisoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    //     $data = DB::transaction(function () use ($request) {
+    //         $collection = collect($request->input('ayuda'));
+
+    //         $aviso = Aviso::create($request->only(['num_aviso', 'fecha', 'periodo', 'entidad_id']));            
+    //         $aviso->avisoDetalle()->create($request->only(['observacion', 'tipo_aviso_id', 'tipo_caracter_id', 'idioma_id']));
+
+    //         // //Le asignamos al registro principal los otros subregistros que tendra asociado
+    //         // $collection->each(function($subItem) use ($entity){
+    //         //     $entity->tipoAviso()->create($subItem);
+    //         // });
+            
+    //         return $aviso;
+    //     });
+        
+        dd($request->all());
     }
 
     /**

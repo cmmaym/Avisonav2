@@ -72,16 +72,16 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => $exception->errors(), 'status' => 422], 422);
         }
         
-        if($exception instanceof QueryException){
-            $code = $exception->errorInfo[1];
+        // if($exception instanceof QueryException){
+        //     $code = $exception->errorInfo[1];
 
-            switch($code){
-                case 1062: 
-                    return response()->json(['error' => ['title' => 'No se puede ingresar el registro porque ya existe uno igual'], 'status' => 409], 409);
-                default:
-                    return response()->json(['error' => ['title' => 'No se pudo realizar la operación'], 'status' => 409], 409);
-            }
-        }
+        //     switch($code){
+        //         case 1062: 
+        //             return response()->json(['error' => ['title' => 'No se puede ingresar el registro porque ya existe uno igual'], 'status' => 409], 409);
+        //         default:
+        //             return response()->json(['error' => ['title' => 'No se pudo realizar la operación'], 'status' => 409], 409);
+        //     }
+        // }
 
         if($exception instanceof HttpException){
             return response()->json(['error' => ['title' => 'Ha ocurrido un error inesperado', 'status' => 500]], 500);

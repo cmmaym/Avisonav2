@@ -20,7 +20,7 @@ class CreateAvisoTable extends Migration
             $table->timestamps();
             $table->string('periodo',45)->comment('Periodo en el que se registro el aviso');
             $table->enum('estado',array('A','I'))->default('A')->comment('Estado del aviso. Puede ser Activo, Inactivo');            
-            $table->integer('user_id')->unsigned()->comment('Usuario que creo o actualizo el regitro');
+            $table->integer('user_id')->unsigned()->nullable()->comment('Usuario que creo o actualizo el regitro');
             $table->integer('entidad_id')->unsigned();
 
             $table->foreign('entidad_id')

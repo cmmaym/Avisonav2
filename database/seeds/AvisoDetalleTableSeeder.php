@@ -15,7 +15,7 @@ class AvisoDetalleTableSeeder extends Seeder
         factory(AvisoNavAPI\AvisoDetalle::class, 4)->create()->each(function ($item, $key) use (&$num){
 
             if($key % 2 == 0){
-                $item->aviso_id = $item->id;
+                //$item->aviso_id = $item->id;
                 $num = $item->id;
             }
 
