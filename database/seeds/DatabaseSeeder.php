@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         DB::statement('TRUNCATE TABLE aviso;');
         DB::statement('TRUNCATE TABLE aviso_detalle;');
         DB::statement('TRUNCATE TABLE ayuda;');
+        DB::statement('TRUNCATE TABLE aviso_carta;');
 
         // $this->call(UsersTableSeeder::class);
         $this->call(IdiomaTableSeeder::class);
@@ -39,6 +40,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AvisoTableSeeder::class);
         $this->call(AvisoDetalleTableSeeder::class);
         $this->call(AyudaTableSeeder::class);
+        $this->call(AvisoCartaTableSeeder::class);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

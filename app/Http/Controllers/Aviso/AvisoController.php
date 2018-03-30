@@ -3,6 +3,8 @@
 namespace AvisoNavAPI\Http\Controllers\Aviso;
 
 use AvisoNavAPI\Aviso;
+use AvisoNavAPI\AvisoDetalle;
+use AvisoNavAPI\Http\Requests\Aviso\StoreAviso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
@@ -17,9 +19,14 @@ class AvisoController extends Controller
      */
     public function index()
     {
-        $collection = Aviso::with('avisoDetalle.tipoAviso')
-                           ->with('carta')
-                           ->get();
+        $collection = Aviso::with([
+                        'entidad',
+                        'avisoDetalle.tipoAviso',
+                        'avisoDetalle.tipoCaracter',
+                        'avisoDetalle.idioma',
+                        'carta'
+                    ])
+                    ->get();
 
        return AvisoResource::collection($collection);
     }
@@ -30,23 +37,38 @@ class AvisoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAviso $request)
     {
-    //     $data = DB::transaction(function () use ($request) {
-    //         $collection = collect($request->input('ayuda'));
+         $data = DB::transaction(function () use ($request) {
 
-    //         $aviso = Aviso::create($request->only(['num_aviso', 'fecha', 'periodo', 'entidad_id']));            
-    //         $aviso->avisoDetalle()->create($request->only(['observacion', 'tipo_aviso_id', 'tipo_caracter_id', 'idioma_id']));
+             //Creamos el encabezado del aviso
+             $entity = Aviso::create($request->only(['num_aviso', 'fecha', 'periodo', 'entidad_id']));
 
-    //         // //Le asignamos al registro principal los otros subregistros que tendra asociado
-    //         // $collection->each(function($subItem) use ($entity){
-    //         //     $entity->tipoAviso()->create($subItem);
-    //         // });
-            
-    //         return $aviso;
-    //     });
-        
-        dd($request->all());
+             $collection = collect($request->input('aviso'));
+
+             //Creamos una coleccion de AvisoDetalle
+             $avisoDetalleCollection = $collection->map(function($item){
+                return new AvisoDetalle($item);
+             });
+
+             $ayudaCollection = collect($request->input('ayuda'));
+
+             //Transformamos la coleccion de ayudas en un array de la siguiente forma:
+             //[(id de la ayuda) => ['ayuda_version' => (numero de la version)]]
+             //para porder almacenarlas en la relacion de muchos a muchos usando el metodo sync
+             $ayudaData = $ayudaCollection->mapWithKeys(function ($item) {
+                 return [$item['id'] => ['ayuda_version' => $item['version']]];
+             });
+
+             $entity->avisoDetalle()->saveMany($avisoDetalleCollection);
+             $entity->carta()->sync($request->input('carta'));
+             $entity->ayuda()->sync($ayudaData);
+
+             return $entity;
+         });
+
+        return new AvisoResource($data);
+
     }
 
     /**
@@ -57,7 +79,7 @@ class AvisoController extends Controller
      */
     public function show(Aviso $aviso)
     {
-        //
+        return new AvisoResource($aviso);
     }
 
     /**
@@ -67,9 +89,57 @@ class AvisoController extends Controller
      * @param  \AvisoNavAPI\Aviso  $aviso
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Aviso $aviso)
+    public function update(StoreAviso $request, Aviso $aviso)
     {
-        //
+        $data = DB::transaction(function () use ($request, $aviso) {
+
+            $entityHasChange = false;
+
+            $entity = $aviso->fill($request->only(['num_aviso', 'fecha', 'periodo', 'entidad_id']));
+
+            //Verificamos si el registro se mantuvo igual o no, es decir, si fue actualizado o no
+            if(!$entity->isClean()){
+                $entityHasChange = true;
+            }
+
+            $collection = collect($request->input('aviso'));
+            $collection->each(function($item) use (&$entityHasChange){
+                $entity = AvisoDetalle::find($item['id']);
+                $entity->fill($item);
+
+                if(!$entity->isClean()){
+                    $entityHasChange = true;
+                }
+
+                $entity->save();
+            });
+
+           $ayudaCollection = collect($request->input('ayuda'));
+
+            //Transformamos la coleccion de ayudas en un array de la siguiente forma:
+            //[(id de la ayuda) => ['ayuda_version' => (numero de la version)]]
+            //para porder almacenarlas en la relacion de muchos a muchos usando el metodo sync
+            $ayudaData = $ayudaCollection->mapWithKeys(function ($item) {
+                return [$item['id'] => ['ayuda_version' => $item['version']]];
+            });
+
+            $entity->carta()->sync($request->input('carta'));
+            $entity->ayuda()->sync($ayudaData);
+
+            $entity->save();
+
+            if(!$entityHasChange){
+                return response()->json(['error' => ['title' => 'Debe por lo menos realizar un cambio para actualizar', 'status' => 422]], 422);
+            }
+
+            return $entity;
+        });
+
+        if(!$data instanceof Aviso){
+            return $data;
+        }
+
+        return new AvisoResource($data);
     }
 
     /**
@@ -80,6 +150,8 @@ class AvisoController extends Controller
      */
     public function destroy(Aviso $aviso)
     {
-        //
+        $aviso->delete();
+
+        return new AvisoResource($aviso);
     }
 }

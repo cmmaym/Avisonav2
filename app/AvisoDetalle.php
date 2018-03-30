@@ -9,24 +9,22 @@ class AvisoDetalle extends Model
 {
     protected $table        = 'aviso_detalle';
     protected $fillable     = [
-        //'aviso_id',
         'observacion',
-        'estado',
         'tipo_aviso_id',
         'tipo_caracter_id',
         'idioma_id'
     ];
 
     public function tipoCaracter(){
-        return $this->hasMany(TipoCaracter::class, 'id', 'tipo_caracter_id');
+        return $this->belongsTo(TipoCaracter::class);
     }
 
     public function tipoAviso(){
-        return $this->hasMany(TipoAviso::class, 'id', 'tipo_aviso_id');
+        return $this->belongsTo(TipoAviso::class);
     }
 
     public function idioma(){
-        return $this->hasMany(Idioma::class, 'id', 'idioma_id');
+        return $this->belongsTo(Idioma::class);
     }
 
     public function aviso(){

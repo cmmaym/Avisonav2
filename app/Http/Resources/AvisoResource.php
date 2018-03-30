@@ -22,9 +22,10 @@ class AvisoResource extends JsonResource
             'fecha_edicion'     => $this->updated_at->format('Y-m-d'),
             'periodo'   => $this->periodo,
             'estado'    => $this->estado,
-            'entidad'   => $this->entidad->first()->nombre,
+            'entidad'   => new EntidadResource($this->entidad),
             'aviso_detalle' => $this->avisoDetalle()->get(),
-            'carta' => $this->carta()->get()
+            'carta' => $this->carta()->get(),
+            'ayuda' => $this->ayuda()->get()
         ];
     }
 }

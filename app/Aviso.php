@@ -12,13 +12,12 @@ class Aviso extends Model
         'num_aviso',
         'fecha',
         'periodo',
-        'estado',
         'entidad_id',
         'user_id',
     ];
 
     public function entidad(){
-        return $this->hasMany(Entidad::class, 'id', 'entidad_id');
+        return $this->belongsTo(Entidad::class);
     }
 
     public function carta(){
@@ -26,7 +25,13 @@ class Aviso extends Model
     }
 
     public function avisoDetalle(){
-        return $this->hasMany(AvisoDetalle::class, 'aviso_id');
+        return $this->hasMany(AvisoDetalle::class);
+    }
+
+    public function ayuda(){
+        return $this->belongsToMany(Ayuda::class)
+                    ->withTimestamps()
+                    ->withPivot('ayuda_version');
     }
 
 }

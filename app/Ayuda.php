@@ -24,10 +24,6 @@ class Ayuda extends Model
         'idioma_id'
     ];
 
-    public function aviso(){
-        return $this->hasMany('App\Aviso', 'aviso_id', 'id');
-    }
-
     public function ubicacion(){
         return $this->hasMany('App\Ubicacion', 'ubicacion_id', 'id');
     }
@@ -42,5 +38,9 @@ class Ayuda extends Model
 
     public function idioma(){
         return $this->hasMany('App\Idioma', 'idioma_id', 'id');
+    }
+
+    public function aviso(){
+        return $this->belongsToMany(Aviso::class);
     }
 }
