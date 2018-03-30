@@ -15,17 +15,17 @@ class AvisoResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'    =>   $this->id,
-            'num_aviso' => $this->num_aviso,
-            'fecha' => $this->fecha,
+            'id'                =>   $this->id,
+            'num_aviso'         => $this->num_aviso,
+            'fecha'             => $this->fecha,
             'fecha_creacion'    => $this->created_at->format('Y-m-d'),
             'fecha_edicion'     => $this->updated_at->format('Y-m-d'),
-            'periodo'   => $this->periodo,
-            'estado'    => $this->estado,
-            'entidad'   => new EntidadResource($this->entidad),
-            'aviso_detalle' => $this->avisoDetalle()->get(),
-            'carta' => $this->carta()->get(),
-            'ayuda' => $this->ayuda()->get()
+            'periodo'           => $this->periodo,
+            'estado'            => $this->estado,
+            'entidad'           => new EntidadResource($this->entidad),
+            'aviso_detalle'     => AvisoDetalleResource::collection($this->avisoDetalle()->get()),
+            'carta'             => CartaResource::collection($this->carta()->get()),
+            'ayuda'             => $this->ayuda()->get()
         ];
     }
 }
