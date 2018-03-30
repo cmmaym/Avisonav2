@@ -19,11 +19,20 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::resource('idioma', 'Idioma\IdiomaController');
+Route::resource('idioma.aviso', 'Idioma\IdiomaAvisoController');
+
 Route::resource('entidad', 'Entidad\EntidadController');
+
 Route::resource('tipoAviso', 'TipoAviso\TipoAvisoController');
+
 Route::resource('zona', 'Zona\ZonaController');
+
 Route::resource('ubicacion', 'Ubicacion\UbicacionController');
+
 Route::resource('tipoColor', 'TipoColor\TipoColorController');
+
 Route::resource('tipoLuz', 'TipoLuz\TipoLuzController');
+
 Route::resource('tipoCaracter', 'TipoCaracter\TipoCaracterController');
+
 Route::resource('aviso', 'Aviso\AvisoController');
