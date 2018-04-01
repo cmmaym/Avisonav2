@@ -36,3 +36,5 @@ Route::resource('tipoLuz', 'TipoLuz\TipoLuzController');
 Route::resource('tipoCaracter', 'TipoCaracter\TipoCaracterController');
 
 Route::resource('aviso', 'Aviso\AvisoController');
+
+Route::resource('ayuda', 'Ayuda\AyudaController');
