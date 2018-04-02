@@ -29,6 +29,6 @@ class CreateVersionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('version_ayuda');
+        Schema::dropIfExists('version');
     }
 }

@@ -10,8 +10,7 @@ class Ayuda extends Model
     protected $fillable     = [
         'numero',
         'nombre',
-        'estado',
-        'ubicacion_id'
+        'estado'
     ];
 
     public function ubicacion(){
