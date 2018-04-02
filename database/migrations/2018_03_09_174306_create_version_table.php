@@ -13,7 +13,7 @@ class CreateVersionTable extends Migration
      */
     public function up()
     {
-        Schema::create('version_ayuda', function (Blueprint $table) {
+        Schema::create('version', function (Blueprint $table) {
             $table->increments('version_id');
             $table->integer('numero_ayuda');
             $table->integer('ubicacion');
