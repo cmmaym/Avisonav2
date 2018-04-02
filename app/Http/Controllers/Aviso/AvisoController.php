@@ -79,7 +79,16 @@ class AvisoController extends Controller
      */
     public function show(Aviso $aviso)
     {
-        return new AvisoResource($aviso);
+        $aviso::with([
+            'ayuda',
+            'ayuda.coordenada' => function ($q){
+                $q->join('aviso_ayuda', 'coordenada.version', '=', 'aviso_ayuda.ayuda_version');
+            }
+        ])        
+        ->get();//->leftJoin('coordenada', 'coordenada.version', 'aviso_ayuda.ayuda_version');
+
+        // dd($aviso->toArray());
+        // dd($aviso->ayuda->toArray());
     }
 
     /**

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Aviso extends Model
 {
-    protected $table        = 'aviso';    
+    protected $table        = 'aviso';
     protected $fillable     = [
         'num_aviso',
         'fecha',
