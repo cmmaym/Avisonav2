@@ -29,9 +29,23 @@ class Aviso extends Model
     }
 
     public function ayuda(){
+
+        $id = $this->id;
+
+        //A la ayuda le asignamos las coordenadas
+        //con respecto a la version asociada con el aviso
         return $this->belongsToMany(Ayuda::class)
-                    ->withTimestamps()
-                    ->withPivot('ayuda_version');
+                    // ->withTimestamps()
+                    ->withPivot('ayuda_version')
+                    ->with(['coordenada' => function($q) use($id){
+                        $q->select('coordenada.*');
+                        $q->join('aviso_ayuda', function($join){
+                            $join->on('coordenada.ayuda_id', '=', 'aviso_ayuda.ayuda_id')
+                                 ->on('coordenada.version', '=', 'aviso_ayuda.ayuda_version');
+                        });
+                        
+                        $q->where('aviso_ayuda.aviso_id', $id);
+                    }]);
     }
 
 }

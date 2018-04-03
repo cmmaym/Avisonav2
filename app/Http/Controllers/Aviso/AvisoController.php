@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\AvisoResource;
+use AvisoNavAPI\Http\Resources\AyudaResource;
 
 class AvisoController extends Controller
 {
@@ -79,16 +80,7 @@ class AvisoController extends Controller
      */
     public function show(Aviso $aviso)
     {
-        $aviso::with([
-            'ayuda',
-            'ayuda.coordenada' => function ($q){
-                $q->join('aviso_ayuda', 'coordenada.version', '=', 'aviso_ayuda.ayuda_version');
-            }
-        ])        
-        ->get();//->leftJoin('coordenada', 'coordenada.version', 'aviso_ayuda.ayuda_version');
-
-        // dd($aviso->toArray());
-        // dd($aviso->ayuda->toArray());
+        return new AvisoResource($aviso);
     }
 
     /**
