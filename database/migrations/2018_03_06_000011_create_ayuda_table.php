@@ -17,7 +17,6 @@ class CreateAyudaTable extends Migration
             $table->increments('id')->unsigned();
             $table->integer('numero')->comment('Numero nacional - Es un numero dependiendo de la situacion geografica');
             $table->string('nombre', 45)->comment('Tipo de la ayuda o luz');
-            $table->integer('version')->comment('Numero de la ultima version de la ayuda');
             $table->enum('estado', array('A','I'))->default('A')->comment('Estado de la ayuda. Puede ser Activo, Inactivo');
             $table->timestamps();
             $table->integer('user_id')->unsigned()->comment('Usuario que creo o actualizo el regitro');

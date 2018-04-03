@@ -16,7 +16,7 @@ class CreateAvisoAyudaTable extends Migration
         Schema::create('aviso_ayuda', function (Blueprint $table) {
             $table->integer('aviso_id')->unsigned();
             $table->integer('ayuda_id')->unsigned();
-            $table->integer('ayuda_version');
+            $table->integer('coordenada_id');
             $table->timestamps();
 
             $table->foreign('aviso_id')

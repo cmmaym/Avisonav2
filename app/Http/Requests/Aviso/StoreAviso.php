@@ -25,8 +25,7 @@ class StoreAviso extends FormRequest
     {
         return [
             'num_aviso'                 => 'required|max:100',
-            'fecha'                     => 'required|date',
-            'periodo'                   => 'required',
+            'fecha'                     => 'required|date',            
             'entidad_id'                => 'required|exists:entidad,id',
             'aviso.*.observacion'       => 'required|string',
             'aviso.*.tipo_aviso_id'     => 'required|exists:tipo_aviso,id',
@@ -34,7 +33,7 @@ class StoreAviso extends FormRequest
             'aviso.*.idioma_id'         => 'required|exists:idioma,id',
             'aviso'                     => 'idioma_duplicate',
             'carta.*'                   => 'required|exists:carta,id',
-            'ayuda.*'                   => 'required|exists:ayuda,id',
+            'ayuda.*.id'                => 'required|exists:ayuda,id',
         ];
     }
 

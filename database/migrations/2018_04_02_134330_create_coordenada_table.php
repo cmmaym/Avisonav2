@@ -20,7 +20,6 @@ class CreateCoordenadaTable extends Migration
             $table->integer('altitud');
             $table->integer('alcance');
             $table->integer('cantidad');
-            $table->integer('version');
             $table->timestamps();
             $table->enum('estado', array('A','I'))->default('A')->comment('Estado de la coordenada. Puede ser Activo, Inactivo');
             $table->integer('ayuda_id')->unsigned();
@@ -28,9 +27,6 @@ class CreateCoordenadaTable extends Migration
             $table->foreign('ayuda_id')
                 ->references('id')->on('ayuda')
                 ->onDelete('cascade');
-
-            $table->unique(['version', 'ayuda_id'], 'version_ayuda_UNIQUE');
-
         });
     }
 

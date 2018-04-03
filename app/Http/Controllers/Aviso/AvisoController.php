@@ -42,8 +42,14 @@ class AvisoController extends Controller
     {
          $data = DB::transaction(function () use ($request) {
 
+             $date = new \DateTime('now');
+
              //Creamos el encabezado del aviso
-             $entity = Aviso::create($request->only(['num_aviso', 'fecha', 'periodo', 'entidad_id']));
+             $entity = new Aviso($request->only(['num_aviso', 'fecha']));
+             $entity->entidad_id = $request->input('entidad_id');
+             $entity->user_id    = 1;
+             $entity->periodo    = $date->format('Ym');
+             $entity->save();
 
              $collection = collect($request->input('aviso'));
 
@@ -55,10 +61,10 @@ class AvisoController extends Controller
              $ayudaCollection = collect($request->input('ayuda'));
 
              //Transformamos la coleccion de ayudas en un array de la siguiente forma:
-             //[(id de la ayuda) => ['ayuda_version' => (numero de la version)]]
+             //[(id de la ayuda) => ['coordenada_id' => (id de la coordenada)]]
              //para porder almacenarlas en la relacion de muchos a muchos usando el metodo sync
              $ayudaData = $ayudaCollection->mapWithKeys(function ($item) {
-                 return [$item['id'] => ['ayuda_version' => $item['version']]];
+                 return [$item['id'] => ['coordenada_id' => $item['coordenada_id']]];
              });
 
              $entity->avisoDetalle()->saveMany($avisoDetalleCollection);
@@ -118,10 +124,10 @@ class AvisoController extends Controller
            $ayudaCollection = collect($request->input('ayuda'));
 
             //Transformamos la coleccion de ayudas en un array de la siguiente forma:
-            //[(id de la ayuda) => ['ayuda_version' => (numero de la version)]]
+            //[(id de la ayuda) => ['coordenada_id' => (id coordenada)]]
             //para porder almacenarlas en la relacion de muchos a muchos usando el metodo sync
             $ayudaData = $ayudaCollection->mapWithKeys(function ($item) {
-                return [$item['id'] => ['ayuda_version' => $item['version']]];
+                return [$item['id'] => ['coordenada_id' => $item['coordenada_id']]];
             });
 
             $entity->carta()->sync($request->input('carta'));

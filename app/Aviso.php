@@ -10,10 +10,7 @@ class Aviso extends Model
     protected $table        = 'aviso';
     protected $fillable     = [
         'num_aviso',
-        'fecha',
-        'periodo',
-        'entidad_id',
-        'user_id',
+        'fecha'
     ];
 
     public function entidad(){
@@ -35,13 +32,13 @@ class Aviso extends Model
         //A la ayuda le asignamos las coordenadas
         //con respecto a la version asociada con el aviso
         return $this->belongsToMany(Ayuda::class)
-                    // ->withTimestamps()
-                    ->withPivot('ayuda_version')
+                    ->withTimestamps()
+                    ->withPivot('coordenada_id')
                     ->with(['coordenada' => function($q) use($id){
                         $q->select('coordenada.*');
                         $q->join('aviso_ayuda', function($join){
                             $join->on('coordenada.ayuda_id', '=', 'aviso_ayuda.ayuda_id')
-                                 ->on('coordenada.version', '=', 'aviso_ayuda.ayuda_version');
+                                 ->on('coordenada.id', '=', 'aviso_ayuda.coordenada_id');
                         });
                         
                         $q->where('aviso_ayuda.aviso_id', $id);

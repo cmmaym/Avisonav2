@@ -8,8 +8,7 @@ $factory->define(AvisoNavAPI\Coordenada::class, function (Faker $faker) {
         'longitud'  =>  $faker->longitude(),
         'altitud'   =>  $faker->randomDigit,
         'alcance'   =>  $faker->randomDigit,
-        'cantidad'  =>  $faker->randomDigit,
-        'version'   =>  1,
+        'cantidad'  =>  $faker->randomDigit,        
         'ayuda_id'  =>  1,
     ];
 });
