@@ -24,4 +24,8 @@ class Ayuda extends Model
     public function aviso(){
         return $this->belongsToMany(Aviso::class);
     }
+
+    // public function coordenadaAviso(){
+    //     return $this->aviso()->where('aviso.id', '7');
+    // }
 }

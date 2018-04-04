@@ -20,16 +20,42 @@ class AvisoController extends Controller
      */
     public function index()
     {
-        $collection = Aviso::with([
-                        'entidad',
-                        'avisoDetalle.tipoAviso',
-                        'avisoDetalle.tipoCaracter',
-                        'avisoDetalle.idioma',
-                        'carta'
-                    ])
-                    ->get();
 
-       return AvisoResource::collection($collection);
+        // $collection = Aviso::leftJoin('aviso_detalle', 'aviso.id', '=', 'aviso_detalle.aviso_id')
+        //                    ->leftJoin('idioma', 'aviso_detalle.idioma_id', '=', 'idioma.id')
+        //                    ->leftJoin('aviso_ayuda', 'aviso.id', '=', 'aviso_ayuda.aviso_id')
+        //                    ->leftJoin('ayuda', 'aviso_ayuda.ayuda_id', '=', 'ayuda.id')
+        //                    ->leftJoin('coordenada', 'aviso_ayuda.coordenada_id', '=', 'coordenada.id')
+        //                    ->leftJoin('coordenada_detalle', function($q){
+        //                         $q->on('coordenada.id', '=', 'coordenada_detalle.coordenada_id')
+        //                           ->on('idioma.id', '=', 'coordenada_detalle.idioma_id');
+        //                    })
+        //                    ->select('aviso.num_aviso as aviso',
+        //                    'aviso_detalle.observacion',
+        //                    'ayuda.id as ayuda',
+        //                    'ayuda.nombre',
+        //                    'coordenada.latitud',
+        //                    'coordenada_detalle.descripcion',
+        //                    'idioma.id as idioma')
+        //                    ->where('aviso.id', 7)
+        //                    ->get();
+
+        $collection = Aviso::with(['ayuda', 'ayuda.coordenada'])
+                           ->where('aviso.id', 7) 
+                           ->get();
+
+        return $collection;
+
+    //     $collection = Aviso::with([
+    //                     'entidad',
+    //                     'avisoDetalle.tipoAviso',
+    //                     'avisoDetalle.tipoCaracter',
+    //                     'avisoDetalle.idioma',
+    //                     'carta'
+    //                 ])
+    //                 ->get();
+
+    //    return AvisoResource::collection($collection);
     }
 
     /**
