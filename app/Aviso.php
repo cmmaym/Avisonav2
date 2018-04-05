@@ -34,15 +34,6 @@ class Aviso extends Model
         return $this->belongsToMany(Ayuda::class)
                     ->withTimestamps()
                     ->withPivot('coordenada_id');
-                    // ->with(['coordenada' => function($q) use($id){
-                    //     $q->select('coordenada.*');
-                    //     $q->join('aviso_ayuda', function($join){
-                    //         $join->on('coordenada.ayuda_id', '=', 'aviso_ayuda.ayuda_id')
-                    //              ->on('coordenada.id', '=', 'aviso_ayuda.coordenada_id');
-                    //     });
-                        
-                    //     $q->where('aviso_ayuda.aviso_id', $id);
-                    // }]);
     }
 
 }

@@ -2,31 +2,16 @@
 
 namespace AvisoNavAPI\Http\Controllers\Idioma;
 
+use AvisoNavAPI\Zona;
 use AvisoNavAPI\Aviso;
-use AvisoNavAPI\Http\Resources\AvisoResource;
-use AvisoNavAPI\Idioma;
 use function foo\func;
+use AvisoNavAPI\Idioma;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Resources\AvisoResource;
 
 class IdiomaAvisoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Idioma $idioma
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Idioma $idioma)
-    {
-        $collection = $idioma->aviso()->with([
-                    'avisoDetalle' => function($query) use ($idioma){
-                        $query->where('idioma_id','=',$idioma->id);
-                    }])->get();
-
-        return AvisoResource::collection($collection);
-    }
-
     /**
      * Display the specified resource.
      *
@@ -36,13 +21,34 @@ class IdiomaAvisoController extends Controller
      */
     public function show(Idioma $idioma, Aviso $aviso)
     {
-        $entity = $idioma->aviso()->with([
-            'avisoDetalle' => function($query) use ($idioma){
-                $query->where('idioma_id','=',$idioma->id);
-            }])
-            ->findOrFail($aviso->id);
+        $aviso = $idioma->aviso()
+                        ->with(['avisoDetalle' => function ($query) use ($idioma){
+                            $query->where('idioma_id', $idioma->id);
+                        }])
+                        ->findOrFail($aviso->id);
+        
+        $aviso->ayuda->each(function($ayuda) use ($idioma){
+            $coordenada_id = $ayuda->pivot->coordenada_id;
+            $ubicacion = $ayuda->ubicacion;
+            $ayuda->ubicacion->zona = (new Zona)->newQuery()
+                                    ->where(function($query) use ($ubicacion){
+                                        $query->orWhere('parent_id', $ubicacion->zona_id)
+                                              ->orWhere('id', $ubicacion->zona_id);
+                                    })
+                                    ->where('idioma_id', $idioma->id)->first();
+                                    
+            $ayuda->load(
+                [
+                    'coordenada' => function($query) use ($coordenada_id, $idioma){
+                        $query->where('id', $coordenada_id);
+                        $query->with(['coordenadaDetalle' => function ($query) use ($idioma){
+                            $query->where('idioma_id',$idioma->id);
+                        }]);
+                    }
+                ]);
+        });
 
-        return new AvisoResource($entity);
+        return new AvisoResource($aviso);
     }
 
 }

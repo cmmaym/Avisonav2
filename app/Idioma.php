@@ -2,6 +2,7 @@
 
 namespace AvisoNavAPI;
 
+use AvisoNavAPI\CoordenadaDetalle;
 use Illuminate\Database\Eloquent\Model;
 
 class Idioma extends Model
@@ -21,5 +22,4 @@ class Idioma extends Model
                                     'aviso_id'
                 );
     }
-
 }
