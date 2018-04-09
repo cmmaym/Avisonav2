@@ -25,7 +25,7 @@ class AvisoResource extends JsonResource
             'entidad'           => new EntidadResource($this->entidad),
             'aviso_detalle'     => AvisoDetalleResource::collection($this->avisoDetalle),
             'carta'             => CartaResource::collection($this->carta),
-            'ayuda'             => AyudaResource::collection($this->ayuda),
+            'ayuda'             => AyudaResource::collection($this->ayudas),
         ];
     }
 }

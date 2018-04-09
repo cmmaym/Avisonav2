@@ -21,8 +21,8 @@ class ZonaResource extends JsonResource
             'fecha_creacion'    =>  $this->created_at->format('Y-m-d'),
             'fecha_edicion'     => $this->updated_at->format('Y-m-d'),
             'estado'            => $this->estado,
-            'idioma'            => new IdiomaResource($this->idioma()->first()),
-            'sub_zona'          => ZonaResource::collection($this->zona()->get()),
+            // 'idioma'            => new IdiomaResource($this->idioma()->first()),
+            // 'sub_zona'          => ZonaResource::collection($this->zona()->get()),
         ];
     }
 }

@@ -21,31 +21,21 @@ class IdiomaAvisoController extends Controller
      */
     public function show(Idioma $idioma, Aviso $aviso)
     {
-        $aviso = $idioma->aviso()
-                        ->with(['avisoDetalle' => function ($query) use ($idioma){
-                            $query->where('idioma_id', $idioma->id);
-                        }])
-                        ->findOrFail($aviso->id);
-        
-        $aviso->ayuda->each(function($ayuda) use ($idioma){
-            $coordenada_id = $ayuda->pivot->coordenada_id;
-            $ubicacion = $ayuda->ubicacion;
-            $ayuda->ubicacion->zona = (new Zona)->newQuery()
-                                    ->where(function($query) use ($ubicacion){
-                                        $query->orWhere('parent_id', $ubicacion->zona_id)
-                                              ->orWhere('id', $ubicacion->zona_id);
-                                    })
-                                    ->where('idioma_id', $idioma->id)->first();
-                                    
-            $ayuda->load(
-                [
-                    'coordenada' => function($query) use ($coordenada_id, $idioma){
-                        $query->where('id', $coordenada_id);
-                        $query->with(['coordenadaDetalle' => function ($query) use ($idioma){
-                            $query->where('idioma_id',$idioma->id);
-                        }]);
-                    }
-                ]);
+        $aviso->load([
+            'entidad',
+            'avisoDetalle' => function($query) use ($idioma){
+                $query->where('idioma_id', $idioma->id);
+            },
+            'ayudas.ubicacion.zona' => function($query) use ($idioma){
+                $query->where('idioma_id', $idioma->id);
+            },
+            'carta'
+        ]);
+
+        $aviso->ayudas->each(function($ayuda) use ($idioma){
+            $ayuda->pivot->ayuda->coordenada->load(['coordenadaDetalle' => function($query) use ($idioma){
+                $query->where('idioma_id', $idioma->id);
+            }]);
         });
 
         return new AvisoResource($aviso);

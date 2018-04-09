@@ -25,7 +25,7 @@ class Aviso extends Model
         return $this->hasMany(AvisoDetalle::class);
     }
 
-    public function ayuda(){
+    public function ayudas(){
 
         $id = $this->id;
 
@@ -33,7 +33,7 @@ class Aviso extends Model
         //con respecto a la version asociada con el aviso
         return $this->belongsToMany(Ayuda::class)
                     ->withTimestamps()
-                    ->withPivot('coordenada_id');
+                    ->withPivot('coordenada_id')
+                    ->using(AvisoAyuda::class);
     }
-
 }

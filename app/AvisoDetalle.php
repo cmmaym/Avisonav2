@@ -15,6 +15,12 @@ class AvisoDetalle extends Model
         'idioma_id'
     ];
 
+    
+    protected $with = [
+        'tipoAviso',
+        'tipoCaracter'
+    ];
+
     public function tipoCaracter(){
         return $this->belongsTo(TipoCaracter::class);
     }
