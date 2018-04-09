@@ -16,7 +16,7 @@ class IdiomaController extends Controller
      */
     public function index()
     {
-        $collection = Idioma::all();
+        $collection = Idioma::paginate(5);
         
         return IdiomaResource::collection($collection);
     }
