@@ -6,9 +6,12 @@ use AvisoNavAPI\Idioma;
 use \AvisoNavAPI\Http\Requests\Idioma\StoreIdioma;
 use AvisoNavAPI\Http\Controllers\Controller;
 use \AvisoNavAPI\Http\Resources\IdiomaResource;
+use AvisoNavAPI\Traits\Responser;
 
 class IdiomaController extends Controller
 {
+    use Responser;
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +19,8 @@ class IdiomaController extends Controller
      */
     public function index()
     {
-        $collection = Idioma::paginate(5);
+        // $collection = Idioma::paginate(5);
+        $collection = $this->paginate(Idioma::all());
         
         return IdiomaResource::collection($collection);
     }
@@ -56,8 +60,8 @@ class IdiomaController extends Controller
     {
         $idioma->fill($request->only(['nombre','alias','estado']));
 
-        if($idioma->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+        if($idioma->isClean()){            
+            return $this->errorResponser('Debe espesificar por lo menos un valor diferente para actualizar', 422);
         }
 
         $idioma->save();
