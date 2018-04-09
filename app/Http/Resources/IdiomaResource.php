@@ -15,7 +15,7 @@ class IdiomaResource extends JsonResource
     public function toArray($request)
     {        
         return [
-            'id'                => (string) $this->id,
+            'id'                => $this->id,
             'nombre'            => $this->nombre,
             'alias'             => $this->alias,
             'fecha_creacion'    => $this->created_at->format('Y-m-d'),

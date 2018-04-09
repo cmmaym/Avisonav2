@@ -12,6 +12,19 @@ class IdiomaTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(AvisoNavAPI\Idioma::class, 2)->create();
+        DB::table('idioma')->insert([
+            [
+                'nombre' => 'Spanish',
+                'alias'  => 'es',
+                'created_at' => new \DateTime('now'),
+                'updated_at' => new \DateTime('now')
+            ],
+            [
+                'nombre' => 'Ingles',
+                'alias'  => 'en',
+                'created_at' => new \DateTime('now'),
+                'updated_at' => new \DateTime('now')
+            ]
+        ]);
     }
 }
