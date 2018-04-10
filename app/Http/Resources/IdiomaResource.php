@@ -23,4 +23,15 @@ class IdiomaResource extends JsonResource
             'estado'            => $this->estado,
         ];
     }
+
+    public static function getOriginalAttribute($index){
+        $attributes = [
+            'id'        => 'id',
+            'nombre'    => 'nombre',
+            'alias'     => 'alias',
+            'fecha_creacion' => 'created_at'
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }

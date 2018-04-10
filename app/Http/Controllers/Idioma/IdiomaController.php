@@ -20,7 +20,12 @@ class IdiomaController extends Controller
     public function index()
     {
         // $collection = Idioma::paginate(5);
-        $collection = $this->paginate(Idioma::all());
+//        $collection = $this->paginate(Idioma::all());
+
+        $collection = Idioma::all();
+        $collection = $this->showAll($collection, IdiomaResource::class);
+;
+
         
         return IdiomaResource::collection($collection);
     }

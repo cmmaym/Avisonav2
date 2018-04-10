@@ -12,6 +12,20 @@ trait Responser {
        return response()->json(['error' => $message, 'code' => $code], $code);
     }
 
+    protected function showAll(Collection $collection, $resource, $code = 200)
+    {
+        if ($collection->isEmpty()) {
+            return response()->json(['data' => $collection], $code);
+        }
+
+//        $collection = $this->filterData($collection, $transformer);
+        $collection = $this->sortData($collection, $resource);
+        $collection = $this->paginate($collection);
+//        $collection = $this->transformData($collection, $transformer);
+//        $collection = $this->cacheResponse($collection);
+        return $collection;
+    }
+
     protected function paginate(Collection $collection)
 	{
 		$rules = [
@@ -36,5 +50,14 @@ trait Responser {
         
 		return $paginated;
 	}
+
+    protected function sortData(Collection $collection, $resource)
+    {
+        if (request()->has('sort_by')) {
+            $attribute = $resource::getOriginalAttribute(request()->sort_by);
+            $collection = $collection->sortBy->{$attribute};
+        }
+        return $collection;
+    }
 
 }
