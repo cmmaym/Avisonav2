@@ -9,9 +9,12 @@ use AvisoNavAPI\Idioma;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\AvisoResource;
+use AvisoNavAPI\Traits\Responser;
 
 class IdiomaAvisoController extends Controller
 {
+    use Responser;
+    
     /**
      * Display the specified resource.
      *
@@ -40,5 +43,4 @@ class IdiomaAvisoController extends Controller
 
         return new AvisoResource($aviso);
     }
-
 }

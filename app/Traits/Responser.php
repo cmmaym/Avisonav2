@@ -3,8 +3,10 @@
 namespace AvisoNavAPI\Traits;
 
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 trait Responser {
 
@@ -19,18 +21,28 @@ trait Responser {
 
 	/**
      * Set collection using filter data, sort data and paginate data
-     *
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $resource
+     * @param int $code
+     * 
      * @return \Illuminate\Support\Collection
      */
-    protected function showAll(Collection $collection, $resource, $code = 200)
+    protected function showAll($query, $resource, $resourceCollection, $url = null, $code = 200)
     {
+    
+        $this->filterData($query, $resource);
+        $this->sortData($query, $resource);
+
+        $collection = $query->get();
+
         if ($collection->isEmpty()) {
             return response()->json(['data' => $collection], $code);
+            // throw new NotFoundHttpException();
         }
 
-        $collection = $this->filterData($collection, $resource);
-        $collection = $this->sortData($collection, $resource);
-        $collection = $this->paginate($collection);
+        $collection = $this->paginate($collection, $url);
+        $collection = $this->transformData($collection, $resourceCollection);
 
         return $collection;
     }
@@ -40,7 +52,7 @@ trait Responser {
      *
      * @return \Illuminate\Support\Collection
      */
-    protected function paginate(Collection $collection)
+    protected function paginate(Collection $collection, $url = null )
 	{
 		$rules = [
 			'per_page' => 'integer|min:2|max:50'
@@ -49,15 +61,17 @@ trait Responser {
         Validator::validate(request()->all(), $rules);
         
 		$page = LengthAwarePaginator::resolveCurrentPage();
-        $perPage = 15;
+        $perPage = 3;
         
 		if (request()->has('per_page')) {
 			$perPage = (int) request()->per_page;
         }
         
+        $path = (!is_null($url)) ? $url : LengthAwarePaginator::resolveCurrentPath();
+
 		$results = $collection->slice(($page - 1) * $perPage, $perPage)->values();
 		$paginated = new LengthAwarePaginator($results, $collection->count(), $perPage, $page, [
-			'path' => LengthAwarePaginator::resolveCurrentPath(),
+			'path' => $path,
         ]);
         
         $paginated->appends(request()->all());
@@ -67,32 +81,43 @@ trait Responser {
 
 	/**
      * Sort the collection using url parameter
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $resource
      *
-     * @return \Illuminate\Support\Collection
      */
-    protected function sortData(Collection $collection, $resource)
+    protected function sortData($query, $resource)
     {
         if (request()->has('sort_by')) {
             $attribute = $resource::getOriginalAttribute(request()->sort_by);
-            $collection = $collection->sortBy->{$attribute};
+            
+            $order = request()->has('order') ? request()->order : 'asc';
+
+            $query->orderBy($attribute, $order);
         }
-        return $collection;
 	}
 	
 	/**
      * Filter the collection using url parameter
      *
-     * @return \Illuminate\Support\Collection
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $resource
      */
-	protected function filterData(Collection $collection, $resource)
+	protected function filterData($query, $resource)
 	{
-		foreach (request()->query() as $query => $value) {
-			$attribute = $resource::getOriginalAttribute($query);
+		foreach (request()->query() as $item => $value) {
+			$attribute = $resource::getOriginalAttribute($item);
 			if (isset($attribute, $value)) {
-				$collection = $collection->where($attribute, $value);
+                $query->where($attribute, $value);
 			}
-		}
-		return $collection;
+        }	
+    }
+    
+    protected function transformData($data, $resource)
+	{
+		// $transformation = fractal($data, new $transformer);
+        // return $transformation->toArray();
+        return new $resource($data);
 	}
 
 }

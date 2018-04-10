@@ -19,9 +19,13 @@ class IdiomaController extends Controller
      */
     public function index()
     {
-        $collection = Idioma::all();
-        $collection = $this->showAll($collection, IdiomaResource::class);
-        
+        $query = Idioma::query();
+        $collection = $this->showAll($query, IdiomaResource::class);
+
+        if($collection instanceof \Illuminate\Http\JsonResponse){
+            return $collection;
+        }
+
         return IdiomaResource::collection($collection);
     }
     

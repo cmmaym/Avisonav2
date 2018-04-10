@@ -96,7 +96,7 @@ class AvisoController extends Controller
      */
     public function show(Aviso $aviso)
     {
-        $aviso->ayuda->each(function($ayuda){
+        $aviso->ayudas->each(function($ayuda){
             $coordenada_id = $ayuda->pivot->coordenada_id;
             $ayuda->load(['coordenada' => function($query) use ($coordenada_id){
                 $query->where('id', $coordenada_id);

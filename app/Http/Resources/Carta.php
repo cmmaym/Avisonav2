@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CartaResource extends JsonResource
+class Carta extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,5 +22,22 @@ class CartaResource extends JsonResource
             'fecha_creacion'    => $this->created_at->format('Y-m-d'),
             'fecha_edicion'     => $this->updated_at->format('Y-m-d'),
         ];
+    }
+
+    /**
+     * Get the original attribute
+     * 
+     * @return string|null
+     */
+    public static function getOriginalAttribute($index){
+        $attributes = [
+            'id'        => 'id',
+            'numero'    => 'numero',
+            'edicion'     => 'edicion',
+            'año'     => 'año',
+            'fecha_creacion' => 'created_at'
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
     }
 }
