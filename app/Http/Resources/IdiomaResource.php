@@ -21,9 +21,17 @@ class IdiomaResource extends JsonResource
             'fecha_creacion'    => $this->created_at->format('Y-m-d'),
             'fecha_edicion'     => $this->updated_at->format('Y-m-d'),
             'estado'            => $this->estado,
+            'links'             => [
+                'self'  =>  route('idioma.show', ['id' => $this->id]),
+            ],
         ];
     }
 
+    /**
+     * Get the original attribute
+     * 
+     * @return string|null
+     */
     public static function getOriginalAttribute($index){
         $attributes = [
             'id'        => 'id',

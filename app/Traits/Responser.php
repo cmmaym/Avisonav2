@@ -8,24 +8,38 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 trait Responser {
 
+	 /**
+     * Create error response in json format
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     private function errorResponse($message, $code){
        return response()->json(['error' => $message, 'code' => $code], $code);
     }
 
+	/**
+     * Set collection using filter data, sort data and paginate data
+     *
+     * @return \Illuminate\Support\Collection
+     */
     protected function showAll(Collection $collection, $resource, $code = 200)
     {
         if ($collection->isEmpty()) {
             return response()->json(['data' => $collection], $code);
         }
 
-//        $collection = $this->filterData($collection, $transformer);
+        $collection = $this->filterData($collection, $resource);
         $collection = $this->sortData($collection, $resource);
         $collection = $this->paginate($collection);
-//        $collection = $this->transformData($collection, $transformer);
-//        $collection = $this->cacheResponse($collection);
+
         return $collection;
     }
 
+	/**
+     * This method receive collection and apply a paginator
+     *
+     * @return \Illuminate\Support\Collection
+     */
     protected function paginate(Collection $collection)
 	{
 		$rules = [
@@ -51,6 +65,11 @@ trait Responser {
 		return $paginated;
 	}
 
+	/**
+     * Sort the collection using url parameter
+     *
+     * @return \Illuminate\Support\Collection
+     */
     protected function sortData(Collection $collection, $resource)
     {
         if (request()->has('sort_by')) {
@@ -58,6 +77,22 @@ trait Responser {
             $collection = $collection->sortBy->{$attribute};
         }
         return $collection;
-    }
+	}
+	
+	/**
+     * Filter the collection using url parameter
+     *
+     * @return \Illuminate\Support\Collection
+     */
+	protected function filterData(Collection $collection, $resource)
+	{
+		foreach (request()->query() as $query => $value) {
+			$attribute = $resource::getOriginalAttribute($query);
+			if (isset($attribute, $value)) {
+				$collection = $collection->where($attribute, $value);
+			}
+		}
+		return $collection;
+	}
 
 }
