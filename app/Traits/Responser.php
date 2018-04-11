@@ -22,29 +22,48 @@ trait Responser {
 	/**
      * Set collection using filter data, sort data and paginate data
      * 
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $query
      * @param string $resource
      * @param int $code
      * 
      * @return \Illuminate\Support\Collection
      */
-    protected function showAll($query, $resource, $resourceCollection, $url = null, $code = 200)
+    protected function showAll($query, $resourceClass, $url = null, $code = 200)
     {
     
-        $this->filterData($query, $resource);
-        $this->sortData($query, $resource);
+        $this->filterData($query, $resourceClass);
+        $this->sortData($query, $resourceClass);
 
-        $collection = $query->get();
+        $collection = $this->paginate($query, $url);
 
         if ($collection->isEmpty()) {
             return response()->json(['data' => $collection], $code);
             // throw new NotFoundHttpException();
         }
 
-        $collection = $this->paginate($collection, $url);
-        $collection = $this->transformData($collection, $resourceCollection);
+        return $collection;
+    }
+
+    protected function paginate($query, $url = null)
+    {
+
+        $rules = [
+			'per_page' => 'integer|min:2|max:50'
+        ];
+        
+        Validator::validate(request()->all(), $rules);
+		
+        $perPage = 3;
+		if (request()->has('per_page')) {
+			$perPage = (int) request()->per_page;
+        }
+
+        $collection = $query->paginate($perPage);
+
+        if(!is_null($url)) $collection->setPath($url);
 
         return $collection;
+
     }
 
 	/**
@@ -52,7 +71,7 @@ trait Responser {
      *
      * @return \Illuminate\Support\Collection
      */
-    protected function paginate(Collection $collection, $url = null )
+    protected function manualPaginate(Collection $collection, $url = null )
 	{
 		$rules = [
 			'per_page' => 'integer|min:2|max:50'
@@ -112,12 +131,5 @@ trait Responser {
 			}
         }	
     }
-    
-    protected function transformData($data, $resource)
-	{
-		// $transformation = fractal($data, new $transformer);
-        // return $transformation->toArray();
-        return new $resource($data);
-	}
 
 }

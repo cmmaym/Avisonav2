@@ -18,21 +18,10 @@ class AvisoResource extends JsonResource
      */
     public function toArray($request)
     {
-    //     $cartas = $this->paginate($this->whenLoaded('carta'));
-    //     $cartaCollection = [
-    //         'data' => new CartaCollection($cartas),
-    //         'links' => [
-    //             ''
-    //         ],
-    //     ];
 
-    $carta = (new CartaCollection($this->paginate($this->whenLoaded('carta'), 'prueba')));
-    $a = $carta->toResponse($request);
-    // dd($a->getData());
-    // // if($this->paginate($this->whenLoaded('carta')) instanceof AbstractPaginator){
-    // // }
-
-    // return false;
+    $carta = (new CartaCollection($this->manualPaginate($this->carta, route('aviso.carta.index', ['id' => $this->id]))))
+             ->toResponse($request)
+             ->getData();
 
         return [
             'id'                => $this->id,
@@ -44,7 +33,7 @@ class AvisoResource extends JsonResource
             'estado'            => $this->estado,
             'entidad'           => new EntidadResource($this->entidad),
             'aviso_detalle'     => AvisoDetalleResource::collection($this->avisoDetalle),
-            'carta'             => $a->getData(),
+            'carta'             => $carta,
             'ayuda'             => AyudaResource::collection($this->ayudas),
         ];
     }

@@ -32,14 +32,17 @@ class IdiomaAvisoController extends Controller
             'ayudas.ubicacion.zona' => function($query) use ($idioma){
                 $query->where('idioma_id', $idioma->id);
             },
-            'carta'
-        ]);
-
-        $aviso->ayudas->each(function($ayuda) use ($idioma){
-            $ayuda->pivot->ayuda->coordenada->load(['coordenadaDetalle' => function($query) use ($idioma){
+            'carta',
+            'ayudas.coordenada' => function($query){
+                $query->join('aviso_ayuda', function($q){
+                    $q->on('coordenada.ayuda_id', 'aviso_ayuda.ayuda_id')
+                      ->on('aviso_ayuda.coordenada_id', 'coordenada.id');
+                });
+            },
+            'ayudas.coordenada.coordenadaDetalle' => function($query) use ($idioma){
                 $query->where('idioma_id', $idioma->id);
-            }]);
-        });
+            }
+        ]);
 
         return new AvisoResource($aviso);
     }

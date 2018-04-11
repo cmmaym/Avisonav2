@@ -24,9 +24,9 @@ class AvisoCartaController extends Controller
     {
         $query = $aviso->carta();
 
-        $collection = $this->showAll($query, CartaResource::class, CartaCollection::class);
+        $collection = $this->showAll($query, CartaResource::class);
         
-        return $collection;
+        return new CartaCollection($collection);
     }
 
 }

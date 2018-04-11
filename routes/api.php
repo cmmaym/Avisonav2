@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('idioma', 'Idioma\IdiomaController');
 Route::resource('idioma.aviso', 'Idioma\IdiomaAvisoController');
+Route::resource('idioma.aviso.ayuda', 'Idioma\IdiomaAvisoAyudaController')->only([
+    'index'
+]);
 
 Route::resource('entidad', 'Entidad\EntidadController');
 

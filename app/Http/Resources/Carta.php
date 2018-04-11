@@ -19,8 +19,8 @@ class Carta extends JsonResource
             'numero'            =>  $this->numero,
             'edicion'           =>  $this->edicion,
             'año'               =>  $this->ano,
-            'fecha_creacion'    => $this->created_at->format('Y-m-d'),
-            'fecha_edicion'     => $this->updated_at->format('Y-m-d'),
+            'fecha_creacion'    =>  $this->created_at->format('Y-m-d'),
+            'fecha_edicion'     =>  $this->updated_at->format('Y-m-d'),
         ];
     }
 

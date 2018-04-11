@@ -19,9 +19,9 @@ class UbicacionResource extends JsonResource
             'ubicacion'         =>  $this->ubicacion,
             'sub_ubicacion'     =>  $this->sub_ubicacion,
             'fecha_creacion'    =>  $this->created_at->format('Y-m-d'),
-            'fecha_edicion'     => $this->updated_at->format('Y-m-d'),
-            'estado'            => $this->estado,
-            'zona'              => new ZonaResource($this->zona),
+            'fecha_edicion'     =>  $this->updated_at->format('Y-m-d'),
+            'estado'            =>  $this->estado,
+            'zona'              =>  new ZonaResource($this->zona),
         ];
     }
 }

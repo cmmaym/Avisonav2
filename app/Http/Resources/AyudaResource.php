@@ -23,7 +23,7 @@ class AyudaResource extends JsonResource
             'estado'            => $this->estado,
             'version'           => $this->version,
             'ubicacion'         => new UbicacionResource($this->ubicacion),
-            'coordenada'        => CoordenadaResource::collection($this->pivot->ayuda->coordenada)
+            'coordenada'        => CoordenadaResource::collection($this->coordenada)
         ];
     }
 }
