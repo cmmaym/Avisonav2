@@ -14,7 +14,7 @@ class CoordenadaDetalle extends Model
     ];
 
     public function coordenada(){
-        return $this->belongsTo(CoordenadaDetalle::class);
+        return $this->belongsTo(Coordenada::class);
     }
 
     public function tipoLuz(){
