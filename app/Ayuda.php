@@ -17,8 +17,16 @@ class Ayuda extends Model
         return $this->belongsTo(Ubicacion::class);
     }
 
-    public function coordenada(){
+    public function coordenadas(){
         return $this->hasMany(Coordenada::class);
+    }
+
+    public function coordenada(){
+        return $this->hasOne(Coordenada::class)
+                    ->join('aviso_ayuda', function($query){
+                        $query->on('coordenada.ayuda_id', 'aviso_ayuda.ayuda_id')
+                              ->on('aviso_ayuda.coordenada_id', 'coordenada.id');
+                    });
     }
 
     public function aviso(){

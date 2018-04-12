@@ -17,33 +17,34 @@ class IdiomaAvisoAyudaController extends Controller
      */
     public function index(Idioma $idioma, Aviso $aviso)
     {
-        $query = $aviso->ayudas()
-                             ->whereHas('coordenada', function($q) use ($idioma){
-                                $q->join('aviso_ayuda', function($q){
-                                    $q->on('coordenada.ayuda_id', 'aviso_ayuda.ayuda_id')
-                                      ->on('aviso_ayuda.coordenada_id', 'coordenada.id');
-                                })
-                                ->where('altitud', 6)
-                                 ->whereHas('coordenadaDetalle', function($q) use ($idioma){
-                                    $q->where('idioma_id', $idioma->id);
-                                 });
-                             })
-                             ->with([
-                                'coordenada' => function($query){
-                                    $query->join('aviso_ayuda', function($q){
-                                        $q->on('coordenada.ayuda_id', 'aviso_ayuda.ayuda_id')
-                                        ->on('aviso_ayuda.coordenada_id', 'coordenada.id');
-                                    });                                    
-                                },
-                                'coordenada.coordenadaDetalle' => function($query) use ($idioma){
-                                    $query->where('idioma_id', $idioma->id);
-                                }
-                            ]);//->where('numero', 538);
+
+        $query = $aviso->ayudas();
+
+        $coordenadaConstraint = function($query){
+            if($latitud = request()->get('latitud')) $query->where('latitud', $latitud);
+            if($altitud = request()->get('altitud')) $query->where('altitud', $altitud);
+            if($alcance = request()->get('alcance')) $query->where('alcance', $alcance);
+            if($cantidad = request()->get('cantidad')) $query->where('cantidad', $cantidad);
+        };
+
+        $coordenadaDetalleConstraint = function($query) use ($idioma){
+            $query->where('idioma_id', $idioma->id);
+        };
+
+        if($numero = request()->get('numero')) $query->where('numero', $numero);
+        if($nombre = request()->get('nombre')) $query->where('nombre', 'like', "%$nombre%");
+
+        $query->with([
+                    'coordenada' => $coordenadaConstraint,
+                    'coordenada.coordenadaDetalle' => $coordenadaDetalleConstraint
+                ])
+              ->whereHas('coordenada', $coordenadaConstraint)
+              ->whereHas('coordenada.coordenadaDetalle', $coordenadaDetalleConstraint);
              
-        $collection = $query->paginate(3);
+        $collection = $query->paginate(1)->appends(request()->all());
         
         return AyudaResource::collection($collection);
-        
+
     }
 
 }
