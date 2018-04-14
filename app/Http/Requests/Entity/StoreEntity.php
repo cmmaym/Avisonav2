@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Requests\Entidad;
+namespace AvisoNavAPI\Http\Requests\Entity;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreEntidad extends FormRequest
+class StoreEntity extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,9 @@ class StoreEntidad extends FormRequest
     public function rules()
     {
         return [
-            'nombre'    => 'required|max:100',
+            'name'      => 'required|max:100',
             'alias'     => 'required|max:45',
-            'estado'    => 'required|in:A,I',
+            'state'     => 'required|in:A,I',
         ];
     }
 

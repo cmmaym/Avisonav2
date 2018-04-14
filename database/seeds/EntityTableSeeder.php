@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class EntidadTableSeeder extends Seeder
+class EntityTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class EntidadTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(AvisoNavAPI\Entidad::class, 10)->create();
+        factory(AvisoNavAPI\Entity::class, 10)->create();
     }
 }

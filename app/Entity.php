@@ -4,10 +4,10 @@ namespace AvisoNavAPI;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Entidad extends Model
+class Entity extends Model
 {
-    protected $table        = 'entidad';
-    protected $fillable     = ['nombre', 'alias', 'estado'];
+    protected $table        = 'entity';
+    protected $fillable     = ['name', 'alias', 'state'];
 
     public function aviso(){
         return $this->hasMany(Aviso::class);
