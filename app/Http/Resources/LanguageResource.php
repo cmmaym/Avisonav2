@@ -15,13 +15,13 @@ class LanguageResource extends JsonResource
     public function toArray($request)
     {        
         return [
-            'id'                => $this->id,
-            'name'              => $this->name,
-            'code'              => $this->code,
-            'create_at'         => $this->created_at->format('Y-m-d'),
-            'update_at'         => $this->updated_at->format('Y-m-d'),
-            'state'             => $this->state,
-            'links'             => [
+            'id'                 => $this->id,
+            'name'               => $this->name,
+            'code'               => $this->code,
+            'created_at'         => $this->created_at->format('Y-m-d'),
+            'updated_at'         => $this->updated_at->format('Y-m-d'),
+            'state'              => $this->state,
+            'links'              => [
                 'self'  =>  route('language.show', ['id' => $this->id]),
             ],
         ];
