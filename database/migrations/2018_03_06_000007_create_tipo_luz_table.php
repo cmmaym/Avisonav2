@@ -21,18 +21,18 @@ class CreateTipoLuzTable extends Migration
             $table->string('illustracion', 45)->nullable()->comment('Imagen de la clase de luz');            
             $table->timestamps();
             $table->enum('estado', array('A','I'))->default('A')->comment('Estado del tipo luz. Puede ser Activo, Inactivo');
-            $table->integer('idioma_id')->unsigned();
+            $table->integer('language_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
 
-            $table->foreign('idioma_id')
-                  ->references('id')->on('idioma')
+            $table->foreign('language_id')
+                  ->references('id')->on('language')
                   ->onDelete('cascade');
 
             $table->foreign('parent_id')
                   ->references('id')->on('tipo_luz')
                   ->onDelete('cascade');
 
-            $table->unique(['clase', 'alias', 'idioma_id'], 'clase_alias_idioma_UNIQUE');
+            $table->unique(['clase', 'alias', 'language_id'], 'clase_alias_language_UNIQUE');
         });
     }
 

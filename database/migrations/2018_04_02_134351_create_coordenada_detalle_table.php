@@ -22,7 +22,7 @@ class CreateCoordenadaDetalleTable extends Migration
             $table->integer('coordenada_id')->unsigned();
             $table->integer('tipo_luz_id')->unsigned();
             $table->integer('tipo_color_id')->unsigned();
-            $table->integer('idioma_id')->unsigned();
+            $table->integer('language_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
 
             $table->foreign('coordenada_id')
@@ -37,15 +37,15 @@ class CreateCoordenadaDetalleTable extends Migration
                 ->references('id')->on('tipo_color')
                 ->onDelete('cascade');
             
-            $table->foreign('idioma_id')
-                ->references('id')->on('idioma')
+            $table->foreign('language_id')
+                ->references('id')->on('language')
                 ->onDelete('cascade');
             
             $table->foreign('parent_id')
                 ->references('id')->on('coordenada_detalle')
                 ->onDelete('cascade');
 
-            $table->unique(['coordenada_id', 'idioma_id'], 'coordenada_idioma_UNIQUE');
+            $table->unique(['coordenada_id', 'language_id'], 'coordenada_language_UNIQUE');
         });
     }
 

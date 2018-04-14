@@ -19,18 +19,18 @@ class CreateZonaTable extends Migration
             $table->string('alias', 45)->comment('Alias del nombre de la zona');            
             $table->timestamps();
             $table->enum('estado', array('A', 'I'))->default('A')->comment('Estado la ubicacion. Puede ser Activo, Inactivo');
-            $table->integer('idioma_id')->unsigned();
+            $table->integer('language_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
 
-            $table->foreign('idioma_id')
-                  ->references('id')->on('idioma')
+            $table->foreign('language_id')
+                  ->references('id')->on('language')
                   ->onDelete('cascade');
 
             $table->foreign('parent_id')
                   ->references('id')->on('zona')
                   ->onDelete('cascade');
 
-            $table->unique(['nombre', 'alias', 'idioma_id'], 'nombre_alias_idoma_UNIQUE');
+            $table->unique(['nombre', 'alias', 'language_id'], 'nombre_alias_language_UNIQUE');
         });
     }
 

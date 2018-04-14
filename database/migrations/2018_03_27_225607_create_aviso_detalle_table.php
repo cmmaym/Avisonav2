@@ -20,7 +20,7 @@ class CreateAvisoDetalleTable extends Migration
             $table->integer('aviso_id')->unsigned();
             $table->integer('tipo_aviso_id')->unsigned();
             $table->integer('tipo_caracter_id')->unsigned();
-            $table->integer('idioma_id')->unsigned();
+            $table->integer('language_id')->unsigned();
 
             $table->foreign('aviso_id')
                 ->references('id')->on('aviso')
@@ -34,11 +34,11 @@ class CreateAvisoDetalleTable extends Migration
                 ->references('id')->on('tipo_caracter')
                 ->onDelete('cascade');
 
-            $table->foreign('idioma_id')
-                ->references('id')->on('idioma')
+            $table->foreign('language_id')
+                ->references('id')->on('language')
                 ->onDelete('cascade');
 
-            $table->unique(['aviso_id', 'idioma_id'], 'aviso_idioma_UNIQUE');
+            $table->unique(['aviso_id', 'language_id'], 'aviso_language_UNIQUE');
         });
     }
 

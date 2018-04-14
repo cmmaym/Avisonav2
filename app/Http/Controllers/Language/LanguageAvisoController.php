@@ -1,36 +1,35 @@
 <?php
 
-namespace AvisoNavAPI\Http\Controllers\Idioma;
+namespace AvisoNavAPI\Http\Controllers\Language;
 
 use AvisoNavAPI\Zona;
 use AvisoNavAPI\Aviso;
-use function foo\func;
-use AvisoNavAPI\Idioma;
+use AvisoNavAPI\Language;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\AvisoResource;
 use AvisoNavAPI\Traits\Responser;
 
-class IdiomaAvisoController extends Controller
+class LanguageAvisoController extends Controller
 {
     use Responser;
     
     /**
      * Display the specified resource.
      *
-     * @param Idioma $idioma
+     * @param Language $language
      * @param Aviso $aviso
      * @return \Illuminate\Http\Response
      */
-    public function show(Idioma $idioma, Aviso $aviso)
+    public function show(Language $language, Aviso $aviso)
     {
         $aviso->load([
             'entidad',
-            'avisoDetalle' => function($query) use ($idioma){
-                $query->where('idioma_id', $idioma->id);
+            'avisoDetalle' => function($query) use ($language){
+                $query->where('language_id', $language->id);
             },
-            'ayudas.ubicacion.zona' => function($query) use ($idioma){
-                $query->where('idioma_id', $idioma->id);
+            'ayudas.ubicacion.zona' => function($query) use ($language){
+                $query->where('language_id', $language->id);
             },
             'carta',
             'ayudas.coordenada' => function($query){
@@ -39,8 +38,8 @@ class IdiomaAvisoController extends Controller
                       ->on('aviso_ayuda.coordenada_id', 'coordenada.id');
                 });
             },
-            'ayudas.coordenada.coordenadaDetalle' => function($query) use ($idioma){
-                $query->where('idioma_id', $idioma->id);
+            'ayudas.coordenada.coordenadaDetalle' => function($query) use ($language){
+                $query->where('language_id', $language->id);
             }
         ]);
 

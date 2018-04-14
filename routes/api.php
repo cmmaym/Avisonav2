@@ -18,9 +18,13 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Route::resource('idioma', 'Idioma\IdiomaController');
-Route::resource('idioma.aviso', 'Idioma\IdiomaAvisoController');
-Route::resource('idioma.aviso.ayuda', 'Idioma\IdiomaAvisoAyudaController')->only([
+Route::resource('language', 'Language\LanguageController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
+Route::resource('language.aviso', 'Language\LanguageAvisoController')->only([
+    'index'
+]);
+Route::resource('language.aviso.ayuda', 'Language\LanguageAvisoAyudaController')->only([
     'index'
 ]);
 

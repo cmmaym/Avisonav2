@@ -3,7 +3,7 @@
 
 use Illuminate\Database\Seeder;
 
-class IdiomaTableSeeder extends Seeder
+class LanguageTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,16 +12,16 @@ class IdiomaTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('idioma')->insert([
+        DB::table('language')->insert([
             [
-                'nombre' => 'Spanish',
-                'alias'  => 'es',
+                'name' => 'Spanish',
+                'code'  => 'es',
                 'created_at' => new \DateTime('now'),
                 'updated_at' => new \DateTime('now')
             ],
             [
-                'nombre' => 'Ingles',
-                'alias'  => 'en',
+                'name' => 'Ingles',
+                'code'  => 'en',
                 'created_at' => new \DateTime('now'),
                 'updated_at' => new \DateTime('now')
             ]

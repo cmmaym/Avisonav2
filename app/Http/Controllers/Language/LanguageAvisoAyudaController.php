@@ -1,14 +1,14 @@
 <?php
 
-namespace AvisoNavAPI\Http\Controllers\Idioma;
+namespace AvisoNavAPI\Http\Controllers\Language;
 
 use AvisoNavAPI\Aviso;
-use AvisoNavAPI\Idioma;
+use AvisoNavAPI\Language;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\AyudaResource;
 
-class IdiomaAvisoAyudaController extends Controller
+class LanguageAvisoAyudaController extends Controller
 {
     /**
      * Display a listing of the resource.
