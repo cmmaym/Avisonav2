@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Requests\TypeNotice;
+namespace AvisoNavAPI\Http\Requests\NoticeType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTypeNotice extends FormRequest
+class StoreNoticeType extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,9 @@ class StoreTypeNotice extends FormRequest
     public function rules()
     {
         return [
-            'typeNotice.*.name'         => 'required|max:100',
-            'typeNotice.*.state'        => 'required|required|in:A,I',
-            'typeNotice.*.language_id'  => 'required|exists:idioma,id',
-            'typeNotice'                => 'idioma_duplicate',
+            'name'         => 'required|max:100',
+            'state'        => 'required|required|in:A,I',
+            'language_id'  => 'required|integer|exists:language,id',
         ];
     }
 
@@ -43,7 +42,6 @@ class StoreTypeNotice extends FormRequest
             'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
             'in'                    =>  'El valor seleccionado para el campo :attribute es invalido',
             'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
-            'idioma_duplicate'      =>  'Registros con idioma duplicado',
         ];
     }
 }

@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TypeNoticeResource extends JsonResource
+class NoticeTypeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -21,7 +21,8 @@ class TypeNoticeResource extends JsonResource
             'updated_at'        => $this->updated_at->format('Y-m-d'),
             'state'             => $this->state,
             'links'              => [
-                'self'  =>  route('typeNotice.show', ['id' => $this->id]),
+                'self'  =>  route('noticeType.show', ['id' => $this->id]),
+                'childs' =>  route('noticeType.child.index', ['id' => $this->id]),
             ],
         ];
     }

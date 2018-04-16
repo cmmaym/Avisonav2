@@ -17,9 +17,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Validator::extend('language_duplicate', function ($attribute, $value, $parameters, $validator) {
-            $idioma = [];
+            $language = [];
             foreach($value as $item){
-                if(!in_array($item['language_id'], $idioma)){
+                if(!in_array($item['language_id'], $language)){
                     $language[] = $item['language_id'];
                 }else{
                     return false;

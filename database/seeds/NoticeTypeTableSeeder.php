@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class TypeNoticeTableSeeder extends Seeder
+class NoticeTypeTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class TypeNoticeTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('type_notice')->insert([
+        DB::table('notice_type')->insert([
             [
                 'name'          => 'Apagada',
                 'created_at'    => new \DateTime('now'),
@@ -42,7 +42,7 @@ class TypeNoticeTableSeeder extends Seeder
                 'updated_at'    => new \DateTime('now'),
                 'state'         => 'A',
                 'language_id'   => 2,
-                'parent_id'     => 2
+                'parent_id'     => 3
             ],
             [
                 'name'          => 'Adicionar',
@@ -58,7 +58,7 @@ class TypeNoticeTableSeeder extends Seeder
                 'updated_at'    => new \DateTime('now'),
                 'state'         => 'A',
                 'language_id'   => 2,
-                'parent_id'     => 3
+                'parent_id'     => 5
             ],
             [
                 'name'          => 'Suprimir',
@@ -74,7 +74,7 @@ class TypeNoticeTableSeeder extends Seeder
                 'updated_at'    => new \DateTime('now'),
                 'state'         => 'A',
                 'language_id'   => 2,
-                'parent_id'     => 4
+                'parent_id'     => 7
             ],
         ]);
     }

@@ -4,20 +4,20 @@ namespace AvisoNavAPI;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TypeNotice extends Model
+class NoticeType extends Model
 {
-    protected $table        = 'type_notice';
+    protected $table        = 'notice_type';
     protected $fillable     = ['name', 'state'];
 
     public function language(){
         return $this->belongsTo(Language::class);
     }
     
-    public function typeNotice(){
-        return $this->hasMany(TypeNotice::class, 'parent_id', 'id');
+    public function noticeType(){
+        return $this->hasMany(NoticeType::class, 'parent_id', 'id');
     }
 
     public function parent(){
-        return $this->belongsTo(TypeNotice::class, 'parent_id', 'id');
+        return $this->belongsTo(NoticeType::class, 'parent_id', 'id');
     }
 }
