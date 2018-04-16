@@ -28,7 +28,9 @@ Route::resource('language.aviso.ayuda', 'Language\LanguageAvisoAyudaController')
     'index'
 ]);
 
-Route::resource('entidad', 'Entidad\EntidadController');
+Route::resource('entity', 'Entity\EntityController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
 
 Route::resource('tipoAviso', 'TipoAviso\TipoAvisoController');
 

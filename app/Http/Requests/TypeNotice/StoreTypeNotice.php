@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Requests\TipoAviso;
+namespace AvisoNavAPI\Http\Requests\TypeNotice;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTipoAviso extends FormRequest
+class StoreTypeNotice extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,10 @@ class StoreTipoAviso extends FormRequest
     public function rules()
     {
         return [
-            'tipoAviso.*.nombre'    => 'required|max:100',
-            'tipoAviso.*.estado'    => 'required|required|in:A,I',
-            'tipoAviso.*.idioma_id' => 'required|exists:idioma,id',
-            'tipoAviso'             => 'idioma_duplicate',
+            'typeNotice.*.name'         => 'required|max:100',
+            'typeNotice.*.state'        => 'required|required|in:A,I',
+            'typeNotice.*.language_id'  => 'required|exists:idioma,id',
+            'typeNotice'                => 'idioma_duplicate',
         ];
     }
 

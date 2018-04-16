@@ -1,105 +1,105 @@
 <?php
 
-namespace AvisoNavAPI\Http\Controllers\TipoAviso;
+namespace AvisoNavAPI\Http\Controllers\TypeNotice;
 
-use AvisoNavAPI\TipoAviso;
+use AvisoNavAPI\TypeNotice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
-use AvisoNavAPI\Http\Resources\TipoAvisoResource;
-use AvisoNavAPI\Http\Requests\TipoAviso\StoreTipoAviso;
+use AvisoNavAPI\Http\Resources\TypeNoticeResource;
+use AvisoNavAPI\Http\Requests\TypeNotice\StoreTypeNotice;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class TipoAvisoController extends Controller
+class TypeNoticeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \AvisoNavAPI\Http\Resources\TipoAvisoResource
+     * @return \AvisoNavAPI\Http\Resources\TypeNoticeResource
      */
     public function index()
     {
-        $collection = TipoAviso::where('parent_id', null)->get();
+        $collection = TypeNotice::where('parent_id', null)->get();
 
-        return TipoAvisoResource::collection($collection);
+        return TypeNoticeResource::collection($collection);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \AvisoNavAPI\Http\Requests\TipoAviso\StoreTipoAviso  $request
-     * @return \AvisoNavAPI\Http\Resources\TipoAvisoResource
+     * @param  \AvisoNavAPI\Http\Requests\TypeNotice\StoreTypeNotice  $request
+     * @return \AvisoNavAPI\Http\Resources\TypeNoticeResource
      */
-    public function store(StoreTipoAviso $request)
+    public function store(StoreTypeNotice $request)
     {        
         $data = DB::transaction(function () use ($request) {
-            $collection = collect($request->input('tipoAviso'));
+            $collection = collect($request->input('TypeNotice'));
 
             //Sacamos el primer elemento de la coleccion el cual sera el registro principal(master)
             $masterItem = $collection->shift();
 
             //Creamos la instancia del registro principal(master)
-            $entity = TipoAviso::create($masterItem);
+            $entity = TypeNotice::create($masterItem);
 
             //Le asignamos al registro principal los otros subregistros que tendra asociado
             $collection->each(function($subItem) use ($entity){
-                $entity->tipoAviso()->create($subItem);
+                $entity->TypeNotice()->create($subItem);
             });
             
             return $entity;
         });
         
-        return new TipoAvisoResource($data);
+        return new TypeNoticeResource($data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \AvisoNavAPI\TipoAviso  $tipoAviso
-     * @return \AvisoNavAPI\Http\Resources\TipoAvisoResource
+     * @param  \AvisoNavAPI\TypeNotice  typeNotice
+     * @return \AvisoNavAPI\Http\Resources\TypeNoticeResource
      */
-    public function show(TipoAviso $tipoAviso)
+    public function show(TypeNotice $typeNotice)
     {        
-        return new TipoAvisoResource($tipoAviso);
+        return new TypeNoticeResource(typeNotice);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \AvisoNavAPI\Http\Requests\TipoAviso\StoreTipoAviso  $request
-     * @param  \AvisoNavAPI\TipoAviso    $tipoAviso
-     * @return \AvisoNavAPI\Http\Resources\TipoAvisoResource
+     * @param  \AvisoNavAPI\Http\Requests\TypeNotice\StoreTypeNotice  $request
+     * @param  \AvisoNavAPI\TypeNotice    typeNotice
+     * @return \AvisoNavAPI\Http\Resources\TypeNoticeResource
      */
-    public function update(StoreTipoAviso $request, TipoAviso $tipoAviso)
+    public function update(StoreTypeNotice $request, TypeNotice $typeNotice)
     {        
-        $data = DB::transaction(function () use ($request, $tipoAviso) {
-            $collection = collect($request->input('tipoAviso'));
+        $data = DB::transaction(function () use ($request, typeNotice) {
+            $collection = collect($request->input('TypeNotice'));
             $entityHasChange = false;
             
-            /*Hacemos una copia de la instancia actual de la coleccion de los subtipoAviso
+            /*Hacemos una copia de la instancia actual de la coleccion de los subTypeNotice
               que nos servira para hacer la aliminacion*/
-            $currentCollection =  $tipoAviso->tipoAviso()->get()->toBase();
+            $currentCollection =  typeNotice->TypeNotice()->get()->toBase();
 
             //Sacamos el primer elemento de la coleccion el cual sera el registro principal(master)
             $masterItem = $collection->shift();
 
             //Agregamos los datos al registro principal(master)
-            $tipoAviso->fill($masterItem);
+            typeNotice->fill($masterItem);
 
             //Verificamos si el registro se mantuvo igual o no, es decir, si fue actualizado o no
-            if(!$tipoAviso->isClean()){
+            if(!typeNotice->isClean()){
                 $entityHasChange = true;
             }
 
             //Agregamos los datos a cada uno de los subregistros que estan asociados
-            $collection->each(function($subItem) use ($tipoAviso, &$entityHasChange){
+            $collection->each(function($subItem) use (typeNotice, &$entityHasChange){
                 if(isset($subItem['id'])){
-                    $entity = $tipoAviso->tipoAviso()->where('id', $subItem['id'])->first();
+                    $entity = typeNotice->TypeNotice()->where('id', $subItem['id'])->first();
 
                     //Si en el request viene un id que no exite lanzamos una excepcion
                     if(!$entity){
                         $e = new ModelNotFoundException();
-                        $e->setModel('TipoAviso');
+                        $e->setModel('TypeNotice');
 
                         throw $e;
                     }
@@ -112,11 +112,11 @@ class TipoAvisoController extends Controller
                     }
 
                 }else{
-                    $entity = TipoAviso::create($subItem);
+                    $entity = TypeNotice::create($subItem);
                     $entityHasChange = true;
                 }
 
-                $tipoAviso->tipoAviso()->save($entity);
+                typeNotice->TypeNotice()->save($entity);
             });
 
             
@@ -133,28 +133,28 @@ class TipoAvisoController extends Controller
                 return response()->json(['error' => ['title' => 'Debe por lo menos realizar un cambio para actualizar', 'status' => 422]], 422);
             }
             
-            $tipoAviso->save();
+            typeNotice->save();
 
-            return $tipoAviso;
+            return typeNotice;
         });
 
-        if(!$data instanceof TipoAviso){
+        if(!$data instanceof TypeNotice){
             return $data;
         }
 
-       return new TipoAvisoResource($data);
+       return new TypeNoticeResource($data);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \AvisoNavAPI\TipoAviso    $tipoAviso
-     * @return \AvisoNavAPI\Http\Resources\TipoAvisoResource
+     * @param  \AvisoNavAPI\TypeNotice    typeNotice
+     * @return \AvisoNavAPI\Http\Resources\TypeNoticeResource
      */
-    public function destroy(Request $request, TipoAviso $tipoAviso)
+    public function destroy(Request $request, TypeNotice typeNotice)
     {        
-        $tipoAviso->delete();
+        typeNotice->delete();
 
-        return new TipoAvisoResource($tipoAviso);
+        return new TypeNoticeResource(typeNotice);
     }
 }
