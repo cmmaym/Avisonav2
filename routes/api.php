@@ -32,7 +32,13 @@ Route::resource('entity', 'Entity\EntityController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
-Route::resource('tipoAviso', 'TipoAviso\TipoAvisoController');
+Route::resource('noticeType', 'NoticeType\NoticeTypeController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
+
+Route::resource('noticeType.child', 'NoticeType\NoticeTypeChildController')->only([
+    'index', 'store', 'update'
+]);
 
 Route::resource('zona', 'Zona\ZonaController');
 

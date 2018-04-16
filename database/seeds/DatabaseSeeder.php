@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::statement('TRUNCATE TABLE language;');
         DB::statement('TRUNCATE TABLE entity;');
-        DB::statement('TRUNCATE TABLE type_notice;');
+        DB::statement('TRUNCATE TABLE notice_type;');
         DB::statement('TRUNCATE TABLE zona;');
         DB::statement('TRUNCATE TABLE ubicacion;');
         DB::statement('TRUNCATE TABLE tipo_color;');
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->call(LanguageTableSeeder::class);
         $this->call(EntityTableSeeder::class);
-        $this->call(TypeNoticeTableSeeder::class);
+        $this->call(NoticeTypeTableSeeder::class);
         // $this->call(ZonaTableSeeder::class);
         // $this->call(UbicacionTableSeeder::class);
         // $this->call(TipoColorTableSeeder::class);
