@@ -6,6 +6,7 @@ use AvisoNavAPI\NoticeType;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\NoticeTypeResource;
+use AvisoNavAPI\ModelFilters\Basic\NoticeTypeFilter;
 use AvisoNavAPI\Http\Requests\NoticeType\StoreNoticeType;
 
 class NoticeTypeChildController extends Controller
@@ -17,7 +18,8 @@ class NoticeTypeChildController extends Controller
      */
     public function index(NoticeType $noticeType)
     {
-        $collection = $noticeType->noticeType()->paginate();
+        $perPage = (int)request()->input('perPage') ?? 15;
+        $collection = $noticeType->noticeType()->filter(request()->all(), NoticeTypeFilter::class)->paginateFilter($perPage);
 
         return NoticeTypeResource::collection($collection);
     }

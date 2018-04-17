@@ -3,9 +3,12 @@
 namespace AvisoNavAPI;
 
 use Illuminate\Database\Eloquent\Model;
+use EloquentFilter\Filterable;
 
 class NoticeType extends Model
 {
+    use Filterable;
+
     protected $table        = 'notice_type';
     protected $fillable     = ['name', 'state'];
 
