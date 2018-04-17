@@ -8,7 +8,6 @@ class NoticeTypeFilter extends ModelFilter
 {
     public function name($name){
         return $this->where('name', 'like', "%$name%");
-        $this->input();
     }
 
     public function date($date){
