@@ -25,7 +25,7 @@ class StoreNoticeType extends FormRequest
     {
         return [
             'name'         => 'required|max:100',
-            'state'        => 'required|required|in:A,I',
+            'state'        => 'sometimes|required|required|in:A,I',
             'language_id'  => 'required|integer|exists:language,id',
         ];
     }

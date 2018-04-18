@@ -19,6 +19,21 @@ trait Responser {
        return response()->json(['error' => $message, 'code' => $code], $code);
     }
 
+    /**
+     * @param string $parentLanguageId
+     */
+    private function validateChildLanguage($parentLanguageId)
+    {
+        if(request()->input('language_id') == $parentLanguageId){
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'language_id' => 'Ya existe un registro con el mismo idioma'
+             ]);
+
+             throw $error;
+        }
+    }
+
+
 	/**
      * Set collection using filter data, sort data and paginate data
      * 

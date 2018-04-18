@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateZonaTable extends Migration
+class CreateZoneTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateZonaTable extends Migration
      */
     public function up()
     {
-        Schema::create('zona', function (Blueprint $table) {
+        Schema::create('zone', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('nombre', 100)->comment('Nombre de la zona de la novedad');
+            $table->string('name', 100)->comment('Nombre de la zona de la novedad');
             $table->string('alias', 45)->comment('Alias del nombre de la zona');            
             $table->timestamps();
-            $table->enum('estado', array('A', 'I'))->default('A')->comment('Estado la ubicacion. Puede ser Activo, Inactivo');
+            $table->enum('state', array('A', 'I'))->default('A')->comment('Estado la ubicacion. Puede ser Activo, Inactivo');
             $table->integer('language_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
 
@@ -27,10 +27,10 @@ class CreateZonaTable extends Migration
                   ->onDelete('cascade');
 
             $table->foreign('parent_id')
-                  ->references('id')->on('zona')
+                  ->references('id')->on('zone')
                   ->onDelete('cascade');
 
-            $table->unique(['nombre', 'alias', 'language_id'], 'nombre_alias_language_UNIQUE');
+            $table->unique(['name', 'alias', 'language_id'], 'nombre_alias_language_UNIQUE');
         });
     }
 
@@ -41,6 +41,6 @@ class CreateZonaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('zona');
+        Schema::dropIfExists('zone');
     }
 }

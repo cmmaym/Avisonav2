@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Requests\Zona;
+namespace AvisoNavAPI\Http\Requests\Zone;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreZona extends FormRequest
+class StoreZone extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,10 @@ class StoreZona extends FormRequest
     public function rules()
     {
         return [
-            'zona.*.nombre'    => 'required|max:100',
-            'zona.*.alias'    =>  'required|max:45',
-            'zona.*.estado'    => 'required|required|in:A,I',
-            'zona.*.idioma_id' => 'required|exists:idioma,id',
-            'zona'             => 'idioma_duplicate',
+            'name'          => 'required|max:100',
+            'alias'         => 'required|max:45',
+            'state'         => 'sometimes|required|required|in:A,I',
+            'language_id'   => 'required|exists:language,id',
         ];
     }
 
@@ -44,7 +43,6 @@ class StoreZona extends FormRequest
             'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
             'in'                    =>  'El valor seleccionado para el campo :attribute es invalido',
             'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
-            'idioma_duplicate'      =>  'Registros con idioma duplicado',
         ];
     }
 }
