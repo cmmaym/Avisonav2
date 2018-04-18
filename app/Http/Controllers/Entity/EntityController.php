@@ -3,12 +3,16 @@
 namespace AvisoNavAPI\Http\Controllers\Entity;
 
 use AvisoNavAPI\Entity;
+use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\EntityResource;
+use AvisoNavAPI\ModelFilters\Basic\EntityFilter;
 use AvisoNavAPI\Http\Requests\Entity\StoreEntity;
 
 class EntityController extends Controller
 {
+    use Filter;
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +20,7 @@ class EntityController extends Controller
      */
     public function index()
     {
-        $collection  =   Entity::all();
+        $collection  =   Entity::filter(request()->all(), EntityFilter::class)->paginateFilter($this->perPage());
 
         return EntityResource::collection($collection);
     }
