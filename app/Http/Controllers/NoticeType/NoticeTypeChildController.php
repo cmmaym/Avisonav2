@@ -9,10 +9,11 @@ use AvisoNavAPI\Http\Resources\NoticeTypeResource;
 use AvisoNavAPI\ModelFilters\Basic\NoticeTypeFilter;
 use AvisoNavAPI\Http\Requests\NoticeType\StoreNoticeType;
 use AvisoNavAPI\Traits\Filter;
+use AvisoNavAPI\Traits\Responser;
 
 class NoticeTypeChildController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -34,6 +35,8 @@ class NoticeTypeChildController extends Controller
      */
     public function store(StoreNoticeType $request, NoticeType $noticeType)
     {
+        $this->validateChildLanguage($noticeType->language_id);
+
         $childNoticeType = new NoticeType($request->only(['name','state']));
         $childNoticeType->language_id = $request->input('language_id');
         
