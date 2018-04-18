@@ -37,12 +37,20 @@ Route::resource('noticeType', 'NoticeType\NoticeTypeController')->only([
 ]);
 
 Route::resource('noticeType.child', 'NoticeType\NoticeTypeChildController')->only([
-    'index', 'store', 'update'
+    'index', 'store'
 ]);
 
-Route::resource('zona', 'Zona\ZonaController');
+Route::resource('zone', 'Zone\ZoneController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
 
-Route::resource('ubicacion', 'Ubicacion\UbicacionController');
+Route::resource('zone.child', 'Zone\ZoneChildController')->only([
+    'index', 'store'
+]);
+
+Route::resource('location', 'Location\LocationController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
 
 Route::resource('tipoColor', 'TipoColor\TipoColorController');
 
