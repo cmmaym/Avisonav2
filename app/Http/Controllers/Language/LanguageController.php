@@ -3,12 +3,15 @@
 namespace AvisoNavAPI\Http\Controllers\Language;
 
 use AvisoNavAPI\Language;
+use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Http\Controllers\Controller;
-use \AvisoNavAPI\Http\Requests\Language\StoreLanguage;
 use \AvisoNavAPI\Http\Resources\LanguageResource;
+use AvisoNavAPI\ModelFilters\Basic\LanguageFilter;
+use \AvisoNavAPI\Http\Requests\Language\StoreLanguage;
 
 class LanguageController extends Controller
 {
+    use Filter;
 
     /**
      * Display a listing of the resource.
@@ -17,7 +20,7 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        $collection = Language::all();
+        $collection = Language::filter(request()->all(), LanguageFilter::class)->paginateFilter($this->perPage());
 
         return LanguageResource::collection($collection);
     }
