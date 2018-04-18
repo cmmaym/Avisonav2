@@ -20,13 +20,13 @@ class CreateAyudaTable extends Migration
             $table->enum('estado', array('A','I'))->default('A')->comment('Estado de la ayuda. Puede ser Activo, Inactivo');
             $table->timestamps();
             $table->integer('user_id')->unsigned()->comment('Usuario que creo o actualizo el regitro');
-            $table->integer('ubicacion_id')->unsigned();
+            $table->integer('location_id')->unsigned();
 
-            $table->foreign('ubicacion_id')
-                ->references('id')->on('ubicacion')
+            $table->foreign('location_id')
+                ->references('id')->on('location')
                 ->onDelete('cascade');
 
-            $table->unique(['numero', 'ubicacion_id'], 'numero_ubicacion_UNIQUE');
+            $table->unique(['numero', 'location_id'], 'numero_location_UNIQUE');
         });
     }
 

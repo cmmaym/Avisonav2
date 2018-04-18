@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Requests\Ubicacion;
+namespace AvisoNavAPI\Http\Requests\Location;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUbicacion extends FormRequest
+class StoreLocation extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,10 @@ class StoreUbicacion extends FormRequest
     public function rules()
     {
         return [
-            'ubicacion'         => 'required|max:100',
-            'sub_ubicacion'     => 'nullable|max:100',
-            'estado'            => 'required|in:A,I',
-            'zona_id'           => 'required|exists:zona,id'
+            'name'                  => 'required|max:100',
+            'sub_location_name'     => 'nullable|max:100',
+            'state'                 => 'sometimes|required|in:A,I',
+            'zone_id'               => 'required|exists:zone,id'
         ];
     }
 
