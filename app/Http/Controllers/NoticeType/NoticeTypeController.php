@@ -11,18 +11,19 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use AvisoNavAPI\Http\Requests\NoticeType\StoreNoticeType;
 use AvisoNavAPI\Http\Requests\NoticeType\UpdateNoticeType;
 use AvisoNavAPI\ModelFilters\Basic\NoticeTypeFilter;
+use AvisoNavAPI\Traits\Filter;
 
 class NoticeTypeController extends Controller
 {
+    use Filter;
     /**
      * Display a listing of the resource.
      *
      * @return \AvisoNavAPI\Http\Resources\NoticeTypeResource
      */
     public function index()
-    {
-        $perPage = (int)request()->input('perPage') ?? 15;
-        $collection = NoticeType::where('parent_id', null)->filter(request()->all(), NoticeTypeFilter::class)->paginateFilter($perPage);
+    {        
+        $collection = NoticeType::where('parent_id', null)->filter(request()->all(), NoticeTypeFilter::class)->paginateFilter($this->perPage());
 
         return NoticeTypeResource::collection($collection);
     }

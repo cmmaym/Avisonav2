@@ -8,18 +8,20 @@ use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\NoticeTypeResource;
 use AvisoNavAPI\ModelFilters\Basic\NoticeTypeFilter;
 use AvisoNavAPI\Http\Requests\NoticeType\StoreNoticeType;
+use AvisoNavAPI\Traits\Filter;
 
 class NoticeTypeChildController extends Controller
 {
+    use Filter;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(NoticeType $noticeType)
-    {
-        $perPage = (int)request()->input('perPage') ?? 15;
-        $collection = $noticeType->noticeType()->filter(request()->all(), NoticeTypeFilter::class)->paginateFilter($perPage);
+    {        
+        $collection = $noticeType->noticeType()->filter(request()->all(), NoticeTypeFilter::class)->paginateFilter($this->perPage());
 
         return NoticeTypeResource::collection($collection);
     }
