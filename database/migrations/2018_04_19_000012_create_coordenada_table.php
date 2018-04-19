@@ -22,10 +22,10 @@ class CreateCoordenadaTable extends Migration
             $table->integer('cantidad');
             $table->timestamps();
             $table->enum('estado', array('A','I'))->default('A')->comment('Estado de la coordenada. Puede ser Activo, Inactivo');
-            $table->integer('ayuda_id')->unsigned();
+            $table->integer('aid_id')->unsigned();
 
-            $table->foreign('ayuda_id')
-                ->references('id')->on('ayuda')
+            $table->foreign('aid_id')
+                ->references('id')->on('aid')
                 ->onDelete('cascade');
         });
     }

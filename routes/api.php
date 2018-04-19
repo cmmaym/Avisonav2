@@ -32,11 +32,11 @@ Route::resource('entity', 'Entity\EntityController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
-Route::resource('noticeType', 'NoticeType\NoticeTypeController')->only([
+Route::resource('noveltyType', 'NoveltyType\NoveltyTypeController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
-Route::resource('noticeType.child', 'NoticeType\NoticeTypeChildController')->only([
+Route::resource('noveltyType.child', 'NoveltyType\NoveltyTypeChildController')->only([
     'index', 'store'
 ]);
 
@@ -52,13 +52,42 @@ Route::resource('location', 'Location\LocationController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
-Route::resource('tipoColor', 'TipoColor\TipoColorController');
+Route::resource('colorType', 'ColorType\ColorTypeController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
 
-Route::resource('tipoLuz', 'TipoLuz\TipoLuzController');
+Route::resource('colorType.child', 'ColorType\ColorTypeChildController')->only([
+    'index', 'store'
+]);
 
-Route::resource('tipoCaracter', 'TipoCaracter\TipoCaracterController');
+Route::resource('lightType', 'lightType\lightTypeController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
 
-Route::resource('aviso', 'Aviso\AvisoController');
-Route::resource('aviso.carta', 'Aviso\AvisoCartaController');
+Route::resource('lightType.child', 'lightType\lightTypeChildController')->only([
+    'index', 'store'
+]);
 
-Route::resource('ayuda', 'Ayuda\AyudaController');
+Route::resource('characterType', 'CharacterType\CharacterTypeController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
+
+Route::resource('characterType.child', 'CharacterType\CharacterTypeChildController')->only([
+    'index', 'store'
+]);
+
+Route::resource('chart', 'Chart\ChartController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
+
+// Route::resource('chartEdition', 'ChartEdition\ChartEditionController')->only([
+//     'index', 'show', 'store', 'update', 'destroy'
+// ]);
+
+Route::resource('notice', 'Notice\NoticeController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
+
+// Route::resource('aviso.carta', 'Aviso\AvisoCartaController');
+
+// Route::resource('ayuda', 'Ayuda\AyudaController');

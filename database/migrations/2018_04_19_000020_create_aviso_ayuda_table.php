@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAvisoCartaTable extends Migration
+class CreateAvisoAyudaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,18 @@ class CreateAvisoCartaTable extends Migration
      */
     public function up()
     {
-        Schema::create('aviso_carta', function (Blueprint $table) {
+        Schema::create('aviso_ayuda', function (Blueprint $table) {
             $table->integer('notice_id')->unsigned();
-            $table->integer('chart_id')->unsigned();
+            $table->integer('aid_id')->unsigned();
+            $table->integer('coordenada_id');
             $table->timestamps();
 
             $table->foreign('notice_id')
                 ->references('id')->on('notice')
                 ->onDelete('cascade');
 
-            $table->foreign('chart_id')
-                ->references('id')->on('chart')
+            $table->foreign('aid_id')
+                ->references('id')->on('aid')
                 ->onDelete('cascade');
         });
     }
@@ -35,6 +36,6 @@ class CreateAvisoCartaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aviso_carta');
+        Schema::dropIfExists('aviso_ayuda');
     }
 }
