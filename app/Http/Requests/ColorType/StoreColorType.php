@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Requests\TipoColor;
+namespace AvisoNavAPI\Http\Requests\ColorType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTipoColor extends FormRequest
+class StoreColorType extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,10 @@ class StoreTipoColor extends FormRequest
     public function rules()
     {
         return [
-            'tipoColor.*.color'     => 'required|max:100',
-            'tipoColor.*.alias'     =>  'required|max:45',
-            'tipoColor.*.estado'    => 'required|required|in:A,I',
-            'tipoColor.*.idioma_id' => 'required|exists:idioma,id',
-            'tipoColor'             => 'idioma_duplicate',
+            'color'       =>  'required|max:100',
+            'alias'       =>  'required|max:45',
+            'state'       =>  'sometimes|required|required|in:A,I',
+            'language_id' =>  'required|exists:language,id',
         ];
     }
 
@@ -44,7 +43,6 @@ class StoreTipoColor extends FormRequest
             'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
             'in'                    =>  'El valor seleccionado para el campo :attribute es invalido',
             'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
-            'idioma_duplicate'      =>  'Registros con idioma duplicado',
         ];
     }
 }

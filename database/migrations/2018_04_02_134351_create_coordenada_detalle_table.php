@@ -21,7 +21,7 @@ class CreateCoordenadaDetalleTable extends Migration
             $table->enum('estado', array('A','I'))->default('A')->comment('Estado de la coordenada detalle. Puede ser Activo, Inactivo');
             $table->integer('coordenada_id')->unsigned();
             $table->integer('tipo_luz_id')->unsigned();
-            $table->integer('tipo_color_id')->unsigned();
+            $table->integer('color_type_id')->unsigned();
             $table->integer('language_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
 
@@ -33,8 +33,8 @@ class CreateCoordenadaDetalleTable extends Migration
                 ->references('id')->on('tipo_luz')
                 ->onDelete('cascade');
             
-            $table->foreign('tipo_color_id')
-                ->references('id')->on('tipo_color')
+            $table->foreign('color_type_id')
+                ->references('id')->on('color_type')
                 ->onDelete('cascade');
             
             $table->foreign('language_id')
