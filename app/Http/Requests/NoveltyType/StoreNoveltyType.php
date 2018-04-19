@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Requests\NoticeType;
+namespace AvisoNavAPI\Http\Requests\NoveltyType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreNoticeType extends FormRequest
+class StoreNoveltyType extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

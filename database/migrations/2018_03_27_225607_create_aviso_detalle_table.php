@@ -17,17 +17,12 @@ class CreateAvisoDetalleTable extends Migration
             $table->increments('id');
             $table->mediumText('observacion')->comment('Observacion acerca del aviso');
             $table->timestamps();
-            $table->integer('aviso_id')->unsigned();
-            $table->integer('notice_type_id')->unsigned();
+            $table->integer('aviso_id')->unsigned();            
             $table->integer('character_type_id')->unsigned();
             $table->integer('language_id')->unsigned();
 
             $table->foreign('aviso_id')
                 ->references('id')->on('aviso')
-                ->onDelete('cascade');
-
-            $table->foreign('notice_type_id')
-                ->references('id')->on('notice_type')
                 ->onDelete('cascade');
 
             $table->foreign('character_type_id')

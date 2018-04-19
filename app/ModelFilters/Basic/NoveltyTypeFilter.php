@@ -4,7 +4,7 @@ namespace AvisoNavAPI\ModelFilters\Basic;
 
 use EloquentFilter\ModelFilter;
 
-class NoticeTypeFilter extends ModelFilter
+class NoveltyTypeFilter extends ModelFilter
 {
     public function name($name){
         return $this->where('name', 'like', "%$name%");

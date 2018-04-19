@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class NoticeTypeTableSeeder extends Seeder
+class NoveltyTypeTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class NoticeTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('notice_type')->insert([
+        DB::table('novelty_type')->insert([
             [
                 'name'          => 'Apagada',
                 'created_at'    => new \DateTime('now'),

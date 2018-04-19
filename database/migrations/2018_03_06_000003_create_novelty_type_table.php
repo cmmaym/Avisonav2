@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNoticeTypeTable extends Migration
+class CreateNoveltyTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateNoticeTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('notice_type', function (Blueprint $table) {
+        Schema::create('novelty_type', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name', 100)->comment('Nombre del tipo de aviso');
             $table->timestamps();            
@@ -26,8 +26,8 @@ class CreateNoticeTypeTable extends Migration
                   ->onDelete('cascade');
 
             $table->foreign('parent_id')
-                  ->references('id')->on('notice_type')
-                  ->onDelete('cascade');            
+                  ->references('id')->on('novelty_type')
+                  ->onDelete('cascade');
 
             $table->unique(['name', 'language_id'], 'name_language_UNIQUE');
         });
@@ -40,6 +40,6 @@ class CreateNoticeTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notice_type');
+        Schema::dropIfExists('novelty_type');
     }
 }
