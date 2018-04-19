@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTipoCaracterTable extends Migration
+class CreateCharacterTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateTipoCaracterTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_caracter', function (Blueprint $table) {
+        Schema::create('character_type', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('nombre', 100)->comment('Nombre del tipo de caracter');            
+            $table->string('name', 100)->comment('Nombre del tipo de caracter');            
             $table->timestamps();
-            $table->enum('estado', array('A','I'))->default('A')->comment('Estado del tipo. Puede ser Activo, Inactivo');
+            $table->enum('state', array('A','I'))->default('A')->comment('Estado del tipo. Puede ser Activo, Inactivo');
             $table->integer('language_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
 
@@ -26,10 +26,10 @@ class CreateTipoCaracterTable extends Migration
                   ->onDelete('cascade');
 
             $table->foreign('parent_id')
-                  ->references('id')->on('tipo_caracter')
+                  ->references('id')->on('character_type')
                   ->onDelete('cascade');
 
-            $table->unique(['nombre', 'language_id'], 'nombre_language_UNIQUE');
+            $table->unique(['name', 'language_id'], 'name_language_UNIQUE');
         });
     }
 
@@ -40,6 +40,6 @@ class CreateTipoCaracterTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_caracter');
+        Schema::dropIfExists('character_type');
     }
 }

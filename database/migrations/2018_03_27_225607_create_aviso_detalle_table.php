@@ -19,7 +19,7 @@ class CreateAvisoDetalleTable extends Migration
             $table->timestamps();
             $table->integer('aviso_id')->unsigned();
             $table->integer('notice_type_id')->unsigned();
-            $table->integer('tipo_caracter_id')->unsigned();
+            $table->integer('character_type_id')->unsigned();
             $table->integer('language_id')->unsigned();
 
             $table->foreign('aviso_id')
@@ -30,8 +30,8 @@ class CreateAvisoDetalleTable extends Migration
                 ->references('id')->on('notice_type')
                 ->onDelete('cascade');
 
-            $table->foreign('tipo_caracter_id')
-                ->references('id')->on('tipo_caracter')
+            $table->foreign('character_type_id')
+                ->references('id')->on('character_type')
                 ->onDelete('cascade');
 
             $table->foreign('language_id')
