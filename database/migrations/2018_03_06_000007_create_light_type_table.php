@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTipoLuzTable extends Migration
+class CreateLightTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateTipoLuzTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_luz', function (Blueprint $table) {
+        Schema::create('light_type', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('clase', 100)->comment('Clase de luz');
+            $table->string('class', 100)->comment('Clase de luz');
             $table->string('alias', 45)->comment('Abreviatura de la clase');
-            $table->mediumText('descripcion')->comment('Descripcion breve de la clase de luz');
-            $table->string('illustracion', 45)->nullable()->comment('Imagen de la clase de luz');            
+            $table->mediumText('description')->comment('Descripcion breve de la clase de luz');
+            $table->string('illustration', 45)->nullable()->comment('Imagen de la clase de luz');            
             $table->timestamps();
-            $table->enum('estado', array('A','I'))->default('A')->comment('Estado del tipo luz. Puede ser Activo, Inactivo');
+            $table->enum('state', array('A','I'))->default('A')->comment('Estado del tipo luz. Puede ser Activo, Inactivo');
             $table->integer('language_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
 
@@ -29,10 +29,10 @@ class CreateTipoLuzTable extends Migration
                   ->onDelete('cascade');
 
             $table->foreign('parent_id')
-                  ->references('id')->on('tipo_luz')
+                  ->references('id')->on('light_type')
                   ->onDelete('cascade');
 
-            $table->unique(['clase', 'alias', 'language_id'], 'clase_alias_language_UNIQUE');
+            $table->unique(['class', 'alias', 'language_id'], 'class_alias_language_UNIQUE');
         });
     }
 
@@ -43,6 +43,6 @@ class CreateTipoLuzTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_luz');
+        Schema::dropIfExists('light_type');
     }
 }

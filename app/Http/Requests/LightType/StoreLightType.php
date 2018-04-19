@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Requests\TipoLuz;
+namespace AvisoNavAPI\Http\Requests\LightType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTipoLuz extends FormRequest
+class StoreLightType extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,12 @@ class StoreTipoLuz extends FormRequest
     public function rules()
     {
         return [
-            'tipoLuz.*.clase'           => 'required|max:100',
-            'tipoLuz.*.alias'           => 'required|max:45',
-            'tipoLuz.*.descripcion'     => 'required',
-            'tipoLuz.*.illustracion'    => 'nullable',
-            'tipoLuz.*.estado'          => 'required|in:A,I',
-            'tipoLuz.*.idioma_id'       => 'required|exists:idioma,id',
-            'tipoLuz'                   => 'idioma_duplicate',
+            'class'           => 'required|max:100',
+            'alias'           => 'required|max:45',
+            'description'     => 'required',
+            'illustration'    => 'nullable',
+            'state'           => 'sometimes|required|in:A,I',
+            'language_id'     => 'required|exists:language,id'
         ];
     }
 
@@ -46,7 +45,6 @@ class StoreTipoLuz extends FormRequest
             'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
             'in'                    =>  'El valor seleccionado para el campo :attribute es invalido',
             'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
-            'idioma_duplicate'      =>  'Registros con idioma duplicado',
         ];
     }
 }
