@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAvisoDetalleTable extends Migration
+class CreateNoticeDetailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateAvisoDetalleTable extends Migration
      */
     public function up()
     {
-        Schema::create('aviso_detalle', function (Blueprint $table) {
+        Schema::create('notice_detail', function (Blueprint $table) {
             $table->increments('id');
-            $table->mediumText('observacion')->comment('Observacion acerca del aviso');
+            $table->mediumText('observation')->comment('Observacion acerca del aviso');
             $table->timestamps();
-            $table->integer('aviso_id')->unsigned();            
+            $table->enum('state',array('A','I'))->default('A')->comment('Estado del aviso detalle. Puede ser Activo, Inactivo');
+            $table->integer('notice_id')->unsigned();            
             $table->integer('character_type_id')->unsigned();
             $table->integer('language_id')->unsigned();
 
-            $table->foreign('aviso_id')
-                ->references('id')->on('aviso')
+            $table->foreign('notice_id')
+                ->references('id')->on('notice')
                 ->onDelete('cascade');
 
             $table->foreign('character_type_id')
@@ -33,7 +34,7 @@ class CreateAvisoDetalleTable extends Migration
                 ->references('id')->on('language')
                 ->onDelete('cascade');
 
-            $table->unique(['aviso_id', 'language_id'], 'aviso_language_UNIQUE');
+            $table->unique(['notice_id', 'language_id'], 'notice_language_UNIQUE');
         });
     }
 
@@ -44,6 +45,6 @@ class CreateAvisoDetalleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aviso_detalle');
+        Schema::dropIfExists('notice_detail');
     }
 }

@@ -14,16 +14,16 @@ class CreateAvisoCartaTable extends Migration
     public function up()
     {
         Schema::create('aviso_carta', function (Blueprint $table) {
-            $table->integer('aviso_id')->unsigned();
-            $table->integer('carta_id')->unsigned();
+            $table->integer('notice_id')->unsigned();
+            $table->integer('chart_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('aviso_id')
-                ->references('id')->on('aviso')
+            $table->foreign('notice_id')
+                ->references('id')->on('notice')
                 ->onDelete('cascade');
 
-            $table->foreign('carta_id')
-                ->references('id')->on('carta')
+            $table->foreign('chart_id')
+                ->references('id')->on('chart')
                 ->onDelete('cascade');
         });
     }

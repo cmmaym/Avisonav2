@@ -1,18 +1,22 @@
 <?php
 
-namespace AvisoNavAPI\Http\Controllers\Aviso;
+namespace AvisoNavAPI\Http\Controllers\Notice;
 
-use AvisoNavAPI\Aviso;
+use AvisoNavAPI\Notice;
 use AvisoNavAPI\AvisoDetalle;
-use AvisoNavAPI\Http\Requests\Aviso\StoreAviso;
+use AvisoNavAPI\Http\Requests\Notice\StoreNotice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
-use AvisoNavAPI\Http\Resources\AvisoResource;
+use AvisoNavAPI\Http\Resources\NoticeResource;
 use AvisoNavAPI\Http\Resources\AyudaResource;
+use AvisoNavAPI\Traits\Filter;
+use AvisoNavAPI\ModelFilters\Basic\NoticeFilter;
 
-class AvisoController extends Controller
+class NoticeController extends Controller
 {
+    use Filter;
+
     /**
      * Display a listing of the resource.
      *
@@ -21,25 +25,30 @@ class AvisoController extends Controller
     public function index()
     {
 
-        $collection = Aviso::with([
-                                'entidad',
-                                'avisoDetalle.tipoAviso',
-                                'avisoDetalle.tipoCaracter',
-                                'avisoDetalle.idioma',
-                                'carta'
-                            ])
-                            ->get();
+        $collection = Notice::filter(request()->all(), NoticeFilter::class)
+                            ->paginateFilter($this->perPage());
 
-        $collection->each(function($aviso){
-            $aviso->ayuda->each(function($ayuda){
-                $coordenada_id = $ayuda->pivot->coordenada_id;
-                $ayuda->load(['coordenada' => function($query) use ($coordenada_id){
-                    $query->where('id', $coordenada_id);
-                }]);
-            });
-        });
+        return NoticeResource::collection($collection);
+
+        // $collection = Aviso::with([
+        //                         'entidad',
+        //                         'avisoDetalle.tipoAviso',
+        //                         'avisoDetalle.tipoCaracter',
+        //                         'avisoDetalle.idioma',
+        //                         'carta'
+        //                     ])
+        //                     ->get();
+
+        // $collection->each(function($aviso){
+        //     $aviso->ayuda->each(function($ayuda){
+        //         $coordenada_id = $ayuda->pivot->coordenada_id;
+        //         $ayuda->load(['coordenada' => function($query) use ($coordenada_id){
+        //             $query->where('id', $coordenada_id);
+        //         }]);
+        //     });
+        // });
         
-        return AvisoResource::collection($collection);
+        // return AvisoResource::collection($collection);
     }
 
     /**

@@ -14,13 +14,13 @@ class CreateAvisoAyudaTable extends Migration
     public function up()
     {
         Schema::create('aviso_ayuda', function (Blueprint $table) {
-            $table->integer('aviso_id')->unsigned();
+            $table->integer('notice_id')->unsigned();
             $table->integer('ayuda_id')->unsigned();
             $table->integer('coordenada_id');
             $table->timestamps();
 
-            $table->foreign('aviso_id')
-                ->references('id')->on('aviso')
+            $table->foreign('notice_id')
+                ->references('id')->on('notice')
                 ->onDelete('cascade');
 
             $table->foreign('ayuda_id')
