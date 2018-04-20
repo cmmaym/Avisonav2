@@ -25,10 +25,11 @@ class DatabaseSeeder extends Seeder
         DB::statement('TRUNCATE TABLE chart_edition;');
         DB::statement('TRUNCATE TABLE notice;');
         DB::statement('TRUNCATE TABLE notice_detail;');
+        DB::statement('TRUNCATE TABLE coordinate;');
         DB::statement('TRUNCATE TABLE aid_type;');
         DB::statement('TRUNCATE TABLE aid;');
-        DB::statement('TRUNCATE TABLE coordenada;');
-        DB::statement('TRUNCATE TABLE coordenada_detalle;');
+        DB::statement('TRUNCATE TABLE aid_detail;');
+        DB::statement('TRUNCATE TABLE notice_aid;');
 
         // $this->call(UsersTableSeeder::class);
         $this->call(LanguageTableSeeder::class);
@@ -43,11 +44,12 @@ class DatabaseSeeder extends Seeder
         $this->call(ChartEditionTableSeeder::class);
         $this->call(NoticeTableSeeder::class);
         $this->call(NoticeDetailTableSeeder::class);
+        $this->call(CoordinateTableSeeder::class);
         $this->call(AidTypeTableSeeder::class);
         $this->call(AidTableSeeder::class);
+        $this->call(AidDetailTableSeeder::class);
+        $this->call(NoticeAidTableSeeder::class);
         // $this->call(AvisoCartaTableSeeder::class);
-        // $this->call(CoordenadaTableSeeder::class);
-        // $this->call(CoordenadaDetalleTableSeeder::class);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

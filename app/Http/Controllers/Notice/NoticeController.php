@@ -30,25 +30,6 @@ class NoticeController extends Controller
 
         return NoticeResource::collection($collection);
 
-        // $collection = Aviso::with([
-        //                         'entidad',
-        //                         'avisoDetalle.tipoAviso',
-        //                         'avisoDetalle.tipoCaracter',
-        //                         'avisoDetalle.idioma',
-        //                         'carta'
-        //                     ])
-        //                     ->get();
-
-        // $collection->each(function($aviso){
-        //     $aviso->ayuda->each(function($ayuda){
-        //         $coordenada_id = $ayuda->pivot->coordenada_id;
-        //         $ayuda->load(['coordenada' => function($query) use ($coordenada_id){
-        //             $query->where('id', $coordenada_id);
-        //         }]);
-        //     });
-        // });
-        
-        // return AvisoResource::collection($collection);
     }
 
     /**
@@ -57,134 +38,71 @@ class NoticeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAviso $request)
+    public function store(StoreNotice $request)
     {
-         $data = DB::transaction(function () use ($request) {
+        $notice = new Notice($request->only(['number', 'date', 'state']));
+        
+        
+        $periodo = (new \DateTime("now"))->format('Ym');
+        $notice->periodo = $periodo;
+        $notice->user = 'JMARDZ';
+        $notice->entity_id = $request->input('entity_id');
 
-             $date = new \DateTime('now');
+        $notice->parent_id = ($request->has('parent_id')) ? $request->input('parent_id') : null;
+        
+        // $notice->file_info = null;
 
-             //Creamos el encabezado del aviso
-             $entity = new Aviso($request->only(['num_aviso', 'fecha']));
-             $entity->entidad_id = $request->input('entidad_id');
-             $entity->user_id    = 1;
-             $entity->periodo    = $date->format('Ym');
-             $entity->save();
+        $notice->save();
 
-             $collection = collect($request->input('aviso'));
-
-             //Creamos una coleccion de AvisoDetalle
-             $avisoDetalleCollection = $collection->map(function($item){
-                return new AvisoDetalle($item);
-             });
-
-             $ayudaCollection = collect($request->input('ayuda'));
-
-             //Transformamos la coleccion de ayudas en un array de la siguiente forma:
-             //[(id de la ayuda) => ['coordenada_id' => (id de la coordenada)]]
-             //para porder almacenarlas en la relacion de muchos a muchos usando el metodo sync
-             $ayudaData = $ayudaCollection->mapWithKeys(function ($item) {
-                 return [$item['id'] => ['coordenada_id' => $item['coordenada_id']]];
-             });
-
-             $entity->avisoDetalle()->saveMany($avisoDetalleCollection);
-             $entity->carta()->sync($request->input('carta'));
-             $entity->ayuda()->sync($ayudaData);
-
-             return $entity;
-         });
-
-        return new AvisoResource($data);
+        return new NoticeResource($notice);
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \AvisoNavAPI\Aviso  $aviso
+     * @param  \AvisoNavAPI\Notice  $notice
      * @return \Illuminate\Http\Response
      */
-    public function show(Aviso $aviso)
+    public function show(Notice $notice)
     {
-        $aviso->ayudas->each(function($ayuda){
-            $coordenada_id = $ayuda->pivot->coordenada_id;
-            $ayuda->load(['coordenada' => function($query) use ($coordenada_id){
-                $query->where('id', $coordenada_id);
-            }]);
-        });
-
-        return new AvisoResource($aviso);
+        return new NoticeResource($notice);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \AvisoNavAPI\Aviso  $aviso
+     * @param  \AvisoNavAPI\Notice  $notice
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreAviso $request, Aviso $aviso)
+    public function update(StoreNotice $request, Notice $notice)
     {
-        $data = DB::transaction(function () use ($request, $aviso) {
+        $notice->fill($request->only(['number', 'date', 'state']));
+        $notice->user = 'JMARDZ';
+        $notice->entity_id = $request->input('entity_id');
 
-            $entityHasChange = false;
+        $notice->parent_id = ($request->has('parent_id')) ? $request->input('parent_id') : null;
 
-            $entity = $aviso->fill($request->only(['num_aviso', 'fecha', 'periodo', 'entidad_id']));
-
-            //Verificamos si el registro se mantuvo igual o no, es decir, si fue actualizado o no
-            if(!$entity->isClean()){
-                $entityHasChange = true;
-            }
-
-            $collection = collect($request->input('aviso'));
-            $collection->each(function($item) use (&$entityHasChange){
-                $entity = AvisoDetalle::find($item['id']);
-                $entity->fill($item);
-
-                if(!$entity->isClean()){
-                    $entityHasChange = true;
-                }
-
-                $entity->save();
-            });
-
-           $ayudaCollection = collect($request->input('ayuda'));
-
-            //Transformamos la coleccion de ayudas en un array de la siguiente forma:
-            //[(id de la ayuda) => ['coordenada_id' => (id coordenada)]]
-            //para porder almacenarlas en la relacion de muchos a muchos usando el metodo sync
-            $ayudaData = $ayudaCollection->mapWithKeys(function ($item) {
-                return [$item['id'] => ['coordenada_id' => $item['coordenada_id']]];
-            });
-
-            $entity->carta()->sync($request->input('carta'));
-            $entity->ayuda()->sync($ayudaData);
-
-            $entity->save();
-
-            if(!$entityHasChange){
-                return response()->json(['error' => ['title' => 'Debe por lo menos realizar un cambio para actualizar', 'status' => 422]], 422);
-            }
-
-            return $entity;
-        });
-
-        if(!$data instanceof Aviso){
-            return $data;
+        if($notice->isClean()){
+            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
         }
+        
+        $notice->save();
 
-        return new AvisoResource($data);
+        return new NoticeResource($notice);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \AvisoNavAPI\Aviso  $aviso
+     * @param  \AvisoNavAPI\Notice  $notice
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Aviso $aviso)
+    public function destroy(Notice $notice)
     {
-        $aviso->delete();
+        $notice->delete();
 
-        return new AvisoResource($aviso);
+        return new NoticeResource($notice);
     }
 }

@@ -32,9 +32,10 @@ class NoticeResource extends JsonResource
             'periodo'           => $this->periodo,
             'state'             => $this->state, 
             'entity'            => new EntityResource($this->entity),
-            // 'aviso_detalle'     => AvisoDetalleResource::collection($this->avisoDetalle),
-            // 'carta'             => $carta,
-            // 'ayuda'             => AyudaResource::collection($this->ayudas),
+            'links'             => [
+                'self'      =>  route('notice.show', ['id' => $this->id]),
+                'detail'    =>  route('notice.detail.index', ['id' => $this->id]),
+            ]
         ];
     }
 }

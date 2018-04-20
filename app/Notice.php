@@ -2,16 +2,18 @@
 
 namespace AvisoNavAPI;
 
+use AvisoNavAPI\Aid;
+use AvisoNavAPI\NoticeAid;
 use AvisoNavAPI\AvisoDetalle;
-use Illuminate\Database\Eloquent\Model;
 use EloquentFilter\Filterable;
+use Illuminate\Database\Eloquent\Model;
 
 class Notice extends Model
 {
     use Filterable;
 
     protected $table        = 'notice';
-    protected $fillable     = ['number', 'date'];
+    protected $fillable     = ['number', 'date', 'state'];
 
     public function entity(){
         return $this->belongsTo(Entity::class);
@@ -21,15 +23,11 @@ class Notice extends Model
         return $this->hasMany(NoticeDetail::class);
     }
 
-    // public function ayudas(){
+    public function aid(){
+        return $this->belongsToMany(Aid::class, 'notice_aid')
+                    ->withTimestamps()
+                    ->withPivot('aid_detail_id')
+                    ->using(NoticeAid::class);
+    }
 
-    //     $id = $this->id;
-
-    //     //A la ayuda le asignamos las coordenadas
-    //     //con respecto a la version asociada con el aviso
-    //     return $this->belongsToMany(Ayuda::class)
-    //                 ->withTimestamps()
-    //                 ->withPivot('coordenada_id')
-    //                 ->using(AvisoAyuda::class);
-    // }
 }

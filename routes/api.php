@@ -88,6 +88,22 @@ Route::resource('notice', 'Notice\NoticeController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
+Route::resource('notice.detail', 'Notice\NoticeDetailController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
+
+Route::resource('notice.aid', 'Notice\NoticeAidController')->only([
+    'index', 'store'
+]);
+
+Route::resource('aid', 'Aid\AidController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
+
+Route::resource('aid.detail', 'Aid\AidDetailController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
+
+
 // Route::resource('aviso.carta', 'Aviso\AvisoCartaController');
 
-// Route::resource('ayuda', 'Ayuda\AyudaController');

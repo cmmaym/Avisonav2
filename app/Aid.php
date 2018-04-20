@@ -2,13 +2,14 @@
 
 namespace AvisoNavAPI;
 
-use Illuminate\Database\Eloquent\Model;
+use AvisoNavAPI\Notice;
 use EloquentFilter\Filterable;
+use Illuminate\Database\Eloquent\Model;
 
 class Aid extends Model
 {
     use Filterable;
-    
+
     protected $table        = 'aid';
     protected $fillable     = [
         'number',
@@ -20,15 +21,24 @@ class Aid extends Model
         return $this->belongsTo(Location::class);
     }
 
-    public function AidDetail(){
+    public function aidDetail(){
         return $this->hasMany(AidDetail::class);
     }
 
-    
-    // public function aviso(){
-    //     return $this->belongsToMany(Aviso::class);
-    // }
-    
+    public function notice(){
+        return $this->belongsToMany(Notice::class);
+    }
+
+    //Obtenemos el detalle de la ayuda
+    //que corresponde al aviso
+    public function aidDetailNotice(){
+        return $this->hasOne(AidDetail::class)
+                    ->join('notice_aid', function($query){
+                        $query->on('aid_detail.aid_id', 'notice_aid.aid_id')
+                              ->on('notice_aid.aid_detail_id', 'aid_detail.id');
+                    });
+    }
+
     // public function coordenada(){
     //     return $this->hasOne(Coordenada::class)
     //                 ->join('aviso_ayuda', function($query){
