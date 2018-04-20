@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class CoordenadaTableSeeder extends Seeder
+class CoordinateTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class CoordenadaTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(AvisoNavAPI\Coordenada::class, 1)->create();
+        factory(AvisoNavAPI\Coordinate::class, 2)->create();
     }
 }
