@@ -34,7 +34,7 @@ class NoticeResource extends JsonResource
             'entity'            => new EntityResource($this->entity),
             'links'             => [
                 'self'      =>  route('notice.show', ['id' => $this->id]),
-                'detail'    =>  route('notice.detail.index', ['id' => $this->id]),
+                'detail'    =>  route('notice.noticeDetail.index', ['id' => $this->id]),
             ]
         ];
     }

@@ -22,7 +22,7 @@ class NoticeDetailResource extends JsonResource
             'state'             => $this->state,
             'character_type'    => new CharacterTypeResource($this->characterType),
             'links'             => [
-                'self'      =>  route('notice.detail.show', [$this->notice->id, $this->id]),
+                'self'      =>  route('notice.noticeDetail.show', [$this->notice->id, $this->id]),
             ]
         ];
     }

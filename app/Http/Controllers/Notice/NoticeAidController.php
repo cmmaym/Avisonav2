@@ -8,6 +8,7 @@ use AvisoNavAPI\Notice;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\ModelFilters\Basic\AidFilter;
 use AvisoNavAPI\Http\Resources\AidResource;
+use AvisoNavAPI\Aid;
 
 class NoticeAidController extends Controller
 {
@@ -26,14 +27,25 @@ class NoticeAidController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function update(Notice $notice, Aid $aid)
     {
-        //
+        $notice->aid()->attach($aid->id, ['aid_detail_id' => request()->input('aidDetail')]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \AvisoNavAPI\Notice  $notice
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Notice $notice, Aid $aid)
+    {
+        $notice->aid()->detach($aid->id);
     }
 
 }

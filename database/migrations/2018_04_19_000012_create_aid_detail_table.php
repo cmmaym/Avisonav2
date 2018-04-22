@@ -66,6 +66,6 @@ class CreateAidDetailTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coordinate_detail');
+        Schema::dropIfExists('aid_detail');
     }
 }

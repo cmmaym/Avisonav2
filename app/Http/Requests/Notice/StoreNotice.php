@@ -24,7 +24,7 @@ class StoreNotice extends FormRequest
     public function rules()
     {
         return [
-            'number'                    => 'required|max:100',
+            'number'                    => 'max:100',
             'date'                      => 'required|date',
             'state'                     => 'sometimes|required|in:A,I',
             'file_info'                 => 'sometimes|required|file',

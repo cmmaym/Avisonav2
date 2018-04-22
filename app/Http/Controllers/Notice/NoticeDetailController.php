@@ -51,10 +51,9 @@ class NoticeDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Notice $notice, $noticeDetail)
+    public function show($notice, NoticeDetail $noticeDetail)
     {
-        dd($noticeDetail);
-        // return new NoticeDetailResource($noticeDetail);
+         return new NoticeDetailResource($noticeDetail);
     }
 
     /**
@@ -64,9 +63,20 @@ class NoticeDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreNoticeDetail $request, $notice, NoticeDetail $noticeDetail)
     {
-        //
+        // dd($noticeDetail);
+        $noticeDetail->fill($request->only(['observation', 'state']));
+        $noticeDetail->character_type_id = $request->input('character_type_id');
+        $noticeDetail->language_id = $request->input('language_id');
+
+        if($noticeDetail->isClean()){
+            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+        }
+        
+        $noticeDetail->save();
+
+        return new NoticeDetailResource($noticeDetail);
     }
 
     /**
@@ -75,8 +85,10 @@ class NoticeDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($notice, NoticeDetail $noticeDetail)
     {
-        //
+        $noticeDetail->delete();
+
+        return new NoticeDetailResource($noticeDetail);
     }
 }
