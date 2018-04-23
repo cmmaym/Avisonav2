@@ -21,7 +21,16 @@ class NoticeAidController extends Controller
      */
     public function index(Notice $notice)
     {
-        $collection = $notice->aid()->filter(request()->all(), AidFilter::class)->paginateFilter($this->perPage());
+        $request = request();
+        $collection = $notice->aid()->filter(request()->all(), AidFilter::class)
+                                    ->with([
+                                        'aidDetail' => function($query) use ($request){
+                                            if($request->has('language')){
+                                                $query->where('language_id', $request->input('language'));
+                                            }
+                                        }
+                                    ])
+                                    ->paginateFilter($this->perPage());
 
         return AidResource::collection($collection);
     }

@@ -15,6 +15,10 @@ class AidDetailFilter extends ModelFilter
         return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($date, $date));
     }
 
+    public function language($language){
+        return $this->where('language_id', '=', $language);
+    }
+
     public function sort($column)
     {
         if(method_exists($this, $method = 'sortBy' . studly_case($column))) {

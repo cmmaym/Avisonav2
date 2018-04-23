@@ -3,7 +3,6 @@
 namespace AvisoNavAPI\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use AvisoNavAPI\CoordenadaDetalle;
 
 class CoordinateResource extends JsonResource
 {
@@ -25,9 +24,9 @@ class CoordinateResource extends JsonResource
             'created_at'        => $this->created_at->format('Y-m-d'),
             'updated_at'        => $this->updated_at->format('Y-m-d'),
             'state'             => $this->state,
-            // 'links'              => [
-            //     'self'  =>  route('aid.show', ['id' => $this->id])
-            // ]
+            'links'             => [
+                'self'  =>  route('coordinate.show', ['id' => $this->id])
+            ]
         ];
     }
 }

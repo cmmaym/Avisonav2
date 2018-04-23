@@ -8,6 +8,7 @@ use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\ModelFilters\Basic\ChartFilter;
 use AvisoNavAPI\Http\Resources\ChartResource;
+use AvisoNavAPI\Http\Requests\Chart\StoreChart;
 
 class ChartController extends Controller
 {
@@ -33,9 +34,14 @@ class ChartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreChart $request)
     {
-        //
+        $chart = new Chart($request->only(['number', 'purpose', 'state']));
+        $chart->user = 'JMARDZ';
+        $chart->save();
+
+        return new ChartResource($chart);
+
     }
 
     /**
@@ -44,9 +50,9 @@ class ChartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Chart $chart)
     {
-        //
+        return new ChartResource($chart);
     }
 
     /**
@@ -56,9 +62,17 @@ class ChartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreChart $request, Chart $chart)
     {
-        //
+        $chart->fill($request->only(['number', 'purpose', 'state']));
+        $chart->user = 'JMARDZ';
+        $chart->save();
+
+        if($chart->isClean()){
+            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+        }
+
+        return new ChartResource($chart);
     }
 
     /**
@@ -67,8 +81,10 @@ class ChartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Chart $chart)
     {
-        //
+        $chart->delete();
+
+        return new ChartResource($chart);
     }
 }

@@ -21,12 +21,14 @@ use Illuminate\Support\Facades\Route;
 Route::resource('language', 'Language\LanguageController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
-Route::resource('language.aviso', 'Language\LanguageAvisoController')->only([
-    'index'
+
+Route::resource('language.notice', 'Language\LanguageNoticeController')->only([
+    'show'
 ]);
-Route::resource('language.aviso.ayuda', 'Language\LanguageAvisoAyudaController')->only([
-    'index'
-]);
+
+// Route::resource('language.aviso.ayuda', 'Language\LanguageAvisoAyudaController')->only([
+//     'index'
+// ]);
 
 Route::resource('entity', 'Entity\EntityController')->only([
     'index', 'show', 'store', 'update', 'destroy'
@@ -80,9 +82,9 @@ Route::resource('chart', 'Chart\ChartController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
-// Route::resource('chartEdition', 'ChartEdition\ChartEditionController')->only([
-//     'index', 'show', 'store', 'update', 'destroy'
-// ]);
+Route::resource('chart.chartEdition', 'Chart\ChartEditionController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
 
 Route::resource('notice', 'Notice\NoticeController')->only([
     'index', 'show', 'store', 'update', 'destroy'
@@ -101,6 +103,10 @@ Route::resource('aid', 'Aid\AidController')->only([
 ]);
 
 Route::resource('aid.aidDetail', 'Aid\AidDetailController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
+
+Route::resource('coordinate', 'Coordinate\CoordinateController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
 

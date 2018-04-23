@@ -39,11 +39,10 @@ class Aid extends Model
                     });
     }
 
-    // public function coordenada(){
-    //     return $this->hasOne(Coordenada::class)
-    //                 ->join('aviso_ayuda', function($query){
-    //                     $query->on('coordenada.ayuda_id', 'aviso_ayuda.ayuda_id')
-    //                           ->on('aviso_ayuda.coordenada_id', 'coordenada.id');
-    //                 });
-    // }
+    public function chart(){
+        return $this->belongsToMany(Chart::class)
+                    ->withTimestamps()
+                    ->withPivot(['aid_detail_id', 'chart_edition_id']);
+    }
+
 }
