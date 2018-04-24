@@ -3,13 +3,16 @@
 namespace AvisoNavAPI\Http\Controllers\LightType;
 
 use AvisoNavAPI\LightType;
+use AvisoNavAPI\LightTypeLang;
+use AvisoNavAPI\Traits\Filter;
 use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\LightTypeResource;
-use AvisoNavAPI\Http\Requests\LightType\StoreLightType;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\ModelFilters\Basic\LightTypeFilter;
+use AvisoNavAPI\Http\Resources\LightTypeLangResource;
+use AvisoNavAPI\Http\Requests\LightType\StoreLightType;
+use AvisoNavAPI\ModelFilters\Basic\LightTypeLangFilter;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class LightTypeController extends Controller
 {
@@ -18,35 +21,36 @@ class LightTypeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \AvisoNavAPI\Http\Resources\LightTypeResource
+     * @return \AvisoNavAPI\Http\Resources\LightTypeLangResource
      */
     public function index()
     {
-        $collection = LightType::where('parent_id', null)->filter(request()->all(), LightTypeFilter::class)->paginateFilter($this->perPage());
+        $collection = LightTypeLang::filter(request()->all(), LightTypeLangFilter::class)
+                                   ->with(['lightType']) 
+                                   ->paginateFilter($this->perPage());
 
-        return LightTypeResource::collection($collection);
+        return LightTypeLangResource::collection($collection);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \AvisoNavAPI\Http\Requests\TipoLuz\StoreLightType  $request
+     * @param  \AvisoNavAPI\Http\Requests\LightType\StoreLightType  $request
      * @return \AvisoNavAPI\Http\Resources\LightTypeResource
      */
     public function store(StoreLightType $request)
     {
-        $colorType = new LightType($request->only(['class', 'alias', 'description', 'illustration', 'state']));
-        $colorType->language_id = $request->input('language_id');
-        $colorType->save();
+        $lightType = new LightType($request->only(['illustration']));
+        $lightType->save();
         
-        return new LightTypeResource($colorType); 
+        return new LightTypeResource($lightType); 
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \AvisoNavAPI\LightType $lightType
-     * @return \AvisoNavAPI\Http\ResourcesLightTypeResource
+     * @return \AvisoNavAPI\Http\Resources\LightTypeResource
      */
     public function show(LightType $lightType)
     {
@@ -62,16 +66,7 @@ class LightTypeController extends Controller
      */
     public function update(StoreLightType $request, LightType $lightType)
     {
-        $lightType->fill($request->only(['class', 'alias', 'description', 'illustration', 'state']));
-
-        //Si es un child validamos que no puedan cambiar su idioma
-        //por el mismo idioma que tenga el su parent
-        if(!is_null($lightType->parent_id)){
-            $parent = $lightType->parent;
-            if($language_id = $request->input('language_id') != $parent->language_id){
-                $lightType->language_id = $language_id;
-            }
-        }
+        $lightType->fill($request->only(['illustration', 'state']));
         
         if($lightType->isClean()){
             return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);

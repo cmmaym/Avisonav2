@@ -10,17 +10,10 @@ class LightType extends Model
     use Filterable;
 
     protected $table        = 'light_type';
-    protected $fillable     = ['class', 'alias', 'description', 'illustration', 'state'];
+    protected $fillable     = ['illustration', 'state'];
 
-    public function language(){
-        return $this->belongsTo(Language::class);
+    public function lightTypeLangs(){
+        return $this->hasMany(LightTypeLang::class);
     }
 
-    public function lightType(){
-        return $this->hasMany(LightType::class, 'parent_id', 'id');
-    }
-
-    public function parent(){
-        return $this->belongsTo(LightType::class);
-    }
 }

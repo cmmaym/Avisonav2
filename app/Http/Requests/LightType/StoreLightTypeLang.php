@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Requests\LightType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreLightType extends FormRequest
+class StoreLightTypeLang extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,10 @@ class StoreLightType extends FormRequest
     public function rules()
     {
         return [
-            'illustration'    => 'nullable',
-            'state'           => 'sometimes|required|in:A,I'
+            'class'           => 'required|max:100',
+            'alias'           => 'required|max:45',
+            'description'     => 'required',
+            'language_id'     => 'required|exists:language,id'
         ];
     }
 
@@ -38,7 +40,8 @@ class StoreLightType extends FormRequest
     {
         return [
             'required'              =>  'El campo :attribute es requerido',
-            'in'                    =>  'El valor seleccionado para el campo :attribute es invalido'
+            'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
+            'exists'                =>  'El valor seleccionado para el campo :attribute es invalido'
         ];
     }
 }

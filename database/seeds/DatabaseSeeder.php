@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         DB::statement('TRUNCATE TABLE location;');
         DB::statement('TRUNCATE TABLE color_type;');
         DB::statement('TRUNCATE TABLE light_type;');
+        DB::statement('TRUNCATE TABLE light_type_lang;');
         DB::statement('TRUNCATE TABLE character_type;');
         DB::statement('TRUNCATE TABLE chart;');
         DB::statement('TRUNCATE TABLE chart_edition;');
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
         DB::statement('TRUNCATE TABLE notice_detail;');
         DB::statement('TRUNCATE TABLE coordinate;');
         DB::statement('TRUNCATE TABLE aid_type;');
+        DB::statement('TRUNCATE TABLE aid_type_lang;');
         DB::statement('TRUNCATE TABLE aid;');
         DB::statement('TRUNCATE TABLE aid_detail;');
         DB::statement('TRUNCATE TABLE notice_aid;');
@@ -43,6 +45,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LocationTableSeeder::class);
         $this->call(ColorTypeTableSeeder::class);
         $this->call(LightTypeTableSeeder::class);
+        $this->call(LightTypeLangTableSeeder::class);
         $this->call(CharacterTypeTableSeeder::class);
         $this->call(ChartTableSeeder::class);
         $this->call(ChartEditionTableSeeder::class);
@@ -50,6 +53,7 @@ class DatabaseSeeder extends Seeder
         $this->call(NoticeDetailTableSeeder::class);
         $this->call(CoordinateTableSeeder::class);
         $this->call(AidTypeTableSeeder::class);
+        $this->call(AidTypeLangTableSeeder::class);
         $this->call(AidTableSeeder::class);
         $this->call(AidDetailTableSeeder::class);
         $this->call(NoticeAidTableSeeder::class);

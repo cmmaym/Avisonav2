@@ -78,8 +78,8 @@ Route::resource('lightType', 'lightType\lightTypeController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
-Route::resource('lightType.child', 'lightType\lightTypeChildController')->only([
-    'index', 'store'
+Route::resource('lightType.lightTypeLang', 'lightType\lightTypeLangController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
 ]);
 
 
