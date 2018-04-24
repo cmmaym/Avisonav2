@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         DB::statement('TRUNCATE TABLE zone_lang;');
         DB::statement('TRUNCATE TABLE location;');
         DB::statement('TRUNCATE TABLE color_type;');
+        DB::statement('TRUNCATE TABLE color_type_lang;');
         DB::statement('TRUNCATE TABLE light_type;');
         DB::statement('TRUNCATE TABLE light_type_lang;');
         DB::statement('TRUNCATE TABLE character_type;');
@@ -44,6 +45,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ZoneLangTableSeeder::class);
         $this->call(LocationTableSeeder::class);
         $this->call(ColorTypeTableSeeder::class);
+        $this->call(ColorTypeLangTableSeeder::class);
         $this->call(LightTypeTableSeeder::class);
         $this->call(LightTypeLangTableSeeder::class);
         $this->call(CharacterTypeTableSeeder::class);

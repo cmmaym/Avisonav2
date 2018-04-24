@@ -68,8 +68,8 @@ Route::resource('colorType', 'ColorType\ColorTypeController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
-Route::resource('colorType.child', 'ColorType\ColorTypeChildController')->only([
-    'index', 'store'
+Route::resource('colorType.colorTypeLang', 'ColorType\ColorTypeLangController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
 ]);
 
 

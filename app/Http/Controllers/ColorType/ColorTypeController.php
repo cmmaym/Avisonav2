@@ -3,13 +3,14 @@
 namespace AvisoNavAPI\Http\Controllers\ColorType;
 
 use AvisoNavAPI\ColorType;
-use Illuminate\Support\Facades\DB;
+use AvisoNavAPI\ColorTypeLang;
+use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\ColorTypeResource;
-use AvisoNavAPI\Http\Requests\ColorType\StoreColorType;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\ModelFilters\Basic\ColorTypeFilter;
+use AvisoNavAPI\Http\Resources\ColorTypeLangResource;
+use AvisoNavAPI\Http\Requests\ColorType\StoreColorType;
+use AvisoNavAPI\ModelFilters\Basic\ColorTypeLangFilter;
 
 class ColorTypeController extends Controller
 {
@@ -18,25 +19,26 @@ class ColorTypeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \AvisoNavAPI\Http\Resources\ColorTypeResource
+     * @return \AvisoNavAPI\Http\Resources\ColorTypeLangResource
      */
     public function index()
     {
-        $collection = ColorType::where('parent_id', null)->filter(request()->all(), ColorTypeFilter::class)->paginateFilter($this->perPage());
+        $collection = ColorTypeLang::filter(request()->all(), ColorTypeLangFilter::class)
+                               ->with(['colorType'])
+                               ->paginateFilter($this->perPage());
 
-        return ColorTypeResource::collection($collection);
+        return ColorTypeLangResource::collection($collection);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \AvisoNavAPI\Http\Requests\TipoColor\StoreColorType  $request
+     * @param  \AvisoNavAPI\Http\Requests\ColorType\StoreColorType  $request
      * @return \AvisoNavAPI\Http\Resources\ColorTypeResource
      */
     public function store(StoreColorType $request)
     {
-        $colorType = new ColorType($request->only(['color', 'alias', 'state']));
-        $colorType->language_id = $request->input('language_id');
+        $colorType = new ColorType();
         $colorType->save();
         
         return new ColorTypeResource($colorType);
@@ -56,22 +58,13 @@ class ColorTypeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \AvisoNavAPI\Http\Requests\TipoColor\StoreColorType  $request
+     * @param  \AvisoNavAPI\Http\Requests\ColorType\StoreColorType  $request
      * @param  \AvisoNavAPI\ColorType $colorType
      * @return \AvisoNavAPI\Http\Resources\ColorTypeResource
      */
     public function update(StoreColorType $request, ColorType $colorType)
     {
-        $colorType->fill($request->only(['color', 'alias', 'state']));
-
-        //Si es un child validamos que no puedan cambiar su idioma
-        //por el mismo idioma que tenga el su parent
-        if(!is_null($colorType->parent_id)){
-            $parent = $colorType->parent;
-            if($language_id = $request->input('language_id') != $parent->language_id){
-                $colorType->language_id = $language_id;
-            }
-        }
+        $colorType->fill($request->only(['state']));
         
         if($colorType->isClean()){
             return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
@@ -94,4 +87,5 @@ class ColorTypeController extends Controller
 
         return new ColorTypeResource($colorType);
     }
+
 }

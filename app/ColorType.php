@@ -10,17 +10,10 @@ class ColorType extends Model
     use Filterable;
     
     protected $table        = 'color_type';
-    protected $fillable     = ['color', 'alias', 'state'];
+    protected $fillable     = ['state'];
 
-    public function language(){
-        return $this->belongsto(Language::class);
+    public function colorTypeLangs(){
+        return $this->hasMany(ColorTypeLang::class);
     }
 
-    public function colorType(){
-        return $this->hasMany(ColorType::class, 'parent_id', 'id');
-    }
-
-    public function parent(){
-        return $this->belongsTo(ColorType::class);
-    }
 }
