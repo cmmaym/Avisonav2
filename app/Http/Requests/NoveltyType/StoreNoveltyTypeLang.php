@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Requests\NoveltyType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreNoveltyType extends FormRequest
+class StoreNoveltyTypeLang extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class StoreNoveltyType extends FormRequest
     public function rules()
     {
         return [
-            'state'        => 'sometimes|required|in:A,I'
+            'name'         => 'required|max:100',
+            'language_id'  => 'required|integer|exists:language,id',
         ];
     }
 
@@ -37,7 +38,7 @@ class StoreNoveltyType extends FormRequest
     {
         return [
             'required'              =>  'El campo :attribute es requerido',
-            'in'                    =>  'El valor seleccionado para el campo :attribute es invalido'
+            'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
         ];
     }
 }

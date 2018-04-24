@@ -42,8 +42,8 @@ Route::resource('noveltyType', 'NoveltyType\NoveltyTypeController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
-Route::resource('noveltyType.child', 'NoveltyType\NoveltyTypeChildController')->only([
-    'index', 'store'
+Route::resource('noveltyType.noveltyTypeLang', 'NoveltyType\NoveltyTypeLangController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
 ]);
 
 

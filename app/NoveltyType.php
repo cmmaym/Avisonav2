@@ -10,17 +10,10 @@ class NoveltyType extends Model
     use Filterable;
 
     protected $table        = 'novelty_type';
-    protected $fillable     = ['name', 'state'];
-
-    public function language(){
-        return $this->belongsTo(Language::class);
-    }
+    protected $fillable     = ['state'];
     
-    public function noveltyType(){
-        return $this->hasMany(NoveltyType::class, 'parent_id', 'id');
+    public function noveltyTypeLangs(){
+        return $this->hasMany(NoveltyTypeLang::class);
     }
 
-    public function parent(){
-        return $this->belongsTo(NoveltyType::class, 'parent_id', 'id');
-    }
 }
