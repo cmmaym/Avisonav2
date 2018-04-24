@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Requests\Zone;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreZone extends FormRequest
+class StoreZoneLang extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,9 @@ class StoreZone extends FormRequest
     public function rules()
     {
         return [
-            'state'         => 'sometimes|required|in:A,I'
+            'name'          => 'required|max:100',
+            'alias'         => 'required|max:45',
+            'language_id'   => 'required|exists:language,id',
         ];
     }
 
@@ -37,7 +39,9 @@ class StoreZone extends FormRequest
     {
         return [
             'required'              =>  'El campo :attribute es requerido',
+            'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
             'in'                    =>  'El valor seleccionado para el campo :attribute es invalido',
+            'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
         ];
     }
 }

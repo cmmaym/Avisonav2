@@ -3,13 +3,14 @@
 namespace AvisoNavAPI\Http\Controllers\Zone;
 
 use AvisoNavAPI\Zone;
-use Illuminate\Support\Facades\DB;
+use AvisoNavAPI\ZoneLang;
+use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\ZoneResource;
 use AvisoNavAPI\Http\Requests\Zone\StoreZone;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use AvisoNavAPI\ModelFilters\Basic\ZoneFilter;
-use AvisoNavAPI\Traits\Filter;
+use AvisoNavAPI\ModelFilters\Basic\ZoneLangFilter;
+use AvisoNavAPI\Http\Resources\ZoneLangResource;
 
 class ZoneController extends Controller
 {
@@ -22,21 +23,22 @@ class ZoneController extends Controller
      */
     public function index()
     {
-        $collection = Zone::where('parent_id', null)->filter(request()->all(), ZoneFilter::class)->paginateFilter($this->perPage());
+        $collection = ZoneLang::filter(request()->all(), ZoneLangFilter::class)
+                              ->with(['zone'])
+                              ->paginateFilter($this->perPage());
 
-        return ZoneResource::collection($collection);
+        return ZoneLangResource::collection($collection);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \AvisoNavAPI\Http\Requests\Zona\StoreZone  $request
+     * @param  \AvisoNavAPI\Http\Requests\Zone\StoreZone  $request
      * @return \AvisoNavAPI\Http\Resources\ZoneResource
      */
     public function store(StoreZone $request)
     {
-        $zone = new Zone($request->only(['name', 'alias', 'state']));
-        $zone->language_id = $request->input('language_id');
+        $zone = new Zone();
         $zone->save();
 
         return new ZoneResource($zone);
@@ -56,22 +58,13 @@ class ZoneController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \AvisoNavAPI\Http\Requests\Zona\StoreZone  $request
-     * @param  \AvisoNavAPI\Zone  $zona
+     * @param  \AvisoNavAPI\Http\Requests\Zone\StoreZone  $request
+     * @param  \AvisoNavAPI\Zone  $zone
      * @return \AvisoNavAPI\Http\Resources\ZoneResource
      */
     public function update(StoreZone $request, Zone $zone)
     {
-        $zone->fill($request->only(['name', 'alias', 'state']));
-
-        //Si es un child validamos que no puedan cambiar su idioma
-        //por el mismo idioma que tenga el su parent
-        if(!is_null($zone->parent_id)){
-            $parent = $zone->parent;
-            if($language_id = $request->input('language_id') != $parent->language_id){
-                $zone->language_id = $language_id;
-            }
-        }
+        $zone->fill($request->only(['state']));
         
         if($zone->isClean()){
             return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
