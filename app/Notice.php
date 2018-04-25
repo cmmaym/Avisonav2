@@ -19,8 +19,12 @@ class Notice extends Model
         return $this->belongsTo(Entity::class);
     }
 
-    public function noticeDetail(){
-        return $this->hasMany(NoticeDetail::class);
+    public function characterType(){
+        return $this->belongsTo(CharacterType::Class);
+    }
+
+    public function noticeLangs(){
+        return $this->hasMany(NoticeLang::class);
     }
 
     public function aid(){

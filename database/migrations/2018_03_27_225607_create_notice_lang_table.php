@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNoticeDetailTable extends Migration
+class CreateNoticeLangTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,16 @@ class CreateNoticeDetailTable extends Migration
      */
     public function up()
     {
-        Schema::create('notice_detail', function (Blueprint $table) {
+        Schema::create('notice_lang', function (Blueprint $table) {
             $table->increments('id');
             $table->mediumText('observation')->comment('Observacion acerca del aviso');
             $table->timestamps();
             $table->enum('state',array('A','I'))->default('A')->comment('Estado del aviso detalle. Puede ser Activo, Inactivo');
             $table->integer('notice_id')->unsigned();            
-            $table->integer('character_type_id')->unsigned();
             $table->integer('language_id')->unsigned();
 
             $table->foreign('notice_id')
                 ->references('id')->on('notice')
-                ->onDelete('cascade');
-
-            $table->foreign('character_type_id')
-                ->references('id')->on('character_type')
                 ->onDelete('cascade');
 
             $table->foreign('language_id')
@@ -45,6 +40,6 @@ class CreateNoticeDetailTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notice_detail');
+        Schema::dropIfExists('notice_lang');
     }
 }

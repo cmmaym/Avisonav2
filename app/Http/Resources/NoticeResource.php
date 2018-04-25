@@ -18,23 +18,20 @@ class NoticeResource extends JsonResource
      */
     public function toArray($request)
     {
-
-    // $carta = (new CartaCollection($this->manualPaginate($this->carta, route('aviso.carta.index', ['id' => $this->id]))))
-    //          ->toResponse($request)
-    //          ->getData();
-
         return [
-            'id'                => $this->id,
-            'number'            => $this->number,  
-            'date'              => $this->date,
-            'created_at'        => $this->created_at->format('Y-m-d'),
-            'updated_at'        => $this->updated_at->format('Y-m-d'),
-            'periodo'           => $this->periodo,
-            'state'             => $this->state, 
-            'entity'            => new EntityResource($this->entity),
-            'links'             => [
+            'id'                        => $this->id,
+            'number'                    => $this->number,
+            'date'                      => $this->date,
+            'created_at'                => $this->created_at->format('Y-m-d'),
+            'updated_at'                => $this->updated_at->format('Y-m-d'),
+            'periodo'                   => $this->periodo,
+            'state'                     => $this->state,
+            'file_info'                 => $this->file_info,
+            'entity'                    => new EntityResource($this->entity),
+            'characterType'             => new CharacterTypeLangResource($this->characterType->characterTypeLang),
+            'links'                     => [
                 'self'      =>  route('notice.show', ['id' => $this->id]),
-                'detail'    =>  route('notice.noticeDetail.index', ['id' => $this->id, 'language'=> $request->input('language')]),
+                'noticeLang'    =>  route('notice.noticeLang.index', ['id' => $this->id]),
             ]
         ];
     }

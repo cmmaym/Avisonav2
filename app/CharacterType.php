@@ -15,5 +15,9 @@ class CharacterType extends Model
     public function characterTypeLangs(){
         return $this->hasMany(CharacterTypeLang::class);
     }
+    
+    public function characterTypeLang(){
+        return $this->hasOne(CharacterTypeLang::class);
+    }
 
 }

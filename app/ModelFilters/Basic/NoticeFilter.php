@@ -22,9 +22,9 @@ class NoticeFilter extends ModelFilter
         return $this->related('entity', 'entity.name', 'like', "%$name%");
     }
     
-    public function observation($observation){
-        return $this->related('noticeDetail', 'notice_detail.observation', 'like', "%$observation%");
-    }
+    // public function observation($observation){
+    //     return $this->related('noticeDetail', 'notice_detail.observation', 'like', "%$observation%");
+    // }
 
     public function sort($column)
     {

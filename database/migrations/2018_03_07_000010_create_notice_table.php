@@ -23,10 +23,15 @@ class CreateNoticeTable extends Migration
             $table->longText('file_info')->nullable()->comment('Es la ruta de un archivo con informacion extra que se le puede adjuntar aun aviso. independientemente del caracter del mismo.');
             $table->string('user', 100)->comment('Nombre de usuario que manipulo le registro');
             $table->integer('entity_id')->unsigned();
+            $table->integer('character_type_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
 
             $table->foreign('entity_id')
                   ->references('id')->on('entity')
+                  ->onDelete('cascade');
+
+            $table->foreign('character_type_id')
+                  ->references('id')->on('character_type')
                   ->onDelete('cascade');
             
             $table->foreign('parent_id')
@@ -44,6 +49,8 @@ class CreateNoticeTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('notice');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

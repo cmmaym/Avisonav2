@@ -108,7 +108,7 @@ Route::resource('notice', 'Notice\NoticeController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
-Route::resource('notice.noticeDetail', 'Notice\NoticeDetailController')->only([
+Route::resource('notice.noticeLang', 'Notice\NoticeLangController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 

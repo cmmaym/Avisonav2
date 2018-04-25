@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         DB::statement('TRUNCATE TABLE chart;');
         DB::statement('TRUNCATE TABLE chart_edition;');
         DB::statement('TRUNCATE TABLE notice;');
-        DB::statement('TRUNCATE TABLE notice_detail;');
+        DB::statement('TRUNCATE TABLE notice_lang;');
         DB::statement('TRUNCATE TABLE coordinate;');
         DB::statement('TRUNCATE TABLE aid_type;');
         DB::statement('TRUNCATE TABLE aid_type_lang;');
@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ChartTableSeeder::class);
         $this->call(ChartEditionTableSeeder::class);
         $this->call(NoticeTableSeeder::class);
-        $this->call(NoticeDetailTableSeeder::class);
+        $this->call(NoticeLangTableSeeder::class);
         $this->call(CoordinateTableSeeder::class);
         $this->call(AidTypeTableSeeder::class);
         $this->call(AidTypeLangTableSeeder::class);
