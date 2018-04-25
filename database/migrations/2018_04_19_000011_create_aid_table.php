@@ -22,6 +22,9 @@ class CreateAidTable extends Migration
             $table->string('user', 100)->comment('Nombre de usuario que manipulo le registro');
             $table->integer('aid_type_id')->unsigned();
             $table->integer('location_id')->unsigned();
+            $table->integer('light_type_id')->unsigned();
+            $table->integer('color_type_id')->unsigned();
+            $table->integer('novelty_type_id')->unsigned();
 
             $table->foreign('aid_type_id')
                   ->references('id')->on('aid_type')
@@ -30,6 +33,18 @@ class CreateAidTable extends Migration
             $table->foreign('location_id')
                   ->references('id')->on('location')
                   ->onDelete('cascade');
+
+            $table->foreign('light_type_id')
+                ->references('id')->on('light_type')
+                ->onDelete('cascade');
+            
+            $table->foreign('color_type_id')
+                ->references('id')->on('color_type')
+                ->onDelete('cascade');
+            
+            $table->foreign('novelty_type_id')
+                ->references('id')->on('novelty_type')
+                ->onDelete('cascade');
 
             $table->unique(['number', 'location_id'], 'number_location_UNIQUE');
         });

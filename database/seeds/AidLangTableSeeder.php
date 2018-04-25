@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class AidDetailTableSeeder extends Seeder
+class AidLangTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class AidDetailTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('aid_detail')->insert([
+        DB::table('aid_lang')->insert([
             [
                 'description'      => 'Español',
                 'observation'      => 'Español',
@@ -19,11 +19,7 @@ class AidDetailTableSeeder extends Seeder
                 'updated_at'       => new \DateTime('now'),
                 'aid_id'           => 1,
                 'coordinate_id'    => 1,
-                'light_type_id'    => 1,
-                'color_type_id'    => 1,
-                'novelty_type_id'  => 3,
                 'language_id'      => 1,
-                'parent_id'        => null
             ],
             [
                 'description'      => 'Ingles',
@@ -32,11 +28,7 @@ class AidDetailTableSeeder extends Seeder
                 'updated_at'       => new \DateTime('now'),
                 'aid_id'           => 1,
                 'coordinate_id'    => 1,
-                'light_type_id'    => 2,
-                'color_type_id'    => 2,
-                'novelty_type_id'  => 4,
                 'language_id'      => 2,
-                'parent_id'        => 1
             ],
             [
                 'description'      => 'Español',
@@ -45,11 +37,7 @@ class AidDetailTableSeeder extends Seeder
                 'updated_at'       => new \DateTime('now'),
                 'aid_id'           => 2,
                 'coordinate_id'    => 2,
-                'light_type_id'    => 3,
-                'color_type_id'    => 3,
-                'novelty_type_id'  => 5,
                 'language_id'      => 1,
-                'parent_id'        => null
             ],
             [
                 'description'      => 'Ingles',
@@ -58,11 +46,7 @@ class AidDetailTableSeeder extends Seeder
                 'updated_at'       => new \DateTime('now'),
                 'aid_id'           => 2,
                 'coordinate_id'    => 2,
-                'light_type_id'    => 4,
-                'color_type_id'    => 4,
-                'novelty_type_id'  => 5,
                 'language_id'      => 2,
-                'parent_id'        => 3
             ],
         ]);
     }

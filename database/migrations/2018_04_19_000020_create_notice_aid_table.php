@@ -16,7 +16,7 @@ class CreateNoticeAidTable extends Migration
         Schema::create('notice_aid', function (Blueprint $table) {
             $table->integer('notice_id')->unsigned();
             $table->integer('aid_id')->unsigned();
-            $table->integer('aid_detail_id');
+            $table->integer('aid_lang_id');
             $table->timestamps();
 
             $table->foreign('notice_id')

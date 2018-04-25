@@ -15,5 +15,9 @@ class LightType extends Model
     public function lightTypeLangs(){
         return $this->hasMany(LightTypeLang::class);
     }
+    
+    public function lightTypeLang(){
+        return $this->hasOne(LightTypeLang::class);
+    }
 
 }

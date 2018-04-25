@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         DB::statement('TRUNCATE TABLE aid_type;');
         DB::statement('TRUNCATE TABLE aid_type_lang;');
         DB::statement('TRUNCATE TABLE aid;');
-        DB::statement('TRUNCATE TABLE aid_detail;');
+        DB::statement('TRUNCATE TABLE aid_lang;');
         DB::statement('TRUNCATE TABLE notice_aid;');
 
         // $this->call(UsersTableSeeder::class);
@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AidTypeTableSeeder::class);
         $this->call(AidTypeLangTableSeeder::class);
         $this->call(AidTableSeeder::class);
-        $this->call(AidDetailTableSeeder::class);
+        $this->call(AidLangTableSeeder::class);
         $this->call(NoticeAidTableSeeder::class);
         // $this->call(AvisoCartaTableSeeder::class);
 

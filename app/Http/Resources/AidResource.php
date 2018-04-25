@@ -13,7 +13,7 @@ class AidResource extends JsonResource
      * @return array
      */
     public function toArray($request)
-    {
+    { 
         return [
             'id'                => $this->id,
             'number'            => $this->number,
@@ -22,10 +22,10 @@ class AidResource extends JsonResource
             'updated_at'        => $this->updated_at->format('Y-m-d'),
             'state'             => $this->state,
             'location'          => new LocationResource($this->location),
-            'detail'            => AidDetailResource::collection($this->aidDetail),
-            'links'             => [
-                'self'  =>  route('aid.show', ['id' => $this->id])
-            ]
+            'lightType'        => new LightTypeLangResource($this->lightType->lightTypeLang),
+            // 'links'             => [
+            //     'self'  =>  route('aid.show', ['id' => $this->id])
+            // ]
         ];
     }
 }

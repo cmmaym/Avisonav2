@@ -24,7 +24,13 @@ class AidController extends Controller
      */
     public function index()
     {
-        $collection = Aid::filter(request()->all(), AidFilter::class)->paginateFilter($this->perPage());
+        $collection = Aid::filter(request()->all(), AidFilter::class)
+                         ->with([
+                             'lightType.lightTypeLang' => function($query){
+                                $query->where('language_id', 2);
+                              }
+                         ])
+                         ->paginateFilter($this->perPage());
 
         return AidResource::collection($collection);
     }
