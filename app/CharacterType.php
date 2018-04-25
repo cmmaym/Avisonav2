@@ -10,17 +10,10 @@ class CharacterType extends Model
     use Filterable;
     
     protected $table        = 'character_type';
-    protected $fillable     = ['name', 'state'];
+    protected $fillable     = ['state'];
 
-    public function language(){
-        return $this->belongsTo()(Language::class);
+    public function characterTypeLangs(){
+        return $this->hasMany(CharacterTypeLang::class);
     }
 
-    public function CharacterType(){
-        return $this->hasMany(CharacterType::class, 'parent_id', 'id');
-    }
-
-    public function parent(){
-        return $this->belongsTo(CharacterType::class);
-    }
 }

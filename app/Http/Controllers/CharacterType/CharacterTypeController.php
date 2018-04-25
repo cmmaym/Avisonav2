@@ -3,13 +3,14 @@
 namespace AvisoNavAPI\Http\Controllers\CharacterType;
 
 use AvisoNavAPI\CharacterType;
-use Illuminate\Support\Facades\DB;
+use AvisoNavAPI\Traits\Filter;
+use AvisoNavAPI\CharacterTypeLang;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\CharacterTypeResource;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use AvisoNavAPI\Http\Requests\CharacterType\StoreCharacterType;
-use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\ModelFilters\Basic\CharacterTypeFilter;
+use AvisoNavAPI\Http\Resources\CharacterTypeLangResource;
+use AvisoNavAPI\ModelFilters\Basic\CharacterTypeLangFilter;
+use AvisoNavAPI\Http\Requests\CharacterType\StoreCharacterType;
 
 class CharacterTypeController extends Controller
 {
@@ -18,25 +19,26 @@ class CharacterTypeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \AvisoNavAPI\Http\Resources\CharacterTypeResource
+     * @return \AvisoNavAPI\Http\Resources\CharacterTypeLangResource
      */
     public function index()
     {
-        $collection = CharacterType::where('parent_id', null)->filter(request()->all(), CharacterTypeFilter::class)->paginateFilter($this->perPage());
+        $collection = CharacterTypeLang::filter(request()->all(), CharacterTypeLangFilter::class)
+                                       ->with(['characterType']) 
+                                       ->paginateFilter($this->perPage());
 
-        return CharacterTypeResource::collection($collection);
+        return CharacterTypeLangResource::collection($collection);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \AvisoNavAPI\Http\Requests\TipoCaracter\StoreCharacterType  $request
+     * @param  \AvisoNavAPI\Http\Requests\CharacterType\StoreCharacterType  $request
      * @return \AvisoNavAPI\Http\Resources\CharacterTypeResource
      */
     public function store(StoreCharacterType $request)
     {
-        $characterType = new CharacterType($request->only(['name', 'state']));
-        $characterType->language_id = $request->input('language_id');
+        $characterType = new CharacterType();
         $characterType->save();
         
         return new CharacterTypeResource($characterType);
@@ -56,22 +58,13 @@ class CharacterTypeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \AvisoNavAPI\Http\Requests\TipoCaracter\StoreCharacterType  $request
+     * @param  \AvisoNavAPI\Http\Requests\CharacterType\StoreCharacterType  $request
      * @param  \AvisoNavAPI\CharacterType $characterType
      * @return \AvisoNavAPI\Http\Resources\CharacterTypeResource
      */
     public function update(StoreCharacterType $request, CharacterType $characterType)
     {
-        $characterType->fill($request->only(['name', 'state']));
-
-        //Si es un child validamos que no puedan cambiar su idioma
-        //por el mismo idioma que tenga el su parent
-        if(!is_null($characterType->parent_id)){
-            $parent = $characterType->parent;
-            if($language_id = $request->input('language_id') != $parent->language_id){
-                $characterType->language_id = $language_id;
-            }
-        }
+        $characterType->fill($request->only(['state']));
         
         if($characterType->isClean()){
             return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
@@ -94,4 +87,5 @@ class CharacterTypeController extends Controller
 
         return new CharacterTypeResource($characterType);
     }
+
 }

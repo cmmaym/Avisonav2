@@ -88,8 +88,8 @@ Route::resource('characterType', 'CharacterType\CharacterTypeController')->only(
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
-Route::resource('characterType.child', 'CharacterType\CharacterTypeChildController')->only([
-    'index', 'store'
+Route::resource('characterType.characterTypeLang', 'CharacterType\CharacterTypeLangController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
 ]);
 
 

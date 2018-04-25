@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Requests\CharacterType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCharacterType extends FormRequest
+class StoreCharacterTypeLang extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class StoreCharacterType extends FormRequest
     public function rules()
     {
         return [
-            'state'       => 'sometimes|required|in:A,I',
+            'name'        => 'required|max:100',
+            'language_id' => 'required|exists:language,id',
         ];
     }
 
@@ -37,7 +38,8 @@ class StoreCharacterType extends FormRequest
     {
         return [
             'required'              =>  'El campo :attribute es requerido',
-            'in'                    =>  'El valor seleccionado para el campo :attribute es invalido',
+            'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
+            'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
         ];
     }
 }
