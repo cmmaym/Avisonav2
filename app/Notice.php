@@ -27,6 +27,10 @@ class Notice extends Model
         return $this->hasMany(NoticeLang::class);
     }
 
+    public function noticeLang(){
+        return $this->hasOne(NoticeLang::class);
+    }
+
     public function aid(){
         return $this->belongsToMany(Aid::class, 'notice_aid')
                     ->withTimestamps()

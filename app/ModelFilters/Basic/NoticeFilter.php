@@ -6,7 +6,7 @@ use EloquentFilter\ModelFilter;
 
 class NoticeFilter extends ModelFilter
 {
-    public function notice($number){
+    public function number($number){
         return $this->where('number', 'like', "%$number%");
     }
     
@@ -22,9 +22,22 @@ class NoticeFilter extends ModelFilter
         return $this->related('entity', 'entity.name', 'like', "%$name%");
     }
     
-    // public function observation($observation){
-    //     return $this->related('noticeDetail', 'notice_detail.observation', 'like', "%$observation%");
-    // }
+    public function character($name){
+        $this->whereHas('characterType.characterTypeLang', function($query) use ($name) {
+            $query->where('name', 'like', "%$name%");
+        });
+    }
+
+    public function language($language){
+        $this->related('noticeLang', 'notice_lang.language_id', '=', $language);
+        $this->whereHas('characterType.characterTypeLang', function($query) use ($language) {
+            $query->where('language_id', $language);
+        });
+    }
+    
+    public function observation($observation){
+        return $this->related('noticeLang', 'notice_lang.observation', 'like', "%$observation%");
+    }
 
     public function sort($column)
     {
@@ -35,7 +48,7 @@ class NoticeFilter extends ModelFilter
         return $this->orderBy('id', $this->input('dir', 'desc'));
     }
 
-    public function sortByNotice()
+    public function sortByNumber()
     {
         return $this->orderBy('number', $this->input('dir', 'asc'));
     }
@@ -45,8 +58,12 @@ class NoticeFilter extends ModelFilter
         return $this->orderBy('date', $this->input('dir', 'asc'));
     }
     
-    public function sortByAlias()
+    public function sortByEntity()
     {
-        return $this->orderBy('alias', $this->input('dir', 'asc'));
+        $input = $this->input('dir', 'asc');
+
+        $this->join('entity', 'notice.entity_id', '=', 'entity.id')
+             ->orderBy('entity.name', $input)
+             ->select('notice.*');
     }
 }

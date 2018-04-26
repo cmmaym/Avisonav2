@@ -27,11 +27,12 @@ class NoticeResource extends JsonResource
             'periodo'                   => $this->periodo,
             'state'                     => $this->state,
             'file_info'                 => $this->file_info,
+            'characterType'             => $this->characterType->characterTypeLang->name,
+            'observation'               => $this->noticeLang->observation,
             'entity'                    => new EntityResource($this->entity),
-            'characterType'             => new CharacterTypeLangResource($this->characterType->characterTypeLang),
             'links'                     => [
-                'self'      =>  route('notice.show', ['id' => $this->id]),
-                'noticeLang'    =>  route('notice.noticeLang.index', ['id' => $this->id]),
+                'self'      =>  route('notice.show', ['id' => $this->id, 'language' => $request->input('language')]),
+                // 'aid'       =>  route(''),
             ]
         ];
     }

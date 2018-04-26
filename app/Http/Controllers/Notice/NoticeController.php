@@ -18,6 +18,11 @@ class NoticeController extends Controller
 {
     use Filter;
 
+    public function __construct()
+    {
+        if(!request()->exists('language')) request()->merge(['language' => '1']);        
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,11 +30,15 @@ class NoticeController extends Controller
      */
     public function index()
     {
+        $language = request()->input('language');
         $collection = Notice::filter(request()->all(), NoticeFilter::class)
                             ->with([
                                 'entity',
-                                'characterType.characterTypeLang' => function ($query){
-                                    $query->where('language_id', 1);
+                                'characterType.characterTypeLang' => function ($query) use ($language){
+                                    $query->where('language_id', $language);
+                                },
+                                'noticeLang' => function ($query) use ($language){
+                                    $query->where('language_id', $language);
                                 }
                             ])
                             ->paginateFilter($this->perPage());
@@ -72,10 +81,14 @@ class NoticeController extends Controller
      */
     public function show(Notice $notice)
     {
+        $language = request()->input('language');
         $notice->load([
             'entity',
-            'characterType.characterTypeLang' => function ($query){
-                $query->where('language_id', 1);
+            'characterType.characterTypeLang' => function ($query) use ($language){
+                $query->where('language_id', $language);
+            },
+            'noticeLang' => function ($query) use ($language){
+                $query->where('language_id', $language);
             }]
         );
         return new NoticeResource($notice);
