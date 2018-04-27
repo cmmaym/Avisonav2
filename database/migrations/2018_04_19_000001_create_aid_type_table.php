@@ -16,6 +16,7 @@ class CreateAidTypeTable extends Migration
         Schema::create('aid_type', function (Blueprint $table) {
             $table->increments('id');
             $table->string('illustration', 45)->nullable()->comment('Imagen de la clase de luz');
+            $table->string('type', 45)->nullable()->comment('Sub tipo que indentifica al tipo de ayuda');
             $table->timestamps();
             $table->enum('state', array('A','I'))->default('A')->comment('Estado del tipo luz. Puede ser Activo, Inactivo');
         });

@@ -16,18 +16,12 @@ class CreateAidLangTable extends Migration
         Schema::create('aid_lang', function (Blueprint $table) {
             $table->increments('id');
             $table->mediumText('description')->comment('Descripcion referente a los cambios en las coordenadas de la ayuda');
-            $table->mediumText('observation')->comment('Observacion referente a los cambios en las coordenadas de la ayuda');
             $table->timestamps();
             $table->integer('aid_id')->unsigned();
-            $table->integer('coordinate_id')->unsigned();
             $table->integer('language_id')->unsigned();
 
             $table->foreign('aid_id')
                 ->references('id')->on('aid')
-                ->onDelete('cascade');
-            
-            $table->foreign('coordinate_id')
-                ->references('id')->on('coordinate')
                 ->onDelete('cascade');
 
             $table->foreign('language_id')

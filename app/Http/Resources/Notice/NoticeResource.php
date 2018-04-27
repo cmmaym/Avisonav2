@@ -1,11 +1,12 @@
 <?php
 
-namespace AvisoNavAPI\Http\Resources;
+namespace AvisoNavAPI\Http\Resources\Notice;
 
 use AvisoNavAPI\Traits\Responser;
 use Illuminate\Support\Collection;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\AbstractPaginator;
+use AvisoNavAPI\Http\Resources\EntityResource;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class NoticeResource extends JsonResource
 {
@@ -22,9 +23,9 @@ class NoticeResource extends JsonResource
             'id'                        => $this->id,
             'number'                    => $this->number,
             'date'                      => $this->date,
+            'year'                      => $this->year,
             'created_at'                => $this->created_at->format('Y-m-d'),
             'updated_at'                => $this->updated_at->format('Y-m-d'),
-            'periodo'                   => $this->periodo,
             'state'                     => $this->state,
             'file_info'                 => $this->file_info,
             'characterType'             => $this->characterType->characterTypeLang->name,
@@ -32,7 +33,6 @@ class NoticeResource extends JsonResource
             'entity'                    => new EntityResource($this->entity),
             'links'                     => [
                 'self'      =>  route('notice.show', ['id' => $this->id, 'language' => $request->input('language')]),
-                // 'aid'       =>  route(''),
             ]
         ];
     }

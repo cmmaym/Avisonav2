@@ -11,6 +11,37 @@ class CoordinateTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(AvisoNavAPI\Coordinate::class, 2)->create();
+        $faker = \Faker\Factory::create();
+
+        DB::table('coordinate')->insert([
+            [
+                'latitud'     => $faker->latitude(),
+                'longitud'    => $faker->longitude(),
+                'created_at'       => new \DateTime('now'),
+                'updated_at'       => new \DateTime('now'),
+                'aid_id'      => 1
+            ],
+            [
+                'latitud'     => $faker->latitude(),
+                'longitud'    => $faker->longitude(),
+                'created_at'       => new \DateTime('now'),
+                'updated_at'       => new \DateTime('now'),
+                'aid_id'      => 2
+            ],
+            [
+                'latitud'     => $faker->latitude(),
+                'longitud'    => $faker->longitude(),
+                'created_at'       => new \DateTime('now'),
+                'updated_at'       => new \DateTime('now'),
+                'aid_id'      => 3
+            ],
+            [
+                'latitud'     => $faker->latitude(),
+                'longitud'    => $faker->longitude(),
+                'created_at'       => new \DateTime('now'),
+                'updated_at'       => new \DateTime('now'),
+                'aid_id'      => 4
+            ],
+        ]);
     }
 }

@@ -23,6 +23,10 @@ class Notice extends Model
         return $this->belongsTo(CharacterType::Class);
     }
 
+    public function noveltyType(){
+        return $this->belongsTo(NoveltyType::class);
+    }
+
     public function noticeLangs(){
         return $this->hasMany(NoticeLang::class);
     }

@@ -10,9 +10,10 @@ use AvisoNavAPI\Traits\Filter;
 use Illuminate\Support\Facades\DB;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\Http\Resources\AyudaResource;
-use AvisoNavAPI\Http\Resources\NoticeResource;
 use AvisoNavAPI\ModelFilters\Basic\NoticeFilter;
 use AvisoNavAPI\Http\Requests\Notice\StoreNotice;
+use AvisoNavAPI\Http\Resources\Notice\NoticeResource;
+use AvisoNavAPI\Http\Resources\Notice\NoticeSimpleResource;
 
 class NoticeController extends Controller
 {
@@ -56,7 +57,6 @@ class NoticeController extends Controller
     {
         $notice = new Notice($request->only(['number', 'date']));
         
-        
         $periodo = (new \DateTime("now"))->format('Ym');
         $notice->periodo = $periodo;
         $notice->user = 'JMARDZ';
@@ -69,8 +69,7 @@ class NoticeController extends Controller
 
         $notice->save();
 
-        return new NoticeResource($notice);
-
+        return new NoticeSimpleResource($notice);
     }
 
     /**
@@ -92,6 +91,28 @@ class NoticeController extends Controller
             }]
         );
         return new NoticeResource($notice);
+    }
+
+    /**
+     * Muestra un notice resource sin ningun noticeLang embebido.
+     * El notieLang dentro del resource ira en forma de link que espesifica la relacion.
+     * Este metodo solo es conveniente para buscar un notice cuando se le quiere realizar una actualizacion.
+     * Los datos que el notice tiene relacionado iran embebidos en el notice resource en el idioma por defecto.
+     *
+     * @param  \AvisoNavAPI\Notice  $notice
+     * @return \AvisoNavAPI\Http\Resources\NoticeResource
+     */
+    public function showSimple($id)
+    {
+        $language = request()->input('language');
+        $notice = Notice::with([
+                            'entity',
+                            'characterType.characterTypeLang' => function ($query) use ($language){
+                                $query->where('language_id', $language);
+                            }]
+                        )->findOrFail($id);
+
+        return new NoticeSimpleResource($notice);
     }
 
     /**

@@ -17,11 +17,13 @@ class CreateCoordinateTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('latitud', 100);
             $table->string('longitud', 100);
-            $table->integer('elevation');
-            $table->integer('scope');
-            $table->integer('quantity');
             $table->timestamps();
             $table->enum('state', array('A','I'))->default('A')->comment('Estado de la coordenada. Puede ser Activo, Inactivo');
+            $table->integer('aid_id')->unsigned();
+
+            $table->foreign('aid_id')
+                  ->references('id')->on('aid')
+                  ->onDelete('cascade');
         });
     }
 

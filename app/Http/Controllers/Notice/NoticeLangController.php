@@ -10,7 +10,7 @@ use AvisoNavAPI\ModelFilters\Basic\NoticeLangFilter;
 use AvisoNavAPI\Http\Requests\Notice\StoreNoticeLang;
 use AvisoNavAPI\Traits\Responser;
 use AvisoNavAPI\Notice;
-use AvisoNavAPI\Http\Resources\NoticeLangResource;
+use AvisoNavAPI\Http\Resources\Notice\NoticeLangResource;
 
 class NoticeLangController extends Controller
 {
