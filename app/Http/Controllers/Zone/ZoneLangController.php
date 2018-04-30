@@ -6,7 +6,7 @@ use AvisoNavAPI\Zone;
 use AvisoNavAPI\ZoneLang;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Http\Controllers\Controller;
-use AvisoNavAPI\Http\Resources\ZoneLangResource;
+use AvisoNavAPI\Http\Resources\Zone\ZoneLangResource;
 use AvisoNavAPI\ModelFilters\Basic\ZoneLangFilter;
 use AvisoNavAPI\Http\Requests\Zone\StoreZoneLang;
 

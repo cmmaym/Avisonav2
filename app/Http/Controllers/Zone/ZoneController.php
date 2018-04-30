@@ -6,15 +6,20 @@ use AvisoNavAPI\Zone;
 use AvisoNavAPI\ZoneLang;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Http\Controllers\Controller;
-use AvisoNavAPI\Http\Resources\ZoneResource;
+use AvisoNavAPI\Http\Resources\Zone\ZoneResource;
 use AvisoNavAPI\Http\Requests\Zone\StoreZone;
 use AvisoNavAPI\ModelFilters\Basic\ZoneFilter;
-use AvisoNavAPI\ModelFilters\Basic\ZoneLangFilter;
-use AvisoNavAPI\Http\Resources\ZoneLangResource;
+// use AvisoNavAPI\ModelFilters\Basic\ZoneLangFilter;
+use AvisoNavAPI\Http\Resources\Zone\ZoneLangResource;
 
 class ZoneController extends Controller
 {
     use Filter;
+
+    public function __construct()
+    {
+        if(!request()->exists('language')) request()->merge(['language' => '1']);
+    }
 
     /**
      * Display a listing of the resource.
@@ -23,11 +28,16 @@ class ZoneController extends Controller
      */
     public function index()
     {
-        $collection = ZoneLang::filter(request()->all(), ZoneLangFilter::class)
-                              ->with(['zone'])
+        $language = request()->input('language');
+        $collection = Zone::filter(request()->all(), ZoneFilter::class)
+                              ->with([
+                                  'zoneLang' => function($query) use ($language){
+                                    $query->where('language_id', $language);
+                                  } 
+                              ])
                               ->paginateFilter($this->perPage());
 
-        return ZoneLangResource::collection($collection);
+        return ZoneResource::collection($collection);
     }
 
     /**
