@@ -24,10 +24,10 @@ class NoticeAidController extends Controller
         $request = request();
         $collection = $notice->aid()->filter(request()->all(), AidFilter::class)
                                     ->with([
-                                        'aidDetail' => function($query) use ($request){
-                                            if($request->has('language')){
-                                                $query->where('language_id', $request->input('language'));
-                                            }
+                                        'aidLang' => function($query) use ($request){
+                                            // if($request->has('language')){
+                                            //     $query->where('language_id', $request->input('language'));
+                                            // }
                                         }
                                     ])
                                     ->paginateFilter($this->perPage());

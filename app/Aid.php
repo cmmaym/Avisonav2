@@ -20,6 +20,10 @@ class Aid extends Model
     public function aidLangs(){
         return $this->hasMany(AidLang::class);
     }
+    
+    public function aidLang(){
+        return $this->hasOne(AidLang::class);
+    }
 
     public function notice(){
         return $this->belongsToMany(Notice::class);

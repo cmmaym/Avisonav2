@@ -104,6 +104,7 @@ Route::resource('chart.chartEdition', 'Chart\ChartEditionController')->only([
 
 
 //Notice
+//Route::get('notice/simple/{id}', 'Notice\NoticeController@showSimple');
 Route::resource('notice', 'Notice\NoticeController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);

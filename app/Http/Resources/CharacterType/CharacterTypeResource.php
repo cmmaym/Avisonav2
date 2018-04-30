@@ -1,6 +1,6 @@
 <?php
 
-namespace AvisoNavAPI\Http\Resources;
+namespace AvisoNavAPI\Http\Resources\CharacterType;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,8 +14,14 @@ class CharacterTypeResource extends JsonResource
      */
     public function toArray($request)
     {
+        $self= $this;
+        $name = function() use ($self){
+            return $self->characterTypeLang->name;
+        };
+
         return [
             'id'                => $this->id,
+            'name'              => $this->when(!is_null($this->characterTypeLang), $name, null),
             'created_at'        => $this->created_at->format('Y-m-d'),
             'updated'           => $this->updated_at->format('Y-m-d'),
             'state'             => $this->state,

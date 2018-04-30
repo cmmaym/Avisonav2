@@ -15,5 +15,9 @@ class NoveltyType extends Model
     public function noveltyTypeLangs(){
         return $this->hasMany(NoveltyTypeLang::class);
     }
+    
+    public function noveltyTypeLang(){
+        return $this->hasOne(NoveltyTypeLang::class);
+    }
 
 }

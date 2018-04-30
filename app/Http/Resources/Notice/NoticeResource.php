@@ -7,6 +7,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Pagination\AbstractPaginator;
 use AvisoNavAPI\Http\Resources\EntityResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use AvisoNavAPI\Http\Resources\NoveltyType\NoveltyTypeResource;
+use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeResource;
 
 class NoticeResource extends JsonResource
 {
@@ -19,6 +21,11 @@ class NoticeResource extends JsonResource
      */
     public function toArray($request)
     {
+        $self = $this;
+        $noticeLang = function() use ($self) {
+            return $self->noticeLang->observation;
+        };
+
         return [
             'id'                        => $this->id,
             'number'                    => $this->number,
@@ -28,11 +35,14 @@ class NoticeResource extends JsonResource
             'updated_at'                => $this->updated_at->format('Y-m-d'),
             'state'                     => $this->state,
             'file_info'                 => $this->file_info,
-            'characterType'             => $this->characterType->characterTypeLang->name,
-            'observation'               => $this->noticeLang->observation,
+            'observation'               => $this->when(!is_null($this->noticeLang), $noticeLang, null),
+            'characterType'             => new CharacterTypeResource($this->characterType),
+            'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
             'entity'                    => new EntityResource($this->entity),
             'links'                     => [
-                'self'      =>  route('notice.show', ['id' => $this->id, 'language' => $request->input('language')]),
+                'self'          => route('notice.show', ['id' => $this->id]),
+                'noticeLang'    => route('notice.noticeLang.index', ['id' => $this->id]),
+                'noticeAid'     => route('notice.aid.index', ['id' => $this->id])
             ]
         ];
     }

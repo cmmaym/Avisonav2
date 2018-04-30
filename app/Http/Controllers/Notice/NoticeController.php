@@ -21,7 +21,7 @@ class NoticeController extends Controller
 
     public function __construct()
     {
-        if(!request()->exists('language')) request()->merge(['language' => '1']);        
+        if(!request()->exists('language')) request()->merge(['language' => '1']);
     }
 
     /**
@@ -36,6 +36,9 @@ class NoticeController extends Controller
                             ->with([
                                 'entity',
                                 'characterType.characterTypeLang' => function ($query) use ($language){
+                                    $query->where('language_id', $language);
+                                },
+                                'noveltyType.noveltyTypeLang' => function ($query) use ($language){
                                     $query->where('language_id', $language);
                                 },
                                 'noticeLang' => function ($query) use ($language){
@@ -86,6 +89,9 @@ class NoticeController extends Controller
             'characterType.characterTypeLang' => function ($query) use ($language){
                 $query->where('language_id', $language);
             },
+            'noveltyType.noveltyTypeLang' => function ($query) use ($language){
+                $query->where('language_id', $language);
+            },
             'noticeLang' => function ($query) use ($language){
                 $query->where('language_id', $language);
             }]
@@ -102,18 +108,18 @@ class NoticeController extends Controller
      * @param  \AvisoNavAPI\Notice  $notice
      * @return \AvisoNavAPI\Http\Resources\NoticeResource
      */
-    public function showSimple($id)
-    {
-        $language = request()->input('language');
-        $notice = Notice::with([
-                            'entity',
-                            'characterType.characterTypeLang' => function ($query) use ($language){
-                                $query->where('language_id', $language);
-                            }]
-                        )->findOrFail($id);
+    // public function showSimple($id)
+    // {
+    //     $language = request()->input('language');
+    //     $notice = Notice::with([
+    //                         'entity',
+    //                         'characterType.characterTypeLang' => function ($query) use ($language){
+    //                             $query->where('language_id', $language);
+    //                         }]
+    //                     )->findOrFail($id);
 
-        return new NoticeSimpleResource($notice);
-    }
+    //     return new NoticeSimpleResource($notice);
+    // }
 
     /**
      * Update the specified resource in storage.

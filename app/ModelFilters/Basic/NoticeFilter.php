@@ -29,7 +29,7 @@ class NoticeFilter extends ModelFilter
     }
 
     public function language($language){
-        $this->related('noticeLang', 'notice_lang.language_id', '=', $language);
+        // $this->related('noticeLang', 'notice_lang.language_id', '=', $language);
         $this->whereHas('characterType.characterTypeLang', function($query) use ($language) {
             $query->where('language_id', $language);
         });
