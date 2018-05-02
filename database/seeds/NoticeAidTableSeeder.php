@@ -15,14 +15,14 @@ class NoticeAidTableSeeder extends Seeder
             [
                 'notice_id'        => 1,
                 'aid_id'           => 1,
-                'aid_lang_id'    => 1,
+                'coordinate_id'    => 1,
                 'created_at'       => new \DateTime('now'),
                 'updated_at'       => new \DateTime('now'),
             ],
             [
                 'notice_id'        => 2,
                 'aid_id'           => 2,
-                'aid_lang_id'    => 2,
+                'coordinate_id'    => 2,
                 'created_at'       => new \DateTime('now'),
                 'updated_at'       => new \DateTime('now'),
             ],
