@@ -19,6 +19,12 @@ use AvisoNavAPI\Http\Requests\NoveltyType\UpdateNoveltyType;
 class NoveltyTypeController extends Controller
 {
     use Filter;
+
+    public function __construct()
+    {
+        if(!request()->exists('language')) request()->merge(['language' => '1']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,11 +32,16 @@ class NoveltyTypeController extends Controller
      */
     public function index()
     {        
-        $collection = NoveltyTypeLang::filter(request()->all(), NoveltyTypeLangFilter::class)
-                                     ->with(['noveltyType'])
+        $language = request()->input('language');
+        $collection = NoveltyType::filter(request()->all(), NoveltyTypeFilter::class)
+                                     ->with([
+                                         'noveltyTypeLang' => function($query) use ($language){
+                                            $query->where('language_id', $language);
+                                          } 
+                                     ])
                                      ->paginateFilter($this->perPage());
 
-        return NoveltyTypeLangResource::collection($collection);
+        return NoveltyTypeResource::collection($collection);
     }
 
     /**
