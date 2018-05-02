@@ -1,6 +1,6 @@
 <?php
 
-namespace AvisoNavAPI\Http\Resources;
+namespace AvisoNavAPI\Http\Resources\ColorType;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,9 +14,19 @@ class ColorTypeResource extends JsonResource
      */
     public function toArray($request)
     {
+        $self= $this;
+        $color = function() use ($self){
+            return $self->colorTypeLang->color;
+        };
         
+        $alias = function() use ($self){
+            return $self->colorTypeLang->alias;
+        };
+
         return [
             'id'                =>  $this->id,
+            'color'             =>  $this->when(!is_null($this->colorTypeLang), $color, null),
+            'alias'             =>  $this->when(!is_null($this->colorTypeLang), $alias, null),
             'created_at'        =>  $this->created_at->format('Y-m-d'),
             'updated_at'        =>  $this->updated_at->format('Y-m-d'),
             'state'             =>  $this->state,

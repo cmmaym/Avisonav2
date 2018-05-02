@@ -12,8 +12,14 @@ class ColorType extends Model
     protected $table        = 'color_type';
     protected $fillable     = ['state'];
 
-    public function colorTypeLangs(){
+    public function colorTypeLangs()
+    {
         return $this->hasMany(ColorTypeLang::class);
+    }
+    
+    public function colorTypeLang()
+    {
+        return $this->hasOne(ColorTypeLang::class);
     }
 
 }

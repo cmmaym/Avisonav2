@@ -6,15 +6,19 @@ use AvisoNavAPI\ColorType;
 use AvisoNavAPI\ColorTypeLang;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Http\Controllers\Controller;
-use AvisoNavAPI\Http\Resources\ColorTypeResource;
+use AvisoNavAPI\Http\Resources\ColorType\ColorTypeResource;
 use AvisoNavAPI\ModelFilters\Basic\ColorTypeFilter;
-use AvisoNavAPI\Http\Resources\ColorTypeLangResource;
 use AvisoNavAPI\Http\Requests\ColorType\StoreColorType;
 use AvisoNavAPI\ModelFilters\Basic\ColorTypeLangFilter;
 
 class ColorTypeController extends Controller
 {
     use Filter;
+
+    public function __construct()
+    {
+        if(!request()->exists('language')) request()->merge(['language' => '1']);
+    }
 
     /**
      * Display a listing of the resource.
@@ -23,11 +27,16 @@ class ColorTypeController extends Controller
      */
     public function index()
     {
-        $collection = ColorTypeLang::filter(request()->all(), ColorTypeLangFilter::class)
-                               ->with(['colorType'])
+        $language = request()->input('language');
+        $collection = ColorType::filter(request()->all(), ColorTypeFilter::class)
+                               ->with([
+                                   'colorTypeLang' => function($query) use ($language){
+                                        $query->where('language_id', $language);
+                                   } 
+                                ])
                                ->paginateFilter($this->perPage());
 
-        return ColorTypeLangResource::collection($collection);
+        return ColorTypeResource::collection($collection);
     }
 
     /**
