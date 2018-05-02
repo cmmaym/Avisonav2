@@ -4,7 +4,7 @@ namespace AvisoNavAPI\ModelFilters\Basic;
 
 use EloquentFilter\ModelFilter;
 
-class AidDetailFilter extends ModelFilter
+class AidLangFilter extends ModelFilter
 {
 
     public function description($description){

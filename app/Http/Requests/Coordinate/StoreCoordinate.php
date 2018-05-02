@@ -26,9 +26,6 @@ class StoreCoordinate extends FormRequest
         return [
             'latitud'           => 'required',
             'longitud'          => 'required',
-            'elevation'         => 'required|integer',
-            'scope'             => 'required|integer',
-            'quantity'          => 'required|integer',
             'state'             => 'sometimes|required|required|in:A,I'
         ];
     }

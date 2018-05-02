@@ -123,7 +123,7 @@ Route::resource('aid', 'Aid\AidController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
 
-Route::resource('aid.aidDetail', 'Aid\AidDetailController')->only([
+Route::resource('aid.aidLang', 'Aid\AidLangController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
 

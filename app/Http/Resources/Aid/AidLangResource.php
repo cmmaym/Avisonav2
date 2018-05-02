@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Resources;
+namespace AvisoNavAPI\Http\Resources\Aid;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AidDetailResource extends JsonResource
+class AidLangResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,14 +17,12 @@ class AidDetailResource extends JsonResource
         return [
             'id'                => $this->id,
             'description'       => $this->description,
-            'observation'       => $this->observation,
             'created_at'        => $this->created_at->format('Y-m-d'),
             'updated_at'        => $this->updated_at->format('Y-m-d'),
-            'state'             => $this->state,
-            'light_type'        => new LightTypeResource($this->lightType),
-            'color_type'        => new ColorTypeResource($this->colorType),
-            'novelty_type'      => new NoveltyTypeResource($this->noveltyType),
-            'coordinate'        => new CoordinateResource($this->coordinate)
+            'links'             => [
+                'self'          => route('aid.aidLang.show', ['aidId' => $this->aid->id, 'id' => $this->id]),
+                'aid'           => route('aid.show', ['id' => $this->aid->id])
+            ]
         ];
     }
 }

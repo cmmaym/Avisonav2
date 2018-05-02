@@ -11,11 +11,7 @@ class Aid extends Model
     use Filterable;
 
     protected $table        = 'aid';
-    protected $fillable     = ['number', 'sub_name', 'state'];
-
-    public function location(){
-        return $this->belongsTo(Location::class);
-    }
+    protected $fillable     = ['number', 'sub_name', 'elevation', 'scope', 'quantity', 'observation', 'state'];
 
     public function aidLangs(){
         return $this->hasMany(AidLang::class);
@@ -24,11 +20,15 @@ class Aid extends Model
     public function aidLang(){
         return $this->hasOne(AidLang::class);
     }
-
-    public function notice(){
-        return $this->belongsToMany(Notice::class);
+    
+    public function aidType(){
+        return $this->belongsTo(AidType::class);
     }
-
+    
+    public function location(){
+        return $this->belongsTo(Location::class);
+    }
+    
     public function lightType(){
         return $this->belongsTo(LightType::class);
     }
@@ -39,6 +39,14 @@ class Aid extends Model
     
     public function noveltyType(){
         return $this->belongsTo(NoveltyType::class);
+    }
+
+    public function coordinate(){
+        return $this->hasOne(Coordinate::class);
+    }
+    
+    public function notice(){
+        return $this->belongsToMany(Notice::class);
     }
 
     //Obtenemos el detalle de la ayuda
