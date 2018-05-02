@@ -16,6 +16,11 @@ class CharacterTypeController extends Controller
 {
     use Filter;
 
+    public function __construct()
+    {
+        if(!request()->exists('language')) request()->merge(['language' => '1']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,11 +28,16 @@ class CharacterTypeController extends Controller
      */
     public function index()
     {
-        $collection = CharacterTypeLang::filter(request()->all(), CharacterTypeLangFilter::class)
-                                       ->with(['characterType']) 
+        $language = request()->input('language');
+        $collection = CharacterType::filter(request()->all(), CharacterTypeFilter::class)
+                                       ->with([
+                                           'characterTypeLang' => function($query) use ($language){
+                                            $query->where('language_id', $language);
+                                          } 
+                                        ]) 
                                        ->paginateFilter($this->perPage());
 
-        return CharacterTypeLangResource::collection($collection);
+        return CharacterTypeResource::collection($collection);
     }
 
     /**
