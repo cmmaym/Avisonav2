@@ -3,6 +3,7 @@
 namespace AvisoNavAPI\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use AvisoNavAPI\Http\Resources\Zone\ZoneResource;
 
 class LocationResource extends JsonResource
 {

@@ -16,7 +16,6 @@ class CreateLightTypeLangTable extends Migration
         Schema::create('light_type_lang', function (Blueprint $table) {
             $table->increments('id');
             $table->string('class', 100)->comment('Clase de luz');
-            $table->string('alias', 45)->comment('Abreviatura de la clase');
             $table->mediumText('description')->comment('Descripcion breve de la clase de luz');
             $table->timestamps();
             $table->integer('language_id')->unsigned();

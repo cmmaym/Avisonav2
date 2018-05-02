@@ -14,7 +14,6 @@ class LightTypeLangTableSeeder extends Seeder
         DB::table('light_type_lang')->insert([
             [
                 'class'             => 'Fija',
-                'alias'             => 'F',
                 'description'       => 'Luz Fija',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
@@ -23,7 +22,6 @@ class LightTypeLangTableSeeder extends Seeder
             ],
             [
                 'class'             => 'Fixed',
-                'alias'             => 'F',
                 'description'       => 'Fixed Light',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
@@ -32,7 +30,6 @@ class LightTypeLangTableSeeder extends Seeder
             ],
             [
                 'class'             => 'De ocultacion',
-                'alias'             => 'Oc.',
                 'description'       => 'Duracion total de la luz mayor que la oscuridad.',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
@@ -41,7 +38,6 @@ class LightTypeLangTableSeeder extends Seeder
             ],
             [
                 'class'             => 'Occulting',
-                'alias'             => 'Oc.',
                 'description'       => 'Total duration of light longer than total duration of darkness.',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
@@ -50,7 +46,6 @@ class LightTypeLangTableSeeder extends Seeder
             ],
             [
                 'class'             => 'Grupo de ocultaciones',
-                'alias'             => 'Oc. (2)',
                 'description'       => 'Luz de grupos de ocultaciones(mostrando 2 ocultaciones).',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
@@ -59,7 +54,6 @@ class LightTypeLangTableSeeder extends Seeder
             ],
             [
                 'class'             => 'Group-occulting',
-                'alias'             => 'Oc. (2)',
                 'description'       => 'Group occulting',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),

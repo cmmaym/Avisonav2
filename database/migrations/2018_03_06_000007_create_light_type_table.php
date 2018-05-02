@@ -15,7 +15,8 @@ class CreateLightTypeTable extends Migration
     {
         Schema::create('light_type', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('illustration', 45)->nullable()->comment('Imagen de la clase de luz');            
+            $table->string('illustration', 45)->nullable()->comment('Imagen de la clase de luz');
+            $table->string('alias', 45)->comment('Abreviatura de la clase');
             $table->timestamps();
             $table->enum('state', array('A','I'))->default('A')->comment('Estado del tipo luz. Puede ser Activo, Inactivo');
         });

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Http\Controllers\Controller;
 use AvisoNavAPI\ModelFilters\Basic\LightTypeFilter;
-use AvisoNavAPI\Http\Resources\LightTypeLangResource;
+use AvisoNavAPI\Http\Resources\LightType\LightTypeLangResource;
 use AvisoNavAPI\Http\Requests\LightType\StoreLightTypeLang;
 use AvisoNavAPI\ModelFilters\Basic\LightTypeLangFilter;
 use AvisoNavAPI\LightTypeLang;
@@ -38,7 +38,7 @@ class LightTypeLangController extends Controller
      */
     public function store(StoreLightTypeLang $request, LightType $lightType)
     {
-        $lightTypeLang = new LightTypeLang($request->only(['class', 'alias', 'description']));
+        $lightTypeLang = new LightTypeLang($request->only(['class', 'description']));
         $lightTypeLang->language_id = $request->input('language_id');
 
         $lightType->lightTypeLangs()->save($lightTypeLang);
@@ -68,7 +68,7 @@ class LightTypeLangController extends Controller
      */
     public function update(StoreLightTypeLang $request, LightType $lightType, LightTypeLang $lightTypeLang)
     {
-        $lightTypeLang->fill($request->only(['class', 'alias', 'description']));
+        $lightTypeLang->fill($request->only(['class', 'description']));
         
         if($lightTypeLang->isClean()){
             return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);

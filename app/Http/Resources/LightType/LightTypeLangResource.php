@@ -1,6 +1,6 @@
 <?php
 
-namespace AvisoNavAPI\Http\Resources;
+namespace AvisoNavAPI\Http\Resources\LightType;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,7 +17,6 @@ class LightTypeLangResource extends JsonResource
         return [
             'id'                =>  $this->id,
             'class'             =>  $this->class,
-            'alias'             =>  $this->alias,
             'description'       =>  $this->description,
             'created_at'        =>  $this->created_at->format('Y-m-d'),
             'updated_at'        =>  $this->updated_at->format('Y-m-d'),
