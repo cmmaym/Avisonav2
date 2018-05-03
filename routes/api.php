@@ -131,6 +131,10 @@ Route::resource('aid.coordinate', 'Aid\AidCoordinateController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
 
+Route::resource('aid.chart', 'Aid\AidChartController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
+
 //AidType
 Route::resource('aidType', 'Aid\AidTypeController')->only([
     'index', 'store', 'show', 'update', 'destroy'

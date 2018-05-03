@@ -36,9 +36,9 @@ class ChartFilter extends ModelFilter
         return $this->orderBy('number', $this->input('dir', 'asc'));
     }
 
-    public function sortByProposito()
+    public function sortByPurpose()
     {
-        return $this->orderBy('proposito', $this->input('dir', 'asc'));
+        return $this->orderBy('purpose', $this->input('dir', 'asc'));
     }
 
     public function sortByDate()

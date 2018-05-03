@@ -66,7 +66,7 @@ class Aid extends Model
     public function chart(){
         return $this->belongsToMany(Chart::class)
                     ->withTimestamps()
-                    ->withPivot(['aid_detail_id', 'chart_edition_id']);
+                    ->withPivot(['coordinate_id', 'chart_edition_id']);
     }
 
 }

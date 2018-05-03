@@ -16,7 +16,7 @@ class CreateAidChartTable extends Migration
         Schema::create('aid_chart', function (Blueprint $table) {
             $table->integer('aid_id')->unsigned();
             $table->integer('chart_id')->unsigned();
-            $table->integer('aid_detail_id')->unsigned();
+            $table->integer('coordinate_id')->unsigned();
             $table->integer('chart_edition_id')->unsigned();
             $table->timestamps();
 
