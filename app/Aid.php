@@ -41,8 +41,12 @@ class Aid extends Model
         return $this->belongsTo(NoveltyType::class);
     }
 
+    public function coordinates(){
+        return $this->hasMany(Coordinate::class);
+    }
+
     public function coordinate(){
-        return $this->hasOne(Coordinate::class);
+        return $this->hasOne(Coordinate::class)->orderBy('id', 'desc');
     }
     
     public function notice(){
@@ -51,13 +55,13 @@ class Aid extends Model
 
     //Obtenemos el detalle de la ayuda
     //que corresponde al aviso
-    public function aidLangNotice(){
-        return $this->hasOne(AidLang::class)
-                    ->join('notice_aid', function($query){
-                        $query->on('aid_lang.aid_id', 'notice_aid.aid_id')
-                              ->on('notice_aid.coordinate_id', 'aid_lang.coordinate_id');
-                    });
-    }
+    // public function aidLangNotice(){
+    //     return $this->hasOne(AidLang::class)
+    //                 ->join('notice_aid', function($query){
+    //                     $query->on('aid_lang.aid_id', 'notice_aid.aid_id')
+    //                           ->on('notice_aid.coordinate_id', 'aid_lang.coordinate_id');
+    //                 });
+    // }
 
     public function chart(){
         return $this->belongsToMany(Chart::class)

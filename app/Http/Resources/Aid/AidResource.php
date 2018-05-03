@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Resources\Aid;
 
 use AvisoNavAPI\Http\Resources\LocationResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use AvisoNavAPI\Http\Resources\CoordinateResource;
+use AvisoNavAPI\Http\Resources\Aid\CoordinateResource;
 use AvisoNavAPI\Http\Resources\ColorType\ColorTypeResource;
 use AvisoNavAPI\Http\Resources\LightType\LightTypeResource;
 

@@ -3,21 +3,18 @@
 namespace AvisoNavAPI;
 
 use Illuminate\Database\Eloquent\Model;
+use EloquentFilter\Filterable;
 
 class Coordinate extends Model
 {
+    use Filterable;
+    
     protected   $table      =   'coordinate';
-    protected   $fillable   =   [
-            'latitud',
-            'longitud',
-            'elevation',
-            'scope',
-            'quantity',
-            'state'
-    ];
+    protected   $fillable   =   ['latitud', 'longitud', 'state'];
 
-    public function aidDetail(){
-        return $this->belongsTo(AidDetail::class);
+    public function aid()
+    {
+        return $this->belongsTo(Aid::class);
     }
 
 }
