@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+Route::post('/login', 'LoginController@authenticate')->middleware('client');
+Route::get('/logout', 'LoginController@logout')->middleware('auth:api');
+
 //Language
 Route::resource('language', 'Language\LanguageController')->only([
     'index', 'show', 'store', 'update', 'destroy'

@@ -20,6 +20,10 @@ class AidController extends Controller
     public function __construct()
     {
         if(!request()->exists('language')) request()->merge(['language' => '1']);
+
+        $this->middleware('client')->only(['index', 'show']);
+        $this->middleware('auth:api')->except(['index', 'show']);
+
     }
 
     /**
@@ -71,6 +75,7 @@ class AidController extends Controller
         $aid->save();
         
         return new AidResource($aid);
+
     }
 
     /**

@@ -5,7 +5,9 @@ namespace AvisoNavAPI\Exceptions;
 use Exception;
 use AvisoNavAPI\Traits\Responser;
 use Illuminate\Database\QueryException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -75,6 +77,14 @@ class Handler extends ExceptionHandler
         if($exception instanceof ValidationException){
             $errors = $exception->validator->errors()->getMessages();            
             return $this->errorResponse($errors, 422);
+        }
+
+        if ($exception instanceof AuthenticationException) {
+            return $this->errorResponse("No esta autenticado", 401);
+        }
+
+        if ($exception instanceof AuthorizationException) {
+            return $this->errorResponse('No posee permisos para ejecutar esta acción', 403);
         }
         
         if($exception instanceof QueryException){
