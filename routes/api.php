@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('/login', 'LoginController@authenticate')->middleware('client');
+Route::post('/login', 'LoginController@authenticate');
 Route::get('/logout', 'LoginController@logout')->middleware('auth:api');
 
 //Language
@@ -28,11 +28,6 @@ Route::resource('language', 'Language\LanguageController')->only([
 Route::resource('language.notice', 'Language\LanguageNoticeController')->only([
     'show'
 ]);
-
-// Route::resource('language.aviso.ayuda', 'Language\LanguageAvisoAyudaController')->only([
-//     'index'
-// ]);
-
 
 //Entity
 Route::resource('entity', 'Entity\EntityController')->only([
@@ -151,7 +146,3 @@ Route::resource('aidType.aidTypeLang', 'Aid\AidTypeLangController')->only([
 Route::resource('coordinate', 'Coordinate\CoordinateController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
-
-
-// Route::resource('aviso.carta', 'Aviso\AvisoCartaController');
-

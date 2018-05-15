@@ -37,8 +37,11 @@ class DatabaseSeeder extends Seeder
         DB::statement('TRUNCATE TABLE aid_lang;');
         DB::statement('TRUNCATE TABLE aid_chart;');
         DB::statement('TRUNCATE TABLE notice_aid;');
+        DB::statement('TRUNCATE TABLE permission;');
+        DB::statement('TRUNCATE TABLE role;');
+        DB::statement('TRUNCATE TABLE role_permission;');
+        DB::statement('TRUNCATE TABLE user;');
 
-        // $this->call(UsersTableSeeder::class);
         $this->call(LanguageTableSeeder::class);
         $this->call(EntityTableSeeder::class);
         $this->call(NoveltyTypeTableSeeder::class);
@@ -63,8 +66,11 @@ class DatabaseSeeder extends Seeder
         $this->call(AidLangTableSeeder::class);
         $this->call(AidChartTableSeeder::class);
         $this->call(NoticeAidTableSeeder::class);
-        // $this->call(AvisoCartaTableSeeder::class);
-
+        $this->call(PermissionTableSeeder::class);
+        $this->call(RoleTableSeeder::class);
+        $this->call(RolePermissionTableSeeder::class);
+        $this->call(UserTableSeeder::class);
+        
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
