@@ -26,5 +26,12 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
+        Passport::tokensCan([
+            'create' => 'Crear',
+            'read'   => 'Leer',
+            'delete' => 'Borrar',
+            'update' => 'Actualizar',
+            'user'   => 'Crear, leer, borrar, actualizar usuarios',
+        ]);
     }
 }

@@ -12,7 +12,8 @@ class Role extends Model
     protected $table        = 'role';
     protected $fillable     = ['name', 'state'];
 
-    public function permission(){
+    public function permission()
+    {
         return $this->belongsToMany(Permission::class, 'role_permission')->withTimestamps();
     }
 

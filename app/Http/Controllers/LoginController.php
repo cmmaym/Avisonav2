@@ -3,8 +3,11 @@
 namespace AvisoNavAPI\Http\Controllers;
 
 use AvisoNavAPI\User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\AuthenticationException;
 
 class LoginController extends Controller
 {
@@ -18,19 +21,26 @@ class LoginController extends Controller
      */
     public function authenticate(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+            $user = User::where('email', $request->input('email'))->first();
+            $scope = $user->role->permission->implode('name', ' ');
 
-        if (Auth::attempt($credentials)) {
-            // Authentication passed...
-            return redirect()->intended('dashboard');
-        }
+            $request = Request::create('/oauth/token', 'POST', [
+                    'grant_type'    => 'password',
+                    'client_id'     => '1',
+                    'client_secret' => '3JQPQh0XQNM7bbN0U0bqPsnR28bocdpOAeXXoamB',
+                    'username'      => $request->input('email'),
+                    'password'      => $request->input('password'),
+                    'scope'         => $scope,
+            ] );
 
-        $user = User::find(1);
+            $response = app()->handle($request);
+            
+            if($response->getStatusCode() == 401)
+            {
+                throw new AuthenticationException();
+            }
 
-        // Creating a token without scopes...
-        $token = $user->createToken('Token Name')->accessToken;
-
-        return $token;
+            return response()->json($response->getContent(), $response->getStatusCode());
     }
 
     public function logout(Request $request)

@@ -22,8 +22,11 @@ class AidController extends Controller
         if(!request()->exists('language')) request()->merge(['language' => '1']);
 
         $this->middleware('client')->only(['index', 'show']);
-        $this->middleware('auth:api')->except(['index', 'show']);
-
+        $this->middleware('auth:api');
+        $this->middleware('scope:create')->only('index');
+        $this->middleware('scope:create')->only(['store']);
+        $this->middleware('scope:delete')->only(['delete']);
+        $this->middleware('scope:update')->only(['update']);
     }
 
     /**

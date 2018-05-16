@@ -62,25 +62,25 @@ class Handler extends ExceptionHandler
     {
 
         if($exception instanceof NotFoundHttpException){
-            return $this->errorResponse('El recurso solicitado no fue encontrado', 404);            
+            return $this->errorResponse('El recurso solicitado no fue encontrado', 404);
         }
         
-        if($exception instanceof MethodNotAllowedHttpException){            
+        if($exception instanceof MethodNotAllowedHttpException){
             return $this->errorResponse('El metodo no esta permitido', 405);
         }
         
         if($exception instanceof ModelNotFoundException){
-            $model  =   strtolower(class_basename($exception->getModel()));            
+            $model  =   strtolower(class_basename($exception->getModel()));
             return $this->errorResponse("No existe ninguna instancia de $model para el id espesificado", 404);
         }
 
         if($exception instanceof ValidationException){
-            $errors = $exception->validator->errors()->getMessages();            
+            $errors = $exception->validator->errors()->getMessages();
             return $this->errorResponse($errors, 422);
         }
 
         if ($exception instanceof AuthenticationException) {
-            return $this->errorResponse("No esta autenticado", 401);
+            return $this->errorResponse("No autenticado", 401);
         }
 
         if ($exception instanceof AuthorizationException) {
