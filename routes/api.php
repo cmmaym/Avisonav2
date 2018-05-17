@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::post('/login', 'LoginController@authenticate');
-Route::get('/logout', 'LoginController@logout')->middleware('auth:api');
+Route::post('/login/refresh', 'LoginController@refresh');
+Route::post('/logout', 'LoginController@logout')->middleware('auth:api');
 
 //Language
 Route::resource('language', 'Language\LanguageController')->only([

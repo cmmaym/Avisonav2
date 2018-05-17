@@ -20,6 +20,7 @@ class Kernel extends HttpKernel
         \AvisoNavAPI\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \AvisoNavAPI\Http\Middleware\TrustProxies::class,
+        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
     ];
 
     /**
