@@ -15,7 +15,7 @@ class UserTableSeeder extends Seeder
         DB::table('user')->insert([
             [
                 'num_ide'       => '1143333278',
-                'user_name'     => 'jmartinezd',
+                'username'     => 'jmartinezd',
                 'name1'         => 'Jefferson',
                 'name2'         => null,
                 'last_name1'    => 'Martinez',
@@ -26,6 +26,20 @@ class UserTableSeeder extends Seeder
                 'updated_at'    => new \DateTime('now'),
                 'state'         => 'A',
                 'role_id'       => 1
+            ],
+            [
+                'num_ide'       => '123456789',
+                'username'     => 'sebas',
+                'name1'         => 'Sebastian',
+                'name2'         => null,
+                'last_name1'    => 'Martinez',
+                'last_name2'    => 'Orozco',
+                'email'         => 'sebas@gmail.com',
+                'password'      => Hash::make('123456'),
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+                'state'         => 'A',
+                'role_id'       => 2
             ],
         ]);
     }

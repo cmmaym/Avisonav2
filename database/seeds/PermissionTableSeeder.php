@@ -13,25 +13,31 @@ class PermissionTableSeeder extends Seeder
     {
         DB::table('permission')->insert([
             [
-                'name'          => 'READ',
+                'name'          => 'read',
                 'description'   => 'Permite el acceso para obtener un recurso',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'name'          => 'WRITE',
+                'name'          => 'create',
                 'description'   => 'Permite el acceso para crear un recurso',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'name'          => 'DELETE',
+                'name'          => 'delete',
                 'description'   => 'Permite el acceso para eliminar un recurso',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'name'          => 'USER',
+                'name'          => 'update',
+                'description'   => 'Permite el acceso para actualizar un recurso',
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+            ],
+            [
+                'name'          => 'user',
                 'description'   => 'Permite realizar operaciones sobre los usuarios',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),

@@ -13,7 +13,7 @@ class UserFilter extends ModelFilter
 
     public function userName($userName)
     {
-        return $this->where('user_name', 'like', "%$userName%");
+        return $this->where('username', 'like', "%$userName%");
     }
 
     public function name1($name1)
@@ -61,7 +61,7 @@ class UserFilter extends ModelFilter
     
     public function sortByUserName()
     {
-        return $this->orderBy('user_name', $this->input('dir', 'asc'));
+        return $this->orderBy('username', $this->input('dir', 'asc'));
     }
     
     public function sortByName1()

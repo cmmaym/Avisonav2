@@ -16,7 +16,7 @@ class CreateUserTable extends Migration
         Schema::create('user', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('num_ide');
-            $table->string('user_name', 100);
+            $table->string('username', 100);
             $table->string('name1', 100);
             $table->string('name2', 100)->nullable();
             $table->string('last_name1', 100);
@@ -31,7 +31,7 @@ class CreateUserTable extends Migration
                 ->references('id')->on('role')
                 ->onDelete('cascade');
 
-            $table->unique(['user_name'], 'user_name_UNIQUE');
+            $table->unique(['username'], 'username_UNIQUE');
             $table->unique(['email'], 'email_UNIQUE');
         });
     }

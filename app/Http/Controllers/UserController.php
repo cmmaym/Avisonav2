@@ -35,7 +35,7 @@ class UserController extends Controller
      */
     public function store(UserType $request)
     {
-        $user = new User($request->only(['num_ide', 'user_name', 'name1', 'name2', 'last_name1', 'last_name2', 'email']));
+        $user = new User($request->only(['num_ide', 'username', 'name1', 'name2', 'last_name1', 'last_name2', 'email']));
         $user->password = Hash::make($request->input('password'));
         $user->role_id = $request->input('role_id');
 
@@ -64,7 +64,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserType $request, User $user)
     {
-        $user->fill($request->only(['num_ide', 'user_name', 'name1', 'name2', 'last_name1', 'last_name2', 'email']));
+        $user->fill($request->only(['num_ide', 'username', 'name1', 'name2', 'last_name1', 'last_name2', 'email']));
 
         if(!is_null($request->input('password')))
         {

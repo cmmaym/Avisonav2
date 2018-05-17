@@ -25,7 +25,7 @@ class UserType extends FormRequest
     {
         return [
             'num_ide'           => 'required|integer',
-            'user_name'         => 'required|unique:user,user_name',
+            'username'         => 'required|unique:user,user_name',
             'name1'             => 'required',
             'name2'             => 'nullable',
             'last_name1'        => 'required',

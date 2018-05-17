@@ -26,6 +26,11 @@ class LoginController extends Controller
         $user = User::where('email', $request->input('email'))->first();
         $scope = $user->role->permission->implode('name', ' ');
 
+        if(strcmp($user->state, 'I') === 0)
+        {
+            throw new AuthenticationException();
+        }
+
         return $this->getToken('password', ['username' => $request->input('email'), 'password' => $request->input('password'), 'scope' => $scope]);
     }
     
