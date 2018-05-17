@@ -6,7 +6,7 @@ use AvisoNavAPI\Aid;
 use AvisoNavAPI\AidLang;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Requests\Aid\StoreAidLang;
 use AvisoNavAPI\Http\Resources\Aid\AidLangResource;
 use AvisoNavAPI\ModelFilters\Basic\AidLangFilter;

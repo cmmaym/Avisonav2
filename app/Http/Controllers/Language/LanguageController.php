@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Controllers\Language;
 
 use AvisoNavAPI\Language;
 use AvisoNavAPI\Traits\Filter;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use \AvisoNavAPI\Http\Resources\LanguageResource;
 use AvisoNavAPI\ModelFilters\Basic\LanguageFilter;
 use \AvisoNavAPI\Http\Requests\Language\StoreLanguage;

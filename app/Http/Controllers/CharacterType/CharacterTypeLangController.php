@@ -5,7 +5,7 @@ namespace AvisoNavAPI\Http\Controllers\CharacterType;
 use AvisoNavAPI\CharacterType;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\CharacterTypeLang;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeLangResource;
 use AvisoNavAPI\ModelFilters\Basic\CharacterTypeLangFilter;
 use AvisoNavAPI\Http\Requests\CharacterType\StoreCharacterTypeLang;

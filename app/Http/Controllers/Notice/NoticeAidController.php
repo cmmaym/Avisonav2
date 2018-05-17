@@ -3,7 +3,7 @@
 namespace AvisoNavAPI\Http\Controllers\Notice;
 
 use Illuminate\Http\Request;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Notice;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\ModelFilters\Basic\AidFilter;
@@ -13,11 +13,6 @@ use AvisoNavAPI\Aid;
 class NoticeAidController extends Controller
 {
     use Filter;
-
-    public function __construct()
-    {
-        if(!request()->exists('language')) request()->merge(['language' => '1']);
-    }
 
     /**
      * Display a listing of the resource.

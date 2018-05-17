@@ -6,7 +6,7 @@ use AvisoNavAPI\LightType;
 use AvisoNavAPI\LightTypeLang;
 use AvisoNavAPI\Traits\Filter;
 use Illuminate\Support\Facades\DB;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\LightType\LightTypeResource;
 use AvisoNavAPI\ModelFilters\Basic\LightTypeFilter;
 // use AvisoNavAPI\Http\Resources\LightTypeLangResource;
@@ -17,11 +17,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class LightTypeController extends Controller
 {
     use Filter;
-
-    public function __construct()
-    {
-        if(!request()->exists('language')) request()->merge(['language' => '1']);
-    }
 
     /**
      * Display a listing of the resource.

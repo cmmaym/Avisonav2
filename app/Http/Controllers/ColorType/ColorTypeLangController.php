@@ -6,7 +6,7 @@ use AvisoNavAPI\ColorType;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Traits\Responser;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\ColorType\ColorTypeLangResource;
 use AvisoNavAPI\ModelFilters\Basic\ColorTypeLangFilter;
 use AvisoNavAPI\Http\Requests\ColorType\StoreColorTypeLang;

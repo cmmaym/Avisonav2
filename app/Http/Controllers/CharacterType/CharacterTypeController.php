@@ -5,7 +5,7 @@ namespace AvisoNavAPI\Http\Controllers\CharacterType;
 use AvisoNavAPI\CharacterType;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\CharacterTypeLang;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeResource;
 use AvisoNavAPI\ModelFilters\Basic\CharacterTypeFilter;
 use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeLangResource;
@@ -15,11 +15,6 @@ use AvisoNavAPI\Http\Requests\CharacterType\StoreCharacterType;
 class CharacterTypeController extends Controller
 {
     use Filter;
-
-    public function __construct()
-    {
-        if(!request()->exists('language')) request()->merge(['language' => '1']);
-    }
 
     /**
      * Display a listing of the resource.

@@ -3,7 +3,7 @@
 namespace AvisoNavAPI\Http\Controllers\Aid;
 
 use Illuminate\Http\Request;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Aid;
 
 class AidChartController extends Controller

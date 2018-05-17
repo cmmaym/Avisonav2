@@ -7,7 +7,7 @@ use AvisoNavAPI\Coordenada;
 use Illuminate\Http\Request;
 use AvisoNavAPI\CoordenadaDetalle;
 use Illuminate\Support\Facades\DB;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\Aid\AidResource;
 use AvisoNavAPI\Http\Requests\Aid\StoreAid;
 use AvisoNavAPI\ModelFilters\Basic\AidFilter;
@@ -16,18 +16,6 @@ use AvisoNavAPI\Traits\Filter;
 class AidController extends Controller
 {
     use Filter;
-
-    public function __construct()
-    {
-        if(!request()->exists('language')) request()->merge(['language' => '1']);
-
-        $this->middleware('client')->only(['index', 'show']);
-        $this->middleware('auth:api');
-        $this->middleware('scope:create')->only('index');
-        $this->middleware('scope:create')->only(['store']);
-        $this->middleware('scope:delete')->only(['delete']);
-        $this->middleware('scope:update')->only(['update']);
-    }
 
     /**
      * Display a listing of the resource.

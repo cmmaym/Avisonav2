@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Controllers\Chart;
 
 use AvisoNavAPI\ChartEdition;
 use Illuminate\Http\Request;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Chart;
 use AvisoNavAPI\Http\Resources\ChartEditionResource;
 

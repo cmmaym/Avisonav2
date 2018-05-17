@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\NoveltyTypeLang;
 use AvisoNavAPI\Traits\Responser;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\NoveltyType\NoveltyTypeLangResource;
 use AvisoNavAPI\ModelFilters\Basic\NoveltyTypeLangFilter;
 use AvisoNavAPI\Http\Requests\NoveltyType\StoreNoveltyTypeLang;

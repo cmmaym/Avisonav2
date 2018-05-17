@@ -3,7 +3,7 @@
 namespace AvisoNavAPI\Http\Controllers\Location;
 
 use AvisoNavAPI\Location;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\LocationResource;
 use AvisoNavAPI\ModelFilters\Basic\LocationFilter;
 use AvisoNavAPI\Http\Requests\Location\StoreLocation;

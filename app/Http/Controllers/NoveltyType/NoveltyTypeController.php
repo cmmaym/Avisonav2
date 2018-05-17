@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\NoveltyTypeLang;
 use Illuminate\Support\Facades\DB;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\NoveltyType\NoveltyTypeResource;
 use AvisoNavAPI\ModelFilters\Basic\NoveltyTypeFilter;
 use AvisoNavAPI\Http\Resources\NoveltyType\NoveltyTypeLangResource;
@@ -19,11 +19,6 @@ use AvisoNavAPI\Http\Requests\NoveltyType\UpdateNoveltyType;
 class NoveltyTypeController extends Controller
 {
     use Filter;
-
-    public function __construct()
-    {
-        if(!request()->exists('language')) request()->merge(['language' => '1']);
-    }
 
     /**
      * Display a listing of the resource.

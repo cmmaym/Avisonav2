@@ -5,7 +5,7 @@ namespace AvisoNavAPI\Http\Controllers\Aid;
 use AvisoNavAPI\AidType;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\ModelFilters\Basic\AidTypeLangFilter;
 use AvisoNavAPI\Http\Resources\Aid\AidTypeLangResource;
 use AvisoNavAPI\Http\Requests\Aid\StoreAidTypeLang;

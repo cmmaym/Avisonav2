@@ -5,7 +5,7 @@ namespace AvisoNavAPI\Http\Controllers\ColorType;
 use AvisoNavAPI\ColorType;
 use AvisoNavAPI\ColorTypeLang;
 use AvisoNavAPI\Traits\Filter;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\ColorType\ColorTypeResource;
 use AvisoNavAPI\ModelFilters\Basic\ColorTypeFilter;
 use AvisoNavAPI\Http\Requests\ColorType\StoreColorType;
@@ -14,11 +14,6 @@ use AvisoNavAPI\ModelFilters\Basic\ColorTypeLangFilter;
 class ColorTypeController extends Controller
 {
     use Filter;
-
-    public function __construct()
-    {
-        if(!request()->exists('language')) request()->merge(['language' => '1']);
-    }
 
     /**
      * Display a listing of the resource.

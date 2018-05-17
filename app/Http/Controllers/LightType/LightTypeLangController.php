@@ -5,7 +5,7 @@ namespace AvisoNavAPI\Http\Controllers\LightType;
 use AvisoNavAPI\LightType;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\ModelFilters\Basic\LightTypeFilter;
 use AvisoNavAPI\Http\Resources\LightType\LightTypeLangResource;
 use AvisoNavAPI\Http\Requests\LightType\StoreLightTypeLang;

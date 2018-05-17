@@ -5,7 +5,7 @@ namespace AvisoNavAPI\Http\Controllers\Chart;
 use AvisoNavAPI\Chart;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\ModelFilters\Basic\ChartFilter;
 use AvisoNavAPI\Http\Resources\ChartResource;
 use AvisoNavAPI\Http\Requests\Chart\StoreChart;

@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Controllers\Aid;
 
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\AidType;
 use AvisoNavAPI\ModelFilters\Basic\AidTypeFilter;
 use AvisoNavAPI\Http\Resources\Aid\AidTypeResource;
@@ -13,11 +13,6 @@ use AvisoNavAPI\Http\Requests\Aid\StoreAidType;
 class AidTypeController extends Controller
 {
     use Filter;
-
-    public function __construct()
-    {
-        if(!request()->exists('language')) request()->merge(['language' => '1']);
-    }
 
     /**
      * Display a listing of the resource.

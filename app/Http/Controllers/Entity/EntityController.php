@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Controllers\Entity;
 
 use AvisoNavAPI\Entity;
 use AvisoNavAPI\Traits\Filter;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\EntityResource;
 use AvisoNavAPI\ModelFilters\Basic\EntityFilter;
 use AvisoNavAPI\Http\Requests\Entity\StoreEntity;

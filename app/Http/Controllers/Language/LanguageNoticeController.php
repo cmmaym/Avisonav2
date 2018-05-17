@@ -6,7 +6,7 @@ use AvisoNavAPI\Notice;
 use AvisoNavAPI\Language;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Responser;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\NoticeResource;
 
 class LanguageNoticeController extends Controller

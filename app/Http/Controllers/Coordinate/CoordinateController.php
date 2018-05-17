@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Controllers\Coordinate;
 
 use AvisoNavAPI\Coordinate;
 use Illuminate\Http\Request;
-use AvisoNavAPI\Http\Controllers\Controller;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\CoordinateResource;
 use AvisoNavAPI\Http\Requests\Coordinate\StoreCoordinate;
 
