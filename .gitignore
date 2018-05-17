@@ -12,3 +12,4 @@ npm-debug.log
 yarn-error.log
 .env
 /.project
+/resources/assets/js/avisonav-client
