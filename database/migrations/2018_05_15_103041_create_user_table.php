@@ -15,17 +15,24 @@ class CreateUserTable extends Migration
     {
         Schema::create('user', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('name');
+            $table->integer('num_ide');
+            $table->string('user_name', 100);
+            $table->string('name1', 100);
+            $table->string('name2', 100)->nullable();
+            $table->string('last_name1', 100);
+            $table->string('last_name2', 100);
             $table->string('email')->unique();
             $table->string('password');
-            // $table->rememberToken();
             $table->timestamps();
+            $table->enum('state', array('A','I'))->default('A')->comment('Estado del usuario. Puede ser Activo, Inactivo');
             $table->integer('role_id');
 
             $table->foreign('id')
                 ->references('id')->on('role')
                 ->onDelete('cascade');
 
+            $table->unique(['user_name'], 'user_name_UNIQUE');
+            $table->unique(['email'], 'email_UNIQUE');
         });
     }
 
@@ -36,6 +43,6 @@ class CreateUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('user');
     }
 }

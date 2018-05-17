@@ -30,9 +30,6 @@ class CreatePermissionTable extends Migration
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('permission');
-        Schema::dropIfExists('role');
-        Schema::dropIfExists('role_permission');
-        Schema::dropIfExists('user');
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

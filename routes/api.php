@@ -21,6 +21,11 @@ Route::post('/login', 'LoginController@authenticate');
 Route::post('/login/refresh', 'LoginController@refresh');
 Route::post('/logout', 'LoginController@logout')->middleware('auth:api');
 
+
+Route::resource('user', 'UserController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
+
 //Language
 Route::resource('language', 'Language\LanguageController')->only([
     'index', 'show', 'store', 'update', 'destroy'
