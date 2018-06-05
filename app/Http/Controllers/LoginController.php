@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use AvisoNavAPI\Http\Requests\LoginType;
 use Illuminate\Auth\AuthenticationException;
+use AvisoNavAPI\Http\Resources\UserResource;
 
 class LoginController extends Controller
 {
@@ -107,6 +108,11 @@ class LoginController extends Controller
             'access_token' => $data->access_token,
             'expires_in' => $data->expires_in
         ];
+    }
+
+    public function getUserAuthenticated(Request $request)
+    {
+        return new UserResource($request->user());
     }
 
 }
