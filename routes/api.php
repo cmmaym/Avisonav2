@@ -20,9 +20,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', 'LoginController@authenticate');
 Route::post('/login/refresh', 'LoginController@refresh');
 Route::post('/logout', 'LoginController@logout')->middleware('auth:api');
-Route::get('/login/getUserAuthenticated', 'LoginController@getUserAuthenticated')->middleware('auth:api');
 
 
+Route::get('user/me', 'UserController@me')->middleware('auth:api');
 Route::resource('user', 'UserController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);

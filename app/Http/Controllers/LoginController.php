@@ -98,8 +98,8 @@ class LoginController extends Controller
             'refresh_token',
             $data->refresh_token,
             864000, // 10 days
-            null,
-            null,
+            '/',
+            'localhost',
             false,
             true // HttpOnly
         ));
@@ -108,11 +108,6 @@ class LoginController extends Controller
             'access_token' => $data->access_token,
             'expires_in' => $data->expires_in
         ];
-    }
-
-    public function getUserAuthenticated(Request $request)
-    {
-        return new UserResource($request->user());
     }
 
 }
