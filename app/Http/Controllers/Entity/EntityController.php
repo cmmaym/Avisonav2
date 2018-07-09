@@ -8,10 +8,11 @@ use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\EntityResource;
 use AvisoNavAPI\ModelFilters\Basic\EntityFilter;
 use AvisoNavAPI\Http\Requests\Entity\StoreEntity;
+use AvisoNavAPI\Traits\Responser;
 
 class EntityController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -61,7 +62,7 @@ class EntityController extends Controller
         $entity->fill($request->only(['name','alias','state',]));
         
         if($entity->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
         
         $entity->save();

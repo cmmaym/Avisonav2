@@ -11,6 +11,6 @@ class EntityTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(AvisoNavAPI\Entity::class, 10)->create();
+        factory(AvisoNavAPI\Entity::class, 100)->create();
     }
 }
