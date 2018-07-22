@@ -2,6 +2,7 @@
 
 namespace AvisoNavAPI\Http\Resources\NoveltyType;
 
+use AvisoNavAPI\Http\Resources\LanguageResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class NoveltyTypeLangResource extends JsonResource
@@ -19,6 +20,7 @@ class NoveltyTypeLangResource extends JsonResource
             'name'              => $this->name,
             'created_at'        => $this->created_at->format('Y-m-d'),
             'updated_at'        => $this->updated_at->format('Y-m-d'),
+            'language'          => new LanguageResource($this->language),
             'links'              => [
                 'self'  =>  route('noveltyType.noveltyTypeLang.show', ['noveltyTypeId' => $this->noveltyType->id, 'id' => $this->id]),
                 'noveltyType'  =>  route('noveltyType.show', ['noveltyTypeId' => $this->noveltyType->id]),

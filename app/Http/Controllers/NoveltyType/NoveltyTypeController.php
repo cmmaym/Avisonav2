@@ -15,10 +15,11 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use AvisoNavAPI\ModelFilters\Basic\NoveltyTypeLangFilter;
 use AvisoNavAPI\Http\Requests\NoveltyType\StoreNoveltyType;
 use AvisoNavAPI\Http\Requests\NoveltyType\UpdateNoveltyType;
+use AvisoNavAPI\Traits\Responser;
 
 class NoveltyTypeController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -50,6 +51,14 @@ class NoveltyTypeController extends Controller
         $noveltyType = new NoveltyType();
         $noveltyType->save();
         
+        $noveltyTypeLang = new NoveltyTypeLang();
+        $noveltyTypeLang->name = $request->input('name'); 
+        $noveltyTypeLang->language_id = $request->input('language_id'); 
+        
+        $noveltyType->noveltyTypeLang()->save($noveltyTypeLang);
+        
+        $noveltyType->refresh();
+
         return new NoveltyTypeResource($noveltyType);
     }
 
@@ -76,7 +85,7 @@ class NoveltyTypeController extends Controller
         $noveltyType->fill($request->only(['state']));
         
         if($noveltyType->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
         
         $noveltyType->save();
