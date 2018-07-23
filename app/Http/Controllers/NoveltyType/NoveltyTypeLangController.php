@@ -14,7 +14,7 @@ use AvisoNavAPI\Http\Requests\NoveltyType\StoreNoveltyTypeLang;
 
 class NoveltyTypeLangController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -40,7 +40,7 @@ class NoveltyTypeLangController extends Controller
     public function store(StoreNoveltyTypeLang $request, NoveltyType $noveltyType)
     {
         $noveltyTypeLang = new NoveltyTypeLang($request->only(['name']));
-        $noveltyTypeLang->language_id = $request->input('language_id');
+        $noveltyTypeLang->language_id = $request->input('language');
 
         $noveltyType->noveltyTypeLangs()->save($noveltyTypeLang);
 
@@ -70,9 +70,10 @@ class NoveltyTypeLangController extends Controller
     public function update(StoreNoveltyTypeLang $request, NoveltyType $noveltyType, NoveltyTypeLang $noveltyTypeLang)
     {        
         $noveltyTypeLang->fill($request->only(['name']));
+        $noveltyTypeLang->language_id = $request->input('language');
         
         if($noveltyTypeLang->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
         
         $noveltyTypeLang->save();

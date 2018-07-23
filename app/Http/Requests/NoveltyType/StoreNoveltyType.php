@@ -26,7 +26,7 @@ class StoreNoveltyType extends FormRequest
         return [
             'state'        => 'sometimes|required|in:A,I',
             'name'         => 'sometimes|required|max:100',
-            'language_id'  => 'sometimes|required|integer|exists:language,id',
+            'language'  => 'sometimes|required|integer|exists:language,id',
         ];
     }
 
