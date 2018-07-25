@@ -35,6 +35,7 @@ class NoticeResource extends JsonResource
             'updated_at'                => $this->updated_at->format('Y-m-d'),
             'state'                     => $this->state,
             'file_info'                 => $this->file_info,
+            'user'                      => $this->user,
             'observation'               => $this->when(!is_null($this->noticeLang), $noticeLang, null),
             'characterType'             => new CharacterTypeResource($this->characterType),
             'noveltyType'               => new NoveltyTypeResource($this->noveltyType),

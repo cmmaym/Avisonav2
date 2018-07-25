@@ -11,28 +11,31 @@ class NoticeFilter extends ModelFilter
     }
     
     public function date($date){
-        return $this->whereRaw("(STR_TO_DATE(date, '%Y-%m-%d') between ? and ?)", array($date, $date));
+        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($date, $date));
     }
 
-    public function periodo($periodo){
-        return $this->where('periodo', '=', $periodo);
+    public function year($year){
+        return $this->where('year', 'like', "%$year%");
     }
 
     public function entity($name){
         return $this->related('entity', 'entity.name', 'like', "%$name%");
     }
     
-    public function character($name){
+    public function characterType($name){
         $this->whereHas('characterType.characterTypeLang', function($query) use ($name) {
             $query->where('name', 'like', "%$name%");
         });
     }
-
-    public function language($language){
-        // $this->related('noticeLang', 'notice_lang.language_id', '=', $language);
-        $this->whereHas('characterType.characterTypeLang', function($query) use ($language) {
-            $query->where('language_id', $language);
+    
+    public function noveltyType($name){
+        $this->whereHas('noveltyType.noveltyTypeLang', function($query) use ($name) {
+            $query->where('name', 'like', "%$name%");
         });
+    }
+
+    public function user($user){
+        return $this->where('user', 'like', "%$user%");
     }
     
     public function observation($observation){
@@ -53,9 +56,36 @@ class NoticeFilter extends ModelFilter
         return $this->orderBy('number', $this->input('dir', 'asc'));
     }
     
+    public function sortByYear()
+    {
+        return $this->orderBy('year', $this->input('dir', 'asc'));
+    }
+    
     public function sortByDate()
     {
-        return $this->orderBy('date', $this->input('dir', 'asc'));
+        return $this->orderBy('created_at', $this->input('dir', 'asc'));
+    }
+    
+    public function sortByCharacterType()
+    {
+        $input = $this->input('dir', 'asc');
+
+        $this->join('character_type', 'notice.character_type_id', '=', 'character_type.id')
+             ->join('character_type_lang', 'character_type.id', '=', 'character_type_lang.character_type_id')
+             ->groupBy('notice.number')
+             ->orderBy('character_type_lang.name', $input)
+             ->select('notice.*');
+    }
+    
+    public function sortByNoveltyType()
+    {
+        $input = $this->input('dir', 'asc');
+
+        $this->join('novelty_type', 'notice.novelty_type_id', '=', 'novelty_type.id')
+             ->join('novelty_type_lang', 'novelty_type.id', '=', 'novelty_type_lang.novelty_type_id')
+             ->groupBy('notice.number')
+             ->orderBy('novelty_type_lang.name', $input)
+             ->select('notice.*');
     }
     
     public function sortByEntity()

@@ -55,17 +55,25 @@ class NoticeController extends Controller
     {
         $notice = new Notice($request->only(['number', 'date']));
         
-        $periodo = (new \DateTime("now"))->format('Ym');
-        $notice->periodo = $periodo;
+        $year = (new \DateTime("now"))->format('Y');
+        $notice->year = $year;
         $notice->user = 'JMARDZ';
-        $notice->entity_id = $request->input('entity_id');
-        $notice->characterType_id = $request->input('character_type_id');
+        $notice->entity_id = $request->input('entity');
+        $notice->characterType_id = $request->input('character_type');
 
         $notice->parent_id = ($request->has('parent_id')) ? $request->input('parent_id') : null;
         
         // $notice->file_info = null;
 
         $notice->save();
+
+        $noticeLang = new NoticeLang();
+        $noticeLang->observation = $request->input('observation');
+        $noticeLang->language_id = $request->input('language');
+
+        $notice->noticeLang()->save($noticeLang);
+        
+        $notice->refresh();
 
         return new NoticeSimpleResource($notice);
     }

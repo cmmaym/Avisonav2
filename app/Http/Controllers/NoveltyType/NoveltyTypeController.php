@@ -53,7 +53,7 @@ class NoveltyTypeController extends Controller
         
         $noveltyTypeLang = new NoveltyTypeLang();
         $noveltyTypeLang->name = $request->input('name'); 
-        $noveltyTypeLang->language_id = $request->input('language_id'); 
+        $noveltyTypeLang->language_id = $request->input('language'); 
         
         $noveltyType->noveltyTypeLang()->save($noveltyTypeLang);
         
