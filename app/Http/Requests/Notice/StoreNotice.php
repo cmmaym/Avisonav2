@@ -24,11 +24,15 @@ class StoreNotice extends FormRequest
     public function rules()
     {
         return [
-            'number'                    => 'max:100',
-            'date'                      => 'required|date',
+            'number'                    => 'required|max:100',
+            // 'date'                      => 'required|date',
             'state'                     => 'sometimes|required|in:A,I',
-            'file_info'                 => 'sometimes|required|file',
-            'entity_id'                 => 'required|exists:entity,id',
+            'file_info'                 => 'sometimes|nullable|file',
+            'entity'                    => 'required|exists:entity,id',
+            'characterType'             => 'required|exists:character_type,id',
+            'noveltyType'               => 'required|exists:novelty_type,id',
+            'language'                  => 'sometimes|required|exists:language,id',
+            'observation'               => 'required',
             'parent_id'                 => 'sometimes|required|exists:notice,id'
         ];
     }

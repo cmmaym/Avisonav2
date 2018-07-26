@@ -16,7 +16,7 @@ class CreateNoticeTable extends Migration
         Schema::create('notice', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('number', 100)->comment('Numero del aviso');
-            $table->dateTime('date')->comment('Fecha en la que se genero el aviso');
+            // $table->dateTime('date')->comment('Fecha en la que se genero el aviso');
             $table->year('year')->comment('Año en el que se registro el aviso');
             $table->timestamps();
             $table->enum('state',array('A','I'))->default('A')->comment('Estado del aviso. Puede ser Activo, Inactivo');

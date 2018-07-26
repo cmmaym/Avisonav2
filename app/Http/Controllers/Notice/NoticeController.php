@@ -14,10 +14,11 @@ use AvisoNavAPI\ModelFilters\Basic\NoticeFilter;
 use AvisoNavAPI\Http\Requests\Notice\StoreNotice;
 use AvisoNavAPI\Http\Resources\Notice\NoticeResource;
 use AvisoNavAPI\Http\Resources\Notice\NoticeSimpleResource;
+use AvisoNavAPI\Traits\Responser;
 
 class NoticeController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -53,13 +54,14 @@ class NoticeController extends Controller
      */
     public function store(StoreNotice $request)
     {
-        $notice = new Notice($request->only(['number', 'date']));
+        $notice = new Notice($request->only(['number']));
         
         $year = (new \DateTime("now"))->format('Y');
         $notice->year = $year;
         $notice->user = 'JMARDZ';
         $notice->entity_id = $request->input('entity');
-        $notice->characterType_id = $request->input('character_type');
+        $notice->character_type_id = $request->input('characterType');
+        $notice->novelty_type_id = $request->input('noveltyType');
 
         $notice->parent_id = ($request->has('parent_id')) ? $request->input('parent_id') : null;
         
@@ -75,7 +77,7 @@ class NoticeController extends Controller
         
         $notice->refresh();
 
-        return new NoticeSimpleResource($notice);
+        return new NoticeResource($notice);
     }
 
     /**
@@ -133,15 +135,16 @@ class NoticeController extends Controller
      */
     public function update(StoreNotice $request, Notice $notice)
     {
-        $notice->fill($request->only(['number', 'date', 'state']));
+        $notice->fill($request->only(['number', 'state']));
         $notice->user = 'JMARDZ';
-        $notice->entity_id = $request->input('entity_id');
-        $notice->characterType_id = $request->input('character_type_id');
+        $notice->entity_id = $request->input('entity');
+        $notice->character_type_id = $request->input('characterType');
+        $notice->novelty_type_id = $request->input('noveltyType');
 
         $notice->parent_id = ($request->has('parent_id')) ? $request->input('parent_id') : null;
 
         if($notice->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
         
         $notice->save();

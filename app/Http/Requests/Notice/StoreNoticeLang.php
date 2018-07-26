@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Requests\Notice;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreNoticeDetail extends FormRequest
+class StoreNoticeLang extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,7 @@ class StoreNoticeDetail extends FormRequest
     {
         return [
             'observation'               => 'required',
-            'state'                     => 'sometimes|required|in:A,I',
-            'character_type_id'         => 'required|exists:character_type,id',
-            'language_id'               => 'required|exists:language,id',
+            'language'                  => 'required|exists:language,id',
         ];
     }
 

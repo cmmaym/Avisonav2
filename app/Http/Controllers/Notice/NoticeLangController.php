@@ -14,7 +14,7 @@ use AvisoNavAPI\Http\Resources\Notice\NoticeLangResource;
 
 class NoticeLangController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -38,7 +38,7 @@ class NoticeLangController extends Controller
     public function store(StoreNoticeLang $request, Notice $notice)
     {
         $noticeLang = new NoticeLang($request->only(['observation']));
-        $noticeLang->language_id = $request->input('language_id');
+        $noticeLang->language_id = $request->input('language');
         
         $notice->noticeLang()->save($noticeLang);
 
@@ -66,10 +66,10 @@ class NoticeLangController extends Controller
     public function update(StoreNoticeLang $request, $notice, NoticeLang $noticeLang)
     {
         $noticeLang->fill($request->only(['observation']));
-        $noticeLang->language_id = $request->input('language_id');
+        $noticeLang->language_id = $request->input('language');
 
         if($noticeLang->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
         
         $noticeLang->save();

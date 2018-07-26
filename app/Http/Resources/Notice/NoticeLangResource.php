@@ -3,6 +3,7 @@
 namespace AvisoNavAPI\Http\Resources\Notice;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use AvisoNavAPI\Http\Resources\LanguageResource;
 
 class NoticeLangResource extends JsonResource
 {
@@ -19,6 +20,7 @@ class NoticeLangResource extends JsonResource
             'observation'       => $this->observation,
             'created_at'        => $this->created_at->format('Y-m-d'),
             'updated_at'        => $this->updated_at->format('Y-m-d'),
+            'language'          => new LanguageResource($this->language),
             'links'             => [
                 'self'      =>  route('notice.noticeLang.show', [$this->notice->id, $this->id]),
             ]

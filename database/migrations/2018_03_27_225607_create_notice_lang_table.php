@@ -17,7 +17,6 @@ class CreateNoticeLangTable extends Migration
             $table->increments('id');
             $table->mediumText('observation')->comment('Observacion acerca del aviso');
             $table->timestamps();
-            $table->enum('state',array('A','I'))->default('A')->comment('Estado del aviso detalle. Puede ser Activo, Inactivo');
             $table->integer('notice_id')->unsigned();            
             $table->integer('language_id')->unsigned();
 

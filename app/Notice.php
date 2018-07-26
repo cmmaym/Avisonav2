@@ -13,7 +13,7 @@ class Notice extends Model
     use Filterable;
 
     protected $table        = 'notice';
-    protected $fillable     = ['number', 'date', 'state'];
+    protected $fillable     = ['number', 'state'];
 
     public function entity(){
         return $this->belongsTo(Entity::class);
