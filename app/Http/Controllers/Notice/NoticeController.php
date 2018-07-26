@@ -13,7 +13,6 @@ use AvisoNavAPI\Http\Resources\AyudaResource;
 use AvisoNavAPI\ModelFilters\Basic\NoticeFilter;
 use AvisoNavAPI\Http\Requests\Notice\StoreNotice;
 use AvisoNavAPI\Http\Resources\Notice\NoticeResource;
-use AvisoNavAPI\Http\Resources\Notice\NoticeSimpleResource;
 use AvisoNavAPI\Traits\Responser;
 
 class NoticeController extends Controller
@@ -27,19 +26,13 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $language = request()->input('language');
         $collection = Notice::filter(request()->all(), NoticeFilter::class)
                             ->with([
                                 'entity',
-                                'characterType.characterTypeLang' => function ($query) use ($language){
-                                    $query->where('language_id', $language);
-                                },
-                                'noveltyType.noveltyTypeLang' => function ($query) use ($language){
-                                    $query->where('language_id', $language);
-                                },
-                                'noticeLang' => function ($query) use ($language){
-                                    $query->where('language_id', $language);
-                                }
+                                'characterType.characterTypeLang' => $this->withLanguageQuery(),
+                                'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
+                                'noticeLang' => $this->withLanguageQuery(),
+                                'aid'
                             ])
                             ->paginateFilter($this->perPage());
 
@@ -88,43 +81,15 @@ class NoticeController extends Controller
      */
     public function show(Notice $notice)
     {
-        $language = request()->input('language');
         $notice->load([
             'entity',
-            'characterType.characterTypeLang' => function ($query) use ($language){
-                $query->where('language_id', $language);
-            },
-            'noveltyType.noveltyTypeLang' => function ($query) use ($language){
-                $query->where('language_id', $language);
-            },
-            'noticeLang' => function ($query) use ($language){
-                $query->where('language_id', $language);
-            }]
-        );
+            'characterType.characterTypeLang' => $this->withLanguageQuery(),
+            'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
+            'noticeLang' => $this->withLanguageQuery(),
+        ]);
+
         return new NoticeResource($notice);
     }
-
-    /**
-     * Muestra un notice resource sin ningun noticeLang embebido.
-     * El notieLang dentro del resource ira en forma de link que espesifica la relacion.
-     * Este metodo solo es conveniente para buscar un notice cuando se le quiere realizar una actualizacion.
-     * Los datos que el notice tiene relacionado iran embebidos en el notice resource en el idioma por defecto.
-     *
-     * @param  \AvisoNavAPI\Notice  $notice
-     * @return \AvisoNavAPI\Http\Resources\NoticeResource
-     */
-    // public function showSimple($id)
-    // {
-    //     $language = request()->input('language');
-    //     $notice = Notice::with([
-    //                         'entity',
-    //                         'characterType.characterTypeLang' => function ($query) use ($language){
-    //                             $query->where('language_id', $language);
-    //                         }]
-    //                     )->findOrFail($id);
-
-    //     return new NoticeSimpleResource($notice);
-    // }
 
     /**
      * Update the specified resource in storage.

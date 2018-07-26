@@ -12,6 +12,10 @@ class AidTypeLang extends Model
     protected $table        = 'aid_type_lang';
     protected $fillable     = ['name'];
 
+    public function language(){
+        return $this->belongsTo(Language::class);
+    }
+
     public function aidType()
     {
         return $this->belongsTo(AidType::class);

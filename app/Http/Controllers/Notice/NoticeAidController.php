@@ -55,7 +55,7 @@ class NoticeAidController extends Controller
      */
     public function update(Notice $notice, Aid $aid)
     {
-        $notice->aid()->attach($aid->id, ['coordinate_id' => request()->input('coordinate_id')]);
+        $notice->aid()->attach($aid->id, ['coordinate_id' => $aid->coordinate->id]);
     }
 
     /**

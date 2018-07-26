@@ -24,25 +24,14 @@ class AidController extends Controller
      */
     public function index()
     {
-        $language = request()->input('language');
         $collection = Aid::filter(request()->all(), AidFilter::class)
                          ->with([
                              'coordinate',
-                             'aidLang' => function($query) use ($language){
-                                $query->where('language_id', $language);
-                              },
-                             'location.zone.zoneLang' => function($query) use ($language){
-                                $query->where('language_id', $language);
-                              },
-                             'lightType.lightTypeLang' => function($query) use ($language){
-                                $query->where('language_id', $language);
-                              },
-                             'colorType.colorTypeLang' => function($query) use ($language){
-                                $query->where('language_id', $language);
-                              },
-                             'aidType.aidTypeLang' => function($query) use ($language){
-                                $query->where('language_id', $language);
-                              }
+                             'aidLang' => $this->withLanguageQuery(),
+                             'location.zone.zoneLang' => $this->withLanguageQuery(),
+                             'lightType.lightTypeLang' => $this->withLanguageQuery(),
+                             'colorType.colorTypeLang' => $this->withLanguageQuery(),
+                             'aidType.aidTypeLang' => $this->withLanguageQuery()
                          ])
                          ->paginateFilter($this->perPage());
 
@@ -77,24 +66,13 @@ class AidController extends Controller
      */
     public function show(Aid $aid)
     {
-        $language = request()->input('language');
         $aid->load([
             'coordinate',
-            'aidLang' => function($query) use ($language){
-            $query->where('language_id', $language);
-            },
-            'location.zone.zoneLang' => function($query) use ($language){
-            $query->where('language_id', $language);
-            },
-            'lightType.lightTypeLang' => function($query) use ($language){
-            $query->where('language_id', $language);
-            },
-            'colorType.colorTypeLang' => function($query) use ($language){
-            $query->where('language_id', $language);
-            },
-            'aidType.aidTypeLang' => function($query) use ($language){
-            $query->where('language_id', $language);
-            }
+            'aidLang' => $this->withLanguageQuery(),
+            'location.zone.zoneLang' => $this->withLanguageQuery(),
+            'lightType.lightTypeLang' => $this->withLanguageQuery(),
+            'colorType.colorTypeLang' => $this->withLanguageQuery(),
+            'aidType.aidTypeLang' => $this->withLanguageQuery()
         ]);
 
         return new AidResource($aid);

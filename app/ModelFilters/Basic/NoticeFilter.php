@@ -65,6 +65,11 @@ class NoticeFilter extends ModelFilter
     {
         return $this->orderBy('created_at', $this->input('dir', 'asc'));
     }
+
+    public function sortByUser()
+    {
+        return $this->orderBy('user', $this->input('dir', 'asc'));
+    }
     
     public function sortByCharacterType()
     {
