@@ -30,20 +30,16 @@ class CreateAidTable extends Migration
             $table->integer('color_type_id')->unsigned();
 
             $table->foreign('aid_type_id')
-                  ->references('id')->on('aid_type')
-                  ->onDelete('cascade');
+                  ->references('id')->on('aid_type');
             
             $table->foreign('location_id')
-                  ->references('id')->on('location')
-                  ->onDelete('cascade');
+                  ->references('id')->on('location');
 
             $table->foreign('light_type_id')
-                ->references('id')->on('light_type')
-                ->onDelete('cascade');
+                ->references('id')->on('light_type');
             
             $table->foreign('color_type_id')
-                ->references('id')->on('color_type')
-                ->onDelete('cascade');
+                ->references('id')->on('color_type');
 
             $table->unique(['number', 'location_id'], 'number_location_UNIQUE');
         });

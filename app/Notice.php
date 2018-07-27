@@ -38,8 +38,7 @@ class Notice extends Model
     public function aid(){
         return $this->belongsToMany(Aid::class, 'notice_aid')
                     ->withTimestamps()
-                    ->withPivot('coordinate_id')
-                    ->using(NoticeAid::class);
+                    ->withPivot('coordinate_id');
     }
 
 }

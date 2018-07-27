@@ -16,7 +16,6 @@ class CreateNoticeTable extends Migration
         Schema::create('notice', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('number', 100)->comment('Numero del aviso');
-            // $table->dateTime('date')->comment('Fecha en la que se genero el aviso');
             $table->year('year')->comment('Año en el que se registro el aviso');
             $table->timestamps();
             $table->enum('state',array('A','I'))->default('A')->comment('Estado del aviso. Puede ser Activo, Inactivo');
@@ -28,20 +27,16 @@ class CreateNoticeTable extends Migration
             $table->integer('parent_id')->unsigned()->nullable();
 
             $table->foreign('entity_id')
-                  ->references('id')->on('entity')
-                  ->onDelete('cascade');
+                  ->references('id')->on('entity');
 
             $table->foreign('character_type_id')
-                  ->references('id')->on('character_type')
-                  ->onDelete('cascade');
+                  ->references('id')->on('character_type');
 
             $table->foreign('novelty_type_id')
-                  ->references('id')->on('novelty_type')
-                  ->onDelete('cascade');
+                  ->references('id')->on('novelty_type');
             
             $table->foreign('parent_id')
-                  ->references('id')->on('notice')
-                  ->onDelete('cascade');
+                  ->references('id')->on('notice');
 
             $table->unique(['number', 'year'], 'number_year_UNIQUE');
         });

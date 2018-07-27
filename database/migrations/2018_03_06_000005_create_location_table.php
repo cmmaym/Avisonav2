@@ -22,8 +22,7 @@ class CreateLocationTable extends Migration
             $table->integer('zone_id')->unsigned();
 
             $table->foreign('zone_id')
-                  ->references('id')->on('zone')
-                  ->onDelete('cascade');
+                  ->references('id')->on('zone');
 
             $table->unique(['name', 'zone_id'], 'name_zone_UNIQUE');
         });

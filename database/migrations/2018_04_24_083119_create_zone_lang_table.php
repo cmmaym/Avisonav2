@@ -22,12 +22,10 @@ class CreateZoneLangTable extends Migration
             $table->integer('zone_id')->unsigned();
 
             $table->foreign('language_id')
-                  ->references('id')->on('language')
-                  ->onDelete('cascade');
+                  ->references('id')->on('language');
             
             $table->foreign('zone_id')
-                  ->references('id')->on('zone')
-                  ->onDelete('cascade');
+                  ->references('id')->on('zone');
 
             $table->unique(['language_id', 'zone_id'], 'language_zone_UNIQUE');
         });

@@ -67,10 +67,10 @@ class AidTableSeeder extends Seeder
                 'created_at'            => new \DateTime('now'),
                 'updated_at'            => new \DateTime('now'),
                 'user'                  => 'JMARDZ',
-                'aid_type_id'           => 7,
+                'aid_type_id'           => 4 ,
                 'location_id'           => 1,
                 'light_type_id'         => 3,
-                'color_type_id'         => 4,
+                'color_type_id'         => 2,
             ],
         ]);
     }

@@ -9,10 +9,11 @@ use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\ModelFilters\Basic\AidFilter;
 use AvisoNavAPI\Http\Resources\Aid\AidResource;
 use AvisoNavAPI\Aid;
+use AvisoNavAPI\Traits\Responser;
 
 class NoticeAidController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -21,25 +22,21 @@ class NoticeAidController extends Controller
      */
     public function index(Notice $notice)
     {
-        $language = request()->input('language');
+        $noticeId = $notice->id;
         $collection = $notice->aid()->filter(request()->all(), AidFilter::class)
                                     ->with([
-                                        'coordinate',
-                                        'aidLang' => function($query) use ($language){
-                                        $query->where('language_id', $language);
+                                        'coordinate' => function($query) use ($noticeId){
+                                            $query->join('notice_aid', function($query) use ($noticeId){
+                                                $query->on('coordinate.aid_id', 'notice_aid.aid_id')
+                                                        ->on('notice_aid.coordinate_id', 'coordinate.id')
+                                                        ->where('notice_aid.notice_id', '=', $noticeId);
+                                            });
                                         },
-                                        'location.zone.zoneLang' => function($query) use ($language){
-                                        $query->where('language_id', $language);
-                                        },
-                                        'lightType.lightTypeLang' => function($query) use ($language){
-                                        $query->where('language_id', $language);
-                                        },
-                                        'colorType.colorTypeLang' => function($query) use ($language){
-                                        $query->where('language_id', $language);
-                                        },
-                                        'aidType.aidTypeLang' => function($query) use ($language){
-                                        $query->where('language_id', $language);
-                                        }
+                                        'aidLang' => $this->withLanguageQuery(),
+                                        'location.zone.zoneLang' => $this->withLanguageQuery(),
+                                        'lightType.lightTypeLang' => $this->withLanguageQuery(),
+                                        'colorType.colorTypeLang' => $this->withLanguageQuery(),
+                                        'aidType.aidTypeLang' => $this->withLanguageQuery()
                                     ])
                                     ->paginateFilter($this->perPage());
 
@@ -55,6 +52,12 @@ class NoticeAidController extends Controller
      */
     public function update(Notice $notice, Aid $aid)
     {
+        $data = $notice->aid()->where('aid_id', '=', $aid->id)->get();
+
+        if(!$data->isEmpty()){
+            return $this->errorResponse('La ayuda no debe estar duplicada en el aviso. Debe seleccionar otra.', 409);
+        }
+        
         $notice->aid()->attach($aid->id, ['coordinate_id' => $aid->coordinate->id]);
     }
 

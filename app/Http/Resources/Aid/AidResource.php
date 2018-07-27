@@ -36,7 +36,6 @@ class AidResource extends JsonResource
             'state'             => $this->state,
             'aidType'           => new AidTypeResource($this->aidType),
             'coordinate'        => new CoordinateResource($this->coordinate),
-            'coordinateAidNotice'        => new CoordinateResource($this->coordinateAidNotice),
             'location'          => new LocationResource($this->location),
             'lightType'         => new LightTypeResource($this->lightType),
             'colorType'         => new ColorTypeResource($this->colorType),

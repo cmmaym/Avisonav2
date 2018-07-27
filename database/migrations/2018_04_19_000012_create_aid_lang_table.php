@@ -21,12 +21,10 @@ class CreateAidLangTable extends Migration
             $table->integer('language_id')->unsigned();
 
             $table->foreign('aid_id')
-                ->references('id')->on('aid')
-                ->onDelete('cascade');
+                ->references('id')->on('aid');
 
             $table->foreign('language_id')
-                ->references('id')->on('language')
-                ->onDelete('cascade');
+                ->references('id')->on('language');
 
             $table->unique(['aid_id', 'language_id'], 'aid_language_UNIQUE');
         });

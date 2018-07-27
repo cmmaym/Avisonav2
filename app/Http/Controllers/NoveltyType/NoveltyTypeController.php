@@ -31,9 +31,7 @@ class NoveltyTypeController extends Controller
         $language = request()->input('language');
         $collection = NoveltyType::filter(request()->all(), NoveltyTypeFilter::class)
                                      ->with([
-                                         'noveltyTypeLang' => function($query) use ($language){
-                                            $query->where('language_id', $language);
-                                          } 
+                                         'noveltyTypeLang' => $this->withLanguageQuery()
                                      ])
                                      ->paginateFilter($this->perPage());
 

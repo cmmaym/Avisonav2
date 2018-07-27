@@ -22,8 +22,7 @@ class CreateCoordinateTable extends Migration
             $table->integer('aid_id')->unsigned();
 
             $table->foreign('aid_id')
-                  ->references('id')->on('aid')
-                  ->onDelete('cascade');
+                  ->references('id')->on('aid');
         });
     }
 

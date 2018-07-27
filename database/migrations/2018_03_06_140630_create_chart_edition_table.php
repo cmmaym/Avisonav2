@@ -22,8 +22,7 @@ class CreateChartEditionTable extends Migration
             $table->integer('chart_id')->unsigned();
 
             $table->foreign('chart_id')
-                  ->references('id')->on('chart')
-                  ->onDelete('cascade');
+                  ->references('id')->on('chart');
 
             $table->unique(['number', 'year', 'chart_id'], 'number_year_chart_UNIQUE');
         });

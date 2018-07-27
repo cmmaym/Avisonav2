@@ -23,12 +23,9 @@ class CharacterTypeController extends Controller
      */
     public function index()
     {
-        $language = request()->input('language');
         $collection = CharacterType::filter(request()->all(), CharacterTypeFilter::class)
                                        ->with([
-                                           'characterTypeLang' => function($query) use ($language){
-                                            $query->where('language_id', $language);
-                                          } 
+                                           'characterTypeLang' => $this->withLanguageQuery()
                                         ]) 
                                        ->paginateFilter($this->perPage());
 

@@ -7,13 +7,14 @@ use AvisoNavAPI\NoticeLang;
 use Illuminate\Http\Request;
 use AvisoNavAPI\AvisoDetalle;
 use AvisoNavAPI\Traits\Filter;
+use AvisoNavAPI\Traits\Responser;
 use Illuminate\Support\Facades\DB;
-use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+use Illuminate\Support\Facades\Auth;
 use AvisoNavAPI\Http\Resources\AyudaResource;
 use AvisoNavAPI\ModelFilters\Basic\NoticeFilter;
 use AvisoNavAPI\Http\Requests\Notice\StoreNotice;
 use AvisoNavAPI\Http\Resources\Notice\NoticeResource;
-use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 
 class NoticeController extends Controller
 {
@@ -31,8 +32,7 @@ class NoticeController extends Controller
                                 'entity',
                                 'characterType.characterTypeLang' => $this->withLanguageQuery(),
                                 'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
-                                'noticeLang' => $this->withLanguageQuery(),
-                                'aid'
+                                'noticeLang' => $this->withLanguageQuery()
                             ])
                             ->paginateFilter($this->perPage());
 
@@ -51,7 +51,7 @@ class NoticeController extends Controller
         
         $year = (new \DateTime("now"))->format('Y');
         $notice->year = $year;
-        $notice->user = 'JMARDZ';
+        $notice->user = Auth::user()->username;
         $notice->entity_id = $request->input('entity');
         $notice->character_type_id = $request->input('characterType');
         $notice->novelty_type_id = $request->input('noveltyType');
@@ -101,7 +101,7 @@ class NoticeController extends Controller
     public function update(StoreNotice $request, Notice $notice)
     {
         $notice->fill($request->only(['number', 'state']));
-        $notice->user = 'JMARDZ';
+        $notice->user = Auth::user()->username;
         $notice->entity_id = $request->input('entity');
         $notice->character_type_id = $request->input('characterType');
         $notice->novelty_type_id = $request->input('noveltyType');

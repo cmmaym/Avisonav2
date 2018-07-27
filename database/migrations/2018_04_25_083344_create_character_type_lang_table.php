@@ -21,12 +21,10 @@ class CreateCharacterTypeLangTable extends Migration
             $table->integer('character_type_id')->unsigned()->nullable();
 
             $table->foreign('language_id')
-                  ->references('id')->on('language')
-                  ->onDelete('cascade');
+                  ->references('id')->on('language');
 
             $table->foreign('character_type_id')
-                  ->references('id')->on('character_type')
-                  ->onDelete('cascade');
+                  ->references('id')->on('character_type');
 
             $table->unique(['language_id', 'character_type_id'], 'language_character_type_UNIQUE');
         });

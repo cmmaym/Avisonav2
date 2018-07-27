@@ -22,12 +22,10 @@ class CreateLightTypeLangTable extends Migration
             $table->integer('light_type_id')->unsigned()->nullable();
 
             $table->foreign('language_id')
-                  ->references('id')->on('language')
-                  ->onDelete('cascade');
+                  ->references('id')->on('language');
 
             $table->foreign('light_type_id')
-                  ->references('id')->on('light_type')
-                  ->onDelete('cascade');
+                  ->references('id')->on('light_type');
 
             $table->unique(['language_id', 'light_type_id'], 'language_light_type_UNIQUE');
         });
