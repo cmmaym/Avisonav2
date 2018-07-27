@@ -24,7 +24,8 @@ class CreateNoveltyTypeLangTable extends Migration
                   ->references('id')->on('language');
             
             $table->foreign('novelty_type_id')
-                  ->references('id')->on('novelty_type');
+                  ->references('id')->on('novelty_type')
+                  ->onDelete('cascade');
 
             $table->unique(['language_id', 'novelty_type_id'], 'language_novelty_UNIQUE');
         });

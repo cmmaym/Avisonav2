@@ -25,7 +25,8 @@ class CreateZoneLangTable extends Migration
                   ->references('id')->on('language');
             
             $table->foreign('zone_id')
-                  ->references('id')->on('zone');
+                  ->references('id')->on('zone')
+                  ->onDelete('cascade');
 
             $table->unique(['language_id', 'zone_id'], 'language_zone_UNIQUE');
         });

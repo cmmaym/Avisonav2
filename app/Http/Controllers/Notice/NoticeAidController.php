@@ -52,12 +52,6 @@ class NoticeAidController extends Controller
      */
     public function update(Notice $notice, Aid $aid)
     {
-        $data = $notice->aid()->where('aid_id', '=', $aid->id)->get();
-
-        if(!$data->isEmpty()){
-            return $this->errorResponse('La ayuda no debe estar duplicada en el aviso. Debe seleccionar otra.', 409);
-        }
-        
         $notice->aid()->attach($aid->id, ['coordinate_id' => $aid->coordinate->id]);
     }
 

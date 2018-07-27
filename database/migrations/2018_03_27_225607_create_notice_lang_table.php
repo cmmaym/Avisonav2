@@ -21,7 +21,8 @@ class CreateNoticeLangTable extends Migration
             $table->integer('language_id')->unsigned();
 
             $table->foreign('notice_id')
-                ->references('id')->on('notice');
+                ->references('id')->on('notice')
+                ->onDelete('cascade');
 
             $table->foreign('language_id')
                 ->references('id')->on('language');

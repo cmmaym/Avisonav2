@@ -25,7 +25,8 @@ class CreateColorTypeLangTable extends Migration
                   ->references('id')->on('language');
 
             $table->foreign('color_type_id')
-                  ->references('id')->on('color_type');
+                  ->references('id')->on('color_type')
+                  ->onDelete('cascade');
 
             $table->unique(['language_id', 'color_type_id'], 'language_color_type_UNIQUE');
         });

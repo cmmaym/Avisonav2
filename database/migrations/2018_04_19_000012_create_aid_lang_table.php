@@ -21,7 +21,8 @@ class CreateAidLangTable extends Migration
             $table->integer('language_id')->unsigned();
 
             $table->foreign('aid_id')
-                ->references('id')->on('aid');
+                ->references('id')->on('aid')
+                ->onDelete('cascade');
 
             $table->foreign('language_id')
                 ->references('id')->on('language');

@@ -24,7 +24,8 @@ class CreateAidTypeLangTable extends Migration
                   ->references('id')->on('language');
 
             $table->foreign('aid_type_id')
-                  ->references('id')->on('aid_type');
+                  ->references('id')->on('aid_type')
+                  ->onDelete('cascade');
 
             $table->unique(['language_id', 'aid_type_id'], 'language_aid_type_UNIQUE');
         });

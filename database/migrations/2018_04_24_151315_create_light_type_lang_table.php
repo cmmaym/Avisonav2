@@ -25,7 +25,8 @@ class CreateLightTypeLangTable extends Migration
                   ->references('id')->on('language');
 
             $table->foreign('light_type_id')
-                  ->references('id')->on('light_type');
+                  ->references('id')->on('light_type')
+                  ->onDelete('cascade');
 
             $table->unique(['language_id', 'light_type_id'], 'language_light_type_UNIQUE');
         });

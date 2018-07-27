@@ -26,6 +26,8 @@ class CreateNoticeAidTable extends Migration
             $table->foreign('aid_id')
                 ->references('id')->on('aid')
                 ->onDelete('cascade');
+
+            $table->unique(['notice_id', 'aid_id'], 'notice_aid_UNIQUE');
         });
     }
 
