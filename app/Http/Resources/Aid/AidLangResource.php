@@ -2,6 +2,7 @@
 
 namespace AvisoNavAPI\Http\Resources\Aid;
 
+use AvisoNavAPI\Http\Resources\LanguageResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AidLangResource extends JsonResource
@@ -19,6 +20,7 @@ class AidLangResource extends JsonResource
             'description'       => $this->description,
             'created_at'        => $this->created_at->format('Y-m-d'),
             'updated_at'        => $this->updated_at->format('Y-m-d'),
+            'language'          => new LanguageResource($this->language),
             'links'             => [
                 'self'          => route('aid.aidLang.show', ['aidId' => $this->aid->id, 'id' => $this->id]),
                 'aid'           => route('aid.show', ['id' => $this->aid->id])

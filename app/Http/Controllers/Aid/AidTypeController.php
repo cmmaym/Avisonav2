@@ -9,10 +9,11 @@ use AvisoNavAPI\AidType;
 use AvisoNavAPI\ModelFilters\Basic\AidTypeFilter;
 use AvisoNavAPI\Http\Resources\Aid\AidTypeResource;
 use AvisoNavAPI\Http\Requests\Aid\StoreAidType;
+use AvisoNavAPI\Traits\Responser;
 
 class AidTypeController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -21,12 +22,9 @@ class AidTypeController extends Controller
      */
     public function index()
     {
-        $language = request()->input('language');
         $collection = AidType::filter(request()->all(), AidTypeFilter::class)
                              ->with([
-                                 'aidTypeLang' => function($query) use ($language){
-                                     $query->where('language_id', $language);
-                                 }
+                                 'aidTypeLang' => $this->withLanguageQuery()
                              ])
                              ->paginateFilter($this->perPage());
 

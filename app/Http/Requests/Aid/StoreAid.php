@@ -25,16 +25,17 @@ class StoreAid extends FormRequest
     {
         return [
             'number'                      => 'nullable|integer',
-            'sub_name'                    => 'required|max:100',
+            'subName'                     => 'required|max:100',
             'elevation'                   => 'required|integer',
             'scope'                       => 'required|integer',
             'quantity'                    => 'required|integer',
             'observation'                 => 'required',
+            'description'                 => 'required',
             'state'                       => 'sometimes|required|in:A,I',
-            'aid_type_id'                 => 'required|exists:aid_type,id',
-            'location_id'                 => 'required|exists:location,id',
-            'light_type_id'               => 'required|exists:light_type,id',
-            'color_type_id'               => 'required|exists:color_type,id'
+            'aidType'                     => 'required|exists:aid_type,id',
+            'location'                    => 'required|exists:location,id',
+            'lightType'                   => 'required|exists:light_type,id',
+            'colorType'                   => 'required|exists:color_type,id'
         ];
     }
 

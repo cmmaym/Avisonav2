@@ -25,7 +25,7 @@ class StoreAidLang extends FormRequest
     {
         return [
             'description'                 => 'required',
-            'language_id'                 => 'required|exists:language,id',
+            'language'                    => 'required|exists:language,id',
         ];
     }
 

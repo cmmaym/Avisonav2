@@ -26,10 +26,11 @@ class AidResource extends JsonResource
         return [
             'id'                => $this->id,
             'number'            => $this->number,
-            'sub_name'          => $this->sub_name,
+            'subName'           => $this->sub_name,
             'elevation'         => $this->elevation,
             'scope'             => $this->scope,
             'quantity'          => $this->quantity,
+            'observation'       => $this->observation,
             'description'       => $this->when(!is_null($this->aidLang), $description, null),
             'created_at'        => $this->created_at->format('Y-m-d'),
             'updated_at'        => $this->updated_at->format('Y-m-d'),

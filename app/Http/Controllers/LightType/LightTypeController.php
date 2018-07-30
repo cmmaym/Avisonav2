@@ -13,10 +13,11 @@ use AvisoNavAPI\ModelFilters\Basic\LightTypeFilter;
 use AvisoNavAPI\Http\Requests\LightType\StoreLightType;
 use AvisoNavAPI\ModelFilters\Basic\LightTypeLangFilter;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use AvisoNavAPI\Traits\Responser;
 
 class LightTypeController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -25,12 +26,9 @@ class LightTypeController extends Controller
      */
     public function index()
     {
-        $language = request()->input('language');
         $collection = LightType::filter(request()->all(), LightTypeFilter::class)
                                    ->with([
-                                       'lightTypeLang' => function($query) use ($language){
-                                            $query->where('language_id', $language);
-                                        } 
+                                       'lightTypeLang' => $this->withLanguageQuery()
                                     ]) 
                                    ->paginateFilter($this->perPage());
 

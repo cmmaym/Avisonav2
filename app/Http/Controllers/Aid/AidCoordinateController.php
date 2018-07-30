@@ -10,10 +10,11 @@ use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Http\Resources\Aid\CoordinateResource;
 use AvisoNavAPI\Http\Requests\Coordinate\StoreCoordinate;
 use AvisoNavAPI\Coordinate;
+use AvisoNavAPI\Traits\Responser;
 
 class AidCoordinateController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -72,7 +73,7 @@ class AidCoordinateController extends Controller
         $coordinate->fill($request->only(['latitud', 'longitud', 'state']));
 
         if($coordinate->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
 
         $coordinate->save();

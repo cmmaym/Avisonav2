@@ -10,10 +10,11 @@ use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Requests\Aid\StoreAidLang;
 use AvisoNavAPI\Http\Resources\Aid\AidLangResource;
 use AvisoNavAPI\ModelFilters\Basic\AidLangFilter;
+use AvisoNavAPI\Traits\Responser;
 
 class AidLangController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -39,7 +40,7 @@ class AidLangController extends Controller
     public function store(StoreAidLang $request, Aid $aid)
     {
         $aidLang = new AidLang($request->only(['description']));
-        $aidLang->language_id = $request->input('language_id');
+        $aidLang->language_id = $request->input('language');
         
         $aid->aidLangs()->save($aidLang);
 
@@ -72,10 +73,10 @@ class AidLangController extends Controller
     {
         $aidLang = $aid->aidLang()->findOrFail($id);
         $aidLang->fill($request->only(['description']));
-        $aidLang->language_id = $request->input('language_id');
+        $aidLang->language_id = $request->input('language');
 
         if($aidLang->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
 
         $aidLang->save();

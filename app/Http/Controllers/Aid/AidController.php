@@ -3,19 +3,22 @@
 namespace AvisoNavAPI\Http\Controllers\Aid;
 
 use AvisoNavAPI\Aid;
+use AvisoNavAPI\AidLang;
 use AvisoNavAPI\Coordenada;
 use Illuminate\Http\Request;
+use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\CoordenadaDetalle;
 use Illuminate\Support\Facades\DB;
-use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\Http\Resources\Aid\AidResource;
+use Illuminate\Support\Facades\Auth;
 use AvisoNavAPI\Http\Requests\Aid\StoreAid;
 use AvisoNavAPI\ModelFilters\Basic\AidFilter;
-use AvisoNavAPI\Traits\Filter;
+use AvisoNavAPI\Http\Resources\Aid\AidResource;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+use AvisoNavAPI\Traits\Responser;
 
 class AidController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -46,13 +49,20 @@ class AidController extends Controller
      */
     public function store(StoreAid $request)
     {
-        $aid = new Aid($request->only(['number', 'sub_name', 'elevation', 'scope', 'quantity', 'observation']));
-        $aid->aid_type_id = $request->input('aid_type_id');
-        $aid->location_id = $request->input('location_id');
-        $aid->light_type_id = $request->input('light_type_id');
-        $aid->color_type_id = $request->input('color_type_id');
-        $aid->user = 'JMARDZ';
+        $aid = new Aid($request->only(['number', 'subName', 'elevation', 'scope', 'quantity', 'observation']));
+        $aid->aid_type_id = $request->input('aidType');
+        $aid->location_id = $request->input('location');
+        $aid->light_type_id = $request->input('lightType');
+        $aid->color_type_id = $request->input('colorType');
+        $aid->user = Auth::user()->username;
         $aid->save();
+
+        $aidLang = new AidLang([$request->input('description')]);
+        $aidLang->language_id = $request->input('language');
+
+        $aid->aidLang()->save($aidLang);
+
+        $aid->refresh();
         
         return new AidResource($aid);
 
@@ -87,10 +97,15 @@ class AidController extends Controller
      */
     public function update(StoreAid $request, Aid $aid)
     {
-        $aid->fill($request->only(['number', 'sub_name', 'elevation', 'scope', 'quantity', 'observation', 'state']));
+        $aid->fill($request->only(['number', 'subName', 'elevation', 'scope', 'quantity', 'observation', 'state']));
+        $aid->aid_type_id = $request->input('aidType');
+        $aid->location_id = $request->input('location');
+        $aid->light_type_id = $request->input('lightType');
+        $aid->color_type_id = $request->input('colorType');
+        $aid->user = Auth::user()->username;
 
         if($aid->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
 
         $aid->save();
