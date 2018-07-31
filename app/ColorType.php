@@ -10,7 +10,6 @@ class ColorType extends Model
     use Filterable;
     
     protected $table        = 'color_type';
-    protected $fillable     = ['state'];
 
     public function colorTypeLangs()
     {

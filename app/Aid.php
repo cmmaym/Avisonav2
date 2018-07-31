@@ -11,7 +11,7 @@ class Aid extends Model
     use Filterable;
 
     protected $table        = 'aid';
-    protected $fillable     = ['number', 'sub_name', 'elevation', 'scope', 'quantity', 'observation', 'state'];
+    protected $fillable     = ['number', 'name', 'elevation', 'scope', 'features', 'observation'];
 
     public function aidLangs(){
         return $this->hasMany(AidLang::class);

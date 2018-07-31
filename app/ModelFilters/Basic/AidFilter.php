@@ -7,8 +7,8 @@ use EloquentFilter\ModelFilter;
 class AidFilter extends ModelFilter
 {
 
-    public function subName($subName){
-        return $this->where('sub_name', 'like', "%$subName%");
+    public function name($name){
+        return $this->where('name', 'like', "%$name%");
     }
 
     public function elevation($elevation){
@@ -19,17 +19,17 @@ class AidFilter extends ModelFilter
         return $this->where('scope', '=', $scope);
     }
 
-    public function quiantity($quiantity){
-        return $this->where('quantity', '=', $quiantity);
+    public function features($features){
+        return $this->where('features', 'like', "%$features%");
     }
 
     public function observation($observation){
         return $this->where('observation', 'like', "%$observation%");
     }
 
-    public function name($name){
-        $this->whereHas('aidType.aidType', function($query) use ($name){
-            $query->where('name', 'like', "%$name%");
+    public function aidType($aidType){
+        $this->whereHas('aidType.aidTypeLang', function($query) use ($aidType){
+            $query->where('name', 'like', "%$aidType%");
         });
     }
 

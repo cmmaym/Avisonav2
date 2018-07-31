@@ -10,7 +10,7 @@ class Location extends Model
     use Filterable;
 
     protected $table        = 'location';
-    protected $fillable     = ['name', 'sub_location_name', 'state'];
+    protected $fillable     = ['name', 'sub_location_name'];
 
     public function zone(){
         // return $this->belongsTo(Zone::class, 'zone_id', 'parent_id');

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class NoveltyTypeTableSeeder extends Seeder
+class LightListTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,20 +11,22 @@ class NoveltyTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('novelty_type')->insert([
+        DB::table('light_list')->insert([
             [
+                'edition'       => '1',
+                'year'          => '2013',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
+                'edition'       => '2',
+                'year'          => '2014',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'created_at'    => new \DateTime('now'),
-                'updated_at'    => new \DateTime('now'),
-            ],
-            [
+                'edition'       => '3',
+                'year'          => '2015',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ]

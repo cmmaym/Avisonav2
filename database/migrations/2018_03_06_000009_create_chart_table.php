@@ -18,7 +18,6 @@ class CreateChartTable extends Migration
             $table->string('number', 45)->comment('Numero de la carta');
             $table->string('purpose', 100)->comment('El proposito es la clasificacion segun el objetivo de la carta');
             $table->timestamps();
-            $table->enum('state', array('A','I'))->default('A')->comment('Estado del registro. Puede ser Activo, Inactivo');
             $table->string('user', 100)->comment('Nombre de usuario que manipulo le registro');
             
             $table->unique(['number'], 'number_UNIQUE');

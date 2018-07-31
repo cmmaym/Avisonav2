@@ -16,7 +16,6 @@ class CreateZoneTable extends Migration
         Schema::create('zone', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->timestamps();
-            $table->enum('state', array('A', 'I'))->default('A')->comment('Estado la ubicacion. Puede ser Activo, Inactivo');
         });
     }
 

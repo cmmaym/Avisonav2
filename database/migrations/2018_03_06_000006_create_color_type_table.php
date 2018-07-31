@@ -16,7 +16,6 @@ class CreateColorTypeTable extends Migration
         Schema::create('color_type', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->timestamps();
-            $table->enum('state', array('A','I'))->comment('Estado del tipo color. Puede ser Activo, Inactivo');
         });
     }
 

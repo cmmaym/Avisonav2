@@ -10,5 +10,5 @@ class ChartEdition extends Model
     use Filterable;
 
     protected $table        = 'chart_edition';
-    protected $fillable     = ['number', 'year', 'state'];
+    protected $fillable     = ['number', 'year'];
 }

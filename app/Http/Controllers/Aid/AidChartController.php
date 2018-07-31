@@ -2,12 +2,20 @@
 
 namespace AvisoNavAPI\Http\Controllers\Aid;
 
-use Illuminate\Http\Request;
-use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Aid;
+use AvisoNavAPI\Chart;
+use Illuminate\Http\Request;
+use AvisoNavAPI\Traits\Filter;
+use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\Http\Resources\ChartResource;
+use AvisoNavAPI\ModelFilters\Basic\ChartFilter;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 
 class AidChartController extends Controller
 {
+
+    use Filter, Responser;
+
     /**
      * Display a listing of the resource.
      *
@@ -15,29 +23,10 @@ class AidChartController extends Controller
      */
     public function index(Aid $aid)
     {
-        $collection = $aid->chart()->filter(request()->all());
-    }
+        $collection = $aid->chart()->filter(request()->all(), ChartFilter::class)
+                                   ->paginateFilter($this->perPage());;
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return ChartResource::collection($collection);
     }
 
     /**
@@ -47,9 +36,9 @@ class AidChartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Aid $aid, Chart $chart)
     {
-        //
+        $aid->chart()->attach($chart->id);
     }
 
     /**
@@ -58,8 +47,8 @@ class AidChartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Aid $aid, Chart $chart)
     {
-        //
+        $aid->chart()->detach($chart->id);
     }
 }

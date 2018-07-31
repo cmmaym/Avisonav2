@@ -16,7 +16,6 @@ class CreateCharacterTypeTable extends Migration
         Schema::create('character_type', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->timestamps();
-            $table->enum('state', array('A','I'))->default('A')->comment('Estado del tipo. Puede ser Activo, Inactivo');
         });
     }
 

@@ -10,7 +10,6 @@ class Zone extends Model
     use Filterable;
     
     protected $table        = 'zone';
-    protected $fillable     = ['state'];
 
     public function zoneLangs(){
         return $this->hasMany(ZoneLang::class);

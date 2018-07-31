@@ -153,3 +153,13 @@ Route::resource('aidType.aidTypeLang', 'Aid\AidTypeLangController')->only([
 Route::resource('coordinate', 'Coordinate\CoordinateController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
+
+//Catalog Ocean Coast
+Route::resource('catalogOceanCoast', 'CatalogOceanCoast\CatalogOceanCoastController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
+
+//Light List
+Route::resource('lightList', 'LightList\LightListController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);

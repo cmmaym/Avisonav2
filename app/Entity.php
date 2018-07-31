@@ -10,7 +10,7 @@ class Entity extends Model
     use Filterable;
 
     protected $table        = 'entity';
-    protected $fillable     = ['name', 'alias', 'state'];
+    protected $fillable     = ['name', 'alias'];
 
     public function aviso(){
         return $this->hasMany(Aviso::class);

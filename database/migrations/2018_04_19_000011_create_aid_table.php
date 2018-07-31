@@ -16,13 +16,12 @@ class CreateAidTable extends Migration
         Schema::create('aid', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('number')->nullable()->comment('Numero nacional - Es un numero dependiendo de la situacion geografica');
-            $table->string('sub_name', 100)->nullable()->comment("Nombre que describe mas a la ayuda");
+            $table->string('name', 100)->nullable()->comment("Nombre de la ayuda");
             $table->integer('elevation');
             $table->integer('scope');
-            $table->integer('quantity');
-            $table->mediumText('observation')->comment('Observacion referente a los cambios en las coordenadas de la ayuda');
+            $table->mediumText('features')->comment('Caracteristicas de la ayuda');
+            $table->mediumText('observation')->comment('Observacion referente a los cambios de la ayuda');
             $table->timestamps();
-            $table->enum('state', array('A','I'))->default('A')->comment('Estado de la ayuda. Puede ser Activo, Inactivo');
             $table->string('user', 100)->comment('Nombre de usuario que manipulo le registro');
             $table->integer('aid_type_id')->unsigned();
             $table->integer('location_id')->unsigned();

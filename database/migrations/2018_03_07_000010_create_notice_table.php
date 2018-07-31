@@ -21,10 +21,13 @@ class CreateNoticeTable extends Migration
             $table->enum('state',array('A','I'))->default('A')->comment('Estado del aviso. Puede ser Activo, Inactivo');
             $table->longText('file_info')->nullable()->comment('Es la ruta de un archivo con informacion extra que se le puede adjuntar aun aviso. independientemente del caracter del mismo.');
             $table->string('user', 100)->comment('Nombre de usuario que manipulo le registro');
+            $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('entity_id')->unsigned();
             $table->integer('character_type_id')->unsigned();
             $table->integer('novelty_type_id')->unsigned();
-            $table->integer('parent_id')->unsigned()->nullable();
+            $table->integer('zone_id')->unsigned();
+            $table->integer('catalog_ocean_coast_id')->unsigned()->nullable();
+            $table->integer('light_list_id')->unsigned()->nullable();
 
             $table->foreign('entity_id')
                   ->references('id')->on('entity');
@@ -37,6 +40,15 @@ class CreateNoticeTable extends Migration
             
             $table->foreign('parent_id')
                   ->references('id')->on('notice');
+            
+            $table->foreign('zone_id')
+                  ->references('id')->on('zone');
+            
+            $table->foreign('catalog_ocean_coast_id')
+                  ->references('id')->on('catalog_ocean_coast');
+            
+            $table->foreign('light_list_id')
+                  ->references('id')->on('light_list');
 
             $table->unique(['number', 'year'], 'number_year_UNIQUE');
         });

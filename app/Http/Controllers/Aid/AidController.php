@@ -49,7 +49,7 @@ class AidController extends Controller
      */
     public function store(StoreAid $request)
     {
-        $aid = new Aid($request->only(['number', 'subName', 'elevation', 'scope', 'quantity', 'observation']));
+        $aid = new Aid($request->only(['number', 'name', 'elevation', 'scope', 'features', 'observation']));
         $aid->aid_type_id = $request->input('aidType');
         $aid->location_id = $request->input('location');
         $aid->light_type_id = $request->input('lightType');
@@ -97,7 +97,7 @@ class AidController extends Controller
      */
     public function update(StoreAid $request, Aid $aid)
     {
-        $aid->fill($request->only(['number', 'subName', 'elevation', 'scope', 'quantity', 'observation', 'state']));
+        $aid->fill($request->only(['number', 'name', 'elevation', 'scope', 'features', 'observation']));
         $aid->aid_type_id = $request->input('aidType');
         $aid->location_id = $request->input('location');
         $aid->light_type_id = $request->input('lightType');

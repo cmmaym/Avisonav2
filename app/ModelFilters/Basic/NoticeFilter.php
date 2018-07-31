@@ -33,6 +33,12 @@ class NoticeFilter extends ModelFilter
             $query->where('name', 'like', "%$name%");
         });
     }
+    
+    public function zone($zone){
+        $this->whereHas('zone.zoneLang', function($query) use ($zone) {
+            $query->where('name', 'like', "%$zone%");
+        });
+    }
 
     public function user($user){
         return $this->where('user', 'like', "%$user%");
@@ -90,6 +96,17 @@ class NoticeFilter extends ModelFilter
              ->join('novelty_type_lang', 'novelty_type.id', '=', 'novelty_type_lang.novelty_type_id')
              ->groupBy('notice.number')
              ->orderBy('novelty_type_lang.name', $input)
+             ->select('notice.*');
+    }
+    
+    public function sortByZone()
+    {
+        $input = $this->input('dir', 'asc');
+
+        $this->join('zone', 'notice.zone_id', '=', 'zone.id')
+             ->join('zone_lang', 'zone.id', '=', 'zone_lang.zone_id')
+             ->groupBy('notice.number')
+             ->orderBy('zone_lang.name', $input)
              ->select('notice.*');
     }
     

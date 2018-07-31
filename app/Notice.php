@@ -26,6 +26,18 @@ class Notice extends Model
     public function noveltyType(){
         return $this->belongsTo(NoveltyType::class);
     }
+    
+    public function zone(){
+        return $this->belongsTo(Zone::class);
+    }
+    
+    public function catalogOceanCoast(){
+        return $this->belongsTo(CatalogOceanCoast::class);
+    }
+
+    public function LightList(){
+        return $this->belongsTo(LightList::class);
+    }
 
     public function noticeLangs(){
         return $this->hasMany(NoticeLang::class);

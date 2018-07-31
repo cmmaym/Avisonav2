@@ -10,7 +10,7 @@ class AidType extends Model
     use Filterable;
 
     protected $table        = 'aid_type';
-    protected $fillable     = ['type', 'state'];
+    protected $fillable     = ['type'];
 
     public function aidTypeLangs()
     {

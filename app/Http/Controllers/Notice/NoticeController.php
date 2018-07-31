@@ -32,7 +32,10 @@ class NoticeController extends Controller
                                 'entity',
                                 'characterType.characterTypeLang' => $this->withLanguageQuery(),
                                 'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
-                                'noticeLang' => $this->withLanguageQuery()
+                                'noticeLang' => $this->withLanguageQuery(),
+                                'zone.zoneLang' => $this->withLanguageQuery(),
+                                'catalogOceanCoast',
+                                'lightList'
                             ])
                             ->paginateFilter($this->perPage());
 
@@ -55,6 +58,10 @@ class NoticeController extends Controller
         $notice->entity_id = $request->input('entity');
         $notice->character_type_id = $request->input('characterType');
         $notice->novelty_type_id = $request->input('noveltyType');
+        $notice->zone_id = $request->input('zone');
+        
+        $notice->catalog_ocean_coast_id = ($request->input('catalogOceanCoast')) ? $request->input('catalogOceanCoast') : null;
+        $notice->light_list_id = ($request->input('lightList')) ? $request->input('lightList') : null;
 
         $notice->parent_id = ($request->has('parent_id')) ? $request->input('parent_id') : null;
         
@@ -86,6 +93,9 @@ class NoticeController extends Controller
             'characterType.characterTypeLang' => $this->withLanguageQuery(),
             'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
             'noticeLang' => $this->withLanguageQuery(),
+            'zone.zoneLang' => $this->withLanguageQuery(),
+            'catalogOceanCoast',
+            'lightList'
         ]);
 
         return new NoticeResource($notice);
@@ -105,6 +115,10 @@ class NoticeController extends Controller
         $notice->entity_id = $request->input('entity');
         $notice->character_type_id = $request->input('characterType');
         $notice->novelty_type_id = $request->input('noveltyType');
+        $notice->zone_id = $request->input('zone');
+
+        $notice->catalog_ocean_coast_id = ($request->input('catalogOceanCoast')) ? $request->input('catalogOceanCoast') : null;
+        $notice->light_list_id = ($request->input('lightList')) ? $request->input('lightList') : null;
 
         $notice->parent_id = ($request->has('parent_id')) ? $request->input('parent_id') : null;
 

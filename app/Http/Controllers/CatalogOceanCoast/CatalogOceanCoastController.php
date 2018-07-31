@@ -1,16 +1,16 @@
 <?php
 
-namespace AvisoNavAPI\Http\Controllers\Chart;
+namespace AvisoNavAPI\Http\Controllers\LightList;
 
-use AvisoNavAPI\Chart;
+use AvisoNavAPI\LightList;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\ModelFilters\Basic\ChartFilter;
-use AvisoNavAPI\Http\Resources\ChartResource;
-use AvisoNavAPI\Http\Requests\Chart\StoreChart;
+use AvisoNavAPI\ModelFilters\Basic\LightListFilter;
+use AvisoNavAPI\Http\Resources\LightListResource;
+use AvisoNavAPI\Http\Requests\LightList\StoreLightList;
 
-class ChartController extends Controller
+class LightListController extends Controller
 {
     use Filter;
 
@@ -21,10 +21,10 @@ class ChartController extends Controller
      */
     public function index()
     {
-        $collection = Chart::filter(request()->all(), ChartFilter::class)
+        $collection = LightList::filter(request()->all(), LightListFilter::class)
                             ->paginateFilter($this->perPage());
 
-        return ChartResource::collection($collection);
+        return LightListResource::collection($collection);
     }
 
     /**
@@ -33,13 +33,12 @@ class ChartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreChart $request)
+    public function store(StoreLightList $request)
     {
-        $chart = new Chart($request->only(['number', 'purpose']));
-        $chart->user = 'JMARDZ';
-        $chart->save();
+        $lightList = new LightList($request->only(['edition', 'year']));
+        $lightList->save();
 
-        return new ChartResource($chart);
+        return new LightListResource($lightList);
     }
 
     /**
@@ -48,9 +47,9 @@ class ChartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Chart $chart)
+    public function show(LightList $lightList)
     {
-        return new ChartResource($chart);
+        return new LightListResource($lightList);
     }
 
     /**
@@ -60,17 +59,16 @@ class ChartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreChart $request, Chart $chart)
+    public function update(StoreLightList $request, LightList $lightList)
     {
-        $chart->fill($request->only(['number', 'purpose']));
-        $chart->user = 'JMARDZ';
-        $chart->save();
+        $lightList->fill($request->only(['edition', 'year']));
+        $lightList->save();
 
-        if($chart->isClean()){
+        if($lightList->isClean()){
             return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
         }
 
-        return new ChartResource($chart);
+        return new LightListResource($lightList);
     }
 
     /**
@@ -79,10 +77,10 @@ class ChartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Chart $chart)
+    public function destroy(LightList $lightList)
     {
-        $chart->delete();
+        $lightList->delete();
 
-        return new ChartResource($chart);
+        return new LightListResource($lightList);
     }
 }

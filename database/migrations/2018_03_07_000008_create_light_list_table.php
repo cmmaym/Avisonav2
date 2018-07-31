@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNoveltyTypeTable extends Migration
+class CreateLightListTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateNoveltyTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('novelty_type', function (Blueprint $table) {
+        Schema::create('light_list', function (Blueprint $table) {
             $table->increments('id')->unsigned();
+            $table->integer('edition')->comment('Numero de edicion de la lista de luces');
+            $table->year('year');
             $table->timestamps();
+
+            $table->unique(['edition', 'year'], 'edition_year_UNIQUE');
         });
     }
 
@@ -26,8 +30,6 @@ class CreateNoveltyTypeTable extends Migration
      */
     public function down()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        Schema::dropIfExists('novelty_type');
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+        Schema::dropIfExists('light_list');
     }
 }

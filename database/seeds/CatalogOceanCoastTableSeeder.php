@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class NoveltyTypeTableSeeder extends Seeder
+class CatalogOceanCoastTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,23 +11,31 @@ class NoveltyTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('novelty_type')->insert([
+        DB::table('catalog_ocean_coast')->insert([
             [
+                'edition'       => '1',
+                'year'          => '2015',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
+                'edition'       => '2',
+                'year'          => '2016',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
+                'edition'       => '3',
+                'year'          => '2017',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
+                'edition'       => '4',
+                'year'          => '2018',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
-            ]
+            ],
         ]);
     }
 }

@@ -10,7 +10,7 @@ class Coordinate extends Model
     use Filterable;
     
     protected   $table      =   'coordinate';
-    protected   $fillable   =   ['latitud', 'longitud', 'state'];
+    protected   $fillable   =   ['latitud', 'longitud'];
 
     public function aid()
     {

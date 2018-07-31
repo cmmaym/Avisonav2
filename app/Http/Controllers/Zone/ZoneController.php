@@ -5,16 +5,17 @@ namespace AvisoNavAPI\Http\Controllers\Zone;
 use AvisoNavAPI\Zone;
 use AvisoNavAPI\ZoneLang;
 use AvisoNavAPI\Traits\Filter;
-use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\Http\Resources\Zone\ZoneResource;
+use AvisoNavAPI\Traits\Responser;
 use AvisoNavAPI\Http\Requests\Zone\StoreZone;
 use AvisoNavAPI\ModelFilters\Basic\ZoneFilter;
+use AvisoNavAPI\Http\Resources\Zone\ZoneResource;
 // use AvisoNavAPI\ModelFilters\Basic\ZoneLangFilter;
 use AvisoNavAPI\Http\Resources\Zone\ZoneLangResource;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 
 class ZoneController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -23,12 +24,9 @@ class ZoneController extends Controller
      */
     public function index()
     {
-        $language = request()->input('language');
         $collection = Zone::filter(request()->all(), ZoneFilter::class)
                               ->with([
-                                  'zoneLang' => function($query) use ($language){
-                                    $query->where('language_id', $language);
-                                  } 
+                                  'zoneLang' => $this->withLanguageQuery()
                               ])
                               ->paginateFilter($this->perPage());
 

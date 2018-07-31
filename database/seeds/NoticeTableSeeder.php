@@ -25,6 +25,9 @@ class NoticeTableSeeder extends Seeder
                 'character_type_id'     => 1,
                 'novelty_type_id'       => 1,
                 'parent_id'             => null,
+                'zone_id'               => 1,
+                'catalog_ocean_coast_id'=> 1,
+                'light_list_id'         => 1
             ],
             [
                 'number'                => '002',
@@ -38,6 +41,9 @@ class NoticeTableSeeder extends Seeder
                 'character_type_id'     => 1,
                 'novelty_type_id'       => 2,
                 'parent_id'             => null,
+                'zone_id'               => 2,
+                'catalog_ocean_coast_id'=> 2,
+                'light_list_id'         => 2
             ],
             [
                 'number'                => '003',
@@ -51,6 +57,9 @@ class NoticeTableSeeder extends Seeder
                 'character_type_id'     => 2,
                 'novelty_type_id'       => 3,
                 'parent_id'             => null,
+                'zone_id'               => 1,
+                'catalog_ocean_coast_id'=> 3,
+                'light_list_id'         => 3
             ],
             [
                 'number'                => '004',
@@ -64,6 +73,9 @@ class NoticeTableSeeder extends Seeder
                 'character_type_id'     => 2,
                 'novelty_type_id'       => 4,
                 'parent_id'             => null,
+                'zone_id'               => 2,
+                'catalog_ocean_coast_id'=> 4,
+                'light_list_id'         => 1
             ],
         ]);
     }

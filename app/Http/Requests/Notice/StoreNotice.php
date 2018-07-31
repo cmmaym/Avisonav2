@@ -25,7 +25,6 @@ class StoreNotice extends FormRequest
     {
         return [
             'number'                    => 'required|max:100',
-            // 'date'                      => 'required|date',
             'state'                     => 'sometimes|required|in:A,I',
             'file_info'                 => 'sometimes|nullable|file',
             'entity'                    => 'required|exists:entity,id',
@@ -33,7 +32,10 @@ class StoreNotice extends FormRequest
             'noveltyType'               => 'required|exists:novelty_type,id',
             'language'                  => 'sometimes|required|exists:language,id',
             'observation'               => 'required',
-            'parent_id'                 => 'sometimes|required|exists:notice,id'
+            'parent_id'                 => 'sometimes|required|exists:notice,id',
+            'zone'                      => 'required|exists:zone,id',
+            'catalogOceanCoast'         => 'nullable|exists:catalog_ocean_coast,id',
+            'lightList'                 => 'nullable|exists:light_list,id',
         ];
     }
 

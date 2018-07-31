@@ -7,6 +7,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Pagination\AbstractPaginator;
 use AvisoNavAPI\Http\Resources\EntityResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use AvisoNavAPI\Http\Resources\LightListResource;
+use AvisoNavAPI\Http\Resources\Zone\ZoneResource;
+use AvisoNavAPI\Http\Resources\CatalogOceanCoastResource;
 use AvisoNavAPI\Http\Resources\NoveltyType\NoveltyTypeResource;
 use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeResource;
 
@@ -40,6 +43,9 @@ class NoticeResource extends JsonResource
             'characterType'             => new CharacterTypeResource($this->characterType),
             'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
             'entity'                    => new EntityResource($this->entity),
+            'zone'                      => new ZoneResource($this->zone),
+            'catalogOceanCoast'         => new CatalogOceanCoastResource($this->catalogOceanCoast),
+            'lightList'                 => new LightListResource($this->lightList),
             'links'                     => [
                 'self'          => route('notice.show', ['id' => $this->id]),
                 'noticeLang'    => route('notice.noticeLang.index', ['id' => $this->id]),
