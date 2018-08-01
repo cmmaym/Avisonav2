@@ -14,7 +14,6 @@ class NoticeTableSeeder extends Seeder
         DB::table('notice')->insert([
             [
                 'number'                => '001',
-            
                 'created_at'            => new \DateTime('now'),
                 'updated_at'            => new \DateTime('now'),
                 'year'                  => '2018',

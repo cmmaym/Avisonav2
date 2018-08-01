@@ -15,14 +15,14 @@ class CreateNoticeLangTable extends Migration
     {
         Schema::create('notice_lang', function (Blueprint $table) {
             $table->increments('id');
-            $table->mediumText('observation')->comment('Observacion acerca del aviso');
+            $table->mediumText('description')->comment('Descripcion acerca del aviso');
             $table->timestamps();
             $table->integer('notice_id')->unsigned();            
             $table->integer('language_id')->unsigned();
 
             $table->foreign('notice_id')
-                ->references('id')->on('notice')
-                ->onDelete('cascade');
+                  ->references('id')->on('notice')
+                  ->onDelete('cascade');
 
             $table->foreign('language_id')
                 ->references('id')->on('language');

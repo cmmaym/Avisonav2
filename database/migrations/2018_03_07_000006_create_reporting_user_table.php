@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLightTypeTable extends Migration
+class CreateReportingUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,15 @@ class CreateLightTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('light_type', function (Blueprint $table) {
+        Schema::create('reporting_user', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('illustration', 45)->nullable()->comment('Imagen de la clase de luz');
-            $table->string('alias', 45)->comment('Abreviatura de la clase');
+            $table->string('name', 100);
             $table->timestamps();
+
+            $table->integer('report_source_id');
+
+            $table->foreign('report_source_id')
+                  ->references('id')->on('report_source');
         });
     }
 
@@ -28,8 +32,6 @@ class CreateLightTypeTable extends Migration
      */
     public function down()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        Schema::dropIfExists('light_type');
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+        Schema::dropIfExists('reporting_user');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEntityTable extends Migration
+class CreateReportSourceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateEntityTable extends Migration
      */
     public function up()
     {
-        Schema::create('entity', function (Blueprint $table) {
+        Schema::create('report_source', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('name', 100)->comment('Nombre de la entidad o usuario que reporto el aviso');
-            $table->string('alias', 45)->comment('Alias o nombre corto de la entidad o usuario');
+            $table->string('name', 100);
+            $table->string('alias', 45);
             $table->timestamps();
 
             $table->unique(['name', 'alias'], 'name_alias_UNIQUE');
@@ -30,6 +30,6 @@ class CreateEntityTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entity');
+        Schema::dropIfExists('report_source');
     }
 }

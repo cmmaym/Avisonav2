@@ -17,29 +17,29 @@ class CreateNoticeTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('number', 100)->comment('Numero del aviso');
             $table->year('year')->comment('Año en el que se registro el aviso');
+            $table->dateTime('report_date')->comment('Fecha en la que se genero el reporte');
+            $table->mediumText('reports_numbers')->comment('Numeros de los reportes');
             $table->timestamps();
             $table->enum('state',array('A','I'))->default('A')->comment('Estado del aviso. Puede ser Activo, Inactivo');
             $table->longText('file_info')->nullable()->comment('Es la ruta de un archivo con informacion extra que se le puede adjuntar aun aviso. independientemente del caracter del mismo.');
             $table->string('user', 100)->comment('Nombre de usuario que manipulo le registro');
             $table->integer('parent_id')->unsigned()->nullable();
-            $table->integer('entity_id')->unsigned();
             $table->integer('character_type_id')->unsigned();
             $table->integer('novelty_type_id')->unsigned();
             $table->integer('zone_id')->unsigned();
             $table->integer('catalog_ocean_coast_id')->unsigned()->nullable();
             $table->integer('light_list_id')->unsigned()->nullable();
+            $table->integer('report_source_id')->unsigned();
+            $table->integer('reporting_user_id')->unsigned();
 
-            $table->foreign('entity_id')
-                  ->references('id')->on('entity');
+            $table->foreign('parent_id')
+                  ->references('id')->on('notice');
 
             $table->foreign('character_type_id')
                   ->references('id')->on('character_type');
 
             $table->foreign('novelty_type_id')
                   ->references('id')->on('novelty_type');
-            
-            $table->foreign('parent_id')
-                  ->references('id')->on('notice');
             
             $table->foreign('zone_id')
                   ->references('id')->on('zone');
@@ -49,6 +49,12 @@ class CreateNoticeTable extends Migration
             
             $table->foreign('light_list_id')
                   ->references('id')->on('light_list');
+
+            $table->foreign('report_source_id')
+                  ->references('id')->on('report_source');
+            
+            $table->foreign('reporting_user_id')
+                  ->references('id')->on('reporting_user');
 
             $table->unique(['number', 'year'], 'number_year_UNIQUE');
         });

@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::statement('TRUNCATE TABLE language;');
-        DB::statement('TRUNCATE TABLE entity;');
         DB::statement('TRUNCATE TABLE novelty_type;');
         DB::statement('TRUNCATE TABLE novelty_type_lang;');
         DB::statement('TRUNCATE TABLE zone;');
@@ -28,6 +27,8 @@ class DatabaseSeeder extends Seeder
         DB::statement('TRUNCATE TABLE character_type_lang;');
         DB::statement('TRUNCATE TABLE chart;');
         DB::statement('TRUNCATE TABLE chart_edition;');
+        DB::statement('TRUNCATE TABLE report_source;');
+        DB::statement('TRUNCATE TABLE reporting_user;');
         DB::statement('TRUNCATE TABLE catalog_ocean_coast;');
         DB::statement('TRUNCATE TABLE light_list;');
         DB::statement('TRUNCATE TABLE notice;');
@@ -45,7 +46,6 @@ class DatabaseSeeder extends Seeder
         DB::statement('TRUNCATE TABLE user;');
 
         $this->call(LanguageTableSeeder::class);
-        $this->call(EntityTableSeeder::class);
         $this->call(NoveltyTypeTableSeeder::class);
         $this->call(NoveltyTypeLangTableSeeder::class);
         $this->call(ZoneTableSeeder::class);
@@ -59,6 +59,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CharacterTypeLangTableSeeder::class);
         $this->call(ChartTableSeeder::class);
         $this->call(ChartEditionTableSeeder::class);
+        $this->call(ReportSourceTableSeeder::class);
+        $this->call(ReportingUserTableSeeder::class);
         $this->call(CatalogOceanCoastTableSeeder::class);
         $this->call(LightListTableSeeder::class);
         $this->call(NoticeTableSeeder::class);

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateColorTypeTable extends Migration
+class CreateTopMarkTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateColorTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('color_type', function (Blueprint $table) {
+        Schema::create('top_mark', function (Blueprint $table) {
             $table->increments('id')->unsigned();
+            $table->string('illustration', 45)->nullable()->comment('Imagen de la marca de tope');
             $table->timestamps();
         });
     }
@@ -27,7 +28,7 @@ class CreateColorTypeTable extends Migration
     public function down()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        Schema::dropIfExists('color_type');
+        Schema::dropIfExists('top_mark');
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

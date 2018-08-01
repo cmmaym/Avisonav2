@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLightTypeLangTable extends Migration
+class CreateColorLightLangTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,22 @@ class CreateLightTypeLangTable extends Migration
      */
     public function up()
     {
-        Schema::create('light_type_lang', function (Blueprint $table) {
+        Schema::create('color_light_lang', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('class', 100)->comment('Clase de luz');
-            $table->mediumText('description')->comment('Descripcion breve de la clase de luz');
+            $table->string('color', 45)->comment('Nombre del color');
+            $table->string('alias', 45)->comment('Abreviacion del color');
             $table->timestamps();
             $table->integer('language_id')->unsigned();
-            $table->integer('light_type_id')->unsigned()->nullable();
+            $table->integer('color_light_id')->unsigned();
 
             $table->foreign('language_id')
                   ->references('id')->on('language');
 
-            $table->foreign('light_type_id')
-                  ->references('id')->on('light_type')
+            $table->foreign('color_light_id')
+                  ->references('id')->on('color_light')
                   ->onDelete('cascade');
 
-            $table->unique(['language_id', 'light_type_id'], 'language_light_type_UNIQUE');
+            $table->unique(['language_id', 'color_light_id'], 'language_color_light_UNIQUE');
         });
     }
 
@@ -39,6 +39,6 @@ class CreateLightTypeLangTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('light_type_lang');
+        Schema::dropIfExists('color_light_lang');
     }
 }

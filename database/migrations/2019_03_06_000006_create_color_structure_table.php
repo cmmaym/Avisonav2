@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAidTypeTable extends Migration
+class CreateColorStructureTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateAidTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('aid_type', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('color_structure', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
             $table->timestamps();
         });
     }
@@ -26,6 +26,8 @@ class CreateAidTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aid_type');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::dropIfExists('color_structure');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
