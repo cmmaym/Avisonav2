@@ -16,9 +16,9 @@ class CreateColorStructureLangTable extends Migration
         Schema::create('color_structure_lang', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name', 45)->comment('Nombre del color');
+            $table->timestamps();
             $table->integer('color_structure_id')->unsigned();
             $table->integer('language_id')->unsigned();
-            $table->timestamps();
 
             $table->foreign('language_id')
                   ->references('id')->on('language');
@@ -26,6 +26,8 @@ class CreateColorStructureLangTable extends Migration
             $table->foreign('color_structure_id')
                   ->references('id')->on('color_structure')
                   ->onDelete('cascade');
+
+            $table->unique(['language_id', 'color_structure_id'], 'language_color_structure_UNIQUE');
         });
     }
 

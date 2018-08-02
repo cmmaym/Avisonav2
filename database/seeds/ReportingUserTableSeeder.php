@@ -11,7 +11,7 @@ class ReportingUserTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('report_source')->insert([
+        DB::table('reporting_user')->insert([
             [
                 'name'             => 'Johan Arciniegas Fajardo',
                 'created_at'        => new \DateTime('now'),
@@ -29,6 +29,12 @@ class ReportingUserTableSeeder extends Seeder
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'report_source_id'  => 3
+            ],
+            [
+                'name'             => 'Victor Ruiz',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'report_source_id'  => 4
             ]
         ]);
     }

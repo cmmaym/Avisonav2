@@ -17,9 +17,6 @@ class CreateAidTypeFormTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('illustration', 45)->nullable()->comment('Imagen de la clase de luz');
             $table->timestamps();
-
-            $table->foreign('aid_type_id')
-                  ->references('id')->on('aid_type');
         });
     }
 

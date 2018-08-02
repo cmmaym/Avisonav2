@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ColorTypeLangTableSeeder extends Seeder
+class ColorStructureLangTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,54 +11,62 @@ class ColorTypeLangTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('color_type_lang')->insert([
+        DB::table('color_structure_lang')->insert([
             [
-                'color'             => 'Blanco',
-                'alias'             => 'W',
+                'name'             => 'Blanco',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 1,
-                'color_type_id'     => 1
+                'color_structure_id'     => 1
             ],
             [
-                'color'             => 'White',
-                'alias'             => 'W',
+                'name'             => 'White',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 2,
-                'color_type_id'     => 1
+                'color_structure_id'     => 1
             ],
             [
-                'color'             => 'Rojo',
-                'alias'             => 'R',
+                'name'             => 'Rojo',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 1,
-                'color_type_id'     => 2
+                'color_structure_id'     => 2
             ],
             [
-                'color'             => 'Red',
-                'alias'             => 'R',
+                'name'             => 'Red',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 2,
-                'color_type_id'     => 2
+                'color_structure_id'     => 2
             ],
             [
-                'color'             => 'Verde',
-                'alias'             => 'G',
+                'name'             => 'Verde',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 1,
-                'color_type_id'     => 3
+                'color_structure_id'     => 3
             ],
             [
-                'color'             => 'Green',
-                'alias'             => 'G',
+                'name'             => 'Green',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 2,
-                'color_type_id'     => 3
+                'color_structure_id'     => 3
+            ],
+            [
+                'name'             => 'Negro',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_structure_id'     => 4
+            ],
+            [
+                'name'             => 'Black',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_structure_id'     => 4
             ]
         ]);
     }

@@ -29,6 +29,12 @@ class LightListTableSeeder extends Seeder
                 'year'          => '2015',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
+            ],
+            [
+                'edition'       => '4',
+                'year'          => '2016',
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
             ]
         ]);
     }

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class LightTypeLangTableSeeder extends Seeder
+class LightClassLangTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,14 +11,14 @@ class LightTypeLangTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('light_type_lang')->insert([
+        DB::table('light_class_lang')->insert([
             [
                 'class'             => 'Fija',
                 'description'       => 'Luz Fija',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 1,
-                'light_type_id'     => 1
+                'light_class_id'     => 1
             ],
             [
                 'class'             => 'Fixed',
@@ -26,7 +26,7 @@ class LightTypeLangTableSeeder extends Seeder
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 2,
-                'light_type_id'     => 1
+                'light_class_id'     => 1
             ],
             [
                 'class'             => 'De ocultacion',
@@ -34,7 +34,7 @@ class LightTypeLangTableSeeder extends Seeder
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 1,
-                'light_type_id'     => 2
+                'light_class_id'     => 2
             ],
             [
                 'class'             => 'Occulting',
@@ -42,7 +42,7 @@ class LightTypeLangTableSeeder extends Seeder
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 2,
-                'light_type_id'     => 2
+                'light_class_id'     => 2
             ],
             [
                 'class'             => 'Grupo de ocultaciones',
@@ -50,7 +50,7 @@ class LightTypeLangTableSeeder extends Seeder
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 1,
-                'light_type_id'     => 3
+                'light_class_id'     => 3
             ],
             [
                 'class'             => 'Group-occulting',
@@ -58,7 +58,7 @@ class LightTypeLangTableSeeder extends Seeder
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 2,
-                'light_type_id'     => 3
+                'light_class_id'     => 3
             ]
         ]);
     }

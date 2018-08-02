@@ -28,8 +28,9 @@ class CreateAidTable extends Migration
             $table->integer('location_id')->unsigned();
             $table->integer('light_class_id')->unsigned();
             $table->integer('color_structure_pattern_id')->unsigned();
-            $table->integer('aid_type_form_id')->unsigned();
             $table->integer('top_mark_id')->unsigned();
+            $table->integer('aid_type_id')->unsigned();
+            $table->integer('aid_type_form_id')->unsigned();
             
             $table->foreign('location_id')
                   ->references('id')->on('location');
@@ -39,12 +40,16 @@ class CreateAidTable extends Migration
             
             $table->foreign('color_structure_pattern_id')
                   ->references('id')->on('color_structure');
+                  
+            $table->foreign('top_mark_id')
+                  ->references('id')->on('top_mark');
             
             $table->foreign('aid_type_form_id')
                   ->references('id')->on('aid_type_form');
             
-            $table->foreign('top_mark_id')
-                  ->references('id')->on('top_mark');
+            $table->foreign('aid_type_id')
+                  ->references('id')->on('aid_type');
+            
         });
     }
 

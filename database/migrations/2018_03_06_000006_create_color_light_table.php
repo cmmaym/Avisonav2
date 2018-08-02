@@ -15,6 +15,7 @@ class CreateColorLightTable extends Migration
     {
         Schema::create('color_light', function (Blueprint $table) {
             $table->increments('id')->unsigned();
+            $table->string('alias', 45)->comment('Abreviacion del color');
             $table->timestamps();
         });
     }

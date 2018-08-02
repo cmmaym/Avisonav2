@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class LightTypeTableSeeder extends Seeder
+class AidTypeFormTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,22 +11,24 @@ class LightTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('light_type')->insert([
+        DB::table('aid_type_form')->insert([
             [
-                'alias'         => 'F',
-                'illustration'  => null,
+                'illustration' => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'alias'         => 'Oc.',
-                'illustration'  => null,
+                'illustration' => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'alias'         => 'Oc. (2)',
-                'illustration'  => null,
+                'illustration' => null,
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+            ],
+            [
+                'illustration' => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],

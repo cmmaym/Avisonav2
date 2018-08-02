@@ -26,7 +26,9 @@ class CreateTopMarkLangTable extends Migration
             
             $table->foreign('top_mark_id')
                   ->references('id')->on('top_mark')
-                  ->onDelete('cascade');;
+                  ->onDelete('cascade');
+            
+            $table->unique(['language_id', 'top_mark_id'], 'language_top_mark_UNIQUE');
         });
     }
 

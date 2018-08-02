@@ -29,6 +29,12 @@ class ReportSourceTableSeeder extends Seeder
                 'alias'             => 'SEMAP',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now')
+            ],
+            [
+                'name'             => 'Grupo 1234',
+                'alias'             => 'G1234',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now')
             ]
         ]);
     }

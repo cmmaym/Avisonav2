@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ChartEditionTableSeeder extends Seeder
+class TopMarkLangTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,48 +11,48 @@ class ChartEditionTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('chart_edition')->insert([
+        DB::table('top_mark_lang')->insert([
             [
-                'edition'        => '1',
-                'year'          => '2018',
+                'description'  => 'Esto es un texto de pruebas 001',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
-                'chart_id'      => 1
+                'top_mark_id'   => 1,
+                'language_id'   => 1
             ],
             [
-                'edition'        => '1',
-                'year'          => '2018',
+                'description'  => 'This is a text test 001',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
-                'chart_id'      => 2
+                'top_mark_id'   => 1,
+                'language_id'   => 2
             ],
             [
-                'edition'        => '1',
-                'year'          => '2018',
+                'description'  => 'Esto es un texto de pruebas 002',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
-                'chart_id'      => 3
+                'top_mark_id'   => 2,
+                'language_id'   => 1
             ],
             [
-                'edition'        => '1',
-                'year'          => '2018',
+                'description'  => 'This is a text test 002',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
-                'chart_id'      => 4
+                'top_mark_id'   => 2,
+                'language_id'   => 2
             ],
             [
-                'edition'        => '1',
-                'year'          => '2018',
+                'description'  => 'Esto es un texto de pruebas 003',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
-                'chart_id'      => 5
+                'top_mark_id'   => 3,
+                'language_id'   => 1
             ],
             [
-                'edition'        => '1',
-                'year'          => '2018',
+                'description'  => 'This is a text test 003',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
-                'chart_id'      => 6
+                'top_mark_id'   => 3,
+                'language_id'   => 2
             ],
         ]);
     }

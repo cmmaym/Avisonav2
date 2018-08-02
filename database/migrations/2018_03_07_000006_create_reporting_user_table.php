@@ -17,8 +17,7 @@ class CreateReportingUserTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('name', 100);
             $table->timestamps();
-
-            $table->integer('report_source_id');
+            $table->integer('report_source_id')->unsigned();
 
             $table->foreign('report_source_id')
                   ->references('id')->on('report_source');

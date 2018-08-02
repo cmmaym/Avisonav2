@@ -14,6 +14,7 @@ class ChartTableSeeder extends Seeder
         DB::table('chart')->insert([
             [
                 'number'        => '001',
+                'name'          => 'Cartagena',
                 'purpose'     => 'Oceanica',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
@@ -21,6 +22,7 @@ class ChartTableSeeder extends Seeder
             ],
             [
                 'number'        => '002',
+                'name'          => 'Barranquilla',
                 'purpose'     => 'General',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
@@ -28,6 +30,7 @@ class ChartTableSeeder extends Seeder
             ],
             [
                 'number'        => '003',
+                'name'          => 'Buenaventura',
                 'purpose'     => 'Costera',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
@@ -35,6 +38,7 @@ class ChartTableSeeder extends Seeder
             ],
             [
                 'number'        => '004',
+                'name'          => 'Santa marta',
                 'purpose'     => 'Aproximacion',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
@@ -42,6 +46,7 @@ class ChartTableSeeder extends Seeder
             ],
             [
                 'number'        => '005',
+                'name'          => 'Malaga',
                 'purpose'     => 'Puerto',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
@@ -49,6 +54,7 @@ class ChartTableSeeder extends Seeder
             ],
             [
                 'number'        => '006',
+                'name'          => 'Legisamo',
                 'purpose'     => 'Canales o Muelles',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),

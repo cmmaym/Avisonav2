@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class AidTypeTableSeeder extends Seeder
+class TopMarkTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,20 +11,19 @@ class AidTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('aid_type')->insert([
+        DB::table('top_mark')->insert([
             [
+                'illustration'  => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
+                'illustration'  => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'created_at'    => new \DateTime('now'),
-                'updated_at'    => new \DateTime('now'),
-            ],
-            [
+                'illustration'  => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],

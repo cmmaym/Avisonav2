@@ -13,31 +13,59 @@ class AidLangTableSeeder extends Seeder
     {
         DB::table('aid_lang')->insert([
             [
-                'description'      => 'Español',
+                'name'             => 'Boya n° 1',
                 'created_at'       => new \DateTime('now'),
                 'updated_at'       => new \DateTime('now'),
                 'aid_id'           => 1,
                 'language_id'      => 1,
             ],
             [
-                'description'      => 'Ingles',
+                'name'             => 'Boy n° 1',
                 'created_at'       => new \DateTime('now'),
                 'updated_at'       => new \DateTime('now'),
                 'aid_id'           => 1,
                 'language_id'      => 2,
             ],
             [
-                'description'      => 'Español',
+                'name'             => 'Boya n° 2',
                 'created_at'       => new \DateTime('now'),
                 'updated_at'       => new \DateTime('now'),
                 'aid_id'           => 2,
                 'language_id'      => 1,
             ],
             [
-                'description'      => 'Ingles',
+                'name'             => 'Boy n° 2',
                 'created_at'       => new \DateTime('now'),
                 'updated_at'       => new \DateTime('now'),
                 'aid_id'           => 2,
+                'language_id'      => 2,
+            ],
+            [
+                'name'             => 'Faro buenaventura',
+                'created_at'       => new \DateTime('now'),
+                'updated_at'       => new \DateTime('now'),
+                'aid_id'           => 3,
+                'language_id'      => 1,
+            ],
+            [
+                'name'             => 'Headlight buenaventura',
+                'created_at'       => new \DateTime('now'),
+                'updated_at'       => new \DateTime('now'),
+                'aid_id'           => 3,
+                'language_id'      => 2,
+            ],
+            [
+                'name'             => 'Enfilacion n° 1',
+                'created_at'       => new \DateTime('now'),
+                'updated_at'       => new \DateTime('now'),
+                'aid_id'           => 4,
+                'language_id'      => 1,
+            ],
+            [
+                'name'             => 'Beacon enfilacion n° 1',
+                'created_at'       => new \DateTime('now'),
+                'updated_at'       => new \DateTime('now'),
+                'aid_id'           => 4,
                 'language_id'      => 2,
             ],
         ]);

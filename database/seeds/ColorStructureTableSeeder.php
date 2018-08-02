@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class AidTypeTableSeeder extends Seeder
+class ColorStructureTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class AidTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('aid_type')->insert([
+        DB::table('color_structure')->insert([
             [
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
@@ -27,7 +27,7 @@ class AidTypeTableSeeder extends Seeder
             [
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
-            ],
+            ]
         ]);
     }
 }

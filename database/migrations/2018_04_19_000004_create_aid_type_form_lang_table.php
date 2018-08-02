@@ -25,7 +25,9 @@ class CreateAidTypeFormLangTable extends Migration
 
             $table->foreign('aid_type_form_id')
                   ->references('id')->on('aid_type_form')
-                  ->onDelete('cascade');;
+                  ->onDelete('cascade');
+            
+            $table->unique(['language_id', 'aid_type_form_id'], 'language_aid_type_form_UNIQUE');
         });
     }
 

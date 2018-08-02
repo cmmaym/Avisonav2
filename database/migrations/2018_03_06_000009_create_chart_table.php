@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -16,6 +17,7 @@ class CreateChartTable extends Migration
         Schema::create('chart', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('number', 45)->comment('Numero de la carta');
+            $table->string('name', 100)->comment('Numero de la carta');
             $table->string('purpose', 100)->comment('El proposito es la clasificacion segun el objetivo de la carta');
             $table->timestamps();
             $table->string('user', 100)->comment('Nombre de usuario que manipulo le registro');
@@ -31,6 +33,8 @@ class CreateChartTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('chart');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
