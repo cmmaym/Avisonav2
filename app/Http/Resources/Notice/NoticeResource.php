@@ -12,6 +12,8 @@ use AvisoNavAPI\Http\Resources\Zone\ZoneResource;
 use AvisoNavAPI\Http\Resources\CatalogOceanCoastResource;
 use AvisoNavAPI\Http\Resources\NoveltyType\NoveltyTypeResource;
 use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeResource;
+use AvisoNavAPI\Http\Resources\ReportSourceResource;
+use AvisoNavAPI\Http\Resources\ReportingUserResource;
 
 class NoticeResource extends JsonResource
 {
@@ -32,20 +34,22 @@ class NoticeResource extends JsonResource
         return [
             'id'                        => $this->id,
             'number'                    => $this->number,
-            'date'                      => $this->date,
             'year'                      => $this->year,
-            'created_at'                => $this->created_at->format('Y-m-d'),
-            'updated_at'                => $this->updated_at->format('Y-m-d'),
+            'reportsNumbers'           => $this->reports_numbers,
+            'reportDate'               => $this->report_date,
+            'createdAt'                => $this->created_at->format('Y-m-d'),
+            'updatedAt'                => $this->updated_at->format('Y-m-d'),
             'state'                     => $this->state,
             'file_info'                 => $this->file_info,
             'user'                      => $this->user,
-            'observation'               => $this->when(!is_null($this->noticeLang), $noticeLang, null),
+            'parent'                    => null,
             'characterType'             => new CharacterTypeResource($this->characterType),
             'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
-            'entity'                    => new EntityResource($this->entity),
             'zone'                      => new ZoneResource($this->zone),
             'catalogOceanCoast'         => new CatalogOceanCoastResource($this->catalogOceanCoast),
             'lightList'                 => new LightListResource($this->lightList),
+            'reportSource'             => new ReportSourceResource($this->reportSource),
+            'reportingUser'            => new ReportingUserResource($this->reportingUser),
             'links'                     => [
                 'self'          => route('notice.show', ['id' => $this->id]),
                 'noticeLang'    => route('notice.noticeLang.index', ['id' => $this->id]),

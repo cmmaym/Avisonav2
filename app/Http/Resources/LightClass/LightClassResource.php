@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Resources\LightType;
+namespace AvisoNavAPI\Http\Resources\LightClass;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LightTypeResource extends JsonResource
+class LightClassResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -29,12 +29,11 @@ class LightTypeResource extends JsonResource
             'class'             =>  $this->when(!is_null($this->lightTypeLang), $class, null),
             'description'       =>  $this->when(!is_null($this->lightTypeLang), $description, null),
             'illustration'      =>  $this->illustration,
-            'created_at'        =>  $this->created_at->format('Y-m-d'),
-            'updated_at'        =>  $this->updated_at->format('Y-m-d'),
-            'state'             =>  $this->state,
+            'createdAt'        =>  $this->created_at->format('Y-m-d'),
+            'updatedAt'        =>  $this->updated_at->format('Y-m-d'),
             'links'              => [
-                'self'  =>  route('lightType.show', ['id' => $this->id]),
-                'lightTypeLang' => route('lightType.lightTypeLang.index', ['id' => $this->id])
+                'self'  =>  route('lightClass.show', ['id' => $this->id]),
+                'lightClassLang' => route('lightClass.lightClassLang.index', ['id' => $this->id])
             ]
         ];
     }

@@ -29,13 +29,14 @@ class NoticeController extends Controller
     {
         $collection = Notice::filter(request()->all(), NoticeFilter::class)
                             ->with([
-                                'entity',
+                                'noticeLang' => $this->withLanguageQuery(),
                                 'characterType.characterTypeLang' => $this->withLanguageQuery(),
                                 'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
-                                'noticeLang' => $this->withLanguageQuery(),
                                 'zone.zoneLang' => $this->withLanguageQuery(),
                                 'catalogOceanCoast',
-                                'lightList'
+                                'lightList',
+                                'reportSource',
+                                'reportingUser'
                             ])
                             ->paginateFilter($this->perPage());
 
@@ -53,12 +54,15 @@ class NoticeController extends Controller
         $notice = new Notice($request->only(['number']));
         
         $year = (new \DateTime("now"))->format('Y');
+        $notice->reports_numbers = $request->input('reportsNumbers');
+        $notice->report_date = $request->input('reportDate');
         $notice->year = $year;
         $notice->user = Auth::user()->username;
-        $notice->entity_id = $request->input('entity');
         $notice->character_type_id = $request->input('characterType');
         $notice->novelty_type_id = $request->input('noveltyType');
         $notice->zone_id = $request->input('zone');
+        $notice->report_source_id = $request->input('reportSource');
+        $notice->reporting_user_id = $request->input('reportingUser');
         
         $notice->catalog_ocean_coast_id = ($request->input('catalogOceanCoast')) ? $request->input('catalogOceanCoast') : null;
         $notice->light_list_id = ($request->input('lightList')) ? $request->input('lightList') : null;
@@ -70,7 +74,7 @@ class NoticeController extends Controller
         $notice->save();
 
         $noticeLang = new NoticeLang();
-        $noticeLang->observation = $request->input('observation');
+        $noticeLang->description = $request->input('description');
         $noticeLang->language_id = $request->input('language');
 
         $notice->noticeLang()->save($noticeLang);
@@ -89,13 +93,14 @@ class NoticeController extends Controller
     public function show(Notice $notice)
     {
         $notice->load([
-            'entity',
+            'noticeLang' => $this->withLanguageQuery(),
             'characterType.characterTypeLang' => $this->withLanguageQuery(),
             'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
-            'noticeLang' => $this->withLanguageQuery(),
             'zone.zoneLang' => $this->withLanguageQuery(),
             'catalogOceanCoast',
-            'lightList'
+            'lightList',
+            'reportSource',
+            'reportingUser'
         ]);
 
         return new NoticeResource($notice);
@@ -111,11 +116,14 @@ class NoticeController extends Controller
     public function update(StoreNotice $request, Notice $notice)
     {
         $notice->fill($request->only(['number', 'state']));
+        $notice->reports_numbers = $request->input('reportsNumbers');
+        $notice->report_date = $request->input('reportDate');
         $notice->user = Auth::user()->username;
-        $notice->entity_id = $request->input('entity');
         $notice->character_type_id = $request->input('characterType');
         $notice->novelty_type_id = $request->input('noveltyType');
         $notice->zone_id = $request->input('zone');
+        $notice->report_source_id = $request->input('reportSource');
+        $notice->reporting_user_id = $request->input('reportingUser');
 
         $notice->catalog_ocean_coast_id = ($request->input('catalogOceanCoast')) ? $request->input('catalogOceanCoast') : null;
         $notice->light_list_id = ($request->input('lightList')) ? $request->input('lightList') : null;

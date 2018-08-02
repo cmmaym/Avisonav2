@@ -22,4 +22,9 @@ class AidType extends Model
         return $this->hasOne(AidTypeLang::class);
     }
 
+    public function aidTypeForm(){
+        return $this->belongsToMany(AidTypeForm::class)
+                    ->withTimestamps();
+    }
+
 }

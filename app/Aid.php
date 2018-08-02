@@ -11,7 +11,31 @@ class Aid extends Model
     use Filterable;
 
     protected $table        = 'aid';
-    protected $fillable     = ['number', 'name', 'elevation', 'scope', 'features', 'observation'];
+    protected $fillable     = ['racon', 'ais', 'height', 'scope', 'features'];
+
+    public function location(){
+        return $this->belongsTo(Location::class);
+    }
+    
+    public function lightClass(){
+        return $this->belongsTo(LightClass::class);
+    }
+    
+    public function colorStructurePattern(){
+        return $this->belongsTo(ColorStructure::class);
+    }
+    
+    public function topMark(){
+        return $this->belongsTo(TopMark::class);
+    }
+    
+    public function aidType(){
+        return $this->belongsTo(AidType::class);
+    }
+    
+    public function aidTypeForm(){
+        return $this->belongsTo(AidTypeForm::class);
+    }
 
     public function aidLangs(){
         return $this->hasMany(AidLang::class);
@@ -19,26 +43,6 @@ class Aid extends Model
     
     public function aidLang(){
         return $this->hasOne(AidLang::class);
-    }
-    
-    public function aidType(){
-        return $this->belongsTo(AidType::class);
-    }
-    
-    public function location(){
-        return $this->belongsTo(Location::class);
-    }
-    
-    public function lightType(){
-        return $this->belongsTo(LightType::class);
-    }
-    
-    public function colorType(){
-        return $this->belongsTo(ColorType::class);
-    }
-    
-    public function noveltyType(){
-        return $this->belongsTo(NoveltyType::class);
     }
 
     public function coordinates(){
@@ -53,10 +57,19 @@ class Aid extends Model
         return $this->belongsToMany(Notice::class);
     }
 
+    public function aidColorStructure(){
+        return $this->belongsToMany(ColorStructure::class)
+                    ->withTimestamps();
+    }
+    
+    public function aidColorLight(){
+        return $this->belongsToMany(ColorLight::class)
+                    ->withTimestamps();
+    }
+    
     public function chart(){
         return $this->belongsToMany(Chart::class)
-                    ->withTimestamps()
-                    ->withPivot(['coordinate_id', 'chart_edition_id']);
+                    ->withTimestamps();
     }
 
 }

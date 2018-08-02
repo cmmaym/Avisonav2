@@ -10,7 +10,7 @@ class Chart extends Model
     use Filterable;
 
     protected $table        = 'chart';
-    protected $fillable     = ['number', 'purpose'];
+    protected $fillable     = ['number', 'name', 'purpose'];
 
     public function chartEdition(){
         return $this->hasMany(ChartEdition::class);

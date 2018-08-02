@@ -6,7 +6,9 @@ use AvisoNavAPI\Http\Resources\LocationResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use AvisoNavAPI\Http\Resources\Aid\CoordinateResource;
 use AvisoNavAPI\Http\Resources\ColorType\ColorTypeResource;
-use AvisoNavAPI\Http\Resources\LightType\LightTypeResource;
+use AvisoNavAPI\Http\Resources\LightClass\LightClassResource;
+use AvisoNavAPI\ColorStructure;
+use AvisoNavAPI\Http\Resources\TopMark\TopMarkResource;
 
 class AidResource extends JsonResource
 {
@@ -19,27 +21,32 @@ class AidResource extends JsonResource
     public function toArray($request)
     {
         $self= $this;
-        $description = function() use ($self){
-            return $self->aidLang->description;
+        $name = function() use ($self){
+            return $self->aidLang->name;
         };
 
         return [
             'id'                => $this->id,
-            'number'            => $this->number,
-            'name'              => $this->name,
-            'elevation'         => $this->elevation,
+            'name'              => $this->when(!is_null($this->aidLang), $name, null),
+            'racon'             => $this->racon,
+            'ais'               => $this->ais,
+            'height'            => $this->height,
+            'floatDiameter'     => $this->float_diameter,
+            'elevationNmm'      => $this->elevation_nmm,
             'scope'             => $this->scope,
+            'sectorAngle'       => $this->sector_angle,
             'features'          => $this->features,
-            'observation'       => $this->observation,
-            'description'       => $this->when(!is_null($this->aidLang), $description, null),
             'created_at'        => $this->created_at->format('Y-m-d'),
             'updated_at'        => $this->updated_at->format('Y-m-d'),
+            'user'              => $this->user,
             'state'             => $this->state,
+            'location'          => new LocationResource($this->location),
+            'lightClass'        => new LightClassResource($this->lightClass),
+            'colorStructurePattern' => new ColorStructure($this->colorStructurePattern),
+            'topMark'           => new TopMarkResource($this->topMark),
             'aidType'           => new AidTypeResource($this->aidType),
             'coordinate'        => new CoordinateResource($this->coordinate),
-            'location'          => new LocationResource($this->location),
-            'lightType'         => new LightTypeResource($this->lightType),
-            'colorType'         => new ColorTypeResource($this->colorType),
+            // 'colorType'         => new ColorTypeResource($this->colorType),
             'links'             => [
                 'self'      =>  route('aid.show', ['id' => $this->id]),
                 'aidLang'   =>  route('aid.aidLang.index', ['id' => $this->id])

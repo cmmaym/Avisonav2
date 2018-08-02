@@ -163,3 +163,13 @@ Route::resource('catalogOceanCoast', 'CatalogOceanCoast\CatalogOceanCoastControl
 Route::resource('lightList', 'LightList\LightListController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
+
+//Report Source
+Route::resource('reportSource', 'ReportSource\ReportSourceController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
+
+//Reporting User
+Route::resource('reportingUser', 'ReportingUser\ReportingUserController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);

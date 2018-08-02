@@ -10,16 +10,24 @@ class NoticeFilter extends ModelFilter
         return $this->where('number', 'like', "%$number%");
     }
     
-    public function date($date){
-        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($date, $date));
-    }
-
     public function year($year){
         return $this->where('year', 'like', "%$year%");
     }
 
-    public function entity($name){
-        return $this->related('entity', 'entity.name', 'like', "%$name%");
+    public function reportsNumbers($reportsNumbers){
+        return $this->where('reports_numbers', 'like', "%$reportsNumbers%");
+    }
+
+    public function reportDate($reportDate){
+        return $this->whereRaw("(STR_TO_DATE(report_date, '%Y-%m-%d') between ? and ?)", array($reportDate, $reportDate));
+    }
+    
+    public function createdAt($createdAt){
+        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
+    }
+    
+    public function user($user){
+        return $this->where('user', 'like', "%$user%");
     }
     
     public function characterType($name){
@@ -33,19 +41,19 @@ class NoticeFilter extends ModelFilter
             $query->where('name', 'like', "%$name%");
         });
     }
-    
+
     public function zone($zone){
         $this->whereHas('zone.zoneLang', function($query) use ($zone) {
             $query->where('name', 'like', "%$zone%");
         });
     }
 
-    public function user($user){
-        return $this->where('user', 'like', "%$user%");
+    public function reportSource($reportSource){
+        return $this->related('reportSource', 'report_source.alias', 'like', "%$reportSource%");
     }
     
-    public function observation($observation){
-        return $this->related('noticeLang', 'notice_lang.observation', 'like', "%$observation%");
+    public function reportingUser($reportingUser){
+        return $this->related('reportingUser', 'reporting_user.name', 'like', "%$reportingUser%");
     }
 
     public function sort($column)
@@ -67,7 +75,12 @@ class NoticeFilter extends ModelFilter
         return $this->orderBy('year', $this->input('dir', 'asc'));
     }
     
-    public function sortByDate()
+    public function sortByReportDate()
+    {
+        return $this->orderBy('report_date', $this->input('dir', 'asc'));
+    }
+    
+    public function sortByCreatedAt()
     {
         return $this->orderBy('created_at', $this->input('dir', 'asc'));
     }
@@ -110,12 +123,21 @@ class NoticeFilter extends ModelFilter
              ->select('notice.*');
     }
     
-    public function sortByEntity()
+    public function sortByReportSourceAlias()
     {
         $input = $this->input('dir', 'asc');
 
-        $this->join('entity', 'notice.entity_id', '=', 'entity.id')
-             ->orderBy('entity.name', $input)
+        $this->join('report_source', 'notice.report_source_id', '=', 'report_source.id')
+             ->orderBy('report_source.alias', $input)
+             ->select('notice.*');
+    }
+    
+    public function sortByReportingUser()
+    {
+        $input = $this->input('dir', 'asc');
+
+        $this->join('reporting_user', 'notice.reporting_user_id', '=', 'reporting_user.id')
+             ->orderBy('reporting_user.name', $input)
              ->select('notice.*');
     }
 }

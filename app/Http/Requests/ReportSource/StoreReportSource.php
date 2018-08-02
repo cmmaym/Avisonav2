@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Requests\Notice;
+namespace AvisoNavAPI\Http\Requests\ReportSource;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreNoticeLang extends FormRequest
+class StoreReportSource extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class StoreNoticeLang extends FormRequest
     public function rules()
     {
         return [
-            'description'               => 'required|max:500',
-            'language'                  => 'required|exists:language,id',
+            'name'        =>  'required|max:100',
+            'alias'       =>  'required|max:45'
         ];
     }
 
@@ -38,9 +38,7 @@ class StoreNoticeLang extends FormRequest
     {
         return [
             'required'              =>  'El campo :attribute es requerido',
-            'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
             'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
         ];
     }
-
 }

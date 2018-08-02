@@ -15,14 +15,10 @@ class Notice extends Model
     protected $table        = 'notice';
     protected $fillable     = ['number', 'state'];
 
-    public function entity(){
-        return $this->belongsTo(Entity::class);
-    }
-
     public function characterType(){
         return $this->belongsTo(CharacterType::Class);
     }
-
+    
     public function noveltyType(){
         return $this->belongsTo(NoveltyType::class);
     }
@@ -34,9 +30,17 @@ class Notice extends Model
     public function catalogOceanCoast(){
         return $this->belongsTo(CatalogOceanCoast::class);
     }
-
+    
     public function LightList(){
         return $this->belongsTo(LightList::class);
+    }
+    
+    public function reportSource(){
+        return $this->belongsTo(ReportSource::class);
+    }
+    
+    public function reportingUser(){
+        return $this->belongsTo(ReportingUser::class);
     }
 
     public function noticeLangs(){
