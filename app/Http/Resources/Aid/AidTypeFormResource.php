@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Resources\Aid;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CoordinateResource extends JsonResource
+class AidTypeFormResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,16 +14,22 @@ class CoordinateResource extends JsonResource
      */
     public function toArray($request)
     {
+        $self= $this;
+        $description = function() use ($self){
+            return $self->aidTypeFormLang->description;
+        };
+
         return [
             'id'                => $this->id,
-            'latitud'           => $this->latitud,
-            'longitud'          => $this->longitud,
+            'illustration'      => $this->illustration,
+            'description'       => $this->when(!is_null($this->aidTypeFormLang), $description, null),
             'createdAt'        => $this->created_at->format('Y-m-d'),
             'updatedAt'        => $this->updated_at->format('Y-m-d'),
             'links'             => [
-                'self'  =>  route('aid.coordinate.show', ['aidId' => $this->aid->id, 'id' => $this->id]),
-                'aid'   =>  route('aid.show', ['id' => $this->aid->id])
+                'self'          => route('aidTypeForm.show', ['id' => $this->id]),
+                'aidTypeFormLang'   => route('aidTypeForm.aidTypeFormLang.index', ['id' => $this->id])
             ]
         ];
+
     }
 }

@@ -4,10 +4,10 @@ namespace AvisoNavAPI\ModelFilters\Basic;
 
 use EloquentFilter\ModelFilter;
 
-class LightTypeFilter extends ModelFilter
+class LightClassFilter extends ModelFilter
 {
     public function class($class){
-        return $this->related('lightTypeLang', 'class', 'like', "%$class%");
+        return $this->related('lightClassLang', 'class', 'like', "%$class%");
     }
 
     public function alias($alias){
@@ -15,15 +15,11 @@ class LightTypeFilter extends ModelFilter
     }
 
     public function description($description){
-        return $this->related('lightTypeLang', 'description', 'like', "%$description%");
+        return $this->related('lightClassLang', 'description', 'like', "%$description%");
     }
 
-    public function date($date){
-        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($date, $date));
-    }
-
-    public function language($language){
-        return $this->related('lightTypeLang', 'language_id', '=', $language);
+    public function createdAt($createdAt){
+        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
     }
 
     public function sort($column)
@@ -39,9 +35,9 @@ class LightTypeFilter extends ModelFilter
     {
         $input = $this->input('dir', 'asc');
 
-        $this->join('light_type_lang', 'light_type_lang.light_type_id', '=', 'light_type.id')
-             ->orderBy('light_type_lang.class', $input)
-             ->select('light_type.*');
+        $this->join('light_Class_lang', 'light_Class_lang.light_Class_id', '=', 'light_Class.id')
+             ->orderBy('light_Class_lang.class', $input)
+             ->select('light_Class.*');
     }
 
     public function sortByAlias()
@@ -53,12 +49,12 @@ class LightTypeFilter extends ModelFilter
     {
         $input = $this->input('dir', 'asc');
 
-        $this->join('light_type_lang', 'light_type_lang.light_type_id', '=', 'light_type.id')
-             ->orderBy('light_type_lang.description', $input)
-             ->select('light_type.*');
+        $this->join('light_Class_lang', 'light_Class_lang.light_Class_id', '=', 'light_Class.id')
+             ->orderBy('light_Class_lang.description', $input)
+             ->select('light_Class.*');
     }
 
-    public function sortByDate()
+    public function sortByCreatedAt()
     {
         return $this->orderBy('created_at', $this->input('dir', 'asc'));
     }

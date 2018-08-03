@@ -4,19 +4,18 @@ namespace AvisoNavAPI\ModelFilters\Basic;
 
 use EloquentFilter\ModelFilter;
 
-class AidLangFilter extends ModelFilter
+class LightClassLangFilter extends ModelFilter
 {
+    public function class($class){
+        return $this->where('class', 'like', "%$class%");
+    }
 
-    public function name($name){
-        return $this->where('name', 'like', "%$name%");
+    public function description($description){
+        return $this->where('description', 'like', "%$description%");
     }
 
     public function createdAt($createdAt){
         return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
-    }
-
-    public function language($language){
-        return $this->related('language', 'code', 'like', "%$language%");
     }
 
     public function sort($column)
@@ -28,9 +27,14 @@ class AidLangFilter extends ModelFilter
         return $this->orderBy('id', $this->input('dir', 'asc'));
     }
 
-    public function sortByName()
+    public function sortByClass()
     {
-        return $this->orderBy('name', $this->input('dir', 'asc'));
+        return $this->orderBy('class', $this->input('dir', 'asc'));
+    }
+
+    public function sortByDescription()
+    {
+        return $this->orderBy('description', $this->input('dir', 'asc'));
     }
 
     public function sortByCreatedAt()

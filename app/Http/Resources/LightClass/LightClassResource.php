@@ -16,18 +16,18 @@ class LightClassResource extends JsonResource
     {
         $self= $this;
         $class = function() use ($self){
-            return $self->lightTypeLang->class;
+            return $self->lightClassLang->class;
         };
         
         $description = function() use ($self){
-            return $self->lightTypeLang->description;
+            return $self->lightClassLang->description;
         };
 
         return [
             'id'                =>  $this->id,
             'alias'             =>  $this->alias,
-            'class'             =>  $this->when(!is_null($this->lightTypeLang), $class, null),
-            'description'       =>  $this->when(!is_null($this->lightTypeLang), $description, null),
+            'class'             =>  $this->when(!is_null($this->lightClassLang), $class, null),
+            'description'       =>  $this->when(!is_null($this->lightClassLang), $description, null),
             'illustration'      =>  $this->illustration,
             'createdAt'        =>  $this->created_at->format('Y-m-d'),
             'updatedAt'        =>  $this->updated_at->format('Y-m-d'),

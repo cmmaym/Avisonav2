@@ -4,19 +4,14 @@ namespace AvisoNavAPI\ModelFilters\Basic;
 
 use EloquentFilter\ModelFilter;
 
-class AidLangFilter extends ModelFilter
+class ColorStructureLangFilter extends ModelFilter
 {
-
     public function name($name){
         return $this->where('name', 'like', "%$name%");
     }
 
     public function createdAt($createdAt){
         return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
-    }
-
-    public function language($language){
-        return $this->related('language', 'code', 'like', "%$language%");
     }
 
     public function sort($column)

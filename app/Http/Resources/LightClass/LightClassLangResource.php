@@ -23,8 +23,8 @@ class LightClassLangResource extends JsonResource
             'updatedAt'        =>  $this->updated_at->format('Y-m-d'),
             'language'          => new LanguageResource($this->language),
             'links'              => [
-                'self'  =>  route('lighClass.lighClassLang.show', ['lighClassId' => $this->lighClass->id, 'id' => $this->id]),
-                'lighClass' => route('lighClass.show', ['id' => $this->lighClass->id])
+                'self'  =>  route('lightClass.lightClassLang.show', ['lightClassId' => $this->lightClass->id, 'id' => $this->id]),
+                'lighClass' => route('lightClass.show', ['id' => $this->lightClass->id])
             ]
         ];
     }

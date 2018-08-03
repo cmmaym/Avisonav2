@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Requests\LightType;
+namespace AvisoNavAPI\Http\Requests\LightClass;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreLightTypeLang extends FormRequest
+class StoreLightClassLang extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,8 @@ class StoreLightTypeLang extends FormRequest
     {
         return [
             'class'           => 'required|max:100',
-            'alias'           => 'required|max:45',
             'description'     => 'required',
-            'language_id'     => 'required|exists:language,id'
+            'language'        => 'required|exists:language,id'
         ];
     }
 

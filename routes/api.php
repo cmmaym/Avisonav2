@@ -68,22 +68,31 @@ Route::resource('location', 'Location\LocationController')->only([
 ]);
 
 
-//ColorType
-Route::resource('colorType', 'ColorType\ColorTypeController')->only([
+//ColorLight
+Route::resource('colorLight', 'ColorLight\ColorLightController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
-Route::resource('colorType.colorTypeLang', 'ColorType\ColorTypeLangController')->only([
+Route::resource('colorLight.colorLightLang', 'ColorLight\ColorLightLangController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
+
+//ColorStructure
+Route::resource('colorStructure', 'ColorStructure\ColorStructureController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
+
+Route::resource('colorStructure.colorStructureLang', 'ColorStructure\ColorStructureLangController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
 
-//LightType
-Route::resource('lightType', 'lightType\lightTypeController')->only([
+//LightClass
+Route::resource('lightClass', 'lightClass\lightClassController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
-Route::resource('lightType.lightTypeLang', 'lightType\lightTypeLangController')->only([
+Route::resource('lightClass.lightClassLang', 'lightClass\lightClassLangController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
@@ -135,8 +144,21 @@ Route::resource('aid.aidLang', 'Aid\AidLangController')->only([
 Route::resource('aid.coordinate', 'Aid\AidCoordinateController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
-
+    
 Route::resource('aid.chart', 'Aid\AidChartController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
+
+Route::resource('aid.colorStructure', 'Aid\AidColorStructureController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
+
+//AidTypeForm
+Route::resource('aidTypeForm', 'AidTypeForm\AidController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
+
+Route::resource('aidTypeForm.aidTypeFormLang', 'AidTypeForm\AidTypeFormLangController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
 
@@ -146,6 +168,15 @@ Route::resource('aidType', 'Aid\AidTypeController')->only([
 ]);
 
 Route::resource('aidType.aidTypeLang', 'Aid\AidTypeLangController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
+
+//TopMark
+Route::resource('topMark', 'TopMark\TopMarkController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
+
+Route::resource('topMark.topMarkLang', 'TopMark\TopMarkLangController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
 

@@ -2,9 +2,10 @@
 
 namespace AvisoNavAPI\Http\Resources\Aid;
 
+use AvisoNavAPI\Http\Resources\LanguageResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CoordinateResource extends JsonResource
+class AidTypeFormLangResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,13 +17,13 @@ class CoordinateResource extends JsonResource
     {
         return [
             'id'                => $this->id,
-            'latitud'           => $this->latitud,
-            'longitud'          => $this->longitud,
+            'description'       => $this->description,
             'createdAt'        => $this->created_at->format('Y-m-d'),
             'updatedAt'        => $this->updated_at->format('Y-m-d'),
+            'language'          => new LanguageResource($this->language),
             'links'             => [
-                'self'  =>  route('aid.coordinate.show', ['aidId' => $this->aid->id, 'id' => $this->id]),
-                'aid'   =>  route('aid.show', ['id' => $this->aid->id])
+                'self'          => route('aidTypeForm.aidTypeFormLang.show', ['aidTypeId' => $this->aidType->id, 'id' => $this->id]),
+                'aidType'           => route('aidType.show', ['id' => $this->aidType->id])
             ]
         ];
     }

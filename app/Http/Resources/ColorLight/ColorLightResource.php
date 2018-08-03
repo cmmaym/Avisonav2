@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Resources\Zone;
+namespace AvisoNavAPI\Http\Resources\ColorLight;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ZoneLangResource extends JsonResource
+class ColorLightResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,15 +14,20 @@ class ZoneLangResource extends JsonResource
      */
     public function toArray($request)
     {
+        $self= $this;
+        $color = function() use ($self){
+            return $self->colorLightLang->color;
+        };
+
         return [
             'id'                =>  $this->id,
-            'name'              =>  $this->name,
+            'color'             =>  $this->when(!is_null($this->colorLightLang), $color, null),
             'alias'             =>  $this->alias,
             'createdAt'        =>  $this->created_at->format('Y-m-d'),
             'updatedAt'        =>  $this->updated_at->format('Y-m-d'),
-            'links'              => [
-                'self'  =>  route('zone.zoneLang.update', ['zoneId' => $this->zone->id, 'zoneLangId' => $this->id]),
-                'zona'  =>  route('zone.show', ['id' => $this->zone->id])
+            'links'             => [
+                'self'  =>  route('colorLight.show', ['id' => $this->id]),
+                'colorLightLang' => route('colorLight.colorLightLang.index', ['id' => $this->id])
             ]
         ];
     }

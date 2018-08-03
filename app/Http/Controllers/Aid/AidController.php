@@ -32,9 +32,11 @@ class AidController extends Controller
                              'coordinate',
                              'aidLang' => $this->withLanguageQuery(),
                              'location.zone.zoneLang' => $this->withLanguageQuery(),
-                             'lightType.lightTypeLang' => $this->withLanguageQuery(),
-                             'colorType.colorTypeLang' => $this->withLanguageQuery(),
-                             'aidType.aidTypeLang' => $this->withLanguageQuery()
+                             'lightClass.lightClassLang' => $this->withLanguageQuery(),
+                             'colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
+                             'topMark.topMarkLang' => $this->withLanguageQuery(),
+                             'aidType.aidTypeLang' => $this->withLanguageQuery(),
+                             'aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery()
                          ])
                          ->paginateFilter($this->perPage());
 
@@ -49,20 +51,22 @@ class AidController extends Controller
      */
     public function store(StoreAid $request)
     {
-        $aid = new Aid($request->only(['number', 'name', 'elevation', 'scope', 'features', 'observation']));
-        $aid->aid_type_id = $request->input('aidType');
-        $aid->location_id = $request->input('location');
-        $aid->light_type_id = $request->input('lightType');
-        $aid->color_type_id = $request->input('colorType');
+        $aid = new Aid($request->only(['racon', 'ais', 'height', 'scope', 'features']));
+        $aid->float_diameter = $request->input('floatDiameter');
+        $aid->elevation_nmm = $request->input('elevationNmm');
+        $aid->sector_angle = $request->input('sectorAngle');
         $aid->user = Auth::user()->username;
+        $aid->location_id = $request->input('location');
+        $aid->light_class_id = $request->input('lightClass');
+        $aid->color_structure_pattern_id = $request->input('colorStructurePattern');
+        $aid->top_mark_id = $request->input('topMark');
+        $aid->aid_type_form_id = $request->input('aidTypeForm');
         $aid->save();
 
-        $aidLang = new AidLang([$request->input('description')]);
+        $aidLang = new AidLang([$request->input('name')]);
         $aidLang->language_id = $request->input('language');
 
         $aid->aidLang()->save($aidLang);
-
-        $aid->refresh();
         
         return new AidResource($aid);
 
@@ -80,9 +84,11 @@ class AidController extends Controller
             'coordinate',
             'aidLang' => $this->withLanguageQuery(),
             'location.zone.zoneLang' => $this->withLanguageQuery(),
-            'lightType.lightTypeLang' => $this->withLanguageQuery(),
-            'colorType.colorTypeLang' => $this->withLanguageQuery(),
-            'aidType.aidTypeLang' => $this->withLanguageQuery()
+            'lightClass.lightClassLang' => $this->withLanguageQuery(),
+            'colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
+            'topMark.topMarkLang' => $this->withLanguageQuery(),
+            'aidType.aidTypeLang' => $this->withLanguageQuery(),
+            'aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery()
         ]);
 
         return new AidResource($aid);
@@ -97,12 +103,17 @@ class AidController extends Controller
      */
     public function update(StoreAid $request, Aid $aid)
     {
-        $aid->fill($request->only(['number', 'name', 'elevation', 'scope', 'features', 'observation']));
-        $aid->aid_type_id = $request->input('aidType');
-        $aid->location_id = $request->input('location');
-        $aid->light_type_id = $request->input('lightType');
-        $aid->color_type_id = $request->input('colorType');
+        $aid->fill($request->only(['racon', 'ais', 'height', 'scope', 'features']));
+        $aid->float_diameter = $request->input('floatDiameter');
+        $aid->elevation_nmm = $request->input('elevationNmm');
+        $aid->sector_angle = $request->input('sectorAngle');
         $aid->user = Auth::user()->username;
+        $aid->location_id = $request->input('location');
+        $aid->light_class_id = $request->input('lightClass');
+        $aid->color_structure_pattern_id = $request->input('colorStructurePattern');
+        $aid->top_mark_id = $request->input('topMark');
+        $aid->aid_type_form_id = $request->input('aidTypeForm');
+        $aid->save();
 
         if($aid->isClean()){
             return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);

@@ -15,7 +15,6 @@ class CreateTopMarkLangTable extends Migration
     {
         Schema::create('top_mark_lang', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('illustration', 45)->nullable()->comment('Imagen de la marca de tope');
             $table->mediumText('description');
             $table->timestamps();
             $table->integer('language_id')->unsigned();

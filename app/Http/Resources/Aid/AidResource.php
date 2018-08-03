@@ -2,13 +2,16 @@
 
 namespace AvisoNavAPI\Http\Resources\Aid;
 
+use AvisoNavAPI\AidTypeForm;
+use AvisoNavAPI\ColorStructure;
 use AvisoNavAPI\Http\Resources\LocationResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use AvisoNavAPI\Http\Resources\Aid\CoordinateResource;
+use AvisoNavAPI\Http\Resources\Aid\AidTypeFormResource;
+use AvisoNavAPI\Http\Resources\TopMark\TopMarkResource;
 use AvisoNavAPI\Http\Resources\ColorType\ColorTypeResource;
 use AvisoNavAPI\Http\Resources\LightClass\LightClassResource;
-use AvisoNavAPI\ColorStructure;
-use AvisoNavAPI\Http\Resources\TopMark\TopMarkResource;
+use AvisoNavAPI\Http\Resources\ColorStructure\ColorStructureResource;
 
 class AidResource extends JsonResource
 {
@@ -36,17 +39,17 @@ class AidResource extends JsonResource
             'scope'             => $this->scope,
             'sectorAngle'       => $this->sector_angle,
             'features'          => $this->features,
-            'created_at'        => $this->created_at->format('Y-m-d'),
-            'updated_at'        => $this->updated_at->format('Y-m-d'),
+            'createdAt'        => $this->created_at->format('Y-m-d'),
+            'updatedAt'        => $this->updated_at->format('Y-m-d'),
             'user'              => $this->user,
             'state'             => $this->state,
             'location'          => new LocationResource($this->location),
             'lightClass'        => new LightClassResource($this->lightClass),
-            'colorStructurePattern' => new ColorStructure($this->colorStructurePattern),
+            'colorStructurePattern' => new ColorStructureResource($this->colorStructurePattern),
             'topMark'           => new TopMarkResource($this->topMark),
             'aidType'           => new AidTypeResource($this->aidType),
+            'aidTypeForm'       => new AidTypeFormResource($this->aidTypeForm),
             'coordinate'        => new CoordinateResource($this->coordinate),
-            // 'colorType'         => new ColorTypeResource($this->colorType),
             'links'             => [
                 'self'      =>  route('aid.show', ['id' => $this->id]),
                 'aidLang'   =>  route('aid.aidLang.index', ['id' => $this->id])
