@@ -24,9 +24,22 @@ class StoreChart extends FormRequest
     public function rules()
     {
         return [
-            'number'        => 'required|string',
-            'purpose'       => 'required|string',
-            'state'         => 'sometimes|required|required|in:A,I'
+            'number'        => 'required|string|max:45',
+            'name'          => 'required|string|max:100',
+            'purpose'       => 'required|string|max:100',
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'required'              =>  'El campo :attribute es requerido',
+            'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
         ];
     }
 }

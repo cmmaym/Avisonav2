@@ -39,8 +39,13 @@ class AidTypeController extends Controller
      */
     public function store(StoreAidType $request)
     {
-        $aidType = new AidType($request->only(['type']));
+        $aidType = new AidType();
         $aidType->save();
+
+        $aidTypeLang = new AidTypeLang($request->only(['name']));
+        $aidTypeLang->language_id = $request->input('language');
+
+        $aidType->aidTypeLang()->save($aidTypeLang);
 
         return new AidTypeResource($aidType);
     }
@@ -53,25 +58,9 @@ class AidTypeController extends Controller
      */
     public function show(AidType $aidType)
     {
-        return new AidTypeResource($aidType);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \AvisoNavAPI\Http\Requests\Aid\StoreAidType  $request
-     * @param  \AvisoNavAPI\AidType $aidType
-     * @return \AvisoNavAPI\Http\Resources\Aid\AidTypeResource
-     */
-    public function update(StoreAidType $request, AidType $aidType)
-    {
-        $aidType->fill($request->only(['type', 'state']));
-
-        if($aidType->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
-        }
-
-        $aidType->save();
+        $aidType->load([
+            'aidTypeLang' => $this->withLanguageQuery()
+        ]);
 
         return new AidTypeResource($aidType);
     }

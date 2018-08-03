@@ -25,7 +25,7 @@ class StoreCharacterTypeLang extends FormRequest
     {
         return [
             'name'        => 'required|max:100',
-            'language_id' => 'required|exists:language,id',
+            'language'    => 'required|exists:language,id',
         ];
     }
 

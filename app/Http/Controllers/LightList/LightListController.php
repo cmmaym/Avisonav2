@@ -1,18 +1,19 @@
 <?php
 
-namespace AvisoNavAPI\Http\Controllers\CatalogOceanCoast;
+namespace AvisoNavAPI\Http\Controllers\LightList;
 
-use AvisoNavAPI\CatalogOceanCoast;
+use AvisoNavAPI\LightList;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\ModelFilters\Basic\CatalogOceanCoastFilter;
-use AvisoNavAPI\Http\Resources\CatalogOceanCoastResource;
-use AvisoNavAPI\Http\Requests\CatalogOceanCoast\StoreCatalogOceanCoast;
+use AvisoNavAPI\ModelFilters\Basic\LightListFilter;
+use AvisoNavAPI\Http\Resources\LightListResource;
+use AvisoNavAPI\Http\Requests\LightList\StoreLightList;
+use AvisoNavAPI\Traits\Responser;
 
-class CatalogOceanCoastController extends Controller
+class LightListController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -21,10 +22,10 @@ class CatalogOceanCoastController extends Controller
      */
     public function index()
     {
-        $collection = CatalogOceanCoast::filter(request()->all(), CatalogOceanCoastFilter::class)
+        $collection = LightList::filter(request()->all(), LightListFilter::class)
                             ->paginateFilter($this->perPage());
 
-        return CatalogOceanCoastResource::collection($collection);
+        return LightListResource::collection($collection);
     }
 
     /**
@@ -33,12 +34,12 @@ class CatalogOceanCoastController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCatalogOceanCoast $request)
+    public function store(StoreLightList $request)
     {
-        $catalogOceanCoast = new CatalogOceanCoast($request->only(['edition', 'year']));
-        $catalogOceanCoast->save();
+        $lightList = new LightList($request->only(['edition', 'year']));
+        $lightList->save();
 
-        return new CatalogOceanCoastResource($catalogOceanCoast);
+        return new LightListResource($lightList);
     }
 
     /**
@@ -47,9 +48,9 @@ class CatalogOceanCoastController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(CatalogOceanCoast $catalogOceanCoast)
+    public function show(LightList $lightList)
     {
-        return new CatalogOceanCoastResource($catalogOceanCoast);
+        return new LightListResource($lightList);
     }
 
     /**
@@ -59,16 +60,16 @@ class CatalogOceanCoastController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreCatalogOceanCoast $request, CatalogOceanCoast $catalogOceanCoast)
+    public function update(StoreLightList $request, LightList $lightList)
     {
-        $catalogOceanCoast->fill($request->only(['edition', 'year']));
-        $catalogOceanCoast->save();
+        $lightList->fill($request->only(['edition', 'year']));
+        $lightList->save();
 
-        if($catalogOceanCoast->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+        if($lightList->isClean()){
+            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
 
-        return new CatalogOceanCoastResource($catalogOceanCoast);
+        return new LightListResource($lightList);
     }
 
     /**
@@ -77,10 +78,10 @@ class CatalogOceanCoastController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CatalogOceanCoast $catalogOceanCoast)
+    public function destroy(LightList $LightList)
     {
-        $catalogOceanCoast->delete();
+        $lightList->delete();
 
-        return new CatalogOceanCoastResource($catalogOceanCoast);
+        return new LightListResource($lightList);
     }
 }

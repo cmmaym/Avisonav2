@@ -10,7 +10,7 @@ class NoticeLang extends Model
     use Filterable;
     
     protected $table        = 'notice_lang';
-    protected $fillable     = ['observation'];
+    protected $fillable     = ['description'];
 
     public function notice(){
         return $this->belongsTo(Notice::class);

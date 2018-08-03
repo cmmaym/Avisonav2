@@ -24,7 +24,9 @@ class StoreZone extends FormRequest
     public function rules()
     {
         return [
-            'state'         => 'sometimes|required|in:A,I'
+            'name'         => 'sometimes|required|max:100',
+            'alias'         => 'sometimes|required|max:45',
+            'language'   => 'sometimes|required|exists:language,id',
         ];
     }
 
@@ -37,7 +39,8 @@ class StoreZone extends FormRequest
     {
         return [
             'required'              =>  'El campo :attribute es requerido',
-            'in'                    =>  'El valor seleccionado para el campo :attribute es invalido',
+            'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
+            'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
         ];
     }
 }

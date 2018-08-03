@@ -27,8 +27,7 @@ class NoveltyTypeController extends Controller
      * @return \AvisoNavAPI\Http\Resources\NoveltyTypeLangResource
      */
     public function index()
-    {        
-        $language = request()->input('language');
+    {
         $collection = NoveltyType::filter(request()->all(), NoveltyTypeFilter::class)
                                      ->with([
                                          'noveltyTypeLang' => $this->withLanguageQuery()
@@ -67,28 +66,12 @@ class NoveltyTypeController extends Controller
      * @return \AvisoNavAPI\Http\Resources\NoveltyTypeResource
      */
     public function show(NoveltyType $noveltyType)
-    {        
+    {
+        $noveltyType->load([
+            'noveltyTypeLang' => $this->withLanguageQuery()
+        ]);
+
         return new NoveltyTypeResource($noveltyType);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \AvisoNavAPI\Http\Requests\NoveltyType\StoreNoveltyType  $request
-     * @param  \AvisoNavAPI\NoveltyType    NoveltyType
-     * @return \AvisoNavAPI\Http\Resources\NoveltyTypeResource
-     */
-    public function update(StoreNoveltyType $request, NoveltyType $noveltyType)
-    {        
-        $noveltyType->fill($request->only(['state']));
-        
-        if($noveltyType->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
-        }
-        
-        $noveltyType->save();
-
-       return new NoveltyTypeResource($noveltyType);
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace AvisoNavAPI\Http\Resources;
+namespace AvisoNavAPI\Http\Resources\Chart;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,12 +16,12 @@ class ChartResource extends JsonResource
     {
         return [
             'id'                =>  $this->id,
+            'name'              =>  $this->name,
             'number'            =>  $this->number,
             'purpose'           =>  $this->purpose,
-            'created_at'        =>  $this->created_at->format('Y-m-d'),
-            'updated_at'        =>  $this->updated_at->format('Y-m-d'),
-            'state'             => $this->state,
-            'edition'           => ChartEditionResource::collection($this->chartEdition),
+            'createdAt'        =>  $this->created_at->format('Y-m-d'),
+            'updatedAt'        =>  $this->updated_at->format('Y-m-d'),
+            'user'              => $this->user,
             'links'             => [
                 'self'  =>  route('chart.show', ['id' => $this->id])
             ]

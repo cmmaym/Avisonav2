@@ -70,6 +70,7 @@ class LightClassLangController extends Controller
     public function update(StoreLightClassLang $request, LightClass $lightClass, LightClassLang $lightClassLang)
     {
         $lightClassLang->fill($request->only(['class', 'description']));
+        $lightClassLang->language_id = $request->input('language');
         
         if($lightClassLang->isClean()){
             return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);

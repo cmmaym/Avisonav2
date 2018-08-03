@@ -26,7 +26,7 @@ class StoreZoneLang extends FormRequest
         return [
             'name'          => 'required|max:100',
             'alias'         => 'required|max:45',
-            'language_id'   => 'required|exists:language,id',
+            'language'   => 'required|exists:language,id',
         ];
     }
 
@@ -40,7 +40,6 @@ class StoreZoneLang extends FormRequest
         return [
             'required'              =>  'El campo :attribute es requerido',
             'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
-            'in'                    =>  'El valor seleccionado para el campo :attribute es invalido',
             'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
         ];
     }

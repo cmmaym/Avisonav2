@@ -22,8 +22,8 @@ class NoveltyTypeResource extends JsonResource
         return [
             'id'                => $this->id,
             'name'              => $this->when(!is_null($this->noveltyTypeLang), $name, null),
-            'created_at'        => $this->created_at->format('Y-m-d'),
-            'updated_at'        => $this->updated_at->format('Y-m-d'),
+            'createdAt'        => $this->created_at->format('Y-m-d'),
+            'updatedAt'        => $this->updated_at->format('Y-m-d'),
             'state'             => $this->state,
             'links'              => [
                 'self'  =>  route('noveltyType.show', ['id' => $this->id]),

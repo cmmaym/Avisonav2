@@ -7,7 +7,7 @@ use AvisoNavAPI\Chart;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Traits\Responser;
-use AvisoNavAPI\Http\Resources\ChartResource;
+use AvisoNavAPI\Http\Resources\Chart\ChartResource;
 use AvisoNavAPI\ModelFilters\Basic\ChartFilter;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 

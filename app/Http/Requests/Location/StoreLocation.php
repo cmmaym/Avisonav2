@@ -25,9 +25,8 @@ class StoreLocation extends FormRequest
     {
         return [
             'name'                  => 'required|max:100',
-            'sub_location_name'     => 'nullable|max:100',
-            'state'                 => 'sometimes|required|in:A,I',
-            'zone_id'               => 'required|exists:zone,id'
+            'subLocationName'       => 'nullable|max:100',
+            'zone'                  => 'required|exists:zone,id'
         ];
     }
 
@@ -41,7 +40,6 @@ class StoreLocation extends FormRequest
         return [
             'required'  =>  'El campo :attribute es requerido',
             'max'       =>  'El campo :attribute debe tener maximo :max caracteres',
-            'in'        =>  'El valor seleccionado para el campo :attribute es invalido',
             'exists'    =>  'El valor seleccionado para el campo :attribute es invalido',
         ];
     }

@@ -40,7 +40,7 @@ class CharacterTypeLangController extends Controller
     public function store(StoreCharacterTypeLang $request, CharacterType $characterType)
     {
         $characterTypeLang = new CharacterTypeLang($request->only(['name']));
-        $characterTypeLang->language_id = $request->input('language_id');
+        $characterTypeLang->language_id = $request->input('language');
 
         $characterType->characterTypeLangs()->save($characterTypeLang);
 
@@ -70,9 +70,10 @@ class CharacterTypeLangController extends Controller
     public function update(StoreCharacterTypeLang $request, CharacterType $characterType, CharacterTypeLang $characterTypeLang)
     {
         $characterTypeLang->fill($request->only(['name']));
+        $characterTypeLang->language_id = $request->input('language');
         
         if($characterTypeLang->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
 
         $characterTypeLang->save();

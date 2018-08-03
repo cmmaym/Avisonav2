@@ -61,6 +61,10 @@ class LightClassController extends Controller
      */
     public function show(LightClass $lightClass)
     {
+        $lightClass->load([
+            'lightClassLang' => $this->withLanguageQuery()
+        ]);
+        
         return new LightClassResource($lightClass);
     }
 

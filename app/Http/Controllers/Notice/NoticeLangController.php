@@ -37,7 +37,7 @@ class NoticeLangController extends Controller
      */
     public function store(StoreNoticeLang $request, Notice $notice)
     {
-        $noticeLang = new NoticeLang($request->only(['observation']));
+        $noticeLang = new NoticeLang($request->only(['description']));
         $noticeLang->language_id = $request->input('language');
         
         $notice->noticeLang()->save($noticeLang);
@@ -65,7 +65,7 @@ class NoticeLangController extends Controller
      */
     public function update(StoreNoticeLang $request, $notice, NoticeLang $noticeLang)
     {
-        $noticeLang->fill($request->only(['observation']));
+        $noticeLang->fill($request->only(['description']));
         $noticeLang->language_id = $request->input('language');
 
         if($noticeLang->isClean()){

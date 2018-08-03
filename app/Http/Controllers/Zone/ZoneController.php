@@ -44,6 +44,11 @@ class ZoneController extends Controller
         $zone = new Zone();
         $zone->save();
 
+        $zoneLang = new ZoneLang($request->only(['name', 'alias']));
+        $zoneLang->language_id = $request->input('language');
+
+        $zone->zoneLangs()->save($zoneLang);
+
         return new ZoneResource($zone);
     }
 
@@ -55,26 +60,10 @@ class ZoneController extends Controller
      */
     public function show(Zone $zone)
     {
-        return new ZoneResource($zone);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \AvisoNavAPI\Http\Requests\Zone\StoreZone  $request
-     * @param  \AvisoNavAPI\Zone  $zone
-     * @return \AvisoNavAPI\Http\Resources\ZoneResource
-     */
-    public function update(StoreZone $request, Zone $zone)
-    {
-        $zone->fill($request->only(['state']));
+        $zone->load([
+            'zoneLang' => $this->withLanguageQuery()
+        ]);
         
-        if($zone->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
-        }
-
-        $zone->save();
-
         return new ZoneResource($zone);
     }
 

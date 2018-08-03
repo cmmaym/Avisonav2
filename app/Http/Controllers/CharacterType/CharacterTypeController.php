@@ -11,10 +11,11 @@ use AvisoNavAPI\ModelFilters\Basic\CharacterTypeFilter;
 use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeLangResource;
 use AvisoNavAPI\ModelFilters\Basic\CharacterTypeLangFilter;
 use AvisoNavAPI\Http\Requests\CharacterType\StoreCharacterType;
+use AvisoNavAPI\Traits\Responser;
 
 class CharacterTypeController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -42,6 +43,11 @@ class CharacterTypeController extends Controller
     {
         $characterType = new CharacterType();
         $characterType->save();
+
+        $characterTypeLang = new CharacterTypeLang($request->only(['name']));
+        $characterTypeLang->language_id = $request->input('language');
+
+        $characterType->characterTypeLangs()->save($characterTypeLang);
         
         return new CharacterTypeResource($characterType);
     }
@@ -54,27 +60,11 @@ class CharacterTypeController extends Controller
      */
     public function show(CharacterType $characterType)
     {
+        $characterType->load([
+            'characterTypeLang' => $this->withLanguageQuery()
+        ]);
+
         return new CharacterTypeResource($characterType);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \AvisoNavAPI\Http\Requests\CharacterType\StoreCharacterType  $request
-     * @param  \AvisoNavAPI\CharacterType $characterType
-     * @return \AvisoNavAPI\Http\Resources\CharacterTypeResource
-     */
-    public function update(StoreCharacterType $request, CharacterType $characterType)
-    {
-        $characterType->fill($request->only(['state']));
-        
-        if($characterType->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
-        }
-
-        $characterType->save();
-
-       return new CharacterTypeResource($characterType);
     }
 
     /**

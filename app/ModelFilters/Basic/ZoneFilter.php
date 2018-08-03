@@ -14,12 +14,8 @@ class ZoneFilter extends ModelFilter
         return $this->related('zoneLang', 'alias', 'like', "%$alias%");
     }
 
-    public function date($date){
-        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($date, $date));
-    }
-
-    public function language($language){
-        return $this->related('zoneLang', 'language_id', '=', $language);
+    public function createdAt($createdAt){
+        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
     }
 
     public function sort($column)
@@ -49,7 +45,7 @@ class ZoneFilter extends ModelFilter
              ->select('zone.*');
     }
 
-    public function sortByDate()
+    public function sortByCreatedAt()
     {
         return $this->orderBy('created_at', $this->input('dir', 'asc'));
     }

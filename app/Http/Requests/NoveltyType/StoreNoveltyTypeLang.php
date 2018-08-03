@@ -25,7 +25,7 @@ class StoreNoveltyTypeLang extends FormRequest
     {
         return [
             'name'          => 'required|max:100',
-            'language'      => 'required|integer|exists:language,id',
+            'language'      => 'required|exists:language,id',
         ];
     }
 
@@ -38,6 +38,7 @@ class StoreNoveltyTypeLang extends FormRequest
     {
         return [
             'required'              =>  'El campo :attribute es requerido',
+            'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
             'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
         ];
     }

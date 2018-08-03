@@ -56,5 +56,10 @@ class Notice extends Model
                     ->withTimestamps()
                     ->withPivot('coordinate_id');
     }
+    
+    public function chartEdition(){
+        return $this->belongsToMany(ChartEdition::class, 'notice_chart_edition')
+                    ->withTimestamps();
+    }
 
 }

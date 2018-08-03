@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\ModelFilters\Basic\ChartFilter;
-use AvisoNavAPI\Http\Resources\ChartResource;
+use AvisoNavAPI\Http\Resources\Chart\ChartResource;
 use AvisoNavAPI\Http\Requests\Chart\StoreChart;
+use AvisoNavAPI\Traits\Responser;
 
 class ChartController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -35,8 +36,8 @@ class ChartController extends Controller
      */
     public function store(StoreChart $request)
     {
-        $chart = new Chart($request->only(['number', 'purpose']));
-        $chart->user = 'JMARDZ';
+        $chart = new Chart($request->only(['number', 'name', 'purpose']));
+        $chart->user = Auth::user()->username;
         $chart->save();
 
         return new ChartResource($chart);
@@ -62,12 +63,12 @@ class ChartController extends Controller
      */
     public function update(StoreChart $request, Chart $chart)
     {
-        $chart->fill($request->only(['number', 'purpose']));
-        $chart->user = 'JMARDZ';
+        $chart->fill($request->only(['number', 'name', 'purpose']));
+        $chart->user = Auth::user()->username;
         $chart->save();
 
         if($chart->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
 
         return new ChartResource($chart);

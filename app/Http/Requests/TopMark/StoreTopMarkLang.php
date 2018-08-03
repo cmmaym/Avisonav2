@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Requests\ColorType;
+namespace AvisoNavAPI\Http\Requests\TopMark;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreColorType extends FormRequest
+class StoreTopMarkLang extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class StoreColorType extends FormRequest
     public function rules()
     {
         return [
-            'state'       =>  'sometimes|required|in:A,I'
+            'description'     => 'required',
+            'language'        => 'required|exists:language,id'
         ];
     }
 
@@ -37,7 +38,7 @@ class StoreColorType extends FormRequest
     {
         return [
             'required'              =>  'El campo :attribute es requerido',
-            'in'                    =>  'El valor seleccionado para el campo :attribute es invalido',
+            'exists'                =>  'El valor seleccionado para el campo :attribute es invalido'
         ];
     }
 }

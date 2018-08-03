@@ -38,7 +38,7 @@ class ZoneLangController extends Controller
     public function store(StoreZoneLang $request, Zone $zone)
     {
         $zoneLang = new ZoneLang($request->only(['name', 'alias']));
-        $zoneLang->language_id = $request->input('language_id');
+        $zoneLang->language_id = $request->input('language');
 
         $zone->zoneLangs()->save($zoneLang);
 
@@ -68,9 +68,10 @@ class ZoneLangController extends Controller
     public function update(StoreZoneLang $request, Zone $zone, ZoneLang $zoneLang)
     {
         $zoneLang->fill($request->only(['name', 'alias']));
+        $zoneLang->language_id = $request->input('language');
         
         if($zoneLang->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
 
         $zoneLang->save();

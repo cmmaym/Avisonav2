@@ -9,10 +9,11 @@ use AvisoNavAPI\ModelFilters\Basic\LocationFilter;
 use AvisoNavAPI\Http\Requests\Location\StoreLocation;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\ModelFilters\Basic\ZoneFilter;
+use AvisoNavAPI\Traits\Responser;
 
 class LocationController extends Controller
 {
-    use Filter;
+    use Filter, Responser;
 
     /**
      * Display a listing of the resource.
@@ -23,7 +24,9 @@ class LocationController extends Controller
     {
         $input = request()->all();
         $collection = Location::filter(request()->all(), LocationFilter::class)
-                              ->with(['zone'])
+                              ->with([
+                                  'zone.zoneLang' => $this->withLanguageQuery()
+                              ])
                               ->paginateFilter($this->perPage());
         
         return LocationResource::collection($collection);
@@ -37,8 +40,8 @@ class LocationController extends Controller
      */
     public function store(StoreLocation $request)
     {
-        $location = new Location($request->only(['name','sub_location_name','state']));
-        $location->zone_id = $request->input('zone_id');
+        $location = new Location($request->only(['name','subLocationName']));
+        $location->zone_id = $request->input('zone');
         $location->save();
 
         return new LocationResource($location);
@@ -52,6 +55,10 @@ class LocationController extends Controller
      */
     public function show(Location $location)
     {
+        $location->load([
+            'zone.zoneLang' => $this->withLanguageQuery()
+        ]);
+
         return new LocationResource($location);
     }
 
@@ -64,11 +71,11 @@ class LocationController extends Controller
      */
     public function update(StoreLocation $request, Location $location)
     {
-        $location->fill($request->only(['name','sub_location_name','state']));
-        $location->zone_id = $request->input('zone_id');
+        $location->fill($request->only(['name','subLocationName']));
+        $location->zone_id = $request->input('zone');
 
         if($location->isClean()){
-            return response()->json(['error' => ['title' => 'Debe por lo menos realizar un cambio para actualizar', 'status' => 422]], 422);
+            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
 
         $location->save();

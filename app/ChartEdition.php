@@ -11,4 +11,9 @@ class ChartEdition extends Model
 
     protected $table        = 'chart_edition';
     protected $fillable     = ['edition', 'year'];
+
+    public function chart()
+    {
+        return $this->belongsTo(Chart::class);
+    }
 }

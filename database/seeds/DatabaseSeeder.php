@@ -49,6 +49,7 @@ class DatabaseSeeder extends Seeder
         DB::statement('TRUNCATE TABLE form_type;');
         DB::statement('TRUNCATE TABLE aid_chart;');
         DB::statement('TRUNCATE TABLE notice_aid;');
+        DB::statement('TRUNCATE TABLE notice_chart_edition;');
         DB::statement('TRUNCATE TABLE permission;');
         DB::statement('TRUNCATE TABLE role;');
         DB::statement('TRUNCATE TABLE role_permission;');
@@ -90,6 +91,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AidColorStructureTableSeeder::class);
         $this->call(AidColorLightTableSeeder::class);
         $this->call(NoticeAidTableSeeder::class);
+        $this->call(NoticeChartEditionTableSeeder::class);
         $this->call(PermissionTableSeeder::class);
         $this->call(RoleTableSeeder::class);
         $this->call(RolePermissionTableSeeder::class);

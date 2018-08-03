@@ -22,8 +22,8 @@ class AidTypeFormLangResource extends JsonResource
             'updatedAt'        => $this->updated_at->format('Y-m-d'),
             'language'          => new LanguageResource($this->language),
             'links'             => [
-                'self'          => route('aidTypeForm.aidTypeFormLang.show', ['aidTypeId' => $this->aidType->id, 'id' => $this->id]),
-                'aidType'           => route('aidType.show', ['id' => $this->aidType->id])
+                'self'          => route('aidTypeForm.aidTypeFormLang.show', ['aidTypeId' => $this->aidTypeForm->id, 'id' => $this->id]),
+                'aidType'           => route('aidTypeForm.show', ['id' => $this->aidTypeForm->id])
             ]
         ];
     }

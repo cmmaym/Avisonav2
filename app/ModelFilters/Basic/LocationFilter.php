@@ -8,19 +8,19 @@ class LocationFilter extends ModelFilter
 {
 
     public function name($name){
-        return $this->where('location.name', 'like', "%$name%");
+        return $this->where('name', 'like', "%$name%");
     }
 
-    public function subName($subName){
-        return $this->where('sub_location_name', 'like', "%$subName%");
+    public function subLocationName($subLocationName){
+        return $this->where('sub_location_name', 'like', "%$subLocationName%");
     }
 
-    public function zoneName($name){
+    public function zone($name){
         return $this->related('zone', 'zone.name', 'like', "%$name%");
     }
 
-    public function date($date){
-        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($date, $date));
+    public function createdAt($createdAt){
+        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
     }
 
     public function sort($column)
@@ -42,7 +42,7 @@ class LocationFilter extends ModelFilter
         return $this->orderBy('sub_location_name', $this->input('dir', 'asc'));
     }
 
-    public function sortByDate()
+    public function sortByCreatedAt()
     {
         return $this->orderBy('created_at', $this->input('dir', 'asc'));
     }

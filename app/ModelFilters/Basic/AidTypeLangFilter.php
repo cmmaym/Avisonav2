@@ -10,12 +10,12 @@ class AidTypeLangFilter extends ModelFilter
         return $this->where('name', 'like', "%$name%");
     }
 
-    public function date($date){
-        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($date, $date));
+    public function createdAt($createdAt){
+        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
     }
 
     public function language($language){
-        return $this->where('language_id', '=', $language);
+        return $this->related('language', 'code', 'like', "%$language%");
     }
 
     public function sort($column)
@@ -27,16 +27,11 @@ class AidTypeLangFilter extends ModelFilter
         return $this->orderBy('id', $this->input('dir', 'asc'));
     }
 
-    public function sortByType()
-    {
-        return $this->orderBy('type', $this->input('dir', 'asc'));
-    }
-
     public function sortByName(){
         return $this->orderBy('name', $this->input('dir', 'asc'));
     }
 
-    public function sortByDate()
+    public function sortByCreatedAt()
     {
         return $this->orderBy('created_at', $this->input('dir', 'asc'));
     }

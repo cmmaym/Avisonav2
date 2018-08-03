@@ -24,9 +24,21 @@ class StoreChartEdition extends FormRequest
     public function rules()
     {
         return [
-            'number'        => 'required|integer',
-            'year'          => 'required|integer',
-            'state'         => 'sometimes|required|required|in:A,I'
+            'edition'       => 'required|numeric',
+            'year'          => 'required|numeric',
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'required'              =>  'El campo :attribute es requerido',
+            'numeric'               =>  'El campo :attribute debe ser un numero',
         ];
     }
 }

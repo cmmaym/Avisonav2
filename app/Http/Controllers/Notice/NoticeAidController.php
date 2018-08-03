@@ -34,9 +34,11 @@ class NoticeAidController extends Controller
                                         },
                                         'aidLang' => $this->withLanguageQuery(),
                                         'location.zone.zoneLang' => $this->withLanguageQuery(),
-                                        'lightType.lightTypeLang' => $this->withLanguageQuery(),
-                                        'colorType.colorTypeLang' => $this->withLanguageQuery(),
-                                        'aidType.aidTypeLang' => $this->withLanguageQuery()
+                                        'lightClass.lightClassLang' => $this->withLanguageQuery(),
+                                        'colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
+                                        'topMark.topMarkLang' => $this->withLanguageQuery(),
+                                        'aidType.aidTypeLang' => $this->withLanguageQuery(),
+                                        'aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery()
                                     ])
                                     ->paginateFilter($this->perPage());
 

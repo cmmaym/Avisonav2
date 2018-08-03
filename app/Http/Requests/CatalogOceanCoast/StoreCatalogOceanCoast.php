@@ -24,8 +24,21 @@ class StoreCatalogOceanCoast extends FormRequest
     public function rules()
     {
         return [
-            'edition'       => 'required|string',
-            'year'          => 'required|string',
+            'edition'       => 'required|numeric',
+            'year'          => 'required|numeric',
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'required'              =>  'El campo :attribute es requerido',
+            'numeric'               =>  'El campo :attribute debe ser un numero',
         ];
     }
 }

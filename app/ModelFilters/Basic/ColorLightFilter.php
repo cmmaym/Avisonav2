@@ -4,22 +4,18 @@ namespace AvisoNavAPI\ModelFilters\Basic;
 
 use EloquentFilter\ModelFilter;
 
-class ColorTypeFilter extends ModelFilter
+class ColorLightFilter extends ModelFilter
 {
     public function color($color){
-        return $this->related('colorTypeLang', 'color', 'like', "%$color%");
+        return $this->related('colorLightLang', 'color', 'like', "%$color%");
     }
 
     public function alias($alias){
-        return $this->related('colorTypeLang', 'alias', 'like', "%$alias%");
+        return $this->where('alias', 'like', "%$alias%");
     }
 
-    public function language($language){
-        return $this->related('colorTypeLang', 'language_id', '=', $language);
-    }
-
-    public function date($date){
-        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($date, $date));
+    public function createdAt($createdAt){
+        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
     }
 
     public function sort($column)
@@ -42,14 +38,10 @@ class ColorTypeFilter extends ModelFilter
 
     public function sortByAlias()
     {
-        $input = $this->input('dir', 'asc');
-
-        $this->join('color_type_lang', 'color_type_lang.color_type_id', '=', 'color_type.id')
-             ->orderBy('color_type_lang.alias', $input)
-             ->select('color_type.*');
+        return $this->orderBy('alias', $this->input('dir', 'asc'));
     }
 
-    public function sortByDate()
+    public function sortByCreatedAt()
     {
         return $this->orderBy('created_at', $this->input('dir', 'asc'));
     }

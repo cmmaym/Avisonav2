@@ -24,8 +24,8 @@ class StoreAidLang extends FormRequest
     public function rules()
     {
         return [
-            'description'                 => 'required',
-            'language'                    => 'required|exists:language,id',
+            'name'                          => 'required|max:100',
+            'language'                      => 'required|exists:language,id',
         ];
     }
 
@@ -38,6 +38,7 @@ class StoreAidLang extends FormRequest
     {
         return [
             'required'              =>  'El campo :attribute es requerido',
+            'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
             'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
         ];
     }

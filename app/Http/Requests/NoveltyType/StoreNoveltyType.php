@@ -24,9 +24,8 @@ class StoreNoveltyType extends FormRequest
     public function rules()
     {
         return [
-            'state'        => 'sometimes|required|in:A,I',
             'name'         => 'sometimes|required|max:100',
-            'language'  => 'sometimes|required|integer|exists:language,id',
+            'language'     => 'sometimes|required|exists:language,id',
         ];
     }
 
@@ -39,7 +38,7 @@ class StoreNoveltyType extends FormRequest
     {
         return [
             'required'              =>  'El campo :attribute es requerido',
-            'in'                    =>  'El valor seleccionado para el campo :attribute es invalido',
+            'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
             'exists'                =>  'El valor seleccionado para el campo :attribute es invalido'
         ];
     }

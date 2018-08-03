@@ -14,8 +14,8 @@ class LightListFilter extends ModelFilter
         return $this->where('year', 'like', "%$year%");
     }
 
-    public function date($date){
-        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($date, $date));
+    public function createdAt($createdAt){
+        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
     }
 
     public function sort($column)
@@ -37,7 +37,7 @@ class LightListFilter extends ModelFilter
         return $this->orderBy('year', $this->input('dir', 'asc'));
     }
 
-    public function sortByDate()
+    public function sortByCreatedAt()
     {
         return $this->orderBy('created_at', $this->input('dir', 'asc'));
     }

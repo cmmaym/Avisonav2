@@ -6,14 +6,18 @@ use EloquentFilter\ModelFilter;
 
 class NoticeLangFilter extends ModelFilter
 {
-    public function observation($observation)
+    public function description($description)
     {
-        return $this->where('observation', 'like', "%$observation%");
+        return $this->where('description', 'like', "%$description%");
     }
     
-    public function date($date)
+    public function createdAt($createdAt)
     {
-        return $this->whereRaw("(STR_TO_DATE(date, '%Y-%m-%d') between ? and ?)", array($date, $date));
+        return $this->whereRaw("(STR_TO_DATE(date, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
+    }
+
+    public function language($language){
+        return $this->related('language', 'code', 'like', "%$language%");
     }
 
     public function sort($column)
@@ -25,23 +29,13 @@ class NoticeLangFilter extends ModelFilter
         return $this->orderBy('id', $this->input('dir', 'desc'));
     }
 
-    public function sortByObservation()
+    public function sortByDescription()
     {
-        return $this->orderBy('observation', $this->input('dir', 'asc'));
+        return $this->orderBy('description', $this->input('dir', 'asc'));
     }
     
-    public function sortByDate()
+    public function sortByCreatedAt()
     {
-        return $this->orderBy('date', $this->input('dir', 'asc'));
+        return $this->orderBy('created_at', $this->input('dir', 'asc'));
     }
-    
-    // public function sortByCharacter()
-    // {
-    //     return $this->orderBy('alias', $this->input('dir', 'asc'));
-    //     $input = $this->input('dir', 'asc');
-
-    //     $this->join('character', 'notice_detail.character_type_id', '=', 'character.id')
-    //          ->orderBy('character_type.name', $input)
-    //          ->select('character.*');
-    // }
 }

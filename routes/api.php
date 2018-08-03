@@ -44,7 +44,7 @@ Route::resource('entity', 'Entity\EntityController')->only([
 
 //NoveltyType
 Route::resource('noveltyType', 'NoveltyType\NoveltyTypeController')->only([
-    'index', 'show', 'store', 'update', 'destroy'
+    'index', 'show', 'store', 'destroy'
 ]);
 
 Route::resource('noveltyType.noveltyTypeLang', 'NoveltyType\NoveltyTypeLangController')->only([
@@ -54,7 +54,7 @@ Route::resource('noveltyType.noveltyTypeLang', 'NoveltyType\NoveltyTypeLangContr
 
 //Zone
 Route::resource('zone', 'Zone\ZoneController')->only([
-    'index', 'show', 'store', 'update', 'destroy'
+    'index', 'show', 'store', 'destroy'
 ]);
 
 Route::resource('zone.zoneLang', 'Zone\ZoneLangController')->only([
@@ -99,7 +99,7 @@ Route::resource('lightClass.lightClassLang', 'lightClass\lightClassLangControlle
 
 //CharacterType
 Route::resource('characterType', 'CharacterType\CharacterTypeController')->only([
-    'index', 'show', 'store', 'update', 'destroy'
+    'index', 'show', 'store', 'destroy'
 ]);
 
 Route::resource('characterType.characterTypeLang', 'CharacterType\CharacterTypeLangController')->only([
@@ -131,6 +131,10 @@ Route::resource('notice.aid', 'Notice\NoticeAidController')->only([
     'index', 'update', 'destroy'
 ]);
 
+Route::resource('notice.chartEdition', 'Notice\NoticeChartEditionController')->only([
+    'index', 'update', 'destroy'
+]);
+
 
 //Aid
 Route::resource('aid', 'Aid\AidController')->only([
@@ -146,25 +150,29 @@ Route::resource('aid.coordinate', 'Aid\AidCoordinateController')->only([
 ]);
     
 Route::resource('aid.chart', 'Aid\AidChartController')->only([
-    'index', 'store', 'show', 'update', 'destroy'
+    'index', 'update', 'destroy'
 ]);
 
-Route::resource('aid.colorStructure', 'Aid\AidColorStructureController')->only([
-    'index', 'store', 'show', 'update', 'destroy'
+Route::resource('aid.colorStructure', 'Aid\AidColorsStructureController')->only([
+    'index', 'update', 'destroy'
+]);
+
+Route::resource('aid.colorLight', 'Aid\AidColorsLightController')->only([
+    'index', 'update', 'destroy'
 ]);
 
 //AidTypeForm
-Route::resource('aidTypeForm', 'AidTypeForm\AidController')->only([
+Route::resource('aidTypeForm', 'Aid\AidTypeFormController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
 
-Route::resource('aidTypeForm.aidTypeFormLang', 'AidTypeForm\AidTypeFormLangController')->only([
+Route::resource('aidTypeForm.aidTypeFormLang', 'Aid\AidTypeFormLangController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
 
 //AidType
 Route::resource('aidType', 'Aid\AidTypeController')->only([
-    'index', 'store', 'show', 'update', 'destroy'
+    'index', 'store', 'show', 'destroy'
 ]);
 
 Route::resource('aidType.aidTypeLang', 'Aid\AidTypeLangController')->only([
