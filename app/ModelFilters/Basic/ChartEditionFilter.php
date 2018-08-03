@@ -39,6 +39,6 @@ class ChartEditionFilter extends ModelFilter
 
     public function sortByCreatedAt()
     {
-        return $this->orderBy('created_at', $this->input('dir', 'asc'));
+        return $this->orderBy('chart_edition.created_at', $this->input('dir', 'asc'));
     }
 }

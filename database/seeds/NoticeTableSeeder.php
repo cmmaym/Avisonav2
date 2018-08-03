@@ -80,7 +80,7 @@ class NoticeTableSeeder extends Seeder
                 'file_info'             => null,
                 'user'                  => 'JMARDZ',
                 'parent_id'             => null,
-                'character_type_id'     => 4,
+                'character_type_id'     => 2,
                 'novelty_type_id'       => 3,
                 'zone_id'               => 2,
                 'catalog_ocean_coast_id'=> 4,
