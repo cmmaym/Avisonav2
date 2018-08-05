@@ -77,7 +77,7 @@ class LoginController extends Controller
             'grant_type'    => $grantType
             ]);
             
-        $request = Request::create('/oauth/token', 'POST', $data);
+        $request = Request::create('/oauth/token/', 'POST', $data);
         
         $response = app()->handle($request);
         
