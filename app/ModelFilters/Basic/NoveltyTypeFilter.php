@@ -28,6 +28,7 @@ class NoveltyTypeFilter extends ModelFilter
         $input = $this->input('dir', 'asc');
 
         $this->join('novelty_type_lang', 'novelty_type_lang.novelty_type_id', '=', 'novelty_type.id')
+             ->groupBy('novelty_type.id')
              ->orderBy('novelty_type_lang.name', $input)
              ->select('novelty_type.*');
     }

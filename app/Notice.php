@@ -14,6 +14,7 @@ class Notice extends Model
 
     protected $table        = 'notice';
     protected $fillable     = ['number', 'state'];
+    protected $dates = ['report_date'];
 
     public function characterType(){
         return $this->belongsTo(CharacterType::Class);

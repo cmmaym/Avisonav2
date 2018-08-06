@@ -36,7 +36,7 @@ class NoticeResource extends JsonResource
             'number'                    => $this->number,
             'year'                      => $this->year,
             'reportsNumbers'           => $this->reports_numbers,
-            'reportDate'               => $this->report_date,
+            'reportDate'               => $this->report_date->format('Y-m-d'),
             'createdAt'                => $this->created_at->format('Y-m-d'),
             'updatedAt'                => $this->updated_at->format('Y-m-d'),
             'state'                     => $this->state,

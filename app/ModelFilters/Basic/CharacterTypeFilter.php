@@ -28,6 +28,7 @@ class CharacterTypeFilter extends ModelFilter
         $input = $this->input('dir', 'asc');
 
         $this->join('character_type_lang', 'character_type_lang.character_type_id', '=', 'character_type.id')
+             ->groupBy('character_type.id')
              ->orderBy('character_type_lang.name', $input)
              ->select('character_type.*');
     }

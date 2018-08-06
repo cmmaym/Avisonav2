@@ -32,6 +32,7 @@ class ZoneFilter extends ModelFilter
         $input = $this->input('dir', 'asc');
 
         $this->join('zone_lang', 'zone_lang.zone_id', '=', 'zone.id')
+             ->groupBy('zone.id')
              ->orderBy('zone_lang.name', $input)
              ->select('zone.*');
     }
@@ -41,6 +42,7 @@ class ZoneFilter extends ModelFilter
         $input = $this->input('dir', 'asc');
 
         $this->join('zone_lang', 'zone_lang.zone_id', '=', 'zone.id')
+             ->groupBy('zone.id')
              ->orderBy('zone_lang.alias', $input)
              ->select('zone.*');
     }

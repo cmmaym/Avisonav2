@@ -131,7 +131,7 @@ class NoticeController extends Controller
         $notice->parent_id = ($request->has('parent_id')) ? $request->input('parent_id') : null;
 
         if($notice->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
+            return $this->errorResponse('Debe especificar por lo menos un valor diferente para actualizar', 409);
         }
         
         $notice->save();

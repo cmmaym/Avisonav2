@@ -69,7 +69,7 @@ class NoticeLangController extends Controller
         $noticeLang->language_id = $request->input('language');
 
         if($noticeLang->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
+            return $this->errorResponse('Debe especificar por lo menos un valor diferente para actualizar', 409);
         }
         
         $noticeLang->save();

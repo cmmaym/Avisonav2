@@ -13,11 +13,15 @@ class NoticeLangFilter extends ModelFilter
     
     public function createdAt($createdAt)
     {
-        return $this->whereRaw("(STR_TO_DATE(date, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
+        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
     }
 
     public function language($language){
         return $this->related('language', 'code', 'like', "%$language%");
+    }
+    
+    public function langName($langName){
+        return $this->related('language', 'name', 'like', "%$langName%");
     }
 
     public function sort($column)
