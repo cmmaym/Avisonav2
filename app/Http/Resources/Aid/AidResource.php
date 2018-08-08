@@ -38,6 +38,7 @@ class AidResource extends JsonResource
             'elevationNmm'      => $this->elevation_nmm,
             'scope'             => $this->scope,
             'sectorAngle'       => $this->sector_angle,
+            'period'            => $this->period,
             'features'          => $this->features,
             'createdAt'        => $this->created_at->format('Y-m-d'),
             'updatedAt'        => $this->updated_at->format('Y-m-d'),

@@ -13,56 +13,56 @@ class AidTypeFormLangTableSeeder extends Seeder
     {
         DB::table('aid_type_form_lang')->insert([
             [
-                'description' => 'Descripcion de la forma del tipo de ayuda 1',
+                'description' => 'Cónica',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
                 'aid_type_form_id' => 1,
                 'language_id'   => 1
             ],
             [
-                'description' => 'Aid form description 1',
+                'description' => 'Conic',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
                 'aid_type_form_id' => 1,
                 'language_id'   => 2
             ],
             [
-                'description' => 'Descripcion de la forma del tipo de ayuda 2',
+                'description' => 'Cilíndrica',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
                 'aid_type_form_id' => 2,
                 'language_id'   => 1
             ],
             [
-                'description' => 'Aid form description 2',
+                'description' => 'Cylindrical',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
                 'aid_type_form_id' => 2,
                 'language_id'   => 2
             ],
             [
-                'description' => 'Descripcion de la forma del tipo de ayuda 3',
+                'description' => 'Esférica',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
                 'aid_type_form_id' => 3,
                 'language_id'   => 1
             ],
             [
-                'description' => 'Aid form description 3',
+                'description' => 'Spherical',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
                 'aid_type_form_id' => 3,
                 'language_id'   => 2
             ],
             [
-                'description' => 'Descripcion de la forma del tipo de ayuda 4',
+                'description' => 'Pilar',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
                 'aid_type_form_id' => 4,
                 'language_id'   => 1
             ],
             [
-                'description' => 'Aid form description 4',
+                'description' => 'Pillar',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
                 'aid_type_form_id' => 4,

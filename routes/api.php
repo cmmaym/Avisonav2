@@ -139,6 +139,9 @@ Route::resource('notice.chartEdition', 'Notice\NoticeChartEditionController')->o
     'index', 'update', 'destroy'
 ]);
 
+//Notice Public route
+Route::get('getNotice/{id}', 'Notice\NoticeController@getNotice');
+
 
 //Aid
 Route::resource('aid', 'Aid\AidController')->only([
@@ -157,7 +160,7 @@ Route::resource('aid.chart', 'Aid\AidChartController')->only([
     'index', 'update', 'destroy'
 ]);
 
-Route::resource('aid.colorStructure', 'Aid\AidColorsStructureController')->only([
+Route::resource('aid.colorStructure', 'Aid\AidColorStructureController')->only([
     'index', 'update', 'destroy'
 ]);
 

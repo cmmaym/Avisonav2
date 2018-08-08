@@ -55,15 +55,17 @@ class AidController extends Controller
         $aid->float_diameter = $request->input('floatDiameter');
         $aid->elevation_nmm = $request->input('elevationNmm');
         $aid->sector_angle = $request->input('sectorAngle');
+        $aid->period = $request->input('period');
         $aid->user = Auth::user()->username;
         $aid->location_id = $request->input('location');
         $aid->light_class_id = $request->input('lightClass');
         $aid->color_structure_pattern_id = $request->input('colorStructurePattern');
         $aid->top_mark_id = $request->input('topMark');
+        $aid->aid_type_id = $request->input('aidType');
         $aid->aid_type_form_id = $request->input('aidTypeForm');
         $aid->save();
 
-        $aidLang = new AidLang([$request->input('name')]);
+        $aidLang = new AidLang($request->only(['name']));
         $aidLang->language_id = $request->input('language');
 
         $aid->aidLang()->save($aidLang);
@@ -107,13 +109,14 @@ class AidController extends Controller
         $aid->float_diameter = $request->input('floatDiameter');
         $aid->elevation_nmm = $request->input('elevationNmm');
         $aid->sector_angle = $request->input('sectorAngle');
+        $aid->period = $request->input('period');
         $aid->user = Auth::user()->username;
         $aid->location_id = $request->input('location');
         $aid->light_class_id = $request->input('lightClass');
         $aid->color_structure_pattern_id = $request->input('colorStructurePattern');
         $aid->top_mark_id = $request->input('topMark');
+        $aid->aid_type_id = $request->input('aidType');
         $aid->aid_type_form_id = $request->input('aidTypeForm');
-        $aid->save();
 
         if($aid->isClean()){
             return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);

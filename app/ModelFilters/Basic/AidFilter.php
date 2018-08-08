@@ -57,7 +57,7 @@ class AidFilter extends ModelFilter
     }
     
     public function colorStructurePattern($colorStructurePattern){
-        $this->whereHas('colorStructurePattern.colorStructurePatternLang', function($query) use ($colorStructurePattern){
+        $this->whereHas('colorStructurePattern.colorStructureLang', function($query) use ($colorStructurePattern){
             $query->where('name', 'like', "%$colorStructurePattern%");
         });
     }
@@ -179,7 +179,7 @@ class AidFilter extends ModelFilter
     {
         $input = $this->input('dir', 'asc');
 
-        $this->join('color_structure', 'color_structure.id', '=', 'aid.color_structure_id')
+        $this->join('color_structure', 'color_structure.id', '=', 'aid.color_structure_pattern_id')
              ->join('color_structure_lang', 'color_structure_lang.color_structure_id', '=', 'color_structure.id')
              ->groupBy('aid.id')
              ->orderBy('color_structure_lang.name', $input)

@@ -14,6 +14,7 @@ use AvisoNavAPI\Http\Resources\AyudaResource;
 use AvisoNavAPI\ModelFilters\Basic\NoticeFilter;
 use AvisoNavAPI\Http\Requests\Notice\StoreNotice;
 use AvisoNavAPI\Http\Resources\Notice\NoticeResource;
+use AvisoNavAPI\Http\Resources\Notice\NoticePublicResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 
 class NoticeController extends Controller
@@ -150,5 +151,31 @@ class NoticeController extends Controller
         $notice->delete();
 
         return new NoticeResource($notice);
+    }
+
+    public function getNotice($number)
+    {
+        $notice = Notice::with([
+            'noticeLang' => $this->withLanguageQuery(),
+            'characterType.characterTypeLang' => $this->withLanguageQuery(),
+            'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
+            'zone.zoneLang' => $this->withLanguageQuery(),
+            'catalogOceanCoast',
+            'lightList',
+            'reportSource',
+            'reportingUser',
+            'aid.coordinate',
+            'aid.aidLang' => $this->withLanguageQuery(),
+            'aid.location.zone.zoneLang' => $this->withLanguageQuery(),
+            'aid.lightClass.lightClassLang' => $this->withLanguageQuery(),
+            'aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
+            'aid.topMark.topMarkLang' => $this->withLanguageQuery(),
+            'aid.aidType.aidTypeLang' => $this->withLanguageQuery(),
+            'aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery()
+        ])
+        ->where('number', '=', $number)
+        ->firstOrFail();
+
+        return new NoticePublicResource($notice);
     }
 }

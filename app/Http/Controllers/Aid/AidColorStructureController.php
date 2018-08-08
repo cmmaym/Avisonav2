@@ -41,7 +41,7 @@ class AidColorStructureController extends Controller
      */
     public function update(Aid $aid, ColorStructure $colorStructure)
     {
-        $aid->colorStructure()->attach($colorStructure->id);
+        $aid->aidColorStructure()->attach($colorStructure->id);
     }
 
     /**
@@ -52,6 +52,6 @@ class AidColorStructureController extends Controller
      */
     public function destroy(Aid $aid, ColorStructure $colorStructure)
     {
-        $aid->colorStructure()->detach($colorStructure->id);
+        $aid->aidColorStructure()->detach($colorStructure->id);
     }
 }

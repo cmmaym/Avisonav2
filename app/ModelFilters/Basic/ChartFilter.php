@@ -7,7 +7,7 @@ use EloquentFilter\ModelFilter;
 class ChartFilter extends ModelFilter
 {
     public function number($number){
-        return $this->where('number', '=', $number);
+        return $this->where('number', 'like', "%$number%");
     }
 
     public function name($name){
@@ -56,7 +56,7 @@ class ChartFilter extends ModelFilter
 
     public function sortByCreatedAt()
     {
-        return $this->orderBy('created_at', $this->input('dir', 'asc'));
+        return $this->orderBy('chart.created_at', $this->input('dir', 'asc'));
     }
 
     public function sortByEdition(){

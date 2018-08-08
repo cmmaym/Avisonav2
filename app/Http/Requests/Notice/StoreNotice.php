@@ -26,7 +26,7 @@ class StoreNotice extends FormRequest
         return [
             'number'                    => 'required|max:100',
             'reportsNumbers'           => 'required|max:500',
-            'reportDate'               => 'required|date',
+            'reportDate'               => 'required|date_format:Y-m-d',
             'state'                     => 'sometimes|required|in:A,I',
             'file_info'                 => 'sometimes|nullable|file',
             'parent_id'                 => 'sometimes|required|exists:notice,id',
@@ -54,6 +54,7 @@ class StoreNotice extends FormRequest
             'in'                    =>  'El valor seleccionado para el campo :attribute es invalido',
             'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
             'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
+            'date_format'           =>  'El campo :attribute no coincide con el formato :format'
         ];
     }
 }

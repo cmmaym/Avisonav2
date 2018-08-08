@@ -31,9 +31,10 @@ class ColorLightFilter extends ModelFilter
     {
         $input = $this->input('dir', 'asc');
 
-        $this->join('color_type_lang', 'color_type_lang.color_type_id', '=', 'color_type.id')
-             ->orderBy('color_type_lang.color', $input)
-             ->select('color_type.*');
+        $this->join('color_light_lang', 'color_light_lang.color_light_id', '=', 'color_light.id')
+             ->groupBy('color_light.id')
+             ->orderBy('color_light_lang.color', $input)
+             ->select('color_light.*');
     }
 
     public function sortByAlias()

@@ -35,9 +35,10 @@ class LightClassFilter extends ModelFilter
     {
         $input = $this->input('dir', 'asc');
 
-        $this->join('light_Class_lang', 'light_Class_lang.light_Class_id', '=', 'light_Class.id')
-             ->orderBy('light_Class_lang.class', $input)
-             ->select('light_Class.*');
+        $this->join('light_class_lang', 'light_class_lang.light_class_id', '=', 'light_class.id')
+             ->groupBy('light_class.id')
+             ->orderBy('light_class_lang.class', $input)
+             ->select('light_class.*');
     }
 
     public function sortByAlias()
@@ -49,9 +50,10 @@ class LightClassFilter extends ModelFilter
     {
         $input = $this->input('dir', 'asc');
 
-        $this->join('light_Class_lang', 'light_Class_lang.light_Class_id', '=', 'light_Class.id')
-             ->orderBy('light_Class_lang.description', $input)
-             ->select('light_Class.*');
+        $this->join('light_class_lang', 'light_class_lang.light_class_id', '=', 'light_class.id')
+             ->groupBy('light_class.id')
+             ->orderBy('light_class_lang.description', $input)
+             ->select('light_class.*');
     }
 
     public function sortByCreatedAt()

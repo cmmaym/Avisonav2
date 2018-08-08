@@ -24,17 +24,22 @@ class StoreAid extends FormRequest
     public function rules()
     {
         return [
-            'number'                      => 'nullable|integer',
-            'name'                        => 'required|max:100',
-            'elevation'                   => 'required|integer',
-            'scope'                       => 'required|integer',
+            'name'                        => 'sometimes|required|max:100',
+            'racon'                       => 'required|max:10',
+            'ais'                         => 'required|max:100',
+            'height'                      => 'required|max:45',
+            'floatDiameter'               => 'required|max:45',
+            'elevationNmm'                => 'required|max:45',
+            'scope'                       => 'required|max:45',
+            'sectorAngle'                 => 'required|max:100',
+            'period'                      => 'required|max:45',
             'features'                    => 'required',
-            'observation'                 => 'required',
-            'description'                 => 'required',
-            'aidType'                     => 'required|exists:aid_type,id',
             'location'                    => 'required|exists:location,id',
-            'lightType'                   => 'required|exists:light_type,id',
-            'colorType'                   => 'required|exists:color_type,id'
+            'lightClass'                  => 'required|exists:light_class,id',
+            'colorStructurePattern'       => 'sometimes|required|exists:color_structure,id',
+            'topMark'                     => 'required|exists:top_mark,id',
+            'aidType'                     => 'required|exists:aid_type,id',
+            'aidTypeForm'                 => 'required|exists:aid_type_form,id',
         ];
     }
 
@@ -49,6 +54,7 @@ class StoreAid extends FormRequest
             'required'              =>  'El campo :attribute es requerido',
             'in'                    =>  'El valor seleccionado para el campo :attribute es invalido',
             'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
+            'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
         ];
     }
 }

@@ -17,6 +17,10 @@ class ChartEditionFilter extends ModelFilter
     public function number($number){
         return $this->related('chart', 'number', 'like', "%$number%");
     }
+    
+    public function purpose($purpose){
+        return $this->related('chart', 'purpose', 'like', "%$purpose%");
+    }
 
     public function createdAt($createdAt){
         return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
@@ -48,6 +52,16 @@ class ChartEditionFilter extends ModelFilter
         $this->join('chart', 'chart_edition.chart_id', '=', 'chart.id')
              ->groupBy('chart_edition.id')
              ->orderBy('chart.number', $input)
+             ->select('chart_edition.*');
+    }
+    
+    public function sortByPurpose()
+    {
+        $input = $this->input('dir', 'asc');
+
+        $this->join('chart', 'chart_edition.chart_id', '=', 'chart.id')
+             ->groupBy('chart_edition.id')
+             ->orderBy('chart.purpose', $input)
              ->select('chart_edition.*');
     }
 
