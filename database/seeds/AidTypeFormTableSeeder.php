@@ -32,6 +32,36 @@ class AidTypeFormTableSeeder extends Seeder
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
+            [
+                'illustration' => null,
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+            ],
+            [
+                'illustration' => null,
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+            ],
+            [
+                'illustration' => null,
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+            ],
+            [
+                'illustration' => null,
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+            ],
+            [
+                'illustration' => null,
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+            ],
+            [
+                'illustration' => null,
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+            ]
         ]);
     }
 }

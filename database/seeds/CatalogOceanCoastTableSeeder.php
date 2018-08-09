@@ -13,29 +13,12 @@ class CatalogOceanCoastTableSeeder extends Seeder
     {
         DB::table('catalog_ocean_coast')->insert([
             [
-                'edition'       => '1',
-                'year'          => '2015',
-                'created_at'    => new \DateTime('now'),
-                'updated_at'    => new \DateTime('now'),
-            ],
-            [
-                'edition'       => '2',
+                'edition'       => '5',
                 'year'          => '2016',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
-            [
-                'edition'       => '3',
-                'year'          => '2017',
-                'created_at'    => new \DateTime('now'),
-                'updated_at'    => new \DateTime('now'),
-            ],
-            [
-                'edition'       => '4',
-                'year'          => '2018',
-                'created_at'    => new \DateTime('now'),
-                'updated_at'    => new \DateTime('now'),
-            ],
+
         ]);
     }
 }

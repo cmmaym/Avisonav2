@@ -28,7 +28,15 @@ class CoordinateController extends Controller
      */
     public function store(StoreCoordinate $request)
     {
-        $coordinate = new Coordinate($request->only(['latitud', 'longitud', 'elevation', 'scope', 'quantity', 'state']));
+        $coordinate = new Coordinate();
+        $coordinate->latitude_degrees = $request->input('latitudeDegrees');
+        $coordinate->latitude_minutes = $request->input('latitudeMinutes');
+        $coordinate->latitude_seconds = $request->input('latitudeSeconds');
+        $coordinate->latitude_dir     = $request->input('latitudeDir');
+        $coordinate->longitude_degrees = $request->input('longitudeDegrees');
+        $coordinate->longitude_minutes = $request->input('longitudeMinutes');
+        $coordinate->longitude_seconds = $request->input('longitudeSeconds');
+        $coordinate->longitude_dir     = $request->input('longitudeDir');
         $coordinate->save();
 
         return new CoordinateResource($coordinate);
@@ -54,10 +62,17 @@ class CoordinateController extends Controller
      */
     public function update(StoreCoordinate $request, Coordinate $coordinate)
     {
-        $coordinate->fill($request->only(['latitud', 'longitud', 'elevation', 'scope', 'quantity', 'state']));
+        $coordinate->latitude_degrees = $request->input('latitudeDegrees');
+        $coordinate->latitude_minutes = $request->input('latitudeMinutes');
+        $coordinate->latitude_seconds = $request->input('latitudeSeconds');
+        $coordinate->latitude_dir     = $request->input('latitudeDir');
+        $coordinate->longitude_degrees = $request->input('longitudeDegrees');
+        $coordinate->longitude_minutes = $request->input('longitudeMinutes');
+        $coordinate->longitude_seconds = $request->input('longitudeSeconds');
+        $coordinate->longitude_dir     = $request->input('longitudeDir');
         
         if($coordinate->isClean()){
-            return response()->json(['error' => ['title' => 'Debe espesificar por lo menos un valor diferente para actualizar', 'status' => 422]], 422);
+            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
         
         $coordinate->save();

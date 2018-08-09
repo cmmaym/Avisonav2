@@ -68,6 +68,34 @@ class NoveltyTypeLangTableSeeder extends Seeder
                 'language_id'           => 2,
                 'novelty_type_id'       => 4
             ],
+            [
+                'name'                  => 'Trasladar',
+                'created_at'            => new \DateTime('now'),
+                'updated_at'            => new \DateTime('now'),
+                'language_id'           => 1,
+                'novelty_type_id'       => 5,
+            ],
+            [
+                'name'                  => 'Move',
+                'created_at'            => new \DateTime('now'),
+                'updated_at'            => new \DateTime('now'),
+                'language_id'           => 2,
+                'novelty_type_id'       => 5
+            ],
+            [
+                'name'                  => 'Sustituir',
+                'created_at'            => new \DateTime('now'),
+                'updated_at'            => new \DateTime('now'),
+                'language_id'           => 1,
+                'novelty_type_id'       => 6,
+            ],
+            [
+                'name'                  => 'Replace',
+                'created_at'            => new \DateTime('now'),
+                'updated_at'            => new \DateTime('now'),
+                'language_id'           => 2,
+                'novelty_type_id'       => 6
+            ],
         ]);
     }
 }

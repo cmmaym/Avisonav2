@@ -28,6 +28,7 @@ class ColorStructureFilter extends ModelFilter
         $input = $this->input('dir', 'asc');
 
         $this->join('color_structure_lang', 'color_structure_lang.color_structure_id', '=', 'color_structure.id')
+             ->groupBy('color_structure_id')
              ->orderBy('color_structure_lang.name', $input)
              ->select('color_structure.*');
     }

@@ -16,8 +16,14 @@ class CoordinateResource extends JsonResource
     {
         return [
             'id'                => $this->id,
-            'latitud'           => $this->latitud,
-            'longitud'          => $this->longitud,
+            'latitudeDegrees'   => $this->latitude_degrees,
+            'latitudeMinutes'   => $this->latitude_minutes,
+            'latitudeSeconds'   => $this->latitude_seconds,
+            'latitudeDir'       => $this->latitude_dir,
+            'longitudeDegrees'   => $this->longitude_degrees,
+            'longitudeMinutes'   => $this->longitude_minutes,
+            'longitudeSeconds'   => $this->longitude_seconds,
+            'longitudeDir'       => $this->longitude_dir,
             'createdAt'        => $this->created_at->format('Y-m-d'),
             'updatedAt'        => $this->updated_at->format('Y-m-d'),
             'links'             => [

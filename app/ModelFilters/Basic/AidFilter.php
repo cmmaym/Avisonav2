@@ -3,6 +3,7 @@
 namespace AvisoNavAPI\ModelFilters\Basic;
 
 use EloquentFilter\ModelFilter;
+use Illuminate\Support\Facades\DB;
 
 class AidFilter extends ModelFilter
 {
@@ -81,11 +82,11 @@ class AidFilter extends ModelFilter
     }
 
     public function latitud($latitud){
-        return $this->related('coordinate', 'latitud', 'like', "%$latitud%");
+        return $this->related('coordinate', DB::raw('CONCAT(latitude_degrees, latitude_minutes, latitude_seconds)'), 'like', "%$latitud%");
     }
     
     public function longitud($longitud){
-        return $this->related('coordinate', 'longitud', 'like', "%$longitud%");
+        return $this->related('coordinate', DB::raw('CONCAT(longitude_degrees, longitude_minutes, longitude_seconds)'), 'like', "%$longitud%");
     }
 
     public function createdAt($createdAt){
@@ -225,7 +226,7 @@ class AidFilter extends ModelFilter
 
         $this->join('coordinate', 'coordinate.aid_id', '=', 'aid.id')
              ->groupBy('aid.id')
-             ->orderBy('coordinate.latitud', $input)
+            ->orderBy(DB::raw('CONCAT(latitude_degrees, latitude_minutes, latitude_seconds)'), $input)
              ->select('aid.*');
     }
     
@@ -235,7 +236,7 @@ class AidFilter extends ModelFilter
 
         $this->join('coordinate', 'coordinate.aid_id', '=', 'aid.id')
              ->groupBy('aid.id')
-             ->orderBy('coordinate.longitud', $input)
+             ->orderBy(DB::raw('CONCAT(longitude_degrees, longitude_minutes, longitude_seconds)'), $input)
              ->select('aid.*');
     }
 

@@ -55,18 +55,74 @@ class ColorLightLangTableSeeder extends Seeder
                 'color_light_id'     => 3
             ],
             [
-                'color'             => 'Negro',
+                'color'             => 'Azul',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 1,
                 'color_light_id'     => 4
             ],
             [
-                'color'             => 'Black',
+                'color'             => 'Blue',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 2,
                 'color_type_id'     => 4
+            ],
+            [
+                'color'             => 'Violeta',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_light_id'     => 5
+            ],
+            [
+                'color'             => 'Violet',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_type_id'     => 5
+            ],
+            [
+                'color'             => 'Amarillo',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_light_id'     => 6
+            ],
+            [
+                'color'             => 'Yellow',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_type_id'     => 6
+            ],
+            [
+                'color'             => 'Naranja',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_light_id'     => 7
+            ],
+            [
+                'color'             => 'Orange',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_type_id'     => 7
+            ],
+            [
+                'color'             => 'Ámbar',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_light_id'     => 8
+            ],
+            [
+                'color'             => 'Amber',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_type_id'     => 8
             ]
         ]);
     }

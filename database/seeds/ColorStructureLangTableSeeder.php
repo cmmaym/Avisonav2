@@ -67,6 +67,132 @@ class ColorStructureLangTableSeeder extends Seeder
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 2,
                 'color_structure_id'     => 4
+            ],
+            [
+                'name'             => 'Amarillo',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_structure_id'     => 5
+            ],
+            [
+                'name'             => 'Yellow',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_structure_id'     => 5
+            ],
+            [
+                'name'             => 'Negro sobre Amarillo',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_structure_id'     => 6
+            ],
+            [
+                'name'             => 'Black on Yellow',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_structure_id'     => 6
+            ],
+            [
+                'name'             => 'Rojo con una banda ancha horizontal verde',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_structure_id'     => 7
+            ],
+            [
+                'name'             => 'Red with a wide horizontal green band',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_structure_id'     => 7
+            ],
+            [
+                'name'             => 'Verde con una banda ancha horizontal roja',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_structure_id'     => 8
+            ],
+            [
+                'name'             => 'Green with a wide horizontal red band',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_structure_id'     => 8
+            ],
+            [
+                'name'             => 'Negro con una banda ancha horizontal amarilla',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_structure_id'     => 9
+            ],
+            [
+                'name'             => 'Black with a wide horizontal yellow band',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_structure_id'     => 9
+            ],
+            [
+                'name'             => 'Amarillo sobre negro',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_structure_id'     => 10
+            ],
+            [
+                'name'             => 'Yellow on black',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_structure_id'     => 10
+            ],
+            [
+                'name'             => 'Amarillo con una banda ancha horizontal negra',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_structure_id'     => 11
+            ],
+            [
+                'name'             => 'Yellow with a wide horizontal black band',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_structure_id'     => 11
+            ],
+            [
+                'name'             => 'Negro con una o varias bandas anchas horizontales rojas',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_structure_id'     => 12
+            ],
+            [
+                'name'             => 'Black with one or more wide red horizontal stripes',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_structure_id'     => 12
+            ],
+            [
+                'name'             => 'Franjas verticales rojas y blancas',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_structure_id'     => 13
+            ],
+            [
+                'name'             => 'Red and white vertical stripes',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_structure_id'     => 13
             ]
         ]);
     }

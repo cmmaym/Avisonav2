@@ -28,8 +28,12 @@ class NoticePublicResource extends JsonResource
     public function toArray($request)
     {
         $self = $this;
-        $noticeLang = function() use ($self) {
-            return $self->noticeLang->observation;
+        $language = function() use ($self) {
+            return $self->noticeLang->language->code;
+        };
+
+        $description = function() use ($self) {
+            return $self->noticeLang->description;
         };
 
         return [
@@ -44,6 +48,9 @@ class NoticePublicResource extends JsonResource
             'file_info'                 => $this->file_info,
             'user'                      => $this->user,
             'parent'                    => null,
+            'description'               =>  $this->when(!is_null($this->noticeLang), $description, null),
+            'language'                 =>  $this->when(!is_null($this->noticeLang), $language, null),
+            'characterType'             => new CharacterTypeResource($this->characterType),
             'characterType'             => new CharacterTypeResource($this->characterType),
             'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
             'zone'                      => new ZoneResource($this->zone),

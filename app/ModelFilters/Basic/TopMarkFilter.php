@@ -28,6 +28,7 @@ class TopMarkFilter extends ModelFilter
         $input = $this->input('dir', 'asc');
 
         $this->join('top_mark_lang', 'top_mark_lang.top_mark_id', '=', 'top_mark.id')
+             ->groupBy('top_mark.id')
              ->orderBy('top_mark_lang.description', $input)
              ->select('top_mark.*');
     }

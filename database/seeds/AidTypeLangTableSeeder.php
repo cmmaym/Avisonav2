@@ -41,14 +41,14 @@ class AidTypeLangTableSeeder extends Seeder
                 'aid_type_id'       => 2
             ],
             [
-                'name'              => 'Beliza Enfilacion Rango Inferior',
+                'name'              => 'Baliza',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 1,
                 'aid_type_id'       => 3
             ],
             [
-                'name'              => 'Beacon Enfilacion Lower Range',
+                'name'              => 'Beacon',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 2,
@@ -67,6 +67,34 @@ class AidTypeLangTableSeeder extends Seeder
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 2,
                 'aid_type_id'       => 4
+            ],
+            [
+                'name'              => 'Luz de sector',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'aid_type_id'       => 5
+            ],
+            [
+                'name'              => 'Sector light',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'aid_type_id'       => 5
+            ],
+            [
+                'name'              => 'Enfilación',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'aid_type_id'       => 6
+            ],
+            [
+                'name'              => 'Leading',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'aid_type_id'       => 6
             ],
         ]);
     }

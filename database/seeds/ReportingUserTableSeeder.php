@@ -17,24 +17,6 @@ class ReportingUserTableSeeder extends Seeder
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'report_source_id'  => 1
-            ],
-            [
-                'name'             => 'Eduardo Nuñez',
-                'created_at'        => new \DateTime('now'),
-                'updated_at'        => new \DateTime('now'),
-                'report_source_id'  => 2
-            ],
-            [
-                'name'             => 'rafael Diaz',
-                'created_at'        => new \DateTime('now'),
-                'updated_at'        => new \DateTime('now'),
-                'report_source_id'  => 3
-            ],
-            [
-                'name'             => 'Victor Ruiz',
-                'created_at'        => new \DateTime('now'),
-                'updated_at'        => new \DateTime('now'),
-                'report_source_id'  => 4
             ]
         ]);
     }

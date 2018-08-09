@@ -38,7 +38,15 @@ class AidCoordinateController extends Controller
      */
     public function store(StoreCoordinate $request, Aid $aid)
     {
-        $coordinate = new Coordinate($request->only(['latitud', 'longitud']));
+        $coordinate = new Coordinate();
+        $coordinate->latitude_degrees = $request->input('latitudeDegrees');
+        $coordinate->latitude_minutes = $request->input('latitudeMinutes');
+        $coordinate->latitude_seconds = $request->input('latitudeSeconds');
+        $coordinate->latitude_dir     = $request->input('latitudeDir');
+        $coordinate->longitude_degrees = $request->input('longitudeDegrees');
+        $coordinate->longitude_minutes = $request->input('longitudeMinutes');
+        $coordinate->longitude_seconds = $request->input('longitudeSeconds');
+        $coordinate->longitude_dir     = $request->input('longitudeDir');
 
         $aid->coordinates()->save($coordinate);
 
@@ -70,7 +78,14 @@ class AidCoordinateController extends Controller
     public function update(StoreCoordinate $request, Aid $aid, $id)
     {
         $coordinate = $aid->coordinates()->findOrFail($id);
-        $coordinate->fill($request->only(['latitud', 'longitud', 'state']));
+        $coordinate->latitude_degrees = $request->input('latitudeDegrees');
+        $coordinate->latitude_minutes = $request->input('latitudeMinutes');
+        $coordinate->latitude_seconds = $request->input('latitudeSeconds');
+        $coordinate->latitude_dir     = $request->input('latitudeDir');
+        $coordinate->longitude_degrees = $request->input('longitudeDegrees');
+        $coordinate->longitude_minutes = $request->input('longitudeMinutes');
+        $coordinate->longitude_seconds = $request->input('longitudeSeconds');
+        $coordinate->longitude_dir     = $request->input('longitudeDir');
 
         if($coordinate->isClean()){
             return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);

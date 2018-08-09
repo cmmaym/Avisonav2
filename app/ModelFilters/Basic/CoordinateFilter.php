@@ -3,15 +3,16 @@
 namespace AvisoNavAPI\ModelFilters\Basic;
 
 use EloquentFilter\ModelFilter;
+use Illuminate\Support\Facades\DB;
 
 class CoordinateFilter extends ModelFilter
 {
-    public function latitud($latitud){
-        return $this->where('latitud', 'like', "%$latitud%");
+    public function latitud($latitude){
+        return $this->whereRaw("CONCAT(latitude_degrees, latitude_minutes, latitude_seconds) like ?", array('%'.$latitude.'%'));
     }
     
-    public function longitud($longitud){
-        return $this->where('longitud', 'like', "%$longitud%");
+    public function longitud($longitude){
+        return $this->whereRaw("CONCAT(longitude_degrees, longitude_minutes, longitude_seconds) like ?", array('%'.$longitude.'%'));
     }
 
     public function createdAt($createdAt){
@@ -29,12 +30,12 @@ class CoordinateFilter extends ModelFilter
 
     public function sortByLatitud()
     {
-        return $this->orderBy('latitud', $this->input('dir', 'asc'));
+        return $this->orderBy(DB::raw('CONCAT(latitude_degrees, latitude_minutes, latitude_seconds)'), $this->input('dir', 'asc'));
     }
     
     public function sortByLongitud()
     {
-        return $this->orderBy('longitud', $this->input('dir', 'asc'));
+        return $this->orderBy(DB::raw('CONCAT(longitude_degrees, longitude_minutes, longitude_seconds)'), $this->input('dir', 'asc'));
     }
 
     public function sortByCreatedAt()

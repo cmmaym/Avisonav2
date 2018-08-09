@@ -20,7 +20,7 @@ class CreateNoticeTable extends Migration
             $table->mediumText('reports_numbers')->comment('Numeros de los reportes');
             $table->dateTime('report_date')->comment('Fecha en la que se genero el reporte');
             $table->timestamps();
-            $table->enum('state',array('A','I'))->default('A')->comment('Estado del aviso. Puede ser Activo, Inactivo');
+            $table->char('state')->comment('Estado del aviso. Puede ser Guardado, Publicado');
             $table->longText('file_info')->nullable()->comment('Es la ruta de un archivo con informacion extra que se le puede adjuntar aun aviso. independientemente del caracter del mismo.');
             $table->string('user', 100)->comment('Nombre de usuario que manipulo le registro');
             $table->integer('parent_id')->unsigned()->nullable();

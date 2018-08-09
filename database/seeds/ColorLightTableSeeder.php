@@ -28,7 +28,27 @@ class ColorLightTableSeeder extends Seeder
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'alias'         => 'B',
+                'alias'         => 'Bu',
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+            ],
+            [
+                'alias'         => 'Vi',
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+            ],
+            [
+                'alias'         => 'Y',
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+            ],
+            [
+                'alias'         => 'Or',
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+            ],
+            [
+                'alias'         => 'Am',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],

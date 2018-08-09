@@ -24,9 +24,14 @@ class StoreCoordinate extends FormRequest
     public function rules()
     {
         return [
-            'latitud'           => 'required',
-            'longitud'          => 'required',
-            'state'             => 'sometimes|required|in:A,I'
+            'latitudeDegrees'           => 'required|numeric',
+            'latitudeMinutes'           => 'required|numeric',
+            'latitudeSeconds'           => 'required|numeric',
+            'latitudeDir'               => 'required',
+            'longitudeDegrees'           => 'required|numeric',
+            'longitudeMinutes'           => 'required|numeric',
+            'longitudeSeconds'           => 'required|numeric',
+            'longitudeDir'               => 'required',
         ];
     }
 
@@ -39,9 +44,6 @@ class StoreCoordinate extends FormRequest
     {
         return [
             'required'              =>  'El campo :attribute es requerido',
-            'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
-            'in'                    =>  'El valor seleccionado para el campo :attribute es invalido',
-            'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
         ];
     }
     

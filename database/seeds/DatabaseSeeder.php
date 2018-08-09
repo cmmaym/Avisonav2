@@ -75,9 +75,9 @@ class DatabaseSeeder extends Seeder
         $this->call(ReportingUserTableSeeder::class);
         $this->call(CatalogOceanCoastTableSeeder::class);
         $this->call(LightListTableSeeder::class);
-        $this->call(NoticeTableSeeder::class);
-        $this->call(NoticeLangTableSeeder::class);
-        $this->call(CoordinateTableSeeder::class);
+        // $this->call(NoticeTableSeeder::class);
+        // $this->call(NoticeLangTableSeeder::class);
+        // $this->call(CoordinateTableSeeder::class);
         $this->call(AidTypeTableSeeder::class);
         $this->call(AidTypeLangTableSeeder::class);
         $this->call(AidTypeFormTableSeeder::class);
@@ -90,7 +90,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AidChartTableSeeder::class);
         $this->call(AidColorStructureTableSeeder::class);
         $this->call(AidColorLightTableSeeder::class);
-        $this->call(NoticeAidTableSeeder::class);
+        // $this->call(NoticeAidTableSeeder::class);
         $this->call(NoticeChartEditionTableSeeder::class);
         $this->call(PermissionTableSeeder::class);
         $this->call(RoleTableSeeder::class);
