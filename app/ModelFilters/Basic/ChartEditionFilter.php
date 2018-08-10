@@ -6,6 +6,10 @@ use EloquentFilter\ModelFilter;
 
 class ChartEditionFilter extends ModelFilter
 {
+    public function scale($scale){
+        return $this->where('scale', 'like', "%$scale%");
+    }
+
     public function edition($edition){
         return $this->where('edition', 'like', "%$edition%");
     }
@@ -14,6 +18,10 @@ class ChartEditionFilter extends ModelFilter
         return $this->where('year', 'like', "%$year%");
     }
 
+    public function name($name){
+        return $this->related('chart', 'name', 'like', "%$name%");
+    }
+    
     public function number($number){
         return $this->related('chart', 'number', 'like', "%$number%");
     }
@@ -35,6 +43,11 @@ class ChartEditionFilter extends ModelFilter
         return $this->orderBy('id', $this->input('dir', 'asc'));
     }
 
+    public function sortByScale()
+    {
+        return $this->orderBy('scale', $this->input('dir', 'asc'));
+    }
+    
     public function sortByEdition()
     {
         return $this->orderBy('edition', $this->input('dir', 'asc'));
@@ -52,6 +65,16 @@ class ChartEditionFilter extends ModelFilter
         $this->join('chart', 'chart_edition.chart_id', '=', 'chart.id')
              ->groupBy('chart_edition.id')
              ->orderBy('chart.number', $input)
+             ->select('chart_edition.*');
+    }
+    
+    public function sortByName()
+    {
+        $input = $this->input('dir', 'asc');
+
+        $this->join('chart', 'chart_edition.chart_id', '=', 'chart.id')
+             ->groupBy('chart_edition.id')
+             ->orderBy('chart.name', $input)
              ->select('chart_edition.*');
     }
     

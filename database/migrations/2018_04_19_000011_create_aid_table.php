@@ -15,13 +15,12 @@ class CreateAidTable extends Migration
     {
         Schema::create('aid', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('racon', 10)->comment("Baliza respondedora de radar");
+            $table->string('racon', 10)->nullable()->comment("Baliza respondedora de radar");
             $table->string('ais', 100)->comment("Sistema de identificacion automatica");
             $table->string('height', 45)->comment("Altura de la estructura de la ayuda");
-            $table->string('float_diameter', 45)->comment("Diametro del flotador");
             $table->string('elevation_nmm', 45)->comment("Elevacion de la luz sobre el nivel del mar");
             $table->string('scope', 45)->comment("Alcance nominal de la luz de la ayuda");
-            $table->string('sector_angle', 100)->comment("Angulo de los sectores");
+            $table->string('sector_angle', 100)->nullable()->comment("Angulo de los sectores");
             $table->string('period', 45)->comment("Periodo de la luz");
             $table->mediumText('features')->comment('Caracteristicas de la ayuda');
             $table->timestamps();
@@ -29,7 +28,7 @@ class CreateAidTable extends Migration
             $table->integer('location_id')->unsigned();
             $table->integer('light_class_id')->unsigned();
             $table->integer('color_structure_pattern_id')->unsigned();
-            $table->integer('top_mark_id')->unsigned();
+            $table->integer('top_mark_id')->nullable()->unsigned();
             $table->integer('aid_type_id')->unsigned();
             $table->integer('aid_type_form_id')->unsigned();
             

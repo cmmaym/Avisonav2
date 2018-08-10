@@ -16,6 +16,7 @@ class ChartEditionResource extends JsonResource
     {
         return [
             'id'                => $this->id,
+            'scale'             => $this->scale,
             'edition'           => $this->edition,
             'year'              => $this->year,
             'createdAt'         =>  $this->created_at->format('Y-m-d'),

@@ -51,18 +51,20 @@ class AidController extends Controller
      */
     public function store(StoreAid $request)
     {
-        $aid = new Aid($request->only(['racon', 'ais', 'height', 'scope', 'features']));
-        $aid->float_diameter = $request->input('floatDiameter');
+        $aid = new Aid($request->only(['ais', 'height', 'scope', 'features']));
         $aid->elevation_nmm = $request->input('elevationNmm');
-        $aid->sector_angle = $request->input('sectorAngle');
         $aid->period = $request->input('period');
         $aid->user = Auth::user()->username;
         $aid->location_id = $request->input('location');
         $aid->light_class_id = $request->input('lightClass');
         $aid->color_structure_pattern_id = $request->input('colorStructurePattern');
-        $aid->top_mark_id = $request->input('topMark');
         $aid->aid_type_id = $request->input('aidType');
         $aid->aid_type_form_id = $request->input('aidTypeForm');
+
+        $aid->racon = ($request->input('racon')) ? $request->input('racon') : null;
+        $aid->sector_angle = ($request->input('sectorAngle')) ? $request->input('sectorAngle') : null;
+        $aid->top_mark_id = ($request->input('topMark')) ? $request->input('topMark') : null;
+
         $aid->save();
 
         $aidLang = new AidLang($request->only(['name']));
@@ -105,10 +107,8 @@ class AidController extends Controller
      */
     public function update(StoreAid $request, Aid $aid)
     {
-        $aid->fill($request->only(['racon', 'ais', 'height', 'scope', 'features']));
-        $aid->float_diameter = $request->input('floatDiameter');
+        $aid->fill($request->only(['ais', 'height', 'scope', 'features']));
         $aid->elevation_nmm = $request->input('elevationNmm');
-        $aid->sector_angle = $request->input('sectorAngle');
         $aid->period = $request->input('period');
         $aid->user = Auth::user()->username;
         $aid->location_id = $request->input('location');
@@ -117,6 +117,10 @@ class AidController extends Controller
         $aid->top_mark_id = $request->input('topMark');
         $aid->aid_type_id = $request->input('aidType');
         $aid->aid_type_form_id = $request->input('aidTypeForm');
+
+        $aid->racon = ($request->input('racon')) ? $request->input('racon') : null;
+        $aid->sector_angle = ($request->input('sectorAngle')) ? $request->input('sectorAngle') : null;
+        $aid->top_mark_id = ($request->input('topMark')) ? $request->input('topMark') : null;
 
         if($aid->isClean()){
             return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);

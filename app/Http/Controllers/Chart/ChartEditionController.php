@@ -38,7 +38,7 @@ class ChartEditionController extends Controller
      */
     public function store(StoreChartEdition $request, Chart $chart)
     {
-        $chartEdition = new ChartEdition($request->only(['edition', 'year']));
+        $chartEdition = new ChartEdition($request->only(['scale', 'edition', 'year']));
         
         $chart->chartEdition()->save($chartEdition);
 
@@ -67,7 +67,7 @@ class ChartEditionController extends Controller
      */
     public function update(StoreChartEdition $request, Chart $chart, ChartEdition $chartEdition)
     {
-        $chartEdition->fill($request->only(['edition', 'year']));
+        $chartEdition->fill($request->only(['scale', 'edition', 'year']));
 
         if($chartEdition->isClean()){
             return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);

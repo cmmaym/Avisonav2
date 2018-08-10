@@ -27,6 +27,7 @@ class AidTypeFilter extends ModelFilter
         $input = $this->input('dir', 'asc');
 
         $this->join('aid_type_lang', 'aid_type_lang.aid_type_id', '=', 'aid_type.id')
+              ->groupBy('aid_type.id')
              ->orderBy('aid_type_lang.name', $input)
              ->select('aid_type.*');
     }

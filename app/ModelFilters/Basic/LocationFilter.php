@@ -16,7 +16,9 @@ class LocationFilter extends ModelFilter
     }
 
     public function zone($name){
-        return $this->related('zone', 'zone.name', 'like', "%$name%");
+        $this->whereHas('zone.zoneLang', function($query) use ($name){
+            $query->where('name', 'like', "%$name%");
+        });
     }
 
     public function createdAt($createdAt){

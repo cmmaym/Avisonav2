@@ -24,6 +24,7 @@ class StoreChartEdition extends FormRequest
     public function rules()
     {
         return [
+            'scale'         => 'required|max:45',
             'edition'       => 'required|numeric',
             'year'          => 'required|numeric',
         ];
@@ -39,6 +40,7 @@ class StoreChartEdition extends FormRequest
         return [
             'required'              =>  'El campo :attribute es requerido',
             'numeric'               =>  'El campo :attribute debe ser un numero',
+            'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
         ];
     }
 }

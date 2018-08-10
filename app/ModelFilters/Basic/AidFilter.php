@@ -23,10 +23,6 @@ class AidFilter extends ModelFilter
         return $this->where('height', 'like', "%$height%");
     }
     
-    public function floatDiameter($floatDiameter){
-        return $this->where('float_diameter', 'like', "%$floatDiameter%");
-    }
-    
     public function elevationNmm($elevationNmm){
         return $this->where('elevation_nmm', 'like', "%$elevationNmm%");
     }
@@ -125,11 +121,6 @@ class AidFilter extends ModelFilter
     public function sortByHeight()
     {
         return $this->orderBy('height', $this->input('dir', 'asc'));
-    }
-    
-    public function sortByFloatDiameter()
-    {
-        return $this->orderBy('float_diameter', $this->input('dir', 'asc'));
     }
     
     public function sortByElevationNmm()

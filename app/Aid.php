@@ -11,7 +11,7 @@ class Aid extends Model
     use Filterable;
 
     protected $table        = 'aid';
-    protected $fillable     = ['racon', 'ais', 'height', 'scope', 'features'];
+    protected $fillable     = ['ais', 'height', 'scope', 'features'];
 
     public function location(){
         return $this->belongsTo(Location::class);

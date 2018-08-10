@@ -45,22 +45,6 @@ class LightClassLangTableSeeder extends Seeder
                 'light_class_id'     => 2
             ],
             [
-                'class'             => 'Grupo de ocultaciones',
-                'description'       => 'Luz de grupos de ocultaciones(mostrando 2 ocultaciones)',
-                'created_at'        => new \DateTime('now'),
-                'updated_at'        => new \DateTime('now'),
-                'language_id'       => 1,
-                'light_class_id'     => 3
-            ],
-            [
-                'class'             => 'Group-occulting',
-                'description'       => 'Group occulting',
-                'created_at'        => new \DateTime('now'),
-                'updated_at'        => new \DateTime('now'),
-                'language_id'       => 2,
-                'light_class_id'     => 3
-            ],
-            [
                 'class'             => 'Isofase',
                 'description'       => 'Igual duración y oscuridad',
                 'created_at'        => new \DateTime('now'),

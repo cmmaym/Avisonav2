@@ -22,12 +22,16 @@ class ChartFilter extends ModelFilter
         return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
     }
 
+    public function scale($scale){
+        return $this->related('chartEdition', 'chart_edition.scale', 'like', "%$scale%");
+    }
+    
     public function edition($edition){
-        return $this->related('chartEdition', 'chart_edition.edition', '=', $edition);
+        return $this->related('chartEdition', 'chart_edition.edition', 'like', "%$edition%");
     }
     
     public function year($year){
-        return $this->related('chartEdition', 'chart_edition.year', '=', $year);
+        return $this->related('chartEdition', 'chart_edition.year', 'like', "%$year%");
     }
 
     public function sort($column)
@@ -59,10 +63,20 @@ class ChartFilter extends ModelFilter
         return $this->orderBy('chart.created_at', $this->input('dir', 'asc'));
     }
 
+    public function sortByScale(){
+        $input = $this->input('dir', 'asc');
+
+        $this->join('chart_edition', 'chart_edition.chart_id', '=', 'chart.id')
+             ->groupBy('chart.id')
+             ->orderBy('chart_edition.scale', $input)
+             ->select('chart.*');
+    }
+    
     public function sortByEdition(){
         $input = $this->input('dir', 'asc');
 
         $this->join('chart_edition', 'chart_edition.chart_id', '=', 'chart.id')
+             ->groupBy('chart.id')
              ->orderBy('chart_edition.edition', $input)
              ->select('chart.*');
     }
@@ -71,6 +85,7 @@ class ChartFilter extends ModelFilter
         $input = $this->input('dir', 'asc');
 
         $this->join('chart_edition', 'chart_edition.chart_id', '=', 'chart.id')
+             ->groupBy('chart.id')
              ->orderBy('chart_edition.year', $input)
              ->select('chart.*');
     }

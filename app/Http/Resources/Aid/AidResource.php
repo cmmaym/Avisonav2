@@ -34,7 +34,6 @@ class AidResource extends JsonResource
             'racon'             => $this->racon,
             'ais'               => $this->ais,
             'height'            => $this->height,
-            'floatDiameter'     => $this->float_diameter,
             'elevationNmm'      => $this->elevation_nmm,
             'scope'             => $this->scope,
             'sectorAngle'       => $this->sector_angle,
