@@ -16,7 +16,7 @@ class CreateAidTable extends Migration
         Schema::create('aid', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('racon', 10)->nullable()->comment("Baliza respondedora de radar");
-            $table->string('ais', 100)->comment("Sistema de identificacion automatica");
+            $table->string('ais', 100)->nullable()->comment("Sistema de identificacion automatica");
             $table->string('height', 45)->comment("Altura de la estructura de la ayuda");
             $table->string('elevation_nmm', 45)->comment("Elevacion de la luz sobre el nivel del mar");
             $table->string('scope', 45)->comment("Alcance nominal de la luz de la ayuda");

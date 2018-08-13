@@ -64,6 +64,7 @@ class NoticeController extends Controller
         $notice->zone_id = $request->input('zone');
         $notice->report_source_id = $request->input('reportSource');
         $notice->reporting_user_id = $request->input('reportingUser');
+        $notice->state = 'G';
         
         $notice->catalog_ocean_coast_id = ($request->input('catalogOceanCoast')) ? $request->input('catalogOceanCoast') : null;
         $notice->light_list_id = ($request->input('lightList')) ? $request->input('lightList') : null;
@@ -125,6 +126,7 @@ class NoticeController extends Controller
         $notice->zone_id = $request->input('zone');
         $notice->report_source_id = $request->input('reportSource');
         $notice->reporting_user_id = $request->input('reportingUser');
+        $notice->state = $request->input('state');
 
         $notice->catalog_ocean_coast_id = ($request->input('catalogOceanCoast')) ? $request->input('catalogOceanCoast') : null;
         $notice->light_list_id = ($request->input('lightList')) ? $request->input('lightList') : null;

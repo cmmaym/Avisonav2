@@ -27,7 +27,7 @@ class StoreNotice extends FormRequest
             'number'                    => 'required|max:100',
             'reportsNumbers'           => 'required|max:500',
             'reportDate'               => 'required|date_format:Y-m-d',
-            'state'                     => 'sometimes|required|in:A,I',
+            'state'                     => 'sometimes|required|in:G,P',
             'file_info'                 => 'sometimes|nullable|file',
             'parent_id'                 => 'sometimes|required|exists:notice,id',
             'characterType'             => 'required|exists:character_type,id',
