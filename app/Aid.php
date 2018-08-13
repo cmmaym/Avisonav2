@@ -63,8 +63,9 @@ class Aid extends Model
     }
     
     public function aidColorLight(){
-        return $this->belongsToMany(ColorLight::class)
-                    ->withTimestamps();
+        return $this->belongsToMany(ColorLight::class, 'aid_color_light')
+                    ->withTimestamps()
+                    ->withPivot('angle');
     }
     
     public function chart(){

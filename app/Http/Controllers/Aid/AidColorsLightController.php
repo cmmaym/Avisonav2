@@ -7,9 +7,10 @@ use AvisoNavAPI\ColorLight;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Traits\Responser;
-use AvisoNavAPI\Http\Resources\ColorLight\ColorLightResource;
 use AvisoNavAPI\ModelFilters\Basic\ColorLightFilter;
+use AvisoNavAPI\Http\Requests\Aid\StoreAidColorLight;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+use AvisoNavAPI\Http\Resources\ColorLight\ColorLightResource;
 
 class AidColorsLightController extends Controller
 {
@@ -24,9 +25,18 @@ class AidColorsLightController extends Controller
     public function index(Aid $aid)
     {
         $collection = $aid->aidColorLight()->filter(request()->all(), ColorLightFilter::class)
-                                   ->paginateFilter($this->perPage());;
+                                   ->paginateFilter($this->perPage());
 
         return ColorLightResource::collection($collection);
+    }
+    
+
+    public function store(StoreAidColorLight $request, Aid $aid)
+    {
+        $aid->aidColorLight()->attach(
+                $request->input('colorLight'),
+                ['angle' => $request->input('angle')]
+        );
     }
 
     /**
@@ -36,9 +46,16 @@ class AidColorsLightController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Aid $aid, ColorLight $colorLight)
+    public function update(StoreAidColorLight $request, Aid $aid, ColorLight $colorLight)
     {
-        $aid->aidColorLight()->attach($colorLight->id);
+        // $aid->aidColorLight()->attach($colorLight->id);
+        $aid->aidColorLight()->updateExistingPivot(
+            $colorLight,
+            [
+                'color_light_id' => $request->input('colorLight'),
+                'angle' => $request->input('angle')
+            ]
+        );
     }
 
     /**

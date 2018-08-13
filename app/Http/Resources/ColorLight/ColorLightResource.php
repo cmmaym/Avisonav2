@@ -23,6 +23,9 @@ class ColorLightResource extends JsonResource
             'id'                =>  $this->id,
             'color'             =>  $this->when(!is_null($this->colorLightLang), $color, null),
             'alias'             =>  $this->alias,
+            $this->mergeWhen(!is_null($this->angle), [
+                'angle' => $this->angle,
+            ]),
             'createdAt'        =>  $this->created_at->format('Y-m-d'),
             'updatedAt'        =>  $this->updated_at->format('Y-m-d'),
             'links'             => [

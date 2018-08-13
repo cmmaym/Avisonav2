@@ -165,7 +165,7 @@ Route::resource('aid.colorStructure', 'Aid\AidColorStructureController')->only([
 ]);
 
 Route::resource('aid.colorLight', 'Aid\AidColorsLightController')->only([
-    'index', 'update', 'destroy'
+    'index', 'store', 'update', 'destroy'
 ]);
 
 //AidTypeForm
