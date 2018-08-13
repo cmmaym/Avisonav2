@@ -30,7 +30,7 @@ class StoreAid extends FormRequest
             'height'                      => 'required|max:45',
             'elevationNmm'                => 'required|max:45',
             'scope'                       => 'required|max:45',
-            'sectorAngle'                 => 'max:100',
+            'flashGroups'                 => 'required|numeric',
             'period'                      => 'required|max:45',
             'features'                    => 'required',
             'location'                    => 'required|exists:location,id',

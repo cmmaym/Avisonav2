@@ -53,6 +53,7 @@ class AidController extends Controller
     {
         $aid = new Aid($request->only(['ais', 'height', 'scope', 'features']));
         $aid->elevation_nmm = $request->input('elevationNmm');
+        $aid->flash_groups = $request->input('flashGroups');
         $aid->period = $request->input('period');
         $aid->user = Auth::user()->username;
         $aid->location_id = $request->input('location');
@@ -62,7 +63,6 @@ class AidController extends Controller
         $aid->aid_type_form_id = $request->input('aidTypeForm');
 
         $aid->racon = ($request->input('racon')) ? $request->input('racon') : null;
-        $aid->sector_angle = ($request->input('sectorAngle')) ? $request->input('sectorAngle') : null;
         $aid->top_mark_id = ($request->input('topMark')) ? $request->input('topMark') : null;
 
         $aid->save();
@@ -109,6 +109,7 @@ class AidController extends Controller
     {
         $aid->fill($request->only(['ais', 'height', 'scope', 'features']));
         $aid->elevation_nmm = $request->input('elevationNmm');
+        $aid->flash_groups = $request->input('flashGroups');
         $aid->period = $request->input('period');
         $aid->user = Auth::user()->username;
         $aid->location_id = $request->input('location');
@@ -119,7 +120,6 @@ class AidController extends Controller
         $aid->aid_type_form_id = $request->input('aidTypeForm');
 
         $aid->racon = ($request->input('racon')) ? $request->input('racon') : null;
-        $aid->sector_angle = ($request->input('sectorAngle')) ? $request->input('sectorAngle') : null;
         $aid->top_mark_id = ($request->input('topMark')) ? $request->input('topMark') : null;
 
         if($aid->isClean()){

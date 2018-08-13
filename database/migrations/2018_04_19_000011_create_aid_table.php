@@ -20,7 +20,7 @@ class CreateAidTable extends Migration
             $table->string('height', 45)->comment("Altura de la estructura de la ayuda");
             $table->string('elevation_nmm', 45)->comment("Elevacion de la luz sobre el nivel del mar");
             $table->string('scope', 45)->comment("Alcance nominal de la luz de la ayuda");
-            $table->string('sector_angle', 100)->nullable()->comment("Angulo de los sectores");
+            $table->string('flash_groups', 100)->comment("Grupos de flasheos");
             $table->string('period', 45)->comment("Periodo de la luz");
             $table->mediumText('features')->comment('Caracteristicas de la ayuda');
             $table->timestamps();

@@ -155,6 +155,10 @@ Route::resource('aid.aidLang', 'Aid\AidLangController')->only([
 Route::resource('aid.coordinate', 'Aid\AidCoordinateController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
+
+Route::resource('aid.sequenceFlashes', 'Aid\AidSequenceFlashesController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
     
 Route::resource('aid.chart', 'Aid\AidChartController')->only([
     'index', 'update', 'destroy'

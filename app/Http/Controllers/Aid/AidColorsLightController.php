@@ -48,9 +48,9 @@ class AidColorsLightController extends Controller
      */
     public function update(StoreAidColorLight $request, Aid $aid, ColorLight $colorLight)
     {
-        // $aid->aidColorLight()->attach($colorLight->id);
+        
         $aid->aidColorLight()->updateExistingPivot(
-            $colorLight,
+            $colorLight->id,
             [
                 'color_light_id' => $request->input('colorLight'),
                 'angle' => $request->input('angle')

@@ -52,6 +52,10 @@ class Aid extends Model
     public function coordinate(){
         return $this->hasOne(Coordinate::class)->orderBy('id', 'desc');
     }
+
+    public function sequenceFlashes(){
+        return $this->hasMany(SequenceFlashes::class);
+    }
     
     public function notice(){
         return $this->belongsToMany(Notice::class);
