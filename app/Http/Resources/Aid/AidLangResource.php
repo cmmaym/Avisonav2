@@ -18,6 +18,7 @@ class AidLangResource extends JsonResource
         return [
             'id'                => $this->id,
             'name'              => $this->name,
+            'observation'       => $this->observation,
             'createdAt'        => $this->created_at->format('Y-m-d'),
             'updatedAt'        => $this->updated_at->format('Y-m-d'),
             'language'          => new LanguageResource($this->language),

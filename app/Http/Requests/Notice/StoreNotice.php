@@ -24,7 +24,6 @@ class StoreNotice extends FormRequest
     public function rules()
     {
         return [
-            'number'                    => 'required|max:100',
             'reportsNumbers'           => 'required|max:500',
             'reportDate'               => 'required|date_format:Y-m-d',
             'state'                     => 'sometimes|required|in:G,P',
@@ -32,7 +31,7 @@ class StoreNotice extends FormRequest
             'parent_id'                 => 'sometimes|required|exists:notice,id',
             'characterType'             => 'required|exists:character_type,id',
             'noveltyType'               => 'required|exists:novelty_type,id',
-            'zone'                      => 'required|exists:zone,id',
+            'location'                  => 'required|exists:location,id',
             'catalogOceanCoast'         => 'nullable|exists:catalog_ocean_coast,id',
             'lightList'                 => 'nullable|exists:light_list,id',
             'reportSource'              => 'required|exists:report_source,id',

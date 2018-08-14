@@ -16,6 +16,7 @@ class CreateAidLangTable extends Migration
         Schema::create('aid_lang', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100)->comment("Nombre de la ayuda");
+            $table->mediumText('observation', 100)->nullable()->comment("Datos complementarios a la ayuda");
             $table->timestamps();
             $table->integer('aid_id')->unsigned();
             $table->integer('language_id')->unsigned();

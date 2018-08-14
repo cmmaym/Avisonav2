@@ -26,7 +26,7 @@ class CreateNoticeTable extends Migration
             $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('character_type_id')->unsigned();
             $table->integer('novelty_type_id')->unsigned();
-            $table->integer('zone_id')->unsigned();
+            $table->integer('location_id')->unsigned();
             $table->integer('catalog_ocean_coast_id')->unsigned()->nullable();
             $table->integer('light_list_id')->unsigned()->nullable();
             $table->integer('report_source_id')->unsigned();
@@ -41,8 +41,8 @@ class CreateNoticeTable extends Migration
             $table->foreign('novelty_type_id')
                   ->references('id')->on('novelty_type');
             
-            $table->foreign('zone_id')
-                  ->references('id')->on('zone');
+            $table->foreign('location_id')
+                  ->references('id')->on('location');
             
             $table->foreign('catalog_ocean_coast_id')
                   ->references('id')->on('catalog_ocean_coast');

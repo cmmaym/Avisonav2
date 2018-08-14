@@ -16,6 +16,7 @@ use AvisoNavAPI\Http\Requests\Notice\StoreNotice;
 use AvisoNavAPI\Http\Resources\Notice\NoticeResource;
 use AvisoNavAPI\Http\Resources\Notice\NoticePublicResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+use AvisoNavAPI\ConsecutiveNotice;
 
 class NoticeController extends Controller
 {
@@ -33,7 +34,7 @@ class NoticeController extends Controller
                                 'noticeLang' => $this->withLanguageQuery(),
                                 'characterType.characterTypeLang' => $this->withLanguageQuery(),
                                 'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
-                                'zone.zoneLang' => $this->withLanguageQuery(),
+                                'location.zone.zoneLang' => $this->withLanguageQuery(),
                                 'catalogOceanCoast',
                                 'lightList',
                                 'reportSource',
@@ -52,36 +53,46 @@ class NoticeController extends Controller
      */
     public function store(StoreNotice $request)
     {
-        $notice = new Notice($request->only(['number']));
-        
-        $year = (new \DateTime("now"))->format('Y');
-        $notice->reports_numbers = $request->input('reportsNumbers');
-        $notice->report_date = $request->input('reportDate');
-        $notice->year = $year;
-        $notice->user = Auth::user()->username;
-        $notice->character_type_id = $request->input('characterType');
-        $notice->novelty_type_id = $request->input('noveltyType');
-        $notice->zone_id = $request->input('zone');
-        $notice->report_source_id = $request->input('reportSource');
-        $notice->reporting_user_id = $request->input('reportingUser');
-        $notice->state = 'G';
-        
-        $notice->catalog_ocean_coast_id = ($request->input('catalogOceanCoast')) ? $request->input('catalogOceanCoast') : null;
-        $notice->light_list_id = ($request->input('lightList')) ? $request->input('lightList') : null;
+        $notice = DB::transaction(function () use ($request){
+            $consecutiveNotice = ConsecutiveNotice::orderBy('year', 'desc')->firstOrFail();
+            
+            $newConsec = str_pad($consecutiveNotice->number + 1, 3, '00', STR_PAD_LEFT);
 
-        $notice->parent_id = ($request->has('parent_id')) ? $request->input('parent_id') : null;
-        
-        // $notice->file_info = null;
+            $notice = new Notice();
+            $notice->number = $newConsec;
+            $year = (new \DateTime("now"))->format('Y');
+            $notice->reports_numbers = $request->input('reportsNumbers');
+            $notice->report_date = $request->input('reportDate');
+            $notice->year = $year;
+            $notice->user = Auth::user()->username;
+            $notice->character_type_id = $request->input('characterType');
+            $notice->novelty_type_id = $request->input('noveltyType');
+            $notice->location_id = $request->input('location');
+            $notice->report_source_id = $request->input('reportSource');
+            $notice->reporting_user_id = $request->input('reportingUser');
+            $notice->state = 'G';
+            
+            $notice->catalog_ocean_coast_id = ($request->input('catalogOceanCoast')) ? $request->input('catalogOceanCoast') : null;
+            $notice->light_list_id = ($request->input('lightList')) ? $request->input('lightList') : null;
+    
+            $notice->parent_id = ($request->has('parent_id')) ? $request->input('parent_id') : null;
+            
+            // $notice->file_info = null;
+    
+            $notice->save();
+    
+            $noticeLang = new NoticeLang();
+            $noticeLang->description = $request->input('description');
+            $noticeLang->language_id = $request->input('language');
+    
+            $notice->noticeLang()->save($noticeLang);
 
-        $notice->save();
+            $consecutiveNotice->number = $newConsec;
+            $consecutiveNotice->save();
 
-        $noticeLang = new NoticeLang();
-        $noticeLang->description = $request->input('description');
-        $noticeLang->language_id = $request->input('language');
+            return $notice;
+        });
 
-        $notice->noticeLang()->save($noticeLang);
-        
-        $notice->refresh();
 
         return new NoticeResource($notice);
     }
@@ -98,7 +109,7 @@ class NoticeController extends Controller
             'noticeLang' => $this->withLanguageQuery(),
             'characterType.characterTypeLang' => $this->withLanguageQuery(),
             'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
-            'zone.zoneLang' => $this->withLanguageQuery(),
+            'location.zone.zoneLang' => $this->withLanguageQuery(),
             'catalogOceanCoast',
             'lightList',
             'reportSource',
@@ -117,13 +128,13 @@ class NoticeController extends Controller
      */
     public function update(StoreNotice $request, Notice $notice)
     {
-        $notice->fill($request->only(['number', 'state']));
+        $notice->fill($request->only(['state']));
         $notice->reports_numbers = $request->input('reportsNumbers');
         $notice->report_date = $request->input('reportDate');
         $notice->user = Auth::user()->username;
         $notice->character_type_id = $request->input('characterType');
         $notice->novelty_type_id = $request->input('noveltyType');
-        $notice->zone_id = $request->input('zone');
+        $notice->location_id = $request->input('location');
         $notice->report_source_id = $request->input('reportSource');
         $notice->reporting_user_id = $request->input('reportingUser');
         $notice->state = $request->input('state');
@@ -161,7 +172,7 @@ class NoticeController extends Controller
             'noticeLang' => $this->withLanguageQuery(),
             'characterType.characterTypeLang' => $this->withLanguageQuery(),
             'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
-            'zone.zoneLang' => $this->withLanguageQuery(),
+            'location.zone.zoneLang' => $this->withLanguageQuery(),
             'catalogOceanCoast',
             'lightList',
             'reportSource',

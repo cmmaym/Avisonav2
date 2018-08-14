@@ -34,10 +34,6 @@ class AidFilter extends ModelFilter
     public function sectorAngle($sectorAngle){
         return $this->where('sector_angle', 'like', "%$sectorAngle%");
     }
-
-    public function features($features){
-        return $this->where('features', 'like', "%$features%");
-    }
     
     public function user($user){
         return $this->where('user', 'like', "%$user%");
@@ -136,11 +132,6 @@ class AidFilter extends ModelFilter
     public function sortBySectorAngle()
     {
         return $this->orderBy('sector_angle', $this->input('dir', 'asc'));
-    }
-    
-    public function sortByFeatures()
-    {
-        return $this->orderBy('features', $this->input('dir', 'asc'));
     }
     
     public function sortByUser()

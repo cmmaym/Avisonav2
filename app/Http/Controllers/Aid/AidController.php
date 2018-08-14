@@ -51,7 +51,7 @@ class AidController extends Controller
      */
     public function store(StoreAid $request)
     {
-        $aid = new Aid($request->only(['ais', 'height', 'scope', 'features']));
+        $aid = new Aid($request->only(['height', 'scope', 'features']));
         $aid->elevation_nmm = $request->input('elevationNmm');
         $aid->flash_groups = $request->input('flashGroups');
         $aid->period = $request->input('period');
@@ -63,11 +63,13 @@ class AidController extends Controller
         $aid->aid_type_form_id = $request->input('aidTypeForm');
 
         $aid->racon = ($request->input('racon')) ? $request->input('racon') : null;
+        $aid->ais = ($request->input('ais')) ? $request->input('ais') : null;
         $aid->top_mark_id = ($request->input('topMark')) ? $request->input('topMark') : null;
 
         $aid->save();
 
         $aidLang = new AidLang($request->only(['name']));
+        $aidLang->observation = ($request->input('observation')) ? $request->input('observation') : null;
         $aidLang->language_id = $request->input('language');
 
         $aid->aidLang()->save($aidLang);
@@ -120,6 +122,7 @@ class AidController extends Controller
         $aid->aid_type_form_id = $request->input('aidTypeForm');
 
         $aid->racon = ($request->input('racon')) ? $request->input('racon') : null;
+        $aid->ais = ($request->input('ais')) ? $request->input('ais') : null;
         $aid->top_mark_id = ($request->input('topMark')) ? $request->input('topMark') : null;
 
         if($aid->isClean()){

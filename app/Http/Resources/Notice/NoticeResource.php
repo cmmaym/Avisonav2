@@ -6,14 +6,14 @@ use AvisoNavAPI\Traits\Responser;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\AbstractPaginator;
 use AvisoNavAPI\Http\Resources\EntityResource;
+use AvisoNavAPI\Http\Resources\LocationResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use AvisoNavAPI\Http\Resources\LightListResource;
-use AvisoNavAPI\Http\Resources\Zone\ZoneResource;
+use AvisoNavAPI\Http\Resources\ReportSourceResource;
+use AvisoNavAPI\Http\Resources\ReportingUserResource;
 use AvisoNavAPI\Http\Resources\CatalogOceanCoastResource;
 use AvisoNavAPI\Http\Resources\NoveltyType\NoveltyTypeResource;
 use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeResource;
-use AvisoNavAPI\Http\Resources\ReportSourceResource;
-use AvisoNavAPI\Http\Resources\ReportingUserResource;
 
 class NoticeResource extends JsonResource
 {
@@ -45,7 +45,7 @@ class NoticeResource extends JsonResource
             'parent'                    => null,
             'characterType'             => new CharacterTypeResource($this->characterType),
             'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
-            'zone'                      => new ZoneResource($this->zone),
+            'location'                  => new LocationResource($this->location),
             'catalogOceanCoast'         => new CatalogOceanCoastResource($this->catalogOceanCoast),
             'lightList'                 => new LightListResource($this->lightList),
             'reportSource'             => new ReportSourceResource($this->reportSource),

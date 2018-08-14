@@ -40,6 +40,7 @@ class AidLangController extends Controller
     public function store(StoreAidLang $request, Aid $aid)
     {
         $aidLang = new AidLang($request->only(['name']));
+        $aidLang->observation = ($request->input('observation')) ? $request->input('observation') : null;
         $aidLang->language_id = $request->input('language');
         
         $aid->aidLangs()->save($aidLang);
@@ -70,6 +71,7 @@ class AidLangController extends Controller
     public function update(StoreAidLang $request, Aid $aid, AidLAng $aidLang)
     {
         $aidLang->fill($request->only(['name']));
+        $aidLang->observation = ($request->input('observation')) ? $request->input('observation') : null;
         $aidLang->language_id = $request->input('language');
 
         if($aidLang->isClean()){

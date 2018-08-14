@@ -42,8 +42,12 @@ class NoticeFilter extends ModelFilter
         });
     }
 
+    public function location($location){
+        $this->related('location', 'name', 'like', "%$location%");
+    }
+
     public function zone($zone){
-        $this->whereHas('zone.zoneLang', function($query) use ($zone) {
+        $this->whereHas('location.zone.zoneLang', function($query) use ($zone) {
             $query->where('name', 'like', "%$zone%");
         });
     }

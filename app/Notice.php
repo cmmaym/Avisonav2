@@ -13,7 +13,7 @@ class Notice extends Model
     use Filterable;
 
     protected $table        = 'notice';
-    protected $fillable     = ['number', 'state'];
+    protected $fillable     = ['state'];
     protected $dates = ['report_date'];
 
     public function characterType(){
@@ -24,8 +24,8 @@ class Notice extends Model
         return $this->belongsTo(NoveltyType::class);
     }
     
-    public function zone(){
-        return $this->belongsTo(Zone::class);
+    public function location(){
+        return $this->belongsTo(Location::class);
     }
     
     public function catalogOceanCoast(){

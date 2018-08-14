@@ -24,7 +24,7 @@ class StoreAidColorLight extends FormRequest
     public function rules()
     {
         return [
-            'angle'                          => 'required|numeric',
+            'angle'                          => 'nullable|numeric',
             'colorLight'                      => 'required|exists:color_light,id',
         ];
     }

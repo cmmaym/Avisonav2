@@ -27,6 +27,10 @@ class AidResource extends JsonResource
         $name = function() use ($self){
             return $self->aidLang->name;
         };
+        
+        $observation = function() use ($self){
+            return $self->aidLang->observation;
+        };
 
         return [
             'id'                => $this->id,
@@ -39,9 +43,9 @@ class AidResource extends JsonResource
             'sectorAngle'       => $this->sector_angle,
             'flashGroups'       => $this->flash_groups,
             'period'            => $this->period,
-            'features'          => $this->features,
             'createdAt'        => $this->created_at->format('Y-m-d'),
             'updatedAt'        => $this->updated_at->format('Y-m-d'),
+            'observation'       => $this->when(!is_null($this->aidLang), $observation, null),
             'user'              => $this->user,
             'state'             => $this->state,
             'location'          => new LocationResource($this->location),

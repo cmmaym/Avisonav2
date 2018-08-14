@@ -26,19 +26,19 @@ class StoreAid extends FormRequest
         return [
             'name'                        => 'sometimes|required|max:100',
             'racon'                       => 'max:10',
-            'ais'                         => 'required|max:100',
+            'ais'                         => 'nullable|max:100',
             'height'                      => 'required|max:45',
             'elevationNmm'                => 'required|max:45',
             'scope'                       => 'required|max:45',
             'flashGroups'                 => 'required|numeric',
             'period'                      => 'required|max:45',
-            'features'                    => 'required',
             'location'                    => 'required|exists:location,id',
             'lightClass'                  => 'required|exists:light_class,id',
             'colorStructurePattern'       => 'sometimes|required|exists:color_structure,id',
             'topMark'                     => 'nullable|exists:top_mark,id',
             'aidType'                     => 'required|exists:aid_type,id',
             'aidTypeForm'                 => 'required|exists:aid_type_form,id',
+            'observation'                 => 'sometimes|nullable'
         ];
     }
 
