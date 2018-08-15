@@ -21,7 +21,6 @@ class CreateNoticeTable extends Migration
             $table->dateTime('report_date')->comment('Fecha en la que se genero el reporte');
             $table->timestamps();
             $table->string('state', 1)->comment('Estado del aviso. Puede ser G(Guardado), P(Publicado)');
-            $table->longText('file_info')->nullable()->comment('Es la ruta de un archivo con informacion extra que se le puede adjuntar aun aviso. independientemente del caracter del mismo.');
             $table->string('user', 100)->comment('Nombre de usuario que manipulo le registro');
             $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('character_type_id')->unsigned();

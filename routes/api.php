@@ -145,6 +145,9 @@ Route::resource('notice.noticeFile', 'Notice\NoticeFileController')->only([
 
 //Notice Public route
 Route::get('getNotice/{id}', 'Notice\NoticeController@getNotice');
+Route::get('getAllNoticeYear', 'Notice\NoticeController@getAllNoticeYear');
+Route::get('getAllNoticeNumberByYear/{year}', 'Notice\NoticeController@getAllNoticeNumberByYear');
+Route::get('getRecentNotice', 'Notice\NoticeController@getRecentNotice');
 
 
 //Aid

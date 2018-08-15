@@ -19,10 +19,17 @@ class ColorLightResource extends JsonResource
             return $self->colorLightLang->color;
         };
 
+        $angle = function() use ($self){
+            return $self->pivot->angle;
+        };
+
         return [
             'id'                =>  $this->id,
             'color'             =>  $this->when(!is_null($this->colorLightLang), $color, null),
             'alias'             =>  $this->alias,
+            $this->mergeWhen(!is_null($this->pivot), [
+                'angle' => $this->when(!is_null($this->pivot), $angle, null),
+            ]),
             $this->mergeWhen(!is_null($this->angle), [
                 'angle' => $this->angle,
             ]),

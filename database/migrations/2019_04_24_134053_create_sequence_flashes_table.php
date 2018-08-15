@@ -21,7 +21,8 @@ class CreateSequenceFlashesTable extends Migration
             $table->integer('aid_id')->unsigned();
 
             $table->foreign('aid_id')
-                  ->references('id')->on('aid');
+                  ->references('id')->on('aid')
+                  ->onDelete('cascade');
         });
     }
 

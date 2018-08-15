@@ -76,8 +76,6 @@ class NoticeController extends Controller
             $notice->light_list_id = ($request->input('lightList')) ? $request->input('lightList') : null;
     
             $notice->parent_id = ($request->has('parent_id')) ? $request->input('parent_id') : null;
-            
-            // $notice->file_info = null;
     
             $notice->save();
     
@@ -184,11 +182,63 @@ class NoticeController extends Controller
             'aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
             'aid.topMark.topMarkLang' => $this->withLanguageQuery(),
             'aid.aidType.aidTypeLang' => $this->withLanguageQuery(),
-            'aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery()
+            'aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
+            'aid.aidColorStructure.colorStructureLang' => $this->withLanguageQuery(),
+            'aid.aidColorLight.colorLightLang' => $this->withLanguageQuery(),
+            'chartEdition.chart'
         ])
         ->where('number', '=', $number)
         ->firstOrFail();
 
         return new NoticePublicResource($notice);
+    }
+
+    public function getAllNoticeYear() 
+    {
+        $collection = Notice::select('year')
+                           ->groupBy('year')
+                           ->get();
+
+        return response()->json($collection);
+    }
+    
+    public function getAllNoticeNumberByYear($year) 
+    {
+        $collection = Notice::select('number')
+                           ->groupBy('number')
+                           ->where('year', '=', $year)
+                           ->get();
+
+        return response()->json($collection);
+    }
+
+    public function getRecentNotice() 
+    {
+        $collection = Notice::with([
+                        'noticeLang' => $this->withLanguageQuery(),
+                        'characterType.characterTypeLang' => $this->withLanguageQuery(),
+                        'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
+                        'location.zone.zoneLang' => $this->withLanguageQuery(),
+                        'catalogOceanCoast',
+                        'lightList',
+                        'reportSource',
+                        'reportingUser',
+                        'aid.coordinate',
+                        'aid.aidLang' => $this->withLanguageQuery(),
+                        'aid.location.zone.zoneLang' => $this->withLanguageQuery(),
+                        'aid.lightClass.lightClassLang' => $this->withLanguageQuery(),
+                        'aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
+                        'aid.topMark.topMarkLang' => $this->withLanguageQuery(),
+                        'aid.aidType.aidTypeLang' => $this->withLanguageQuery(),
+                        'aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
+                        'aid.aidColorStructure.colorStructureLang' => $this->withLanguageQuery(),
+                        'aid.aidColorLight.colorLightLang' => $this->withLanguageQuery(),
+                        'chartEdition.chart'
+                    ])
+                    ->orderBy('created_at', 'desc')
+                    ->take(5)
+                    ->get();
+
+        return NoticePublicResource::collection($collection);
     }
 }

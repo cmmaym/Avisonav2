@@ -25,7 +25,7 @@ class StoreNoticeFile extends FormRequest
     {
         return [
             'name'           => 'required|max:100',
-            'file'           => 'required|file|mimes:pdf'//|size:10240'
+            'file'           => 'required|file|mimes:pdf|max:10000'
         ];
     }
 
@@ -38,8 +38,10 @@ class StoreNoticeFile extends FormRequest
     {
         return [
             'required'              =>  'El campo :attribute es requerido',
-            'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
-            'size'                  => 'El archivo excede el peso maximo de :size'
+            'max'               => [
+                'string'    => 'El campo :attribute debe tener maximo :max caracteres',
+                'file'      => 'El archivo debe tener un peso de maximo :max kilobytes'
+            ]
         ];
     }
 }

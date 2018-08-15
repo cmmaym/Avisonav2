@@ -9,7 +9,15 @@ class ApiController extends Controller
     public function __construct()
     {
         $this->middleware('client')->only(['index', 'show']);
-        $this->middleware('auth:api', ['except' => ['getNotice']]);
+        $this->middleware('auth:api', [ 'except' => 
+            [
+                'getNotice',
+                'getAllNoticeYear',
+                'getAllNoticeNumberByYear',
+                'getRecentNotice'
+            ],
+        ]);
+
         $this->middleware('scope:read')->only(['index', 'show']);
         $this->middleware('scope:create')->only(['store']);
         $this->middleware('scope:delete')->only(['delete']);

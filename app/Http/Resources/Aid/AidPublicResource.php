@@ -12,8 +12,9 @@ use AvisoNavAPI\Http\Resources\TopMark\TopMarkResource;
 use AvisoNavAPI\Http\Resources\ColorType\ColorTypeResource;
 use AvisoNavAPI\Http\Resources\LightClass\LightClassResource;
 use AvisoNavAPI\Http\Resources\ColorStructure\ColorStructureResource;
+use AvisoNavAPI\Http\Resources\ColorLight\ColorLightResource;
 
-class AidResource extends JsonResource
+class AidPublicResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -54,6 +55,9 @@ class AidResource extends JsonResource
             'aidType'           => new AidTypeResource($this->aidType),
             'aidTypeForm'       => new AidTypeFormResource($this->aidTypeForm),
             'coordinate'        => new CoordinateResource($this->coordinate),
+            'colorStructure'    => ColorStructureResource::collection($this->aidColorStructure),
+            'colorLight'        => ColorLightResource::collection($this->aidColorLight),
+            'sequenceFlashes'   => SequenceFlashesResource::collection($this->sequenceFlashes),
             'links'             => [
                 'self'      =>  route('aid.show', ['id' => $this->id]),
                 'aidLang'   =>  route('aid.aidLang.index', ['id' => $this->id])

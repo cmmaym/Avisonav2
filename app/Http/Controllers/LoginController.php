@@ -99,7 +99,7 @@ class LoginController extends Controller
             $data->refresh_token,
             864000, // 10 days
             '/',
-            'localhost',
+            env('HOST'),
             false,
             true // HttpOnly
         ));
