@@ -188,6 +188,7 @@ class NoticeController extends Controller
             'chartEdition.chart'
         ])
         ->where('number', '=', $number)
+        ->where('state', '=', 'P')
         ->firstOrFail();
 
         return new NoticePublicResource($notice);
@@ -235,6 +236,7 @@ class NoticeController extends Controller
                         'aid.aidColorLight.colorLightLang' => $this->withLanguageQuery(),
                         'chartEdition.chart'
                     ])
+                    ->where('state', '=', 'P')
                     ->orderBy('created_at', 'desc')
                     ->take(5)
                     ->get();
