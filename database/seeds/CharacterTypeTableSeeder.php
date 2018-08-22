@@ -13,14 +13,17 @@ class CharacterTypeTableSeeder extends Seeder
     {
         DB::table('character_type')->insert([
             [
+                'alias'         => 'G',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
+                'alias'         => 'T',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
+                'alias'         => 'P',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ]

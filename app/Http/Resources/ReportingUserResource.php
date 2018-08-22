@@ -17,6 +17,7 @@ class ReportingUserResource extends JsonResource
         return [
             'id'            => $this->id,
             'name'          => $this->name,
+            'rank'          => $this->rank,
             'createdAt'    => $this->created_at->format('Y-m-d'),
             'updatedAt'    => $this->updated_at->format('Y-m-d'),
             'reportSource'  => new ReportSourceResource($this->reportSource)

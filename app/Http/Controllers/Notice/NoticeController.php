@@ -32,8 +32,6 @@ class NoticeController extends Controller
         $collection = Notice::filter(request()->all(), NoticeFilter::class)
                             ->with([
                                 'noticeLang' => $this->withLanguageQuery(),
-                                'characterType.characterTypeLang' => $this->withLanguageQuery(),
-                                'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
                                 'location.zone.zoneLang' => $this->withLanguageQuery(),
                                 'catalogOceanCoast',
                                 'lightList',
@@ -65,8 +63,6 @@ class NoticeController extends Controller
             $notice->report_date = $request->input('reportDate');
             $notice->year = $year;
             $notice->user = Auth::user()->username;
-            $notice->character_type_id = $request->input('characterType');
-            $notice->novelty_type_id = $request->input('noveltyType');
             $notice->location_id = $request->input('location');
             $notice->report_source_id = $request->input('reportSource');
             $notice->reporting_user_id = $request->input('reportingUser');
@@ -105,8 +101,6 @@ class NoticeController extends Controller
     {
         $notice->load([
             'noticeLang' => $this->withLanguageQuery(),
-            'characterType.characterTypeLang' => $this->withLanguageQuery(),
-            'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
             'location.zone.zoneLang' => $this->withLanguageQuery(),
             'catalogOceanCoast',
             'lightList',
@@ -130,8 +124,6 @@ class NoticeController extends Controller
         $notice->reports_numbers = $request->input('reportsNumbers');
         $notice->report_date = $request->input('reportDate');
         $notice->user = Auth::user()->username;
-        $notice->character_type_id = $request->input('characterType');
-        $notice->novelty_type_id = $request->input('noveltyType');
         $notice->location_id = $request->input('location');
         $notice->report_source_id = $request->input('reportSource');
         $notice->reporting_user_id = $request->input('reportingUser');
@@ -168,8 +160,6 @@ class NoticeController extends Controller
     {
         $notice = Notice::with([
             'noticeLang' => $this->withLanguageQuery(),
-            'characterType.characterTypeLang' => $this->withLanguageQuery(),
-            'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
             'location.zone.zoneLang' => $this->withLanguageQuery(),
             'catalogOceanCoast',
             'lightList',
@@ -217,8 +207,6 @@ class NoticeController extends Controller
     {
         $collection = Notice::with([
                         'noticeLang' => $this->withLanguageQuery(),
-                        'characterType.characterTypeLang' => $this->withLanguageQuery(),
-                        'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
                         'location.zone.zoneLang' => $this->withLanguageQuery(),
                         'catalogOceanCoast',
                         'lightList',

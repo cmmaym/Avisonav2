@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNoticeAidTable extends Migration
+class CreateNoveltyAidTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,23 @@ class CreateNoticeAidTable extends Migration
      */
     public function up()
     {
-        Schema::create('notice_aid', function (Blueprint $table) {
-            $table->integer('notice_id')->unsigned();
+        Schema::create('novelty_aid', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
+            $table->integer('novelty_id')->unsigned();
             $table->integer('aid_id')->unsigned();
             $table->integer('coordinate_id');
+            $table->integer('chart_edition_id');
             $table->timestamps();
 
-            $table->foreign('notice_id')
-                ->references('id')->on('notice')
+            $table->foreign('novelty_id')
+                ->references('id')->on('novelty')
                 ->onDelete('cascade');
 
             $table->foreign('aid_id')
                 ->references('id')->on('aid')
                 ->onDelete('cascade');
 
-            $table->unique(['notice_id', 'aid_id'], 'notice_aid_UNIQUE');
+            $table->unique(['novelty_id', 'aid_id'], 'novelty_aid_UNIQUE');
         });
     }
 
@@ -38,6 +40,6 @@ class CreateNoticeAidTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notice_aid');
+        Schema::dropIfExists('novelty_aid');
     }
 }

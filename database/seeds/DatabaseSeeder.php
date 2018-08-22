@@ -48,7 +48,8 @@ class DatabaseSeeder extends Seeder
         DB::statement('TRUNCATE TABLE aid_lang;');
         DB::statement('TRUNCATE TABLE form_type;');
         DB::statement('TRUNCATE TABLE aid_chart;');
-        DB::statement('TRUNCATE TABLE notice_aid;');
+        DB::statement('TRUNCATE TABLE novelty;');
+        DB::statement('TRUNCATE TABLE novelty_aid;');
         DB::statement('TRUNCATE TABLE notice_chart_edition;');
         DB::statement('TRUNCATE TABLE permission;');
         DB::statement('TRUNCATE TABLE role;');

@@ -122,7 +122,6 @@ Route::resource('chartEdition', 'Chart\EditionChartController')->only([
 
 
 //Notice
-//Route::get('notice/simple/{id}', 'Notice\NoticeController@showSimple');
 Route::resource('notice', 'Notice\NoticeController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
@@ -141,6 +140,10 @@ Route::resource('notice.chartEdition', 'Notice\NoticeChartEditionController')->o
 
 Route::resource('notice.noticeFile', 'Notice\NoticeFileController')->only([
     'index', 'store', 'update', 'destroy'
+]);
+
+Route::resource('notice.novelty', 'Notice\NoticeNoveltyController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
 ]);
 
 //Notice Public route

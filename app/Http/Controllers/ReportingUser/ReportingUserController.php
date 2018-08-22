@@ -38,7 +38,7 @@ class ReportingUserController extends Controller
      */
     public function store(StoreReportingUser $request)
     {        
-        $reportingUser = new ReportingUser($request->only(['name']));
+        $reportingUser = new ReportingUser($request->only(['name', 'rank']));
         $reportingUser->save();
 
         return new ReportingUserResource($reportingUser);
@@ -64,7 +64,7 @@ class ReportingUserController extends Controller
      */
     public function update(StoreReportingUser $request, ReportingUser $reportingUser)
     {        
-        $reportingUser->fill($request->only(['name']));
+        $reportingUser->fill($request->only(['name', 'rank']));
         
         if($reportingUser->isClean()){
             return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);

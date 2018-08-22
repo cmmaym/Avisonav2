@@ -41,7 +41,7 @@ class CharacterTypeController extends Controller
      */
     public function store(StoreCharacterType $request)
     {
-        $characterType = new CharacterType();
+        $characterType = new CharacterType($request->only(['alias']));
         $characterType->save();
 
         $characterTypeLang = new CharacterTypeLang($request->only(['name']));
@@ -65,6 +65,26 @@ class CharacterTypeController extends Controller
         ]);
 
         return new CharacterTypeResource($characterType);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \AvisoNavAPI\Http\Requests\CharacterType\StoreCharacterType  $request
+     * @param  \AvisoNavAPI\CharacterType $characterType
+     * @return \AvisoNavAPI\Http\Resources\CharacterTypeResource
+     */
+    public function update(StoreCharacterType $request, CharacterType $characterType)
+    {
+        $characterType->fill($request->only(['alias']));
+        
+        if($characterType->isClean()){
+            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
+        }
+
+        $characterType->save();
+
+       return new CharacterTypeResource($characterType);
     }
 
     /**

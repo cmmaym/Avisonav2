@@ -14,6 +14,7 @@ class ReportingUserTableSeeder extends Seeder
         DB::table('reporting_user')->insert([
             [
                 'name'             => 'Johan Arciniegas Fajardo',
+                'rank'              => 'TS23',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
                 'report_source_id'  => 1

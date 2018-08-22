@@ -16,6 +16,7 @@ class CreateReportingUserTable extends Migration
         Schema::create('reporting_user', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name', 100);
+            $table->string('rank', 45);
             $table->timestamps();
             $table->integer('report_source_id')->unsigned();
 

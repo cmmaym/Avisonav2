@@ -28,7 +28,11 @@ class NoticeResource extends JsonResource
     {
         $self = $this;
         $noticeLang = function() use ($self) {
-            return $self->noticeLang->observation;
+            return $self->noticeLang->description;
+        };
+
+        $description = function() use ($self) {
+            return $self->noticeLang->description;
         };
 
         return [
@@ -42,6 +46,7 @@ class NoticeResource extends JsonResource
             'state'                     => $this->state,
             'file_info'                 => $this->file_info,
             'user'                      => $this->user,
+            'description'               =>  $this->when(!is_null($this->noticeLang), $description, null),
             'parent'                    => null,
             'characterType'             => new CharacterTypeResource($this->characterType),
             'noveltyType'               => new NoveltyTypeResource($this->noveltyType),

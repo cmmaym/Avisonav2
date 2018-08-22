@@ -15,7 +15,7 @@ class CreateNoticeLangTable extends Migration
     {
         Schema::create('notice_lang', function (Blueprint $table) {
             $table->increments('id');
-            $table->mediumText('description')->comment('Descripcion acerca del aviso');
+            $table->mediumText('description')->nullable()->comment('Descripcion acerca del aviso');
             $table->timestamps();
             $table->integer('notice_id')->unsigned();            
             $table->integer('language_id')->unsigned();

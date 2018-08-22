@@ -15,6 +15,7 @@ class CreateCharacterTypeTable extends Migration
     {
         Schema::create('character_type', function (Blueprint $table) {
             $table->increments('id')->unsigned();
+            $table->string('alias', 5);
             $table->timestamps();
         });
     }

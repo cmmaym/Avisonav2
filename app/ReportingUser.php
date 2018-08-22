@@ -10,7 +10,7 @@ class ReportingUser extends Model
     use Filterable;
 
     protected $table        = 'reporting_user';
-    protected $fillable     = ['name'];
+    protected $fillable     = ['name', 'rank'];
 
     public function reportSource()
     {

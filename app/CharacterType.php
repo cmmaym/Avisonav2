@@ -10,6 +10,7 @@ class CharacterType extends Model
     use Filterable;
     
     protected $table        = 'character_type';
+    protected $fillable     = ['alias'];
 
     public function characterTypeLangs(){
         return $this->hasMany(CharacterTypeLang::class);

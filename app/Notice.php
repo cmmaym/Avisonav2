@@ -16,12 +16,9 @@ class Notice extends Model
     protected $fillable     = ['state'];
     protected $dates = ['report_date'];
 
-    public function characterType(){
-        return $this->belongsTo(CharacterType::Class);
-    }
-    
-    public function noveltyType(){
-        return $this->belongsTo(NoveltyType::class);
+    public function novelty()
+    {
+        return $this->hasMany(Novelty::class);
     }
     
     public function location(){
@@ -54,12 +51,6 @@ class Notice extends Model
 
     public function noticeLang(){
         return $this->hasOne(NoticeLang::class);
-    }
-
-    public function aid(){
-        return $this->belongsToMany(Aid::class, 'notice_aid')
-                    ->withTimestamps()
-                    ->withPivot('coordinate_id');
     }
     
     public function chartEdition(){
