@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCoordinateTable extends Migration
+class CreateSymbolTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateCoordinateTable extends Migration
      */
     public function up()
     {
-        Schema::create('coordinate', function (Blueprint $table) {
+        Schema::create('symbol', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('latitude_degrees');
-            $table->integer('latitude_minutes');
-            $table->float('latitude_seconds');
-            $table->string('latitude_dir', 1);
-            $table->integer('longitude_degrees');
-            $table->integer('longitude_minutes');
-            $table->float('longitude_seconds');
-            $table->string('longitude_dir', 1);
             $table->timestamps();
+            $table->integer('symbol_type_id')->unsigned();
+            $table->integer('image_id')->unsigned();
+            
+            $table->foreign('symbol_type_id')
+                  ->references('id')->on('symbol_type');
+            
+            $table->foreign('image_id')
+                  ->references('id')->on('image');
         });
     }
 
@@ -35,7 +35,7 @@ class CreateCoordinateTable extends Migration
     public function down()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        Schema::dropIfExists('coordinate');
+        Schema::dropIfExists('symbol');
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

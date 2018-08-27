@@ -37,28 +37,8 @@ class Aid extends Model
         return $this->belongsTo(AidTypeForm::class);
     }
 
-    public function aidLangs(){
-        return $this->hasMany(AidLang::class);
-    }
-    
-    public function aidLang(){
-        return $this->hasOne(AidLang::class);
-    }
-
-    public function coordinates(){
-        return $this->hasMany(Coordinate::class);
-    }
-
-    public function coordinate(){
-        return $this->hasOne(Coordinate::class)->orderBy('id', 'desc');
-    }
-
     public function sequenceFlashes(){
         return $this->hasMany(SequenceFlashes::class);
-    }
-    
-    public function notice(){
-        return $this->belongsToMany(Notice::class);
     }
 
     public function aidColorStructure(){
@@ -71,10 +51,9 @@ class Aid extends Model
                     ->withTimestamps()
                     ->withPivot('angle');
     }
-    
-    public function chart(){
-        return $this->belongsToMany(Chart::class)
-                    ->withTimestamps();
+
+    public function symbol(){
+        return $this->belongsTo(Symbol::class);
     }
 
 }

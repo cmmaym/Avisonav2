@@ -5,15 +5,15 @@ namespace AvisoNavAPI;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
-class NoticeFile extends Model
+class NoveltyFile extends Model
 {
     use Filterable;
 
-    protected $table        = 'notice_file';
+    protected $table        = 'novelty_file';
     protected $fillable     = ['name', 'path'];
 
-    public function notice()
+    public function novelty()
     {
-        return $this->belongsTo(Notice::class);
+        return $this->belongsTo(Novelty::class);
     }
 }

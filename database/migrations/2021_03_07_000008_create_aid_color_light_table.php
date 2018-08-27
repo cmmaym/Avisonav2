@@ -14,6 +14,7 @@ class CreateAidColorLightTable extends Migration
     public function up()
     {
         Schema::create('aid_color_light', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
             $table->integer('aid_id')->unsigned();
             $table->integer('color_light_id')->unsigned();
             $table->integer('angle')->nullable()->comment('Angulo del sector de la luz');

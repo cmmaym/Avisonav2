@@ -31,6 +31,7 @@ class CreateAidTable extends Migration
             $table->integer('top_mark_id')->nullable()->unsigned();
             $table->integer('aid_type_id')->unsigned();
             $table->integer('aid_type_form_id')->unsigned();
+            $table->integer('symbol_id')->unsigned();
             
             $table->foreign('location_id')
                   ->references('id')->on('location');
@@ -50,6 +51,11 @@ class CreateAidTable extends Migration
             $table->foreign('aid_type_id')
                   ->references('id')->on('aid_type');
             
+            $table->foreign('symbol_id')
+                  ->references('id')->on('symbol')
+                  ->onDelete('cascade');
+
+            $table->unique(['symbol_id'], 'symbol_UNIQUE');
         });
     }
 

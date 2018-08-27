@@ -10,22 +10,34 @@ class Novelty extends Model
     use Filterable;
 
     protected $table        = 'novelty';
+    protected $fillable     = ['state'];
 
     public function notice(){
         return $this->belongsTo(Notice::Class);
-    }
-    
-    public function characterType(){
-        return $this->belongsTo(CharacterType::Class);
     }
     
     public function noveltyType(){
         return $this->belongsTo(NoveltyType::class);
     }
 
-    public function aid(){
-        return $this->belongsToMany(Aid::class, 'novelty_aid')
-                    ->withTimestamps()
-                    ->withPivot('coordinate_id', 'chart_edition_id');
+    public function characterType(){
+        return $this->belongsTo(CharacterType::Class);
+    }
+
+    public function symbol(){
+        return $this->belongsTo(Symbol::class);
+    }
+
+    public function parent(){
+        return $this->belongsTo(Novelty::class, 'parent_id', 'id');
+    }
+
+    public function coordinate(){
+        return $this->belongsToMany(Coordinate::class, 'novelty_coordinate')
+                    ->withTimestamps();
+    }
+
+    public function noveltyFile(){
+        return $this->hasMany(NoveltyFile::class);
     }
 }

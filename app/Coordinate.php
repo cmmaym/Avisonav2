@@ -11,9 +11,14 @@ class Coordinate extends Model
     
     protected   $table      =   'coordinate';
 
-    public function aid()
+    public function symbol()
     {
-        return $this->belongsTo(Aid::class);
+        return $this->belongsToMany(Symbol::class);
+    }
+    
+    public function novelty()
+    {
+        return $this->belongsToMany(Novelty::class);
     }
 
 }

@@ -41,10 +41,6 @@ class Notice extends Model
         return $this->belongsTo(ReportingUser::class);
     }
 
-    public function noticeFile(){
-        return $this->hasMany(NoticeFile::class);
-    }
-
     public function noticeLangs(){
         return $this->hasMany(NoticeLang::class);
     }

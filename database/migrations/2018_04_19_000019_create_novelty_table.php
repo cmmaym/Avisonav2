@@ -15,10 +15,13 @@ class CreateNoveltyTable extends Migration
     {
         Schema::create('novelty', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('notice_id')->nullable()->unsigned();
-            $table->integer('novelty_type_id')->nullable()->unsigned();
-            $table->integer('character_type_id')->nullable()->unsigned();
+            $table->integer('notice_id')->unsigned();
+            $table->integer('novelty_type_id')->unsigned();
+            $table->integer('character_type_id')->unsigned();
+            $table->string('state', 1)->comment('El estado puede ser A(Activo) y C(Cancelado)');
             $table->timestamps();
+            $table->integer('symbol_id')->unsigned();
+            $table->integer('parent_id')->nullable()->unsigned();
 
             $table->foreign('notice_id')
                   ->references('id')->on('notice')
@@ -29,8 +32,14 @@ class CreateNoveltyTable extends Migration
 
             $table->foreign('character_type_id')
                   ->references('id')->on('character_type');
+            
+            $table->foreign('symbol_id')
+                  ->references('id')->on('symbol');
+            
+            $table->foreign('parent_id')
+                  ->references('id')->on('novelty');
 
-            $table->unique(['notice_id', 'character_type_id', 'novelty_type_id'], 'notice_character_type_novelty_type_UNIQUE');
+            $table->unique(['notice_id', 'novelty_type_id', 'character_type_id'], 'notice_novelty_type_character_type_UNIQUE');
         });
     }
 

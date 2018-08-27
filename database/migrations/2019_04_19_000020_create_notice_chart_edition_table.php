@@ -14,6 +14,7 @@ class CreateNoticeChartEditionTable extends Migration
     public function up()
     {
         Schema::create('notice_chart_edition', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
             $table->integer('notice_id')->unsigned();
             $table->integer('chart_edition_id')->unsigned();
             $table->timestamps();
