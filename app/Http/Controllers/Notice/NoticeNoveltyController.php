@@ -53,39 +53,73 @@ class NoticeNoveltyController extends Controller
         $novelty->novelty_type_id = $noveltyType;
         $novelty->character_type_id = $characterType->id;
 
-        if($parent)
+        if($parent && !$symbol)
         {
-            $novelty->parent_id = $parent->id;
+            if($parent->characterType->alias === 'P')
+            {
+                return $this->errorResponse('Una novedad Permanente no puede ser cancelada', 409);
+            }
             
-            //Validamos que la novedad a cancelar no a sido Canecelada anteriormente
+            if($parent->characterType->alias === 'T' && $characterType->alias === 'G')
+            {
+                return $this->errorResponse('Una novedad Temporal no puede ser cancelada por una novedad General', 409);
+            }
+            
+            $novelty->parent_id = $parent->id;
+            $parent->state = 'C';
+            $novelty->state = 'A';
+
+            $parent->save();
+        }else if($symbol && !$parent)
+        {
+            //Buscamos si el simbolo se encuentra en otra novedad Temporal y estado Abierta asociada al symbolo
+            $noveltyTemp = Novelty::whereHas('characterType', function($query) {
+                                        $query->where('alias', 'T');
+                                    })
+                                    ->where('state', 'A')
+                                    ->where('symbol_id', $symbol)
+                                    ->first();
+            
+            if($noveltyTemp)
+            {
+                return $this->errorResponse('La ayuda o peligro esta pendiente por cancelar en otro aviso', 409);
+            }
 
             $novelty->state = 'A';
+            $novelty->symbol_id = $symbol;
+        }else if($symbol && $parent)
+        {
+            if($parent->characterType->alias === 'P')
+            {
+                return $this->errorResponse('Una novedad Permanente no puede ser cancelada', 409);
+            }
+            
+            if($parent->characterType->alias === 'T' && $characterType->alias === 'G')
+            {
+                return $this->errorResponse('Una novedad Temporal no puede ser cancelada por una novedad General', 409);
+            }
+
+            //Buscamos la ultima novedad temporal y estado Abierta asociada al symbolo
+            $noveltyTemp = Novelty::whereHas('characterType', function($query) {
+                                        $query->where('alias', 'T');
+                                    })
+                                    ->where('state', 'A')
+                                    ->where('symbol_id', $symbol)
+                                    ->first();
+            
+            if($noveltyTemp->symbol_id !== $symbol)
+            {
+                return $this->errorResponse('La novedad a cancelar no corresponde con la ultima novedad Temporal pendiente por cancelar relacionada a la Ayuda o Peligro seleccionado', 409);
+            }
+
+            $novelty->state = 'A';
+            $novelty->parent_id = $parent->id;
+            $novelty->symbol_id = $symbol;
+            $parent->state = 'C';
+
+            $parent->save();
         }
         
-        // if($symbol)
-        // {
-        //     //Buscamos si el simbolo se encuentra en otra novedad
-        //     //con caracter Temporal y estado Abierta
-        //     $noveltyTemp = Novelty::whereHas('characterType', function($query) {
-        //                             $query->where('alias', 'T');
-        //                         })
-        //                         ->where('state', 'A')
-        //                         ->where('symbol_id', $symbol)
-        //                         ->first();
-
-        //     //Validamos si se encontro una novedad temporal con el simbolo y el usuario no envio
-        //     //la novedad que la cancele
-        //     if($noveltyTemp && !$parent)
-        //     {
-        //         return $this->errorResponse('La ayuda o peligro esta pendiente por cancelar en otro aviso', 409);
-        //     }
-
-        //     //Validamos si la novedad es de caracter permanente
-        //     if($characterType->alias === 'P')
-
-        //     $novelty->symbol_id = $symbol;
-        // }
-
         $notice->novelty()->save($novelty);
 
         return new NoveltyResource($novelty);
