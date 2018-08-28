@@ -233,3 +233,8 @@ Route::resource('reportSource', 'ReportSource\ReportSourceController')->only([
 Route::resource('reportingUser', 'ReportingUser\ReportingUserController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
+
+//Image
+Route::resource('image', 'Image\ImageController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);

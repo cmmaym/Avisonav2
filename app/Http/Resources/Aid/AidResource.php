@@ -12,6 +12,7 @@ use AvisoNavAPI\Http\Resources\TopMark\TopMarkResource;
 use AvisoNavAPI\Http\Resources\ColorType\ColorTypeResource;
 use AvisoNavAPI\Http\Resources\LightClass\LightClassResource;
 use AvisoNavAPI\Http\Resources\ColorStructure\ColorStructureResource;
+use AvisoNavAPI\Http\Resources\ImageResource;
 
 class AidResource extends JsonResource
 {
@@ -25,16 +26,16 @@ class AidResource extends JsonResource
     {
         $self= $this;
         $name = function() use ($self){
-            return $self->aidLang->name;
+            return $self->symbol->symbolLang->name;
         };
         
         $observation = function() use ($self){
-            return $self->aidLang->observation;
+            return $self->symbol->symbolLang->observation;
         };
 
         return [
             'id'                => $this->id,
-            'name'              => $this->when(!is_null($this->aidLang), $name, null),
+            'name'              => $this->when(!is_null($this->symbol->symbolLang), $name, null),
             'racon'             => $this->racon,
             'ais'               => $this->ais,
             'height'            => $this->height,
@@ -45,7 +46,7 @@ class AidResource extends JsonResource
             'period'            => $this->period,
             'createdAt'        => $this->created_at->format('Y-m-d'),
             'updatedAt'        => $this->updated_at->format('Y-m-d'),
-            'observation'       => $this->when(!is_null($this->aidLang), $observation, null),
+            'observation'       => $this->when(!is_null($this->symbol->symbolLang), $observation, null),
             'user'              => $this->user,
             'location'          => new LocationResource($this->location),
             'lightClass'        => new LightClassResource($this->lightClass),
@@ -53,11 +54,7 @@ class AidResource extends JsonResource
             'topMark'           => new TopMarkResource($this->topMark),
             'aidType'           => new AidTypeResource($this->aidType),
             'aidTypeForm'       => new AidTypeFormResource($this->aidTypeForm),
-            'coordinate'        => new CoordinateResource($this->coordinate),
-            'links'             => [
-                'self'      =>  route('aid.show', ['id' => $this->id]),
-                'aidLang'   =>  route('aid.aidLang.index', ['id' => $this->id])
-            ]
+            'image'             => new ImageResource($this->symbol->image),
         ];
     }
 }

@@ -71,15 +71,13 @@ class NoticeController extends Controller
             $notice->catalog_ocean_coast_id = ($request->input('catalogOceanCoast')) ? $request->input('catalogOceanCoast') : null;
             $notice->light_list_id = ($request->input('lightList')) ? $request->input('lightList') : null;
     
-            $notice->parent_id = ($request->has('parent_id')) ? $request->input('parent_id') : null;
-    
             $notice->save();
     
-            $noticeLang = new NoticeLang();
-            $noticeLang->description = $request->input('description');
-            $noticeLang->language_id = $request->input('language');
+            // $noticeLang = new NoticeLang();
+            // $noticeLang->description = $request->input('description');
+            // $noticeLang->language_id = $request->input('language');
     
-            $notice->noticeLang()->save($noticeLang);
+            // $notice->noticeLang()->save($noticeLang);
 
             $consecutiveNotice->number = $newConsec;
             $consecutiveNotice->save();
@@ -165,8 +163,8 @@ class NoticeController extends Controller
             'lightList',
             'reportSource',
             'reportingUser',
-            'aid.coordinate',
-            'aid.aidLang' => $this->withLanguageQuery(),
+            'aid.symbol.coordinate',
+            'aid.symbol.symbolLang' => $this->withLanguageQuery(),
             'aid.location.zone.zoneLang' => $this->withLanguageQuery(),
             'aid.lightClass.lightClassLang' => $this->withLanguageQuery(),
             'aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
@@ -212,8 +210,8 @@ class NoticeController extends Controller
                         'lightList',
                         'reportSource',
                         'reportingUser',
-                        'aid.coordinate',
-                        'aid.aidLang' => $this->withLanguageQuery(),
+                        'aid.symbol.coordinate',
+                        'aid.symbol.symbolLang' => $this->withLanguageQuery(),
                         'aid.location.zone.zoneLang' => $this->withLanguageQuery(),
                         'aid.lightClass.lightClassLang' => $this->withLanguageQuery(),
                         'aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),

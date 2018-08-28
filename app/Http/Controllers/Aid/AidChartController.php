@@ -23,7 +23,7 @@ class AidChartController extends Controller
      */
     public function index(Aid $aid)
     {
-        $collection = $aid->chart()->filter(request()->all(), ChartFilter::class)
+        $collection = $aid->symbol->chart()->filter(request()->all(), ChartFilter::class)
                                    ->paginateFilter($this->perPage());;
 
         return ChartResource::collection($collection);
@@ -38,7 +38,7 @@ class AidChartController extends Controller
      */
     public function update(Aid $aid, Chart $chart)
     {
-        $aid->chart()->attach($chart->id);
+        $aid->symbol->chart()->attach($chart->id);
     }
 
     /**
@@ -49,6 +49,6 @@ class AidChartController extends Controller
      */
     public function destroy(Aid $aid, Chart $chart)
     {
-        $aid->chart()->detach($chart->id);
+        $aid->symbol->chart()->detach($chart->id);
     }
 }

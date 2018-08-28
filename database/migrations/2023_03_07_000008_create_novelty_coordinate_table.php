@@ -14,7 +14,6 @@ class CreateNoveltyCoordinateTable extends Migration
     public function up()
     {
         Schema::create('novelty_coordinate', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
             $table->integer('novelty_id')->unsigned();
             $table->integer('coordinate_id')->unsigned();
             $table->timestamps();

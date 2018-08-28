@@ -11,6 +11,7 @@ use AvisoNavAPI\Http\Requests\Notice\StoreNovelty;
 use AvisoNavAPI\Http\Resources\Notice\NoveltyResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\ModelFilters\Basic\NoveltyFilter;
+use AvisoNavAPI\CharacterType;
 
 class NoticeNoveltyController extends Controller
 {
@@ -41,9 +42,49 @@ class NoticeNoveltyController extends Controller
      */
     public function store(StoreNovelty $request, Notice $notice)
     {
+        $noveltyType = $request->input('noveltyType');
+        $characterType = CharacterType::find($request->input('characterType'));
+        $symbol = $request->input('symbol');
+
+        //Novedad a cancelar
+        $parent = Novelty::find($request->input('parent'));
+
         $novelty = new Novelty();
-        $novelty->novelty_type = $request->input('noveltyType');
-        $novelty->character_type = $request->input('characterType');
+        $novelty->novelty_type_id = $noveltyType;
+        $novelty->character_type_id = $characterType->id;
+
+        if($parent)
+        {
+            $novelty->parent_id = $parent->id;
+            
+            //Validamos que la novedad a cancelar no a sido Canecelada anteriormente
+
+            $novelty->state = 'A';
+        }
+        
+        // if($symbol)
+        // {
+        //     //Buscamos si el simbolo se encuentra en otra novedad
+        //     //con caracter Temporal y estado Abierta
+        //     $noveltyTemp = Novelty::whereHas('characterType', function($query) {
+        //                             $query->where('alias', 'T');
+        //                         })
+        //                         ->where('state', 'A')
+        //                         ->where('symbol_id', $symbol)
+        //                         ->first();
+
+        //     //Validamos si se encontro una novedad temporal con el simbolo y el usuario no envio
+        //     //la novedad que la cancele
+        //     if($noveltyTemp && !$parent)
+        //     {
+        //         return $this->errorResponse('La ayuda o peligro esta pendiente por cancelar en otro aviso', 409);
+        //     }
+
+        //     //Validamos si la novedad es de caracter permanente
+        //     if($characterType->alias === 'P')
+
+        //     $novelty->symbol_id = $symbol;
+        // }
 
         $notice->novelty()->save($novelty);
 

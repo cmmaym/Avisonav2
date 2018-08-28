@@ -22,15 +22,11 @@ class CreateNoticeTable extends Migration
             $table->timestamps();
             $table->string('state', 1)->comment('Estado del aviso. Puede ser G(Guardado), P(Publicado)');
             $table->string('user', 100)->comment('Nombre de usuario que manipulo le registro');
-            $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('location_id')->unsigned();
             $table->integer('catalog_ocean_coast_id')->unsigned()->nullable();
             $table->integer('light_list_id')->unsigned()->nullable();
             $table->integer('report_source_id')->unsigned();
             $table->integer('reporting_user_id')->unsigned();
-
-            $table->foreign('parent_id')
-                  ->references('id')->on('notice');
             
             $table->foreign('location_id')
                   ->references('id')->on('location');

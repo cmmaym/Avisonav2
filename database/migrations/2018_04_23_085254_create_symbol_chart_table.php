@@ -14,7 +14,6 @@ class CreateSymbolChartTable extends Migration
     public function up()
     {
         Schema::create('symbol_chart', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
             $table->integer('symbol_id')->unsigned();
             $table->integer('chart_id')->unsigned();
             $table->timestamps();

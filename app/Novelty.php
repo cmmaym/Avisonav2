@@ -15,6 +15,14 @@ class Novelty extends Model
     public function notice(){
         return $this->belongsTo(Notice::Class);
     }
+
+    public function noveltyLangs(){
+        return $this->hasMany(NoveltyLang::class);
+    }
+
+    public function noveltyLang(){
+        return $this->hasOne(NoveltyLang::class);
+    }
     
     public function noveltyType(){
         return $this->belongsTo(NoveltyType::class);

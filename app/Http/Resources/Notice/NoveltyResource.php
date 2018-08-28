@@ -5,6 +5,7 @@ namespace AvisoNavAPI\Http\Resources\Notice;
 use AvisoNavAPI\Traits\Responser;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\AbstractPaginator;
+use Illuminate\Http\Resources\Json\JsonResource;
 use AvisoNavAPI\Http\Resources\NoveltyType\NoveltyTypeResource;
 use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeResource;
 

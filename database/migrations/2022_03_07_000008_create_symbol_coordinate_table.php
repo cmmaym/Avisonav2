@@ -14,7 +14,6 @@ class CreateSymbolCoordinateTable extends Migration
     public function up()
     {
         Schema::create('symbol_coordinate', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
             $table->integer('symbol_id')->unsigned();
             $table->integer('coordinate_id')->unsigned();
             $table->timestamps();

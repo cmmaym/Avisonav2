@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\DB;
 class AidFilter extends ModelFilter
 {
     public function name($name){
-        return $this->related('aidLang', 'name', 'like', "%$name%");
+        $this->whereHas('symbol.symbolLang', function($query) use ($name){
+            $query->where('name', 'like', "%$name%");
+        });
     }
 
     public function racon($racon){
@@ -98,9 +100,10 @@ class AidFilter extends ModelFilter
     {
         $input = $this->input('dir', 'asc');
 
-        $this->join('aid_lang', 'aid_lang.aid_id', '=', 'aid.id')
+        $this->join('symbol', 'symbol.id', '=', 'aid.symbol_id')
+             ->join('symbol_lang', 'symbol_lang.symbol_id', '=', 'symbol.id')
              ->groupBy('aid.id')
-             ->orderBy('aid_lang.name', $input)
+             ->orderBy('symbol.name', $input)
              ->select('aid.*');
     }
 

@@ -23,8 +23,7 @@ class AidCoordinateController extends Controller
      */
     public function index(Aid $aid)
     {
-        $collection = $aid->coordinates()->filter(request()->all(), CoordinateFilter::class)
-                                         ->with(['aid'])
+        $collection = $aid->symbol->coordinate()->filter(request()->all(), CoordinateFilter::class)
                                          ->paginateFilter($this->perPage());
 
         return CoordinateResource::collection($collection);
@@ -48,21 +47,7 @@ class AidCoordinateController extends Controller
         $coordinate->longitude_seconds = $request->input('longitudeSeconds');
         $coordinate->longitude_dir     = $request->input('longitudeDir');
 
-        $aid->coordinates()->save($coordinate);
-
-        return new CoordinateResource($coordinate);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \AvisoNavAPI\Aid $aid
-     * @param  int $id
-     * @return \AvisoNavAPI\Http\Resources\Aid\CoordinateResource
-     */
-    public function show(Aid $aid, $id)
-    {
-        $coordinate = $aid->coordinates()->findOrFail($id);
+        $aid->symbol->coordinate()->save($coordinate);
 
         return new CoordinateResource($coordinate);
     }
@@ -77,7 +62,7 @@ class AidCoordinateController extends Controller
      */
     public function update(StoreCoordinate $request, Aid $aid, $id)
     {
-        $coordinate = $aid->coordinates()->findOrFail($id);
+        $coordinate = $aid->symbol->coordinate()->findOrFail($id);
         $coordinate->latitude_degrees = $request->input('latitudeDegrees');
         $coordinate->latitude_minutes = $request->input('latitudeMinutes');
         $coordinate->latitude_seconds = $request->input('latitudeSeconds');
@@ -105,10 +90,8 @@ class AidCoordinateController extends Controller
      */
     public function destroy(Aid $aid, $id)
     {
-        $coordinate = $aid->coordinates()->findOrFail($id);
+        $coordinate = $aid->symbol->coordinate()->findOrFail($id);
 
-        $coordinate->delete();
-
-        return new CoordinateResource($coordinate);
+        $aid->symbol->coordinate()->detach($coordinate->id);
     }
 }

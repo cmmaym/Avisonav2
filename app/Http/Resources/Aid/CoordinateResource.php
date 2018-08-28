@@ -25,11 +25,7 @@ class CoordinateResource extends JsonResource
             'longitudeSeconds'   => $this->longitude_seconds,
             'longitudeDir'       => $this->longitude_dir,
             'createdAt'        => $this->created_at->format('Y-m-d'),
-            'updatedAt'        => $this->updated_at->format('Y-m-d'),
-            'links'             => [
-                'self'  =>  route('aid.coordinate.show', ['aidId' => $this->aid->id, 'id' => $this->id]),
-                'aid'   =>  route('aid.show', ['id' => $this->aid->id])
-            ]
+            'updatedAt'        => $this->updated_at->format('Y-m-d')
         ];
     }
 }

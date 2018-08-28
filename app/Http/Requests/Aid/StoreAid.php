@@ -34,11 +34,13 @@ class StoreAid extends FormRequest
             'period'                      => 'required|max:45',
             'location'                    => 'required|exists:location,id',
             'lightClass'                  => 'required|exists:light_class,id',
-            'colorStructurePattern'       => 'sometimes|required|exists:color_structure,id',
+            'colorStructurePattern'       => 'required|exists:color_structure,id',
             'topMark'                     => 'nullable|exists:top_mark,id',
             'aidType'                     => 'required|exists:aid_type,id',
             'aidTypeForm'                 => 'required|exists:aid_type_form,id',
-            'observation'                 => 'sometimes|nullable'
+            'observation'                 => 'sometimes|nullable',
+            'image'                       => 'required|exists:image,id',
+            'language'                    => 'sometimes|exists:language,id',
         ];
     }
 

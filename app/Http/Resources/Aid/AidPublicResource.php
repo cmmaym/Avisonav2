@@ -26,16 +26,16 @@ class AidPublicResource extends JsonResource
     {
         $self= $this;
         $name = function() use ($self){
-            return $self->aidLang->name;
+            return $self->symbol->symbolLang->name;
         };
         
         $observation = function() use ($self){
-            return $self->aidLang->observation;
+            return $self->symbol->symbolLang->observation;
         };
 
         return [
             'id'                => $this->id,
-            'name'              => $this->when(!is_null($this->aidLang), $name, null),
+            'name'              => $this->when(!is_null($this->symbol->symbolLang), $name, null),
             'racon'             => $this->racon,
             'ais'               => $this->ais,
             'height'            => $this->height,
@@ -46,7 +46,7 @@ class AidPublicResource extends JsonResource
             'period'            => $this->period,
             'createdAt'        => $this->created_at->format('Y-m-d'),
             'updatedAt'        => $this->updated_at->format('Y-m-d'),
-            'observation'       => $this->when(!is_null($this->aidLang), $observation, null),
+            'observation'       => $this->when(!is_null($this->symbol->symbolLang), $observation, null),
             'user'              => $this->user,
             'location'          => new LocationResource($this->location),
             'lightClass'        => new LightClassResource($this->lightClass),
@@ -54,7 +54,7 @@ class AidPublicResource extends JsonResource
             'topMark'           => new TopMarkResource($this->topMark),
             'aidType'           => new AidTypeResource($this->aidType),
             'aidTypeForm'       => new AidTypeFormResource($this->aidTypeForm),
-            'coordinate'        => new CoordinateResource($this->coordinate),
+            'coordinate'        => new CoordinateResource($this->coordinate->first),
             'colorStructure'    => ColorStructureResource::collection($this->aidColorStructure),
             'colorLight'        => ColorLightResource::collection($this->aidColorLight),
             'sequenceFlashes'   => SequenceFlashesResource::collection($this->sequenceFlashes),

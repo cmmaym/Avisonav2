@@ -25,7 +25,11 @@ class StoreNovelty extends FormRequest
     {
         return [
             'noveltyType'               => 'required|exists:novelty_type,id',
-            'characterType'             => 'required|exists:character_type,id'
+            'characterType'             => 'required|exists:character_type,id',
+            'symbol'                    => 'nullable|exists:symbol,id',
+            'language'                  => 'sometimes|required|exists:language,id',
+            'description'               => 'sometimes|required|max:500',
+            'parent'                    => 'nullable|exists:novelty,id',
         ];
     }
 

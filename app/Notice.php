@@ -53,5 +53,4 @@ class Notice extends Model
         return $this->belongsToMany(ChartEdition::class, 'notice_chart_edition')
                     ->withTimestamps();
     }
-
 }

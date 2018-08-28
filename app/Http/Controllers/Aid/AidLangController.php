@@ -3,14 +3,15 @@
 namespace AvisoNavAPI\Http\Controllers\Aid;
 
 use AvisoNavAPI\Aid;
-use AvisoNavAPI\AidLang;
+// use AvisoNavAPI\AidLang;
+use AvisoNavAPI\SymbolLang;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
-use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\Http\Requests\Aid\StoreAidLang;
-use AvisoNavAPI\Http\Resources\Aid\AidLangResource;
-use AvisoNavAPI\ModelFilters\Basic\AidLangFilter;
 use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\Http\Requests\Aid\StoreAidLang;
+use AvisoNavAPI\ModelFilters\Basic\AidLangFilter;
+use AvisoNavAPI\Http\Resources\Aid\AidLangResource;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 
 class AidLangController extends Controller
 {
@@ -23,8 +24,7 @@ class AidLangController extends Controller
      */
     public function index(Aid $aid)
     {
-        $collection = $aid->aidLangs()->filter(request()->all(), AidLangFilter::class)
-                                       ->with(['aid'])
+        $collection = $aid->symbol->symbolLangs()->filter(request()->all(), AidLangFilter::class)
                                        ->paginateFilter($this->perPage());
 
         return AidLangResource::collection($collection);
@@ -39,13 +39,13 @@ class AidLangController extends Controller
      */
     public function store(StoreAidLang $request, Aid $aid)
     {
-        $aidLang = new AidLang($request->only(['name']));
-        $aidLang->observation = ($request->input('observation')) ? $request->input('observation') : null;
-        $aidLang->language_id = $request->input('language');
+        $symbolLang = new SymbolLang($request->only(['name']));
+        $symbolLang->observation = ($request->input('observation')) ? $request->input('observation') : null;
+        $symbolLang->language_id = $request->input('language');
         
-        $aid->aidLangs()->save($aidLang);
+        $aid->symbol->symbolLangs()->save($symbolLang);
 
-        return new AidLangResource($aidLang);
+        return new AidLangResource($symbolLang);
     }
 
     /**
@@ -68,19 +68,20 @@ class AidLangController extends Controller
      * @param  int $id
      * @return \AvisoNavAPI\Http\Resources\Aid\AidLangResource
      */
-    public function update(StoreAidLang $request, Aid $aid, AidLAng $aidLang)
+    public function update(StoreAidLang $request, Aid $aid, $symbolLangId)
     {
-        $aidLang->fill($request->only(['name']));
-        $aidLang->observation = ($request->input('observation')) ? $request->input('observation') : null;
-        $aidLang->language_id = $request->input('language');
+        $symbolLang = $aid->symbol->symbolLangs()->findOrFail($symbolLangId);
+        $symbolLang->fill($request->only(['name']));
+        $symbolLang->observation = ($request->input('observation')) ? $request->input('observation') : null;
+        $symbolLang->language_id = $request->input('language');
 
-        if($aidLang->isClean()){
+        if($symbolLang->isClean()){
             return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
 
-        $aidLang->save();
+        $symbolLang->save();
 
-        return new AidLangResource($aidLang);
+        return new AidLangResource($symbolLang);
     }
 
     /**
@@ -90,10 +91,11 @@ class AidLangController extends Controller
      * @param  int $id
      * @return \AvisoNavAPI\Http\Resources\Aid\AidLangResource
      */
-    public function destroy(Aid $aid, AidLang $aidLang)
+    public function destroy(Aid $aid, $symbolLangId)
     {
-        $aidLang->delete();
+        $symbolLang = $aid->symbol->symbolLangs()->findOrFail($symbolLangId);
+        $symbolLang->delete();
 
-        return new AidLangResource($aidLang);
+        return new AidLangResource($symbolLang);
     }
 }

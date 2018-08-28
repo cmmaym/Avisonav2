@@ -3,7 +3,7 @@
 namespace AvisoNavAPI\Http\Controllers\Aid;
 
 use AvisoNavAPI\Aid;
-use AvisoNavAPI\AidLang;
+use AvisoNavAPI\SymbolLang;
 use AvisoNavAPI\Coordenada;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
@@ -15,6 +15,7 @@ use AvisoNavAPI\ModelFilters\Basic\AidFilter;
 use AvisoNavAPI\Http\Resources\Aid\AidResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\Symbol;
 
 class AidController extends Controller
 {
@@ -29,8 +30,7 @@ class AidController extends Controller
     {
         $collection = Aid::filter(request()->all(), AidFilter::class)
                          ->with([
-                             'coordinate',
-                             'aidLang' => $this->withLanguageQuery(),
+                             'symbol.symbolLang' => $this->withLanguageQuery(),
                              'location.zone.zoneLang' => $this->withLanguageQuery(),
                              'lightClass.lightClassLang' => $this->withLanguageQuery(),
                              'colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
@@ -51,31 +51,39 @@ class AidController extends Controller
      */
     public function store(StoreAid $request)
     {
-        $aid = new Aid($request->only(['height', 'scope', 'features']));
-        $aid->elevation_nmm = $request->input('elevationNmm');
-        $aid->flash_groups = $request->input('flashGroups');
-        $aid->period = $request->input('period');
-        $aid->user = Auth::user()->username;
-        $aid->location_id = $request->input('location');
-        $aid->light_class_id = $request->input('lightClass');
-        $aid->color_structure_pattern_id = $request->input('colorStructurePattern');
-        $aid->aid_type_id = $request->input('aidType');
-        $aid->aid_type_form_id = $request->input('aidTypeForm');
+        $symbolAid = DB::transaction(function () use ($request){
+            $symbol = new Symbol();
+            $symbol->symbol_type_id = 1;
+            $symbol->image_id = $request->input('image');
+            $symbol->save();
 
-        $aid->racon = ($request->input('racon')) ? $request->input('racon') : null;
-        $aid->ais = ($request->input('ais')) ? $request->input('ais') : null;
-        $aid->top_mark_id = ($request->input('topMark')) ? $request->input('topMark') : null;
+            $symbolLang = new SymbolLang($request->only(['name']));
+            $symbolLang->observation = ($request->input('observation')) ? $request->input('observation') : null;
+            $symbolLang->language_id = $request->input('language');
 
-        $aid->save();
+            $symbol->symbolLang()->save($symbolLang);
 
-        $aidLang = new AidLang($request->only(['name']));
-        $aidLang->observation = ($request->input('observation')) ? $request->input('observation') : null;
-        $aidLang->language_id = $request->input('language');
+            $aid = new Aid($request->only(['height', 'scope', 'features']));
+            $aid->elevation_nmm = $request->input('elevationNmm');
+            $aid->flash_groups = $request->input('flashGroups');
+            $aid->period = $request->input('period');
+            $aid->user = Auth::user()->username;
+            $aid->location_id = $request->input('location');
+            $aid->light_class_id = $request->input('lightClass');
+            $aid->color_structure_pattern_id = $request->input('colorStructurePattern');
+            $aid->aid_type_id = $request->input('aidType');
+            $aid->aid_type_form_id = $request->input('aidTypeForm');
 
-        $aid->aidLang()->save($aidLang);
+            $aid->racon = ($request->input('racon')) ? $request->input('racon') : null;
+            $aid->ais = ($request->input('ais')) ? $request->input('ais') : null;
+            $aid->top_mark_id = ($request->input('topMark')) ? $request->input('topMark') : null;
+
+            $symbol->aid()->save($aid);
+
+            return $aid;
+        });
         
-        return new AidResource($aid);
-
+        return new AidResource($symbolAid);
     }
 
     /**
@@ -87,8 +95,7 @@ class AidController extends Controller
     public function show(Aid $aid)
     {
         $aid->load([
-            'coordinate',
-            'aidLang' => $this->withLanguageQuery(),
+            'symbol.symbolLang' => $this->withLanguageQuery(),
             'location.zone.zoneLang' => $this->withLanguageQuery(),
             'lightClass.lightClassLang' => $this->withLanguageQuery(),
             'colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
@@ -142,7 +149,7 @@ class AidController extends Controller
      */
     public function destroy(Aid $aid)
     {
-        $aid->delete();
+        $aid->symbol->delete();
 
         return new AidResource($aid);
     }
