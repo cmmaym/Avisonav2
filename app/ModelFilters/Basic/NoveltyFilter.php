@@ -17,6 +17,11 @@ class NoveltyFilter extends ModelFilter
             $query->where('name', 'like', "%$name%");
         });
     }
+
+    public function state($state)
+    {
+        return $this->where('state', $state);
+    }
     
     public function createdAt($createdAt){
         return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));

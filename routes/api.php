@@ -243,3 +243,8 @@ Route::resource('image', 'Image\ImageController')->only([
 Route::resource('symbol', 'Symbol\SymbolController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
+
+//Novelty
+Route::resource('novelty', 'Notice\NoveltyController')->only([
+    'index'
+]);

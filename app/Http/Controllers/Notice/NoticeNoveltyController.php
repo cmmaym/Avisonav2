@@ -109,7 +109,7 @@ class NoticeNoveltyController extends Controller
                                     ->where('symbol_id', $symbol)
                                     ->first();
             
-            if($noveltyTemp->symbol_id !== $symbol)
+            if(!is_null($noveltyTemp) && $noveltyTemp->symbol->id !== $symbol)
             {
                 return $this->errorResponse('La novedad a cancelar no corresponde con la ultima novedad Temporal pendiente por cancelar relacionada a la Ayuda o Peligro seleccionado', 409);
             }
