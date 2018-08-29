@@ -82,7 +82,9 @@ class NoticeNoveltyController extends Controller
             
             if($noveltyTemp)
             {
-                return $this->errorResponse('La ayuda o peligro esta pendiente por cancelar en otro aviso', 409);
+                //Numero del aviso donde se encuentra la novedad temporal que no ha sido candelada
+                $noticeNumber = $noveltyTemp->notice->number;
+                return $this->errorResponse("La ayuda o peligro se encuentra en una novedad pendiente por cancelar en el aviso $noticeNumber", 409);
             }
 
             $novelty->state = 'A';

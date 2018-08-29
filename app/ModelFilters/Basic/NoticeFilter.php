@@ -29,18 +29,6 @@ class NoticeFilter extends ModelFilter
     public function user($user){
         return $this->where('user', 'like', "%$user%");
     }
-    
-    public function characterType($name){
-        $this->whereHas('characterType.characterTypeLang', function($query) use ($name) {
-            $query->where('name', 'like', "%$name%");
-        });
-    }
-    
-    public function noveltyType($name){
-        $this->whereHas('noveltyType.noveltyTypeLang', function($query) use ($name) {
-            $query->where('name', 'like', "%$name%");
-        });
-    }
 
     public function location($location){
         $this->related('location', 'name', 'like', "%$location%");
@@ -92,28 +80,6 @@ class NoticeFilter extends ModelFilter
     public function sortByUser()
     {
         return $this->orderBy('user', $this->input('dir', 'asc'));
-    }
-    
-    public function sortByCharacterType()
-    {
-        $input = $this->input('dir', 'asc');
-
-        $this->join('character_type', 'notice.character_type_id', '=', 'character_type.id')
-             ->join('character_type_lang', 'character_type.id', '=', 'character_type_lang.character_type_id')
-             ->groupBy('notice.number')
-             ->orderBy('character_type_lang.name', $input)
-             ->select('notice.*');
-    }
-    
-    public function sortByNoveltyType()
-    {
-        $input = $this->input('dir', 'asc');
-
-        $this->join('novelty_type', 'notice.novelty_type_id', '=', 'novelty_type.id')
-             ->join('novelty_type_lang', 'novelty_type.id', '=', 'novelty_type_lang.novelty_type_id')
-             ->groupBy('notice.number')
-             ->orderBy('novelty_type_lang.name', $input)
-             ->select('notice.*');
     }
     
     public function sortByZone()

@@ -72,12 +72,17 @@ class NoticeController extends Controller
             $notice->light_list_id = ($request->input('lightList')) ? $request->input('lightList') : null;
     
             $notice->save();
-    
-            // $noticeLang = new NoticeLang();
-            // $noticeLang->description = $request->input('description');
-            // $noticeLang->language_id = $request->input('language');
-    
-            // $notice->noticeLang()->save($noticeLang);
+
+            $description = $request->input('description');
+
+            if($description)
+            {
+                $noticeLang = new NoticeLang();
+                $noticeLang->description = $description;
+                $noticeLang->language_id = $request->input('language');
+        
+                $notice->noticeLang()->save($noticeLang);
+            }    
 
             $consecutiveNotice->number = $newConsec;
             $consecutiveNotice->save();
@@ -129,8 +134,6 @@ class NoticeController extends Controller
 
         $notice->catalog_ocean_coast_id = ($request->input('catalogOceanCoast')) ? $request->input('catalogOceanCoast') : null;
         $notice->light_list_id = ($request->input('lightList')) ? $request->input('lightList') : null;
-
-        $notice->parent_id = ($request->has('parent_id')) ? $request->input('parent_id') : null;
 
         if($notice->isClean()){
             return $this->errorResponse('Debe especificar por lo menos un valor diferente para actualizar', 409);

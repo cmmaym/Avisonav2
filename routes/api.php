@@ -238,3 +238,8 @@ Route::resource('reportingUser', 'ReportingUser\ReportingUserController')->only(
 Route::resource('image', 'Image\ImageController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
+
+//Symbol
+Route::resource('symbol', 'Symbol\SymbolController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);

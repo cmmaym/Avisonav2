@@ -27,14 +27,13 @@ class StoreNotice extends FormRequest
             'reportsNumbers'           => 'required|max:500',
             'reportDate'               => 'required|date_format:Y-m-d',
             'state'                     => 'sometimes|required|in:G,P',
-            'file_info'                 => 'sometimes|nullable|file',
             'location'                  => 'required|exists:location,id',
             'catalogOceanCoast'         => 'nullable|exists:catalog_ocean_coast,id',
             'lightList'                 => 'nullable|exists:light_list,id',
             'reportSource'              => 'required|exists:report_source,id',
             'reportingUser'             => 'required|exists:reporting_user,id',
             'language'                  => 'sometimes|required|exists:language,id',
-            'description'               => 'sometimes|required|max:500',
+            'description'               => 'sometimes|nullable|max:500',
         ];
     }
 

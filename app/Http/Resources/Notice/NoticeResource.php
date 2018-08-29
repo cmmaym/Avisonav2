@@ -44,22 +44,13 @@ class NoticeResource extends JsonResource
             'createdAt'                => $this->created_at->format('Y-m-d'),
             'updatedAt'                => $this->updated_at->format('Y-m-d'),
             'state'                     => $this->state,
-            'file_info'                 => $this->file_info,
             'user'                      => $this->user,
             'description'               =>  $this->when(!is_null($this->noticeLang), $description, null),
-            'parent'                    => null,
-            'characterType'             => new CharacterTypeResource($this->characterType),
-            'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
             'location'                  => new LocationResource($this->location),
             'catalogOceanCoast'         => new CatalogOceanCoastResource($this->catalogOceanCoast),
             'lightList'                 => new LightListResource($this->lightList),
             'reportSource'             => new ReportSourceResource($this->reportSource),
-            'reportingUser'            => new ReportingUserResource($this->reportingUser),
-            'links'                     => [
-                'self'          => route('notice.show', ['id' => $this->id]),
-                'noticeLang'    => route('notice.noticeLang.index', ['id' => $this->id]),
-                'noticeAid'     => route('notice.aid.index', ['id' => $this->id])
-            ]
+            'reportingUser'            => new ReportingUserResource($this->reportingUser)
         ];
     }
 }
