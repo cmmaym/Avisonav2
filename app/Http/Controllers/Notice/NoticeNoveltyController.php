@@ -184,13 +184,56 @@ class NoticeNoveltyController extends Controller
      */
     public function update(StoreNovelty $request, Notice $notice, $noveltyId)
     {
-        $novelty = $notice->findOrFail($noveltyId);
-        $novelty->novelty_type = $request->input('noveltyType');
-        $novelty->character_type = $request->input('characterType');
+        $noveltyType = $request->input('noveltyType');
+        $characterType = CharacterType::find($request->input('characterType'));
+        $symbol = Symbol::find($request->input('symbol'));
+
+        //Novedad a cancelar
+        $parent = Novelty::find($request->input('parent'));
+
+        $novelty = $notice->novelty()->findOrFail($noveltyId);
+        $novelty->novelty_type_id = $noveltyType;
+        $novelty->character_type_id = $characterType->id;
+
+        //Validamos si tiene una novedad por cancelar
+        if($parent)
+        {
+            if($parent->characterType->alias === 'P')
+            {
+                return $this->errorResponse('Una novedad Permanente no puede ser cancelada', 409);
+            }
+            
+            if($parent->characterType->alias === 'T' && $characterType->alias === 'G')
+            {
+                return $this->errorResponse('Una novedad Temporal no puede ser cancelada por una novedad General', 409);
+            }
+
+            //Validamos si la novedad anteriormente NO tenia asociado una novedad a cancelar
+            //y que no hayan seleccionado algun simbolo
+            if(!$novelty->parent && !$symbol)
+            {
+                $novelty->parent_id = $parent->id;
+                $parent->state = 'C';
+                $novelty->state = 'A';
+    
+                $parent->save();
+            }
+
+            //Validamos si la novedad anteriormente SI tenia asociada una novedad a cancelar
+            //y si dicha novedad es diferete a la que hayan seleccionado
+            //y que no hayan seleccionado algun simbolo
+            if($novelty->parent && ($novelty->parent->id !== $parent->id ) && !$symbol)
+            {
+                
+            }
+            
+        }
 
         if($novelty->isClean()){
             return $this->errorResponse('Debe especificar por lo menos un valor diferente para actualizar', 409);
         }
+        
+        $this->generateNoveltySequence($notice->id);
 
         return new NoveltyResource($novelty);
     }
