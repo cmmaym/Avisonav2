@@ -248,3 +248,11 @@ Route::resource('symbol', 'Symbol\SymbolController')->only([
 Route::resource('novelty', 'Notice\NoveltyController')->only([
     'index'
 ]);
+
+Route::resource('novelty.noveltyLang', 'Notice\NoveltyLangController')->only([
+    'index', 'store', 'update', 'destroy'
+]);
+
+Route::resource('novelty.coordinate', 'Notice\NoveltyCoordinateController')->only([
+    'index', 'store', 'update', 'destroy'
+]);

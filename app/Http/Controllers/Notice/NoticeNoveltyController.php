@@ -3,15 +3,18 @@
 namespace AvisoNavAPI\Http\Controllers\Notice;
 
 use AvisoNavAPI\Notice;
+use AvisoNavAPI\Symbol;
 use AvisoNavAPI\Novelty;
+use AvisoNavAPI\NoveltyLang;
 use Illuminate\Http\Request;
+use AvisoNavAPI\CharacterType;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Traits\Responser;
+use Illuminate\Support\Facades\DB;
+use AvisoNavAPI\ModelFilters\Basic\NoveltyFilter;
 use AvisoNavAPI\Http\Requests\Notice\StoreNovelty;
 use AvisoNavAPI\Http\Resources\Notice\NoveltyResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\ModelFilters\Basic\NoveltyFilter;
-use AvisoNavAPI\CharacterType;
 
 class NoticeNoveltyController extends Controller
 {
@@ -44,7 +47,8 @@ class NoticeNoveltyController extends Controller
     {
         $noveltyType = $request->input('noveltyType');
         $characterType = CharacterType::find($request->input('characterType'));
-        $symbol = $request->input('symbol');
+        $symbol = Symbol::find($request->input('symbol'));
+        $description = $request->input('description');
 
         //Novedad a cancelar
         $parent = Novelty::find($request->input('parent'));
@@ -53,7 +57,10 @@ class NoticeNoveltyController extends Controller
         $novelty->novelty_type_id = $noveltyType;
         $novelty->character_type_id = $characterType->id;
 
-        if($parent && !$symbol)
+        if(!$parent && !$symbol)
+        {
+            $novelty->state = 'A';
+        }else if($parent && !$symbol)
         {
             if($parent->characterType->alias === 'P')
             {
@@ -84,11 +91,12 @@ class NoticeNoveltyController extends Controller
             {
                 //Numero del aviso donde se encuentra la novedad temporal que no ha sido candelada
                 $noticeNumber = $noveltyTemp->notice->number;
-                return $this->errorResponse("La ayuda o peligro se encuentra en una novedad pendiente por cancelar en el aviso $noticeNumber", 409);
+                $noveltyNum = $noveltyTemp->num_item; 
+                return $this->errorResponse("La ayuda o peligro se encuentra en la novedad #$noveltyNum pendiente por cancelar en el aviso $noticeNumber", 409);
             }
 
             $novelty->state = 'A';
-            $novelty->symbol_id = $symbol;
+            $novelty->symbol_id = $symbol->id;
         }else if($symbol && $parent)
         {
             if($parent->characterType->alias === 'P')
@@ -109,20 +117,41 @@ class NoticeNoveltyController extends Controller
                                     ->where('symbol_id', $symbol)
                                     ->first();
             
-            if(!is_null($noveltyTemp) && $noveltyTemp->symbol->id !== $symbol)
+            if(!is_null($noveltyTemp) && ($noveltyTemp->id !== $parent->id))
             {
                 return $this->errorResponse('La novedad a cancelar no corresponde con la ultima novedad Temporal pendiente por cancelar relacionada a la Ayuda o Peligro seleccionado', 409);
+            }else if($parent->symbol->id !== $symbol)
+            {
+                return $this->errorResponse('La ayuda o peligro seleccionado no corresponte con la ayuda o peligro asociado a la novedad a cancelar', 409);
             }
 
             $novelty->state = 'A';
             $novelty->parent_id = $parent->id;
-            $novelty->symbol_id = $symbol;
+            $novelty->symbol_id = $symbol->id;
+
             $parent->state = 'C';
 
             $parent->save();
         }
         
         $notice->novelty()->save($novelty);
+
+        if($symbol)
+        {
+            $coordinate = $symbol->coordinate()->orderBy('created_at', 'desc')->first();
+            $novelty->coordinate()->attach($coordinate->id);
+        }
+
+        if($description)
+        {
+            $noveltyLang = new NoveltyLang();
+            $noveltyLang->description = $description;
+            $noveltyLang->language_id = $request->input('language');
+
+            $novelty->noveltyLang()->save($noveltyLang);
+        }
+
+        $this->generateNoveltySequence($notice->id);
 
         return new NoveltyResource($novelty);
     }
@@ -178,6 +207,20 @@ class NoticeNoveltyController extends Controller
         $novelty = $notice->findOrFail($noveltyId);
         $novelty->delete();
 
+        $this->generateNoveltySequence($notice->id);
+
         return new NoveltyResource($novelty);
+    }
+
+    private function generateNoveltySequence($noticeId)
+    {
+        //Generamos la variable row en mysql iniciando en 0
+        DB::statement('SET @row := 0');
+
+        //actualizamos el num_item en base a la variable row + 1
+        DB::table('novelty')
+            ->where('notice_id', $noticeId)
+            ->orderBy('created_at', 'asc')
+            ->update(['num_item' => DB::raw('(@row := @row + 1)')]);
     }
 }

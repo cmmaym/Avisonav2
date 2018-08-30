@@ -18,7 +18,8 @@ class CreateNoveltyTable extends Migration
             $table->integer('notice_id')->unsigned();
             $table->integer('novelty_type_id')->unsigned();
             $table->integer('character_type_id')->unsigned();
-            $table->string('state', 1)->comment('El estado puede ser A(Activo) y C(Cancelado)');
+            $table->string('state', 1)->comment('El estado puede ser A(Abierta) y C(Cancelada)');
+            $table->integer('num_item')->unsigned()->comment('Consecutivo de una  novedad dentro de un aviso');
             $table->timestamps();
             $table->integer('symbol_id')->nullable()->unsigned();
             $table->integer('parent_id')->nullable()->unsigned();
@@ -38,6 +39,8 @@ class CreateNoveltyTable extends Migration
             
             $table->foreign('parent_id')
                   ->references('id')->on('novelty');
+            
+            $table->unique(['notice_id', 'num_item'], 'notice_num_item_UNIQUE');
         });
     }
 

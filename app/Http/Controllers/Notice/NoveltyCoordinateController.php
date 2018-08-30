@@ -1,29 +1,29 @@
 <?php
 
-namespace AvisoNavAPI\Http\Controllers\Aid;
+namespace AvisoNavAPI\Http\Controllers\Notice;
 
+use AvisoNavAPI\Novelty;
+use AvisoNavAPI\Coordinate;
 use Illuminate\Http\Request;
-use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\Aid;
-use AvisoNavAPI\ModelFilters\Basic\CoordinateFilter;
 use AvisoNavAPI\Traits\Filter;
+use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\ModelFilters\Basic\CoordinateFilter;
 use AvisoNavAPI\Http\Resources\CoordinateResource;
 use AvisoNavAPI\Http\Requests\Coordinate\StoreCoordinate;
-use AvisoNavAPI\Coordinate;
-use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 
-class AidCoordinateController extends Controller
+class NoveltyCoordinateController extends Controller
 {
     use Filter, Responser;
 
     /**
      * Display a listing of the resource.
      *
-     * @return \AvisoNavAPI\Http\Resources\Aid\CoordinateResource
+     * @return \AvisoNavAPI\Http\Resources\CoordinateResource
      */
-    public function index(Aid $aid)
+    public function index(Novelty $novelty)
     {
-        $collection = $aid->symbol->coordinate()->filter(request()->all(), CoordinateFilter::class)
+        $collection = $novelty->coordinate()->filter(request()->all(), CoordinateFilter::class)
                                          ->paginateFilter($this->perPage());
 
         return CoordinateResource::collection($collection);
@@ -33,9 +33,9 @@ class AidCoordinateController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \AvisoNavAPI\Http\Requests\Coordinate\StoreCoordinate  $request
-     * @return \AvisoNavAPI\Http\Resources\Aid\CoordinateResource
+     * @return \AvisoNavAPI\Http\Resources\CoordinateResource
      */
-    public function store(StoreCoordinate $request, Aid $aid)
+    public function store(StoreCoordinate $request, Novelty $novelty)
     {
         $coordinate = new Coordinate();
         $coordinate->latitude_degrees = $request->input('latitudeDegrees');
@@ -47,7 +47,7 @@ class AidCoordinateController extends Controller
         $coordinate->longitude_seconds = $request->input('longitudeSeconds');
         $coordinate->longitude_dir     = $request->input('longitudeDir');
 
-        $aid->symbol->coordinate()->save($coordinate);
+        $novelty->coordinate()->save($coordinate);
 
         return new CoordinateResource($coordinate);
     }
@@ -56,13 +56,13 @@ class AidCoordinateController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \AvisoNavAPI\Http\Requests\Coordinate\StoreCoordinate  $request
-     * @param  \AvisoNavAPI\Aid $aid
+     * @param  \AvisoNavAPI\Novelty $novelty
      * @param  int  $id
-     * @return \AvisoNavAPI\Http\Resources\Aid\CoordinateResource
+     * @return \AvisoNavAPI\Http\Resources\CoordinateResource
      */
-    public function update(StoreCoordinate $request, Aid $aid, $id)
+    public function update(StoreCoordinate $request, Novelty $novelty, $id)
     {
-        $coordinate = $aid->symbol->coordinate()->findOrFail($id);
+        $coordinate = $novelty->coordinate()->findOrFail($id);
         $coordinate->latitude_degrees = $request->input('latitudeDegrees');
         $coordinate->latitude_minutes = $request->input('latitudeMinutes');
         $coordinate->latitude_seconds = $request->input('latitudeSeconds');
@@ -84,14 +84,14 @@ class AidCoordinateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \AvisoNavAPI\Aid $aid
+     * @param  \AvisoNavAPI\Novelty $novelty
      * @param  int  $id
      * @return \AvisoNavAPI\Http\Resources\Aid\CoordinateResource
      */
-    public function destroy(Aid $aid, $id)
+    public function destroy(Novelty $novelty, $id)
     {
-        $coordinate = $aid->symbol->coordinate()->findOrFail($id);
+        $coordinate = $novelty->coordinate()->findOrFail($id);
 
-        $aid->symbol->coordinate()->detach($coordinate->id);
+        $novelty->coordinate()->detach($coordinate->id);
     }
 }

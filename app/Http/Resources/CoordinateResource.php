@@ -1,6 +1,6 @@
 <?php
 
-namespace AvisoNavAPI\Http\Resources\Aid;
+namespace AvisoNavAPI\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 

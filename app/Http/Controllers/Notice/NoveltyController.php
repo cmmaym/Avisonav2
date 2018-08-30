@@ -28,6 +28,9 @@ class NoveltyController extends Controller
                                             'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
                                        ])
                                        ->where('state', 'A')
+                                       ->whereHas('characterType', function($query){
+                                            $query->where('alias', '<>', 'P');
+                                       })
                                        ->paginateFilter($this->perPage());
 
         return NoveltyResource::collection($collection);

@@ -8,6 +8,7 @@ use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Http\Resources\Json\JsonResource;
 use AvisoNavAPI\Http\Resources\NoveltyType\NoveltyTypeResource;
 use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeResource;
+use AvisoNavAPI\Http\Resources\SymbolResource;
 
 class NoveltyResource extends JsonResource
 {
@@ -25,15 +26,6 @@ class NoveltyResource extends JsonResource
         $description = function() use ($self) {
             return $self->noveltyLang->description;
         };
-        
-        $symbolName = function() use ($self) {
-            if(!is_null($self->symbol->symbolLang))
-            {
-                return $self->symbol->symbolLang->name;
-            }
-
-            return null;
-        };
 
         return [
             'id'                        => $this->id,
@@ -41,9 +33,12 @@ class NoveltyResource extends JsonResource
             'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
             'characterType'             => new CharacterTypeResource($this->characterType),
             'description'               =>  $this->when(!is_null($this->noveltyLang), $description, null),
-            'symbol'                    => $this->when(!is_null($this->symbol), $symbolName, null),
+            'symbol'                    => new SymbolResource($this->symbol),
+            'state'                     => $this->state,
+            'numItem'                   => $this->num_item,
             'createdAt'                => $this->created_at->format('Y-m-d'),
-            'updatedAt'                => $this->updated_at->format('Y-m-d')
+            'updatedAt'                => $this->updated_at->format('Y-m-d'),
+            'parent'                    => new NoveltyResource($this->parent)
         ];
     }
 }
