@@ -31,6 +31,7 @@ class NoticeNoveltyController extends Controller
                                        ->with([
                                             'characterType.characterTypeLang' => $this->withLanguageQuery(),
                                             'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
+                                            'parent'
                                        ])
                                        ->paginateFilter($this->perPage());
 
@@ -89,9 +90,9 @@ class NoticeNoveltyController extends Controller
             
             if($noveltyTemp)
             {
-                //Numero del aviso donde se encuentra la novedad temporal que no ha sido candelada
                 $noticeNumber = $noveltyTemp->notice->number;
                 $noveltyNum = $noveltyTemp->num_item; 
+
                 return $this->errorResponse("La ayuda o peligro se encuentra en la novedad #$noveltyNum pendiente por cancelar en el aviso $noticeNumber", 409);
             }
 
@@ -122,7 +123,7 @@ class NoticeNoveltyController extends Controller
                 return $this->errorResponse('La novedad a cancelar no corresponde con la ultima novedad Temporal pendiente por cancelar relacionada a la Ayuda o Peligro seleccionado', 409);
             }else if($parent->symbol->id !== $symbol)
             {
-                return $this->errorResponse('La ayuda o peligro seleccionado no corresponte con la ayuda o peligro asociado a la novedad a cancelar', 409);
+                return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
             }
 
             $novelty->state = 'A';
@@ -221,17 +222,124 @@ class NoticeNoveltyController extends Controller
 
             //Validamos si la novedad anteriormente SI tenia asociada una novedad a cancelar
             //y si dicha novedad es diferete a la que hayan seleccionado
-            //y que no hayan seleccionado algun simbolo
-            if($novelty->parent && ($novelty->parent->id !== $parent->id ) && !$symbol)
+            if($novelty->parent && ($novelty->parent->id !== $parent->id ))
             {
+                if($symbol)
+                {
+                    if($parent->symbol && ($symbol->id !== $parent->symbol->id))
+                    {
+                        return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
+                    }
+
+                    $novelty->symbol_id = $symbol->id;
+                }else if($parent->symbol)
+                {
+                    return $this->errorResponse('Debe seleccionar la ayuda o peligro asociado a la novedad a cancelar', 409);
+                }
+
+                $novelty->parent->state = 'A';
+                $novelty->parent->save();
+
+                $novelty->parent_id = $parent->id;
+                $parent->state = 'C';
+
+                $parent->save();
+            }else if($novelty->parent && ($novelty->parent->id === $parent->id ))
+            {
+                if($symbol)
+                {
+                    if($parent->symbol && ($symbol->id !== $parent->symbol->id))
+                    {
+                        return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
+                    }
+
+                    $novelty->symbol_id = $symbol->id;
+                }else if($parent->symbol)
+                {
+                    return $this->errorResponse('Debe seleccionar la ayuda o peligro asociado a la novedad a cancelar', 409);
+                }
+
+            }else if(!$novelty->parent && $symbol)
+            {
+                if($parent->symbol && ($symbol->id !== $parent->symbol->id))
+                {
+                    return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
+                }
+
+                $novelty->symbol_id = $symbol->id;
+                $novelty->parent_id = $parent->id;
                 
+                $parent->state = 'C';
+                $parent->save();
+            }else if(!$symbol && $parent->symbol)
+            {
+                return $this->errorResponse('Debe seleccionar la ayuda o peligro asociado a la novedad a cancelar', 409);
             }
             
+        }else if($novelty->parent)
+        {
+            $novelty->parent->state = 'A';
+            $novelty->parent->save();
+
+            $novelty->parent_id = null;
+        }
+        
+        if($symbol && !$parent)
+        {
+            if($novelty->state === 'C')
+            {
+                $noveltyNext = Novelty::where('parent_id', $novelty->id)->first();
+
+                $noveltyNextNumItem = $noveltyNext->num_item;
+                $noveltyNextNoticeNumber = $noveltyNext->notice->number;
+                if(!$noveltyNext->symbol)
+                {
+                    return $this->errorResponse("Debe primero especificar la ayuda o peligro en la novedad #$noveltyNextNumItem del aviso No $noveltyNextNoticeNumber", 409);
+                }else if($noveltyNext->symbol->id !== $symbol->id)
+                {
+                    $noveltyNextSymbolName = $noveltyNext->symbol->symbolLang()->first()->name;
+                    return $this->errorResponse("Debe seleccionar la ayuda o peligro de nombre $noveltyNextSymbolName, ya que es la que se encuentra en la novedad #$noveltyNextNumItem del aviso No $noveltyNextNoticeNumber", 409);
+                }
+            }
+
+            $noveltyTemp = Novelty::where('state', 'A')
+                                  ->where('symbol_id', $symbol->id)
+                                  ->whereHas('characterType', function($query){
+                                        $query->where('alias', 'T');
+                                  })
+                                  ->first();
+
+            if($noveltyTemp)
+            {
+                $noticeNumber = $noveltyTemp->notice->number;
+                $noveltyNum = $noveltyTemp->num_item;
+                
+                return $this->errorResponse("La ayuda o peligro se encuentra en la novedad #$noveltyNum pendiente por cancelar en el aviso $noticeNumber", 409);
+            }
+
+            $novelty->symbol_id = $symbol->id;
         }
 
+        if(!$symbol && !$parent)
+        {
+            if($novelty->symbol)
+            {
+                $novelty->symbol_id = null;
+            }
+
+            if($novelty->parent)
+            {
+                $novelty->parent_id = null;
+                $novelty->parent->state = 'A';
+                $novelty->parent->save();
+            }
+        }
+        
         if($novelty->isClean()){
             return $this->errorResponse('Debe especificar por lo menos un valor diferente para actualizar', 409);
         }
+        
+        $novelty->save();
         
         $this->generateNoveltySequence($notice->id);
 
