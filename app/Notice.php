@@ -48,9 +48,4 @@ class Notice extends Model
     public function noticeLang(){
         return $this->hasOne(NoticeLang::class);
     }
-    
-    public function chartEdition(){
-        return $this->belongsToMany(ChartEdition::class, 'notice_chart_edition')
-                    ->withTimestamps();
-    }
 }

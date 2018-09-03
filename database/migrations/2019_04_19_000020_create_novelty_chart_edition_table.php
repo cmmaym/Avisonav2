@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNoticeChartEditionTable extends Migration
+class CreateNoveltyChartEditionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,20 @@ class CreateNoticeChartEditionTable extends Migration
      */
     public function up()
     {
-        Schema::create('notice_chart_edition', function (Blueprint $table) {
-            $table->integer('notice_id')->unsigned();
+        Schema::create('novelty_chart_edition', function (Blueprint $table) {
+            $table->integer('novelty_id')->unsigned();
             $table->integer('chart_edition_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('notice_id')
-                ->references('id')->on('notice')
+            $table->foreign('novelty_id')
+                ->references('id')->on('novelty')
                 ->onDelete('cascade');
 
             $table->foreign('chart_edition_id')
                 ->references('id')->on('chart_edition')
                 ->onDelete('cascade');
 
-            $table->unique(['notice_id', 'chart_edition_id'], 'notice_chart_edition_UNIQUE');
+            $table->unique(['novelty_id', 'chart_edition_id'], 'novelty_chart_edition_UNIQUE');
         });
     }
 
@@ -37,6 +37,6 @@ class CreateNoticeChartEditionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notice_chart_edition');
+        Schema::dropIfExists('novelty_chart_edition');
     }
 }

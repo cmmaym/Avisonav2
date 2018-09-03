@@ -15,6 +15,7 @@ use AvisoNavAPI\ModelFilters\Basic\NoveltyFilter;
 use AvisoNavAPI\Http\Requests\Notice\StoreNovelty;
 use AvisoNavAPI\Http\Resources\Notice\NoveltyResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+use AvisoNavAPI\ChartEdition;
 
 class NoticeNoveltyController extends Controller
 {
@@ -58,10 +59,7 @@ class NoticeNoveltyController extends Controller
         $novelty->novelty_type_id = $noveltyType;
         $novelty->character_type_id = $characterType->id;
 
-        if(!$parent && !$symbol)
-        {
-            $novelty->state = 'A';
-        }else if($parent && !$symbol)
+        if($parent)
         {
             if($parent->characterType->alias === 'P')
             {
@@ -72,67 +70,53 @@ class NoticeNoveltyController extends Controller
             {
                 return $this->errorResponse('Una novedad Temporal no puede ser cancelada por una novedad General', 409);
             }
-            
+
+            if($symbol)
+            {
+                //Buscamos la ultima novedad temporal y estado Abierta asociada al symbolo
+                $noveltyTemp = Novelty::whereHas('characterType', function($query) {
+                                    $query->where('alias', 'T');
+                                })
+                                ->where('state', 'A')
+                                ->where('symbol_id', $symbol)
+                                ->first();
+
+                if($noveltyTemp && ($noveltyTemp->id !== $parent->id))
+                {
+                    return $this->errorResponse('La novedad a cancelar no corresponde con la ultima novedad Temporal pendiente por cancelar relacionada a la Ayuda o Peligro seleccionado', 409);
+                }else if($parent->symbol && ($parent->symbol->id !== $symbol->id))
+                {
+                    return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
+                }
+
+                $novelty->symbol_id = $symbol->id;
+            }
+
             $novelty->parent_id = $parent->id;
-            $parent->state = 'C';
             $novelty->state = 'A';
 
+            $parent->state = 'C';
             $parent->save();
-        }else if($symbol && !$parent)
+        }else if($symbol)
         {
-            //Buscamos si el simbolo se encuentra en otra novedad Temporal y estado Abierta asociada al symbolo
+            //Buscamos la ultima novedad temporal y estado Abierta asociada al symbolo
             $noveltyTemp = Novelty::whereHas('characterType', function($query) {
-                                        $query->where('alias', 'T');
-                                    })
-                                    ->where('state', 'A')
-                                    ->where('symbol_id', $symbol)
-                                    ->first();
-            
+                                $query->where('alias', 'T');
+                            })
+                            ->where('state', 'A')
+                            ->where('symbol_id', $symbol->id)
+                            ->first();
+
             if($noveltyTemp)
             {
                 $noticeNumber = $noveltyTemp->notice->number;
                 $noveltyNum = $noveltyTemp->num_item; 
 
-                return $this->errorResponse("La ayuda o peligro se encuentra en la novedad #$noveltyNum pendiente por cancelar en el aviso $noticeNumber", 409);
+                return $this->errorResponse("La ayuda o peligro se encuentra en la novedad #$noveltyNum del aviso $noticeNumber pendiente por cancelar", 409);
             }
 
-            $novelty->state = 'A';
             $novelty->symbol_id = $symbol->id;
-        }else if($symbol && $parent)
-        {
-            if($parent->characterType->alias === 'P')
-            {
-                return $this->errorResponse('Una novedad Permanente no puede ser cancelada', 409);
-            }
-            
-            if($parent->characterType->alias === 'T' && $characterType->alias === 'G')
-            {
-                return $this->errorResponse('Una novedad Temporal no puede ser cancelada por una novedad General', 409);
-            }
-
-            //Buscamos la ultima novedad temporal y estado Abierta asociada al symbolo
-            $noveltyTemp = Novelty::whereHas('characterType', function($query) {
-                                        $query->where('alias', 'T');
-                                    })
-                                    ->where('state', 'A')
-                                    ->where('symbol_id', $symbol)
-                                    ->first();
-            
-            if(!is_null($noveltyTemp) && ($noveltyTemp->id !== $parent->id))
-            {
-                return $this->errorResponse('La novedad a cancelar no corresponde con la ultima novedad Temporal pendiente por cancelar relacionada a la Ayuda o Peligro seleccionado', 409);
-            }else if($parent->symbol->id !== $symbol)
-            {
-                return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
-            }
-
             $novelty->state = 'A';
-            $novelty->parent_id = $parent->id;
-            $novelty->symbol_id = $symbol->id;
-
-            $parent->state = 'C';
-
-            $parent->save();
         }
         
         $notice->novelty()->save($novelty);
@@ -140,7 +124,32 @@ class NoticeNoveltyController extends Controller
         if($symbol)
         {
             $coordinate = $symbol->coordinate()->orderBy('created_at', 'desc')->first();
-            $novelty->coordinate()->attach($coordinate->id);
+
+            if($coordinate) $novelty->coordinate()->attach($coordinate->id);
+
+            $symbol->chart->load([
+                                'chartEdition' => function($query){
+                                    $query->leftJoin(DB::raw('
+                                        (
+                                            select chart_id, max(created_at) max_created_at
+                                            from chart_edition
+                                            group by chart_id
+                                        ) che
+                                    '), function($join){
+                                        $join->on('chart_edition.chart_id', '=', 'che.chart_id');
+                                        $join->on('chart_edition.created_at', '=', 'che.max_created_at');
+                                    })
+                                    ->select('chart_edition.*')
+                                    ->whereNotNull('che.chart_id');
+                                }
+                            ]);
+       
+            if($symbol->chart)
+            {
+                $chartEditionId = $symbol->chart->pluck('chartEdition')->collapse()->pluck('id');
+                if ($chartEditionId) $notice->chartEdition()->syncWithoutDetaching($chartEditionId);
+            }
+
         }
 
         if($description)
@@ -231,6 +240,33 @@ class NoticeNoveltyController extends Controller
                         return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
                     }
 
+                    $coordinate = $symbol->coordinate()->orderBy('created_at', 'desc')->first();
+
+                    if($coordinate) $novelty->coordinate()->syncWithoutDetaching($coordinate->id);
+
+                    $symbol->chart->load([
+                        'chartEdition' => function($query){
+                            $query->leftJoin(DB::raw('
+                                (
+                                    select chart_id, max(created_at) max_created_at
+                                    from chart_edition
+                                    group by chart_id
+                                ) che
+                            '), function($join){
+                                $join->on('chart_edition.chart_id', '=', 'che.chart_id');
+                                $join->on('chart_edition.created_at', '=', 'che.max_created_at');
+                            })
+                            ->select('chart_edition.*')
+                            ->whereNotNull('che.chart_id');
+                        }
+                    ]);
+        
+                    if($symbol->chart)
+                    {
+                        $chartEditionId = $symbol->chart->pluck('chartEdition')->collapse()->pluck('id');
+                        if ($chartEditionId) $notice->chartEdition()->syncWithoutDetaching($chartEditionId);
+                    }
+
                     $novelty->symbol_id = $symbol->id;
                 }else if($parent->symbol)
                 {
@@ -253,6 +289,33 @@ class NoticeNoveltyController extends Controller
                         return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
                     }
 
+                    $coordinate = $symbol->coordinate()->orderBy('created_at', 'desc')->first();
+
+                    if($coordinate) $novelty->coordinate()->syncWithoutDetaching($coordinate->id);
+
+                    $symbol->chart->load([
+                        'chartEdition' => function($query){
+                            $query->leftJoin(DB::raw('
+                                (
+                                    select chart_id, max(created_at) max_created_at
+                                    from chart_edition
+                                    group by chart_id
+                                ) che
+                            '), function($join){
+                                $join->on('chart_edition.chart_id', '=', 'che.chart_id');
+                                $join->on('chart_edition.created_at', '=', 'che.max_created_at');
+                            })
+                            ->select('chart_edition.*')
+                            ->whereNotNull('che.chart_id');
+                        }
+                    ]);
+        
+                    if($symbol->chart)
+                    {
+                        $chartEditionId = $symbol->chart->pluck('chartEdition')->collapse()->pluck('id');
+                        if ($chartEditionId) $notice->chartEdition()->syncWithoutDetaching($chartEditionId);
+                    }
+
                     $novelty->symbol_id = $symbol->id;
                 }else if($parent->symbol)
                 {
@@ -264,6 +327,33 @@ class NoticeNoveltyController extends Controller
                 if($parent->symbol && ($symbol->id !== $parent->symbol->id))
                 {
                     return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
+                }
+
+                $coordinate = $symbol->coordinate()->orderBy('created_at', 'desc')->first();
+
+                if($coordinate) $novelty->coordinate()->syncWithoutDetaching($coordinate->id);
+
+                $symbol->chart->load([
+                    'chartEdition' => function($query){
+                        $query->leftJoin(DB::raw('
+                            (
+                                select chart_id, max(created_at) max_created_at
+                                from chart_edition
+                                group by chart_id
+                            ) che
+                        '), function($join){
+                            $join->on('chart_edition.chart_id', '=', 'che.chart_id');
+                            $join->on('chart_edition.created_at', '=', 'che.max_created_at');
+                        })
+                        ->select('chart_edition.*')
+                        ->whereNotNull('che.chart_id');
+                    }
+                ]);
+    
+                if($symbol->chart)
+                {
+                    $chartEditionId = $symbol->chart->pluck('chartEdition')->collapse()->pluck('id');
+                    if ($chartEditionId) $notice->chartEdition()->syncWithoutDetaching($chartEditionId);
                 }
 
                 $novelty->symbol_id = $symbol->id;
@@ -309,13 +399,67 @@ class NoticeNoveltyController extends Controller
                                   })
                                   ->first();
 
-            if($noveltyTemp)
+            if($noveltyTemp && ($noveltyTemp->id !== $novelty->id))
             {
                 $noticeNumber = $noveltyTemp->notice->number;
                 $noveltyNum = $noveltyTemp->num_item;
                 
                 return $this->errorResponse("La ayuda o peligro se encuentra en la novedad #$noveltyNum pendiente por cancelar en el aviso $noticeNumber", 409);
             }
+
+            $symbol->chart->load([
+                'chartEdition' => function($query){
+                    $query->leftJoin(DB::raw('
+                        (
+                            select chart_id, max(created_at) max_created_at
+                            from chart_edition
+                            group by chart_id
+                        ) che
+                    '), function($join){
+                        $join->on('chart_edition.chart_id', '=', 'che.chart_id');
+                        $join->on('chart_edition.created_at', '=', 'che.max_created_at');
+                    })
+                    ->select('chart_edition.*')
+                    ->whereNotNull('che.chart_id');
+                }
+            ]);
+
+            if($novelty->symbol && ($symbol->id !== $novelty->symbol->id))
+            {
+                $coordinate = $novelty->symbol->coordinate()->orderBy('created_at', 'desc')->first();
+
+                if($coordinate) $novelty->coordinate()->detach($coordinate->id);
+
+                $novelty->symbol->chart->load([
+                    'chartEdition' => function($query){
+                        $query->leftJoin(DB::raw('
+                            (
+                                select chart_id, max(created_at) max_created_at
+                                from chart_edition
+                                group by chart_id
+                            ) che
+                        '), function($join){
+                            $join->on('chart_edition.chart_id', '=', 'che.chart_id');
+                            $join->on('chart_edition.created_at', '=', 'che.max_created_at');
+                        })
+                        ->select('chart_edition.*')
+                        ->whereNotNull('che.chart_id');
+                    }
+                ]);
+
+                $chartEditionId = $novelty->symbol->chart->pluck('chartEdition')->collapse()->pluck('id');
+                $notice->chartEdition()->detach($chartEditionId);
+            }
+
+            if($symbol->chart)
+            {
+                $chartEditionId = $symbol->chart->pluck('chartEdition')->collapse()->pluck('id');
+                if ($chartEditionId) $notice->chartEdition()->syncWithoutDetaching($chartEditionId);
+            }
+
+            $coordinate = $symbol->coordinate()->orderBy('created_at', 'desc')->first();
+
+            if($coordinate) $novelty->coordinate()->syncWithoutDetaching($coordinate->id);
 
             $novelty->symbol_id = $symbol->id;
         }
@@ -355,7 +499,51 @@ class NoticeNoveltyController extends Controller
      */
     public function destroy(Notice $notice, $noveltyId)
     {
-        $novelty = $notice->findOrFail($noveltyId);
+        $novelty = $notice->novelty()->findOrFail($noveltyId);
+
+        $noveltyNext = Novelty::where('parent_id', $novelty->id)->first();
+
+        if($noveltyNext)
+        {
+            $noveltyNextNumItem = $noveltyNext->num_item;
+            $noveltyNextNoticeNumber = $noveltyNext->notice->number;
+
+            return $this->errorResponse("Debe primero eliminar la novedad #$noveltyNextNumItem del aviso No $noveltyNextNoticeNumber", 409);
+        }
+
+        if($novelty->parent)
+        {
+            $novelty->parent->state = 'A';
+            $novelty->parent->save();
+        }
+
+        if($novelty->symbol)
+        {
+            $coordinate = $novelty->symbol->coordinate()->orderBy('created_at', 'desc')->first();
+
+            if($coordinate) $novelty->coordinate()->detach($coordinate->id);
+
+            $novelty->symbol->chart->load([
+                'chartEdition' => function($query){
+                    $query->leftJoin(DB::raw('
+                        (
+                            select chart_id, max(created_at) max_created_at
+                            from chart_edition
+                            group by chart_id
+                        ) che
+                    '), function($join){
+                        $join->on('chart_edition.chart_id', '=', 'che.chart_id');
+                        $join->on('chart_edition.created_at', '=', 'che.max_created_at');
+                    })
+                    ->select('chart_edition.*')
+                    ->whereNotNull('che.chart_id');
+                }
+            ]);
+
+            $chartEditionId = $novelty->symbol->chart->pluck('chartEdition')->collapse()->pluck('id');
+            $notice->chartEdition()->detach($chartEditionId);
+        }
+
         $novelty->delete();
 
         $this->generateNoveltySequence($notice->id);
