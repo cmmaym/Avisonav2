@@ -8,6 +8,7 @@ use Illuminate\Pagination\AbstractPaginator;
 use AvisoNavAPI\Http\Resources\SymbolResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use AvisoNavAPI\Http\Resources\Notice\NoveltyResource;
+use AvisoNavAPI\Http\Resources\Notice\NoveltySubResource;
 use AvisoNavAPI\Http\Resources\NoveltyType\NoveltyTypeResource;
 use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeResource;
 
@@ -39,7 +40,8 @@ class NoveltyResource extends JsonResource
             'numItem'                   => $this->num_item,
             'createdAt'                => $this->created_at->format('Y-m-d'),
             'updatedAt'                => $this->updated_at->format('Y-m-d'),
-            'parent'                    => new NoveltyParentResource($this->parent)
+            'parent'                    => new NoveltySubResource($this->parent),
+            'child'                     => new NoveltySubResource($this->child)
         ];
     }
 }

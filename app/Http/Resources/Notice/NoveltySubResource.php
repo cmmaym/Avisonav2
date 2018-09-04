@@ -11,7 +11,7 @@ use AvisoNavAPI\Http\Resources\Notice\NoveltyResource;
 use AvisoNavAPI\Http\Resources\NoveltyType\NoveltyTypeResource;
 use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeResource;
 
-class NoveltyParentResource extends JsonResource
+class NoveltySubResource extends JsonResource
 {
     use Responser;
     /**

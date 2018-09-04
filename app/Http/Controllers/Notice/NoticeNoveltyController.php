@@ -234,7 +234,11 @@ class NoticeNoveltyController extends Controller
             {
                 $novelty->coordinate()->detach();
                 $novelty->chartEdition()->detach();
+            }else if($novelty->symbol && !$symbol)
+            {
+                $novelty->symbol_id = null;
             }
+
 
             //Validamos si la novedad anteriormente SI tenia asociada una novedad a cancelar
             //y si dicha novedad es diferete a la que hayan seleccionado
@@ -411,7 +415,7 @@ class NoticeNoveltyController extends Controller
                 $noticeNumber = $noveltyTemp->notice->number;
                 $noveltyNum = $noveltyTemp->num_item;
                 
-                return $this->errorResponse("La ayuda o peligro se encuentra en la novedad #$noveltyNum pendiente por cancelar en el aviso $noticeNumber", 409);
+                return $this->errorResponse("La ayuda o peligro se encuentra pendiente por cancelar en la novedad #$noveltyNum del aviso $noticeNumber", 409);
             }
 
             $symbol->chart->load([

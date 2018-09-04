@@ -18,6 +18,16 @@ class NoveltyFilter extends ModelFilter
         });
     }
 
+    public function symbol($name){
+        $this->whereHas('symbol.symbolLang', function($query) use ($name) {
+            $query->where('name', 'like', "%$name%");
+        });
+    }
+    
+    public function description($description){
+        $this->related('noveltyLang', 'description', 'like', "%$description%");
+    }
+
     public function state($state)
     {
         return $this->where('state', $state);
@@ -36,16 +46,37 @@ class NoveltyFilter extends ModelFilter
         return $this->orderBy('id', $this->input('dir', 'desc'));
     }
     
+    public function sortByNumItem()
+    {
+        return $this->orderBy('num_item', $this->input('dir', 'asc'));
+    }
+
     public function sortByCreatedAt()
     {
         return $this->orderBy('created_at', $this->input('dir', 'asc'));
     }
     
+    public function sortByState()
+    {
+        return $this->orderBy('state', $this->input('dir', 'asc'));
+    }
+    
+    public function sortBySymbol()
+    {
+        $input = $this->input('dir', 'asc');
+
+        $this->join('symbol', 'novelty.symbol_id', '=', 'symbol.id')
+             ->join('symbol_lang', 'symbol.id', '=', 'symbol_lang.symbol_id')
+             ->groupBy('novelty.id')
+             ->orderBy('symbol_lang.name', $input)
+             ->select('novelty.*');
+    }
+
     public function sortByCharacterType()
     {
         $input = $this->input('dir', 'asc');
 
-        $this->join('character_type', 'notice.character_type_id', '=', 'character_type.id')
+        $this->join('character_type', 'novelty.character_type_id', '=', 'character_type.id')
              ->join('character_type_lang', 'character_type.id', '=', 'character_type_lang.character_type_id')
              ->groupBy('novelty.id')
              ->orderBy('character_type_lang.name', $input)
@@ -56,7 +87,7 @@ class NoveltyFilter extends ModelFilter
     {
         $input = $this->input('dir', 'asc');
 
-        $this->join('novelty_type', 'notice.novelty_type_id', '=', 'novelty_type.id')
+        $this->join('novelty_type', 'novelty.novelty_type_id', '=', 'novelty_type.id')
              ->join('novelty_type_lang', 'novelty_type.id', '=', 'novelty_type_lang.novelty_type_id')
              ->groupBy('novelty.id')
              ->orderBy('novelty_type_lang.name', $input)

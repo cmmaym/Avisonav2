@@ -39,6 +39,10 @@ class Novelty extends Model
     public function parent(){
         return $this->belongsTo(Novelty::class, 'parent_id', 'id');
     }
+    
+    public function child(){
+        return $this->belongsTo(Novelty::class, 'id', 'parent_id');
+    }
 
     public function coordinate(){
         return $this->belongsToMany(Coordinate::class, 'novelty_coordinate')
