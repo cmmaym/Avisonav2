@@ -2,18 +2,18 @@
 
 namespace AvisoNavAPI\Http\Controllers\Notice;
 
-use AvisoNavAPI\Notice;
-use AvisoNavAPI\NoticeFile;
+use AvisoNavAPI\Novelty;
+use AvisoNavAPI\NoveltyFile;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Traits\Responser;
 use Illuminate\Support\Facades\Storage;
-use AvisoNavAPI\ModelFilters\Basic\NoticeFileFilter;
-use AvisoNavAPI\Http\Requests\Notice\StoreNoticeFile;
-use AvisoNavAPI\Http\Resources\Notice\NoticeFileResource;
+use AvisoNavAPI\ModelFilters\Basic\NoveltyFileFilter;
+use AvisoNavAPI\Http\Requests\Notice\StoreNoveltyFile;
+use AvisoNavAPI\Http\Resources\Notice\NoveltyFileResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 
-class NoticeFileController extends Controller
+class NoveltyFileController extends Controller
 {
     use Filter, Responser;
 
@@ -22,12 +22,12 @@ class NoticeFileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Notice $notice)
+    public function index(Novelty $novelty)
     {
-        $collection = $notice->noticeFile()->filter(request()->all(), NoticeFileFilter::class)
+        $collection = $novelty->noveltyFile()->filter(request()->all(), NoveltyFileFilter::class)
                                            ->paginateFilter($this->perPage());
 
-        return NoticeFileResource::collection($collection);
+        return NoveltyFileResource::collection($collection);
     }
 
     /**
@@ -36,7 +36,7 @@ class NoticeFileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreNoticeFile $request, Notice $notice)
+    public function store(StoreNoveltyFile $request, Novelty $novelty)
     {
         $name = $request->input('name');
         $fileUpload = $request->file('file');
@@ -45,13 +45,13 @@ class NoticeFileController extends Controller
         $extension = $fileUpload->getClientOriginalExtension();
         $path = $fileUpload->storeAs('notice-files', $fileName.'.'.$extension, 'public');
 
-        $noticeFile = new NoticeFile();
-        $noticeFile->name = $name;
-        $noticeFile->path = $path;
+        $noveltyFile = new NoveltyFile();
+        $noveltyFile->name = $name;
+        $noveltyFile->path = $path;
 
-        $notice->noticeFile()->save($noticeFile);
+        $novelty->noveltyFile()->save($noveltyFile);
 
-        return new NoticeFileResource($noticeFile);
+        return new NoveltyFileResource($noveltyFile);
     }
 
     /**
@@ -60,12 +60,15 @@ class NoticeFileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($notice, NoticeFile $noticeFile)
+    public function destroy(Novelty $novelty, $noveltyFileId)
     {
-        $noticeFile->delete();
 
-        Storage::disk('public')->delete($noticeFile->path);
+        $noveltyFile = $novelty->noveltyFile()->findOrFail($noveltyFileId);
 
-        return new NoticeFileResource($noticeFile);
+        $noveltyFile->delete();
+
+        Storage::disk('public')->delete($noveltyFile->path);
+
+        return new NoveltyFileResource($noveltyFile);
     }
 }

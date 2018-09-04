@@ -58,6 +58,7 @@ class NoticeNoveltyController extends Controller
         $novelty = new Novelty();
         $novelty->novelty_type_id = $noveltyType;
         $novelty->character_type_id = $characterType->id;
+        $novelty->state = 'A';
 
         if($parent)
         {
@@ -147,7 +148,7 @@ class NoticeNoveltyController extends Controller
             if($symbol->chart)
             {
                 $chartEditionId = $symbol->chart->pluck('chartEdition')->collapse()->pluck('id');
-                if ($chartEditionId) $notice->chartEdition()->syncWithoutDetaching($chartEditionId);
+                if ($chartEditionId) $novelty->chartEdition()->syncWithoutDetaching($chartEditionId);
             }
 
         }
@@ -229,6 +230,12 @@ class NoticeNoveltyController extends Controller
                 $parent->save();
             }
 
+            if($novelty->symbol && $symbol && ($novelty->symbol->id !== $symbol->id))
+            {
+                $novelty->coordinate()->detach();
+                $novelty->chartEdition()->detach();
+            }
+
             //Validamos si la novedad anteriormente SI tenia asociada una novedad a cancelar
             //y si dicha novedad es diferete a la que hayan seleccionado
             if($novelty->parent && ($novelty->parent->id !== $parent->id ))
@@ -264,7 +271,7 @@ class NoticeNoveltyController extends Controller
                     if($symbol->chart)
                     {
                         $chartEditionId = $symbol->chart->pluck('chartEdition')->collapse()->pluck('id');
-                        if ($chartEditionId) $notice->chartEdition()->syncWithoutDetaching($chartEditionId);
+                        if ($chartEditionId) $novelty->chartEdition()->syncWithoutDetaching($chartEditionId);
                     }
 
                     $novelty->symbol_id = $symbol->id;
@@ -313,7 +320,7 @@ class NoticeNoveltyController extends Controller
                     if($symbol->chart)
                     {
                         $chartEditionId = $symbol->chart->pluck('chartEdition')->collapse()->pluck('id');
-                        if ($chartEditionId) $notice->chartEdition()->syncWithoutDetaching($chartEditionId);
+                        if ($chartEditionId) $novelty->chartEdition()->syncWithoutDetaching($chartEditionId);
                     }
 
                     $novelty->symbol_id = $symbol->id;
@@ -353,7 +360,7 @@ class NoticeNoveltyController extends Controller
                 if($symbol->chart)
                 {
                     $chartEditionId = $symbol->chart->pluck('chartEdition')->collapse()->pluck('id');
-                    if ($chartEditionId) $notice->chartEdition()->syncWithoutDetaching($chartEditionId);
+                    if ($chartEditionId) $novelty->chartEdition()->syncWithoutDetaching($chartEditionId);
                 }
 
                 $novelty->symbol_id = $symbol->id;
@@ -426,35 +433,14 @@ class NoticeNoveltyController extends Controller
 
             if($novelty->symbol && ($symbol->id !== $novelty->symbol->id))
             {
-                $coordinate = $novelty->symbol->coordinate()->orderBy('created_at', 'desc')->first();
-
-                if($coordinate) $novelty->coordinate()->detach($coordinate->id);
-
-                $novelty->symbol->chart->load([
-                    'chartEdition' => function($query){
-                        $query->leftJoin(DB::raw('
-                            (
-                                select chart_id, max(created_at) max_created_at
-                                from chart_edition
-                                group by chart_id
-                            ) che
-                        '), function($join){
-                            $join->on('chart_edition.chart_id', '=', 'che.chart_id');
-                            $join->on('chart_edition.created_at', '=', 'che.max_created_at');
-                        })
-                        ->select('chart_edition.*')
-                        ->whereNotNull('che.chart_id');
-                    }
-                ]);
-
-                $chartEditionId = $novelty->symbol->chart->pluck('chartEdition')->collapse()->pluck('id');
-                $notice->chartEdition()->detach($chartEditionId);
+                $novelty->coordinate()->detach();
+                $novelty->chartEdition()->detach();
             }
 
             if($symbol->chart)
             {
                 $chartEditionId = $symbol->chart->pluck('chartEdition')->collapse()->pluck('id');
-                if ($chartEditionId) $notice->chartEdition()->syncWithoutDetaching($chartEditionId);
+                if ($chartEditionId) $novelty->chartEdition()->syncWithoutDetaching($chartEditionId);
             }
 
             $coordinate = $symbol->coordinate()->orderBy('created_at', 'desc')->first();
@@ -468,6 +454,8 @@ class NoticeNoveltyController extends Controller
         {
             if($novelty->symbol)
             {
+                $novelty->coordinate()->detach();
+                $novelty->chartEdition()->detach();
                 $novelty->symbol_id = null;
             }
 
@@ -515,33 +503,6 @@ class NoticeNoveltyController extends Controller
         {
             $novelty->parent->state = 'A';
             $novelty->parent->save();
-        }
-
-        if($novelty->symbol)
-        {
-            $coordinate = $novelty->symbol->coordinate()->orderBy('created_at', 'desc')->first();
-
-            if($coordinate) $novelty->coordinate()->detach($coordinate->id);
-
-            $novelty->symbol->chart->load([
-                'chartEdition' => function($query){
-                    $query->leftJoin(DB::raw('
-                        (
-                            select chart_id, max(created_at) max_created_at
-                            from chart_edition
-                            group by chart_id
-                        ) che
-                    '), function($join){
-                        $join->on('chart_edition.chart_id', '=', 'che.chart_id');
-                        $join->on('chart_edition.created_at', '=', 'che.max_created_at');
-                    })
-                    ->select('chart_edition.*')
-                    ->whereNotNull('che.chart_id');
-                }
-            ]);
-
-            $chartEditionId = $novelty->symbol->chart->pluck('chartEdition')->collapse()->pluck('id');
-            $notice->chartEdition()->detach($chartEditionId);
         }
 
         $novelty->delete();

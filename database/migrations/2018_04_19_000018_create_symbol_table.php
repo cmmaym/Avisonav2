@@ -18,12 +18,16 @@ class CreateSymbolTable extends Migration
             $table->timestamps();
             $table->integer('symbol_type_id')->unsigned();
             $table->integer('image_id')->unsigned();
+            $table->integer('location_id')->unsigned();
             
             $table->foreign('symbol_type_id')
                   ->references('id')->on('symbol_type');
             
             $table->foreign('image_id')
                   ->references('id')->on('image');
+
+            $table->foreign('location_id')
+                  ->references('id')->on('location');
         });
     }
 

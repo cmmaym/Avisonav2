@@ -31,7 +31,7 @@ class AidController extends Controller
         $collection = Aid::filter(request()->all(), AidFilter::class)
                          ->with([
                              'symbol.symbolLang' => $this->withLanguageQuery(),
-                             'location.zone.zoneLang' => $this->withLanguageQuery(),
+                             'symbol.location.zone.zoneLang' => $this->withLanguageQuery(),
                              'lightClass.lightClassLang' => $this->withLanguageQuery(),
                              'colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
                              'topMark.topMarkLang' => $this->withLanguageQuery(),
@@ -55,6 +55,7 @@ class AidController extends Controller
             $symbol = new Symbol();
             $symbol->symbol_type_id = 1;
             $symbol->image_id = $request->input('image');
+            $symbol->location_id = $request->input('location');
             $symbol->save();
 
             $symbolLang = new SymbolLang($request->only(['name']));
@@ -68,7 +69,6 @@ class AidController extends Controller
             $aid->flash_groups = $request->input('flashGroups');
             $aid->period = $request->input('period');
             $aid->user = Auth::user()->username;
-            $aid->location_id = $request->input('location');
             $aid->light_class_id = $request->input('lightClass');
             $aid->color_structure_pattern_id = $request->input('colorStructurePattern');
             $aid->aid_type_id = $request->input('aidType');
@@ -96,7 +96,7 @@ class AidController extends Controller
     {
         $aid->load([
             'symbol.symbolLang' => $this->withLanguageQuery(),
-            'location.zone.zoneLang' => $this->withLanguageQuery(),
+            'symbol.location.zone.zoneLang' => $this->withLanguageQuery(),
             'lightClass.lightClassLang' => $this->withLanguageQuery(),
             'colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
             'topMark.topMarkLang' => $this->withLanguageQuery(),
@@ -132,10 +132,13 @@ class AidController extends Controller
         $aid->ais = ($request->input('ais')) ? $request->input('ais') : null;
         $aid->top_mark_id = ($request->input('topMark')) ? $request->input('topMark') : null;
 
+        $aid->symbol->location_id = $request->input('location');
+
         if($aid->isClean()){
             return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
         }
 
+        $aid->symbol->save();
         $aid->save();
 
         return new AidResource($aid);

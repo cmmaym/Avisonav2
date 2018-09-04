@@ -4,7 +4,7 @@ namespace AvisoNavAPI\ModelFilters\Basic;
 
 use EloquentFilter\ModelFilter;
 
-class NoticeFileFilter extends ModelFilter
+class NoveltyFileFilter extends ModelFilter
 {
     public function name($name)
     {

@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class NoticeFileResource extends JsonResource
+class NoveltyFileResource extends JsonResource
 {
     use Responser;
     /**

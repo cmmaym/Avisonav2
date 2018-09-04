@@ -12,10 +12,6 @@ class Aid extends Model
 
     protected $table        = 'aid';
     protected $fillable     = ['ais', 'height', 'scope', 'features'];
-
-    public function location(){
-        return $this->belongsTo(Location::class);
-    }
     
     public function lightClass(){
         return $this->belongsTo(LightClass::class);

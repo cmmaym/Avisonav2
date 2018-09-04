@@ -46,7 +46,7 @@ class Novelty extends Model
     }
 
     public function chartEdition(){
-        return $this->belongsToMany(ChartEdition::class, 'notice_chart_edition')
+        return $this->belongsToMany(ChartEdition::class, 'novelty_chart_edition')
                     ->withTimestamps();
     }
 

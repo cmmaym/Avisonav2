@@ -42,7 +42,9 @@ class AidFilter extends ModelFilter
     }
     
     public function location($name){
-        return $this->related('location', 'name', 'like', "%$name%");
+        $this->whereHas('symbol.location', function($query) use ($name){
+            $query->where('name', 'like', "%$name%");
+        });
     }
 
     public function lightClass($lightClass){

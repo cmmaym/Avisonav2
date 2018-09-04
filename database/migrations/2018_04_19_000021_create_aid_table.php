@@ -25,16 +25,12 @@ class CreateAidTable extends Migration
             $table->mediumText('features')->comment('Caracteristicas de la ayuda');
             $table->timestamps();
             $table->string('user', 100)->comment('Nombre de usuario que manipulo le registro');
-            $table->integer('location_id')->unsigned();
             $table->integer('light_class_id')->unsigned();
             $table->integer('color_structure_pattern_id')->unsigned();
             $table->integer('top_mark_id')->nullable()->unsigned();
             $table->integer('aid_type_id')->unsigned();
             $table->integer('aid_type_form_id')->unsigned();
             $table->integer('symbol_id')->unsigned();
-            
-            $table->foreign('location_id')
-                  ->references('id')->on('location');
 
             $table->foreign('light_class_id')
                   ->references('id')->on('light_class');

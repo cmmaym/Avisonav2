@@ -2,9 +2,10 @@
 
 namespace AvisoNavAPI\Http\Resources;
 
+use AvisoNavAPI\Http\Resources\ImageResource;
+use AvisoNavAPI\Http\Resources\LocationResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use AvisoNavAPI\Http\Resources\Aid\CoordinateResource;
-use AvisoNavAPI\Http\Resources\ImageResource;
 
 class SymbolResource extends JsonResource
 {
@@ -33,6 +34,7 @@ class SymbolResource extends JsonResource
             'updatedAt'         => $this->updated_at->format('Y-m-d'),
             'symbolType'        => $this->symbolType->title,
             // 'image'             => new ImageResource($this->symbol->image),
+            'location'          => new LocationResource($this->location),
         ];
     }
 }

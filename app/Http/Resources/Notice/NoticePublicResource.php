@@ -62,7 +62,7 @@ class NoticePublicResource extends JsonResource
             'reportSource'             => new ReportSourceResource($this->reportSource),
             'reportingUser'            => new ReportingUserResource($this->reportingUser),
             'aids'                     => AidPublicResource::collection($this->aid),
-            'chartEdition'             => ChartEditionResource::collection($this->chartEdition),
+            // 'chartEdition'             => ChartEditionResource::collection($this->chartEdition),
             'files'                => NoticeFileResource::collection($this->noticeFile),
         ];
     }

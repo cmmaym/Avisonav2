@@ -134,14 +134,6 @@ Route::resource('notice.aid', 'Notice\NoticeAidController')->only([
     'index', 'update', 'destroy'
 ]);
 
-Route::resource('notice.chartEdition', 'Notice\NoticeChartEditionController')->only([
-    'index', 'update', 'destroy'
-]);
-
-Route::resource('notice.noticeFile', 'Notice\NoticeFileController')->only([
-    'index', 'store', 'update', 'destroy'
-]);
-
 Route::resource('notice.novelty', 'Notice\NoticeNoveltyController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
@@ -254,5 +246,13 @@ Route::resource('novelty.noveltyLang', 'Notice\NoveltyLangController')->only([
 ]);
 
 Route::resource('novelty.coordinate', 'Notice\NoveltyCoordinateController')->only([
+    'index', 'store', 'update', 'destroy'
+]);
+
+Route::resource('novelty.chartEdition', 'Notice\NoveltyChartEditionController')->only([
+    'index', 'update', 'destroy'
+]);
+
+Route::resource('novelty.noveltyFile', 'Notice\NoveltyFileController')->only([
     'index', 'store', 'update', 'destroy'
 ]);

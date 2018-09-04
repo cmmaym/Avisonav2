@@ -28,6 +28,10 @@ class Symbol extends Model
         return $this->belongsTo(Image::class);
     }
 
+    public function location(){
+        return $this->belongsTo(Location::class);
+    }
+
     public function aid(){
         return $this->hasOne(Aid::class);
     }

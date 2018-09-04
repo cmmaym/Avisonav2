@@ -48,7 +48,7 @@ class AidPublicResource extends JsonResource
             'updatedAt'        => $this->updated_at->format('Y-m-d'),
             'observation'       => $this->when(!is_null($this->symbol->symbolLang), $observation, null),
             'user'              => $this->user,
-            'location'          => new LocationResource($this->location),
+            'location'          => new LocationResource($this->symbol->location),
             'lightClass'        => new LightClassResource($this->lightClass),
             'colorStructurePattern' => new ColorStructureResource($this->colorStructurePattern),
             'topMark'           => new TopMarkResource($this->topMark),
