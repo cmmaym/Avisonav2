@@ -18,6 +18,8 @@ class CreateReportingUserTable extends Migration
             $table->string('name', 100);
             $table->string('rank', 45);
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->integer('report_source_id')->unsigned();
 
             $table->foreign('report_source_id')

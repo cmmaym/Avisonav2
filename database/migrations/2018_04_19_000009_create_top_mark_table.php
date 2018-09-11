@@ -17,6 +17,8 @@ class CreateTopMarkTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('illustration', 45)->nullable()->comment('Imagen de la marca de tope');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
         });
     }
 

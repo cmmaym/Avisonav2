@@ -24,6 +24,8 @@ class CreateCoordinateTable extends Migration
             $table->float('longitude_seconds');
             $table->string('longitude_dir', 1);
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
         });
     }
 

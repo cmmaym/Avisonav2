@@ -17,6 +17,8 @@ class CreateNoticeLangTable extends Migration
             $table->increments('id');
             $table->mediumText('description')->nullable()->comment('Descripcion acerca del aviso');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->integer('notice_id')->unsigned();            
             $table->integer('language_id')->unsigned();
 

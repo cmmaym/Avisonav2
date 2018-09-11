@@ -17,6 +17,8 @@ class CreateColorLightLangTable extends Migration
             $table->increments('id');
             $table->string('color', 45)->comment('Nombre del color');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->integer('language_id')->unsigned();
             $table->integer('color_light_id')->unsigned();
 

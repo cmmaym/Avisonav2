@@ -18,6 +18,8 @@ class CreateLightClassTable extends Migration
             $table->string('alias', 45)->comment('Abreviatura de la clase');
             $table->string('illustration', 45)->nullable()->comment('Imagen de la clase de luz');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
         });
     }
 

@@ -19,6 +19,8 @@ class CreateChartEditionTable extends Migration
             $table->integer('edition')->comment('Numero de edicion de la carta');
             $table->year('year');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->integer('chart_id')->unsigned();
 
             $table->foreign('chart_id')

@@ -18,6 +18,8 @@ class CreateLightListTable extends Migration
             $table->integer('edition')->comment('Numero de edicion de la lista de luces');
             $table->year('year');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
 
             $table->unique(['edition', 'year'], 'edition_year_UNIQUE');
         });

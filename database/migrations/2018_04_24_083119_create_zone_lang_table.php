@@ -18,6 +18,8 @@ class CreateZoneLangTable extends Migration
             $table->string('name', 100)->comment('Nombre de la zona de la novedad');
             $table->string('alias', 45)->comment('Alias del nombre de la zona');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->integer('language_id')->unsigned();
             $table->integer('zone_id')->unsigned();
 

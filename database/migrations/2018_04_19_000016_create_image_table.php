@@ -18,6 +18,8 @@ class CreateImageTable extends Migration
             $table->string('name', 100)->comment('Nombre del archivo');
             $table->mediumText('path')->comment('Ruta del archivo');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
         });
     }
 

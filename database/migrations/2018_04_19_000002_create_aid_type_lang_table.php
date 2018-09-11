@@ -17,6 +17,8 @@ class CreateAidTypeLangTable extends Migration
             $table->increments('id');
             $table->string('name', 100)->comment("Nombre del tipo de ayuda");
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->integer('language_id')->unsigned();
             $table->integer('aid_type_id')->unsigned();
 

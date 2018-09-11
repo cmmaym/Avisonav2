@@ -17,6 +17,8 @@ class CreateColorStructureLangTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('name', 45)->comment('Nombre del color');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->integer('color_structure_id')->unsigned();
             $table->integer('language_id')->unsigned();
 

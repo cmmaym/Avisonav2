@@ -18,6 +18,8 @@ class CreateAidColorLightTable extends Migration
             $table->integer('color_light_id')->unsigned();
             $table->integer('angle')->nullable()->comment('Angulo del sector de la luz');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
 
             $table->foreign('aid_id')
                 ->references('id')->on('aid')

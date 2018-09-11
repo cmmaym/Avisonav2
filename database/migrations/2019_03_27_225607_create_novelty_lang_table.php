@@ -17,6 +17,8 @@ class CreateNoveltyLangTable extends Migration
             $table->increments('id');
             $table->mediumText('description')->nullable()->comment('Descripcion acerca de la novedad');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->integer('novelty_id')->unsigned();            
             $table->integer('language_id')->unsigned();
 

@@ -18,6 +18,8 @@ class CreateReportSourceTable extends Migration
             $table->string('name', 100);
             $table->string('alias', 45);
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
 
             $table->unique(['name', 'alias'], 'name_alias_UNIQUE');
         });

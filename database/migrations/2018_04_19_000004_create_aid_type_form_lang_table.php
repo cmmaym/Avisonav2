@@ -17,6 +17,8 @@ class CreateAidTypeFormLangTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('description', 45);
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->integer('language_id')->unsigned();
             $table->integer('aid_type_form_id')->unsigned();
 

@@ -18,6 +18,8 @@ class CreateLightClassLangTable extends Migration
             $table->string('class', 100)->comment('Clase de luz');
             $table->mediumText('description')->comment('Descripcion breve de la clase de luz');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->integer('language_id')->unsigned();
             $table->integer('light_class_id')->unsigned()->nullable();
 

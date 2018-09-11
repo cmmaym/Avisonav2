@@ -17,6 +17,8 @@ class CreateAidTypeTable extends Migration
         Schema::create('aid_type', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
         });
     }
 

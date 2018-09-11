@@ -18,6 +18,8 @@ class CreateLanguageTable extends Migration
             $table->string('name', 45)->comment('Nombre del idioma');
             $table->string('code', 45)->comment('Codigo ISO del idioma');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
 
             $table->unique(['name', 'code'], 'name_code_UNIQUE');
         });

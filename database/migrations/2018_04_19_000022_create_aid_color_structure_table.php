@@ -17,6 +17,8 @@ class CreateAidColorStructureTable extends Migration
             $table->integer('aid_id')->unsigned();
             $table->integer('color_structure_id')->unsigned();
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
 
             $table->foreign('aid_id')
                 ->references('id')->on('aid')

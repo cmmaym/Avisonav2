@@ -17,6 +17,8 @@ class CreateFormTypeTable extends Migration
             $table->integer('aid_type_form_id')->unsigned();
             $table->integer('aid_type_id')->unsigned();
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
 
             $table->foreign('aid_type_form_id')
                   ->references('id')->on('aid_type_form');

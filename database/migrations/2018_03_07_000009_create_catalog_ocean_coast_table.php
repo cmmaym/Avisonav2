@@ -18,6 +18,8 @@ class CreateCatalogOceanCoastTable extends Migration
             $table->integer('edition')->comment('Numero de edicion del catalogo');
             $table->year('year');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
 
             $table->unique(['edition', 'year'], 'edition_year_UNIQUE');
         });

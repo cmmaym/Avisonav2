@@ -20,8 +20,9 @@ class CreateNoticeTable extends Migration
             $table->mediumText('reports_numbers')->comment('Numeros de los reportes');
             $table->dateTime('report_date')->comment('Fecha en la que se genero el reporte');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->string('state', 1)->comment('Estado del aviso. Puede ser G(Guardado), P(Publicado)');
-            $table->string('user', 100)->comment('Nombre de usuario que manipulo le registro');
             $table->integer('location_id')->unsigned();
             $table->integer('catalog_ocean_coast_id')->unsigned()->nullable();
             $table->integer('light_list_id')->unsigned()->nullable();

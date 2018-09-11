@@ -18,6 +18,8 @@ class CreateConsecutiveNoticeTable extends Migration
             $table->integer('number')->unsigned();
             $table->year('year')->unsigned();
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
         });
     }
 

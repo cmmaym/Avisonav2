@@ -17,6 +17,8 @@ class CreateColorLightTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('alias', 45)->comment('Abreviacion del color');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
         });
     }
 

@@ -16,6 +16,8 @@ class CreateSymbolTable extends Migration
         Schema::create('symbol', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->integer('symbol_type_id')->unsigned();
             $table->integer('image_id')->unsigned();
             $table->integer('location_id')->unsigned();

@@ -18,9 +18,11 @@ class CreateSequenceFlashesTable extends Migration
             $table->string('on', 45)->comment('Encendido');
             $table->string('off', 45)->comment('Apagado');
             $table->timestamps();
-            $table->integer('aid_id')->unsigned();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
+            $table->integer('period_id')->unsigned();
 
-            $table->foreign('aid_id')
+            $table->foreign('period_id')
                   ->references('id')->on('aid')
                   ->onDelete('cascade');
         });

@@ -17,6 +17,8 @@ class CreateNoveltyChartEditionTable extends Migration
             $table->integer('novelty_id')->unsigned();
             $table->integer('chart_edition_id')->unsigned();
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
 
             $table->foreign('novelty_id')
                 ->references('id')->on('novelty')

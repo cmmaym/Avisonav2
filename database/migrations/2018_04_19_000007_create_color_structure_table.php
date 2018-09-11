@@ -16,6 +16,8 @@ class CreateColorStructureTable extends Migration
         Schema::create('color_structure', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
         });
     }
 

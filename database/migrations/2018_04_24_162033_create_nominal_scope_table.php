@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNoveltyFileTable extends Migration
+class CreateNominalScopeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateNoveltyFileTable extends Migration
      */
     public function up()
     {
-        Schema::create('novelty_file', function (Blueprint $table) {
+        Schema::create('nominal_scope', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('name', 100)->comment('Nombre del archivo');
-            $table->mediumText('path')->comment('Ruta del archivo');
-            $table->integer('novelty_id')->unsigned();
+            $table->float('scope');
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
+            $table->string('state', 1)->comment('El estado puede ser C=Current(Actual) o A:Archived(Archivado)');
+            $table->integer('aid_id')->unsigned();
 
-            $table->foreign('novelty_id')
-                ->references('id')->on('novelty')
+            $table->foreign('aid_id')
+                ->references('id')->on('aid')
                 ->onDelete('cascade');
         });
     }
@@ -35,6 +35,6 @@ class CreateNoveltyFileTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('novelty_file');
+        Schema::dropIfExists('nominal_scope');
     }
 }

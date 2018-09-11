@@ -17,13 +17,11 @@ class CreateAidTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('racon', 10)->nullable()->comment("Baliza respondedora de radar");
             $table->string('ais', 100)->nullable()->comment("Sistema de identificacion automatica");
-            $table->string('height', 45)->comment("Altura de la estructura de la ayuda");
-            $table->string('elevation_nmm', 45)->comment("Elevacion de la luz sobre el nivel del mar");
-            $table->string('scope', 45)->comment("Alcance nominal de la luz de la ayuda");
-            $table->string('flash_groups', 100)->comment("Grupos de flasheos");
-            $table->string('period', 45)->comment("Periodo de la luz");
-            $table->mediumText('features')->comment('Caracteristicas de la ayuda');
+            $table->bool('radar_reflector');
+            $table->float('float_diameter');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->string('user', 100)->comment('Nombre de usuario que manipulo le registro');
             $table->integer('light_class_id')->unsigned();
             $table->integer('color_structure_pattern_id')->unsigned();

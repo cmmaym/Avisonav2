@@ -18,6 +18,8 @@ class CreateLocationTable extends Migration
             $table->string('name', 100)->comment('Nombre de la ubicacion de la ayuda');
             $table->string('sub_location_name', 100)->nullable()->comment('Nombre de la sub ubicacion es decir la ubicacion mas espesifica donde se encuentra la ayuda');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->integer('zone_id')->unsigned();
 
             $table->foreign('zone_id')

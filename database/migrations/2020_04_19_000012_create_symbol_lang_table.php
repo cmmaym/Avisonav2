@@ -18,6 +18,8 @@ class CreateSymbolLangTable extends Migration
             $table->string('name', 100);
             $table->mediumText('observation')->nullable();
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->integer('symbol_id')->unsigned();
             $table->integer('language_id')->unsigned();
             

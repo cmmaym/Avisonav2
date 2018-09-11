@@ -17,6 +17,8 @@ class CreateSymbolChartTable extends Migration
             $table->integer('symbol_id')->unsigned();
             $table->integer('chart_id')->unsigned();
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
 
             $table->foreign('symbol_id')
                 ->references('id')->on('symbol')
