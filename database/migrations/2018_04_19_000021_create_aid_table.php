@@ -15,14 +15,13 @@ class CreateAidTable extends Migration
     {
         Schema::create('aid', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('racon', 10)->nullable()->comment("Baliza respondedora de radar");
+            $table->boolean('racon')->nullable()->comment("Baliza respondedora de radar");
             $table->string('ais', 100)->nullable()->comment("Sistema de identificacion automatica");
-            $table->bool('radar_reflector');
-            $table->float('float_diameter');
+            $table->boolean('radar_reflector');
+            $table->float('float_diameter')->nullable();
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
-            $table->string('user', 100)->comment('Nombre de usuario que manipulo le registro');
             $table->integer('light_class_id')->unsigned();
             $table->integer('color_structure_pattern_id')->unsigned();
             $table->integer('top_mark_id')->nullable()->unsigned();

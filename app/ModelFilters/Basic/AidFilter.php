@@ -37,8 +37,8 @@ class AidFilter extends ModelFilter
         return $this->where('sector_angle', 'like', "%$sectorAngle%");
     }
     
-    public function user($user){
-        return $this->where('user', 'like', "%$user%");
+    public function createdBy($user){
+        return $this->where('created_by', 'like', "%$user%");
     }
     
     public function location($name){
@@ -139,9 +139,9 @@ class AidFilter extends ModelFilter
         return $this->orderBy('sector_angle', $this->input('dir', 'asc'));
     }
     
-    public function sortByUser()
+    public function sortByCreatedBy()
     {
-        return $this->orderBy('user', $this->input('dir', 'asc'));
+        return $this->orderBy('created_by', $this->input('dir', 'asc'));
     }
     
     public function sortByLocation(){

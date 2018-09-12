@@ -158,9 +158,9 @@ Route::resource('aid.coordinate', 'Aid\AidCoordinateController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
 
-Route::resource('aid.sequenceFlashes', 'Aid\AidSequenceFlashesController')->only([
-    'index', 'store', 'show', 'update', 'destroy'
-]);
+// Route::resource('aid.sequenceFlashes', 'Aid\AidSequenceFlashesController')->only([
+//     'index', 'store', 'show', 'update', 'destroy'
+// ]);
     
 Route::resource('aid.chart', 'Aid\AidChartController')->only([
     'index', 'update', 'destroy'
@@ -171,6 +171,10 @@ Route::resource('aid.colorStructure', 'Aid\AidColorStructureController')->only([
 ]);
 
 Route::resource('aid.colorLight', 'Aid\AidColorsLightController')->only([
+    'index', 'store', 'update', 'destroy'
+]);
+
+Route::resource('aid.height', 'Aid\AidHeightController')->only([
     'index', 'store', 'update', 'destroy'
 ]);
 

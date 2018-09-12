@@ -2,16 +2,16 @@
 
 namespace AvisoNavAPI;
 
-use AvisoNavAPI\Notice;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use AvisoNavAPI\Traits\Observable;
 
 class Aid extends Model
 {
-    use Filterable;
+    use Filterable, Observable;
 
     protected $table        = 'aid';
-    protected $fillable     = ['ais', 'height', 'scope', 'features'];
+    protected $fillable     = ['racon', 'ais', 'radar_reflector', 'float_diameter'];
     
     public function lightClass(){
         return $this->belongsTo(LightClass::class);
@@ -50,6 +50,16 @@ class Aid extends Model
 
     public function symbol(){
         return $this->belongsTo(Symbol::class);
+    }
+
+    public function heightCollection()
+    {
+        return $this->hasMany(Height::class)->orderBy('created_at', 'desc');
+    }
+    
+    public function height()
+    {
+        return $this->hasOne(Height::class)->where('state', 'C');
     }
 
 }

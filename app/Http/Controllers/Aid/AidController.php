@@ -16,6 +16,7 @@ use AvisoNavAPI\Http\Resources\Aid\AidResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Traits\Responser;
 use AvisoNavAPI\Symbol;
+use AvisoNavAPI\Language;
 
 class AidController extends Controller
 {
@@ -52,6 +53,9 @@ class AidController extends Controller
     public function store(StoreAid $request)
     {
         $symbolAid = DB::transaction(function () use ($request){
+
+            $language = Language::where('code','es')->firstOrFail();
+
             $symbol = new Symbol();
             $symbol->symbol_type_id = 1;
             $symbol->image_id = $request->input('image');
@@ -60,22 +64,20 @@ class AidController extends Controller
 
             $symbolLang = new SymbolLang($request->only(['name']));
             $symbolLang->observation = ($request->input('observation')) ? $request->input('observation') : null;
-            $symbolLang->language_id = $request->input('language');
+            $symbolLang->language_id = $language->id;
 
             $symbol->symbolLang()->save($symbolLang);
 
-            $aid = new Aid($request->only(['height', 'scope', 'features']));
-            $aid->elevation_nmm = $request->input('elevationNmm');
-            $aid->flash_groups = $request->input('flashGroups');
-            $aid->period = $request->input('period');
-            $aid->user = Auth::user()->username;
+            $aid = new Aid();
+            $aid->racon = ($request->input('racon')) ? $request->input('racon') : false;
+            $aid->radar_reflector = ($request->input('radarRelector')) ? $request->input('reflectorRadar') : false;
             $aid->light_class_id = $request->input('lightClass');
             $aid->color_structure_pattern_id = $request->input('colorStructurePattern');
             $aid->aid_type_id = $request->input('aidType');
             $aid->aid_type_form_id = $request->input('aidTypeForm');
 
-            $aid->racon = ($request->input('racon')) ? $request->input('racon') : null;
             $aid->ais = ($request->input('ais')) ? $request->input('ais') : null;
+            $aid->float_diameter = ($request->input('floatDiameter')) ? $request->input('floatDiameter') : null;
             $aid->top_mark_id = ($request->input('topMark')) ? $request->input('topMark') : null;
 
             $symbol->aid()->save($aid);
@@ -116,20 +118,16 @@ class AidController extends Controller
      */
     public function update(StoreAid $request, Aid $aid)
     {
-        $aid->fill($request->only(['ais', 'height', 'scope', 'features']));
-        $aid->elevation_nmm = $request->input('elevationNmm');
-        $aid->flash_groups = $request->input('flashGroups');
-        $aid->period = $request->input('period');
-        $aid->user = Auth::user()->username;
-        $aid->location_id = $request->input('location');
+        $aid->racon = ($request->input('racon')) ? $request->input('racon') : false;
+        $aid->radar_reflector = ($request->input('radarReflector')) ? $request->input('radarReflector') : false;
         $aid->light_class_id = $request->input('lightClass');
         $aid->color_structure_pattern_id = $request->input('colorStructurePattern');
         $aid->top_mark_id = $request->input('topMark');
         $aid->aid_type_id = $request->input('aidType');
         $aid->aid_type_form_id = $request->input('aidTypeForm');
 
-        $aid->racon = ($request->input('racon')) ? $request->input('racon') : null;
         $aid->ais = ($request->input('ais')) ? $request->input('ais') : null;
+        $aid->float_diameter = ($request->input('floatDiameter')) ? $request->input('floatDiameter') : null;
         $aid->top_mark_id = ($request->input('topMark')) ? $request->input('topMark') : null;
 
         $aid->symbol->location_id = $request->input('location');

@@ -25,13 +25,10 @@ class StoreAid extends FormRequest
     {
         return [
             'name'                        => 'sometimes|required|max:100',
-            'racon'                       => 'max:10',
+            'racon'                       => 'boolean',
             'ais'                         => 'nullable|max:100',
-            'height'                      => 'required|max:45',
-            'elevationNmm'                => 'required|max:45',
-            'scope'                       => 'required|max:45',
-            'flashGroups'                 => 'required|numeric',
-            'period'                      => 'required|max:45',
+            'radarReflector'              => 'boolean',
+            'floatDiameter'               => 'nullable|numeric',
             'location'                    => 'required|exists:location,id',
             'lightClass'                  => 'required|exists:light_class,id',
             'colorStructurePattern'       => 'required|exists:color_structure,id',
@@ -39,8 +36,7 @@ class StoreAid extends FormRequest
             'aidType'                     => 'required|exists:aid_type,id',
             'aidTypeForm'                 => 'required|exists:aid_type_form,id',
             'observation'                 => 'sometimes|nullable',
-            'image'                       => 'required|exists:image,id',
-            'language'                    => 'sometimes|exists:language,id',
+            'image'                       => 'required|exists:image,id'
         ];
     }
 

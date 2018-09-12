@@ -12,7 +12,7 @@ class SequenceFlashes extends Model
     protected   $table      =   'sequence_flashes';
     protected   $fillable   =   ['on', 'off'];
 
-    public function aid(){
-        return $this->belongsTo(Aid::class);
+    public function period(){
+        return $this->belongsTo(Period::class);
     }
 }

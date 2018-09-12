@@ -33,7 +33,7 @@ class Novelty extends Model
     }
 
     public function symbol(){
-        return $this->belongsTo(Symbol::class);
+        return $this->hasOne(Symbol::class);
     }
 
     public function parent(){
