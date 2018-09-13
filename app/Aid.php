@@ -33,10 +33,6 @@ class Aid extends Model
         return $this->belongsTo(AidTypeForm::class);
     }
 
-    public function sequenceFlashes(){
-        return $this->hasMany(SequenceFlashes::class);
-    }
-
     public function aidColorStructure(){
         return $this->belongsToMany(ColorStructure::class)
                     ->withTimestamps();
@@ -60,6 +56,26 @@ class Aid extends Model
     public function height()
     {
         return $this->hasOne(Height::class)->where('state', 'C');
+    }
+
+    public function nominalScopeCollection()
+    {
+        return $this->hasMany(NominalScope::class)->orderBy('created_at', 'desc');
+    }
+
+    public function nominalScope()
+    {
+        return $this->hasOne(NominalScope::class)->where('state', 'C');
+    }
+    
+    public function periodCollection()
+    {
+        return $this->hasMany(Period::class)->orderBy('created_at', 'desc');
+    }
+
+    public function period()
+    {
+        return $this->hasOne(Period::class)->where('state', 'C');
     }
 
 }

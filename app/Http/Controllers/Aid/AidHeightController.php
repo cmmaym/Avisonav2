@@ -46,8 +46,11 @@ class AidHeightController extends Controller
         
         $aid->height()->save($height);
 
-        $lastHeight->state = 'A';
-        $lastHeight->save();
+        if($lastHeight)
+        {
+            $lastHeight->state = 'A';
+            $lastHeight->save();
+        }
 
         return new HeightResource($height);
     }
@@ -80,7 +83,7 @@ class AidHeightController extends Controller
      *
      * @param  \AvisoNavAPI\Aid $aid
      * @param  int  $id
-     * @return \AvisoNavAPI\Http\Resources\Aid\CoordinateResource
+     * @return \AvisoNavAPI\Http\Resources\HeightResource
      */
     public function destroy(Aid $aid, $id)
     {
@@ -89,8 +92,12 @@ class AidHeightController extends Controller
         $height->delete();
 
         $currentHeight = $aid->heightCollection()->first();
-        $currentHeight->state = 'C';
-        $currentHeight->save();
+
+        if($currentHeight)
+        {
+            $currentHeight->state = 'C';
+            $currentHeight->save();
+        }
 
         return new HeightResource($height);
     }

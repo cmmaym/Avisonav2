@@ -157,10 +157,6 @@ Route::resource('aid.aidLang', 'Aid\AidLangController')->only([
 Route::resource('aid.coordinate', 'Aid\AidCoordinateController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
-
-// Route::resource('aid.sequenceFlashes', 'Aid\AidSequenceFlashesController')->only([
-//     'index', 'store', 'show', 'update', 'destroy'
-// ]);
     
 Route::resource('aid.chart', 'Aid\AidChartController')->only([
     'index', 'update', 'destroy'
@@ -175,6 +171,18 @@ Route::resource('aid.colorLight', 'Aid\AidColorsLightController')->only([
 ]);
 
 Route::resource('aid.height', 'Aid\AidHeightController')->only([
+    'index', 'store', 'update', 'destroy'
+]);
+
+Route::resource('aid.nominalScope', 'Aid\AidNominalScopeController')->only([
+    'index', 'store', 'update', 'destroy'
+]);
+
+Route::resource('aid.period', 'Aid\AidPeriodController')->only([
+    'index', 'store', 'update', 'destroy'
+]);
+
+Route::resource('aid.period.sequenceFlashes', 'Aid\AidPeriodSequenceFlashesController')->only([
     'index', 'store', 'update', 'destroy'
 ]);
 

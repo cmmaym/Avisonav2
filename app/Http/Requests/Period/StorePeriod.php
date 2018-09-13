@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Requests\SequenceFlashes;
+namespace AvisoNavAPI\Http\Requests\Period;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSequenceFlashes extends FormRequest
+class StorePeriod extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class StoreSequenceFlashes extends FormRequest
     public function rules()
     {
         return [
-            'on'           => 'required|numeric',
-            'off'           => 'required|numeric',
+            'time'                        => 'required|numeric',
+            'flashGroup'                  => 'required|numeric'
         ];
     }
 
@@ -40,5 +40,4 @@ class StoreSequenceFlashes extends FormRequest
             'required'              =>  'El campo :attribute es requerido'
         ];
     }
-    
 }

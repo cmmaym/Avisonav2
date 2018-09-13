@@ -17,9 +17,9 @@ class CreateSymbolNoveltyTable extends Migration
             $table->increments('id')->unsigned();
             $table->integer('novelty_id')->unsigned();
             $table->integer('symbol_id')->unsigned();
-            $table->integer('height_id')->unsigned();
-            $table->integer('nominal_scope_id')->unsigned();
-            $table->integer('period_id')->unsigned();
+            $table->integer('height_id')->unsigned()->nullable();
+            $table->integer('nominal_scope_id')->unsigned()->nullable();
+            $table->integer('period_id')->unsigned()->nullable();
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);

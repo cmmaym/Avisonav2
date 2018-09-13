@@ -15,15 +15,15 @@ class CreateSequenceFlashesTable extends Migration
     {
         Schema::create('sequence_flashes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('on', 45)->comment('Encendido');
-            $table->string('off', 45)->comment('Apagado');
+            $table->float('on')->comment('Encendido');
+            $table->float('off')->comment('Apagado');
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
             $table->integer('period_id')->unsigned();
 
             $table->foreign('period_id')
-                  ->references('id')->on('aid')
+                  ->references('id')->on('period')
                   ->onDelete('cascade');
         });
     }

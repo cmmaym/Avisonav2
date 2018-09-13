@@ -1,6 +1,6 @@
 <?php
 
-namespace AvisoNavAPI\Http\Resources\Aid;
+namespace AvisoNavAPI\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,11 +19,7 @@ class SequenceFlashesResource extends JsonResource
             'on'                => $this->on,
             'off'                => $this->off,
             'createdAt'        => $this->created_at->format('Y-m-d'),
-            'updatedAt'        => $this->updated_at->format('Y-m-d'),
-            'links'             => [
-                'self'  =>  route('aid.sequenceFlashes.show', ['aidId' => $this->aid->id, 'id' => $this->id]),
-                'aid'   =>  route('aid.show', ['id' => $this->aid->id])
-            ]
+            'updatedAt'        => $this->updated_at->format('Y-m-d')
         ];
     }
 }
