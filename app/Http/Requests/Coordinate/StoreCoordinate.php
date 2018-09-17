@@ -24,14 +24,8 @@ class StoreCoordinate extends FormRequest
     public function rules()
     {
         return [
-            'latitudeDegrees'           => 'required|numeric',
-            'latitudeMinutes'           => 'required|numeric',
-            'latitudeSeconds'           => 'required|numeric',
-            'latitudeDir'               => 'required',
-            'longitudeDegrees'           => 'required|numeric',
-            'longitudeMinutes'           => 'required|numeric',
-            'longitudeSeconds'           => 'required|numeric',
-            'longitudeDir'               => 'required',
+            'latitude'           => 'required|numeric|between:-90,90',
+            'longitude'           => 'required|numeric|between:-180,180'
         ];
     }
 

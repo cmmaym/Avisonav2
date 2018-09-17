@@ -38,7 +38,8 @@ class Symbol extends Model
 
     public function coordinate(){
         return $this->belongsToMany(Coordinate::class, 'symbol_coordinate')
-                    ->withTimestamps();
+                    ->withTimestamps()
+                    ->orderBy('symbol_coordinate.created_at', 'desc');
     }
 
     public function chart(){

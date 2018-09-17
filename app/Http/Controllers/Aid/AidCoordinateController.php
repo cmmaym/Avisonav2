@@ -37,17 +37,21 @@ class AidCoordinateController extends Controller
      */
     public function store(StoreCoordinate $request, Aid $aid)
     {
-        $coordinate = new Coordinate();
-        $coordinate->latitude_degrees = $request->input('latitudeDegrees');
-        $coordinate->latitude_minutes = $request->input('latitudeMinutes');
-        $coordinate->latitude_seconds = $request->input('latitudeSeconds');
-        $coordinate->latitude_dir     = $request->input('latitudeDir');
-        $coordinate->longitude_degrees = $request->input('longitudeDegrees');
-        $coordinate->longitude_minutes = $request->input('longitudeMinutes');
-        $coordinate->longitude_seconds = $request->input('longitudeSeconds');
-        $coordinate->longitude_dir     = $request->input('longitudeDir');
+        $lastCoordinate = $aid->symbol->coordinate()->where('state', 'C')->first();
 
-        $aid->symbol->coordinate()->save($coordinate);
+        $coordinate = new Coordinate($request->only(['latitude', 'longitude']));
+
+        if($lastCoordinate)
+        {
+            $aid->symbol->coordinate()->updateExistingPivot(
+                $lastCoordinate->id,
+                [
+                    'state' => 'A'
+                ]
+            );
+        }
+
+        $aid->symbol->coordinate()->save($coordinate, ['state' => 'C']);
 
         return new CoordinateResource($coordinate);
     }
@@ -63,14 +67,7 @@ class AidCoordinateController extends Controller
     public function update(StoreCoordinate $request, Aid $aid, $id)
     {
         $coordinate = $aid->symbol->coordinate()->findOrFail($id);
-        $coordinate->latitude_degrees = $request->input('latitudeDegrees');
-        $coordinate->latitude_minutes = $request->input('latitudeMinutes');
-        $coordinate->latitude_seconds = $request->input('latitudeSeconds');
-        $coordinate->latitude_dir     = $request->input('latitudeDir');
-        $coordinate->longitude_degrees = $request->input('longitudeDegrees');
-        $coordinate->longitude_minutes = $request->input('longitudeMinutes');
-        $coordinate->longitude_seconds = $request->input('longitudeSeconds');
-        $coordinate->longitude_dir     = $request->input('longitudeDir');
+        $coordinate->fill($request->only(['latitude', 'longitude']));
 
         if($coordinate->isClean()){
             return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
@@ -93,5 +90,17 @@ class AidCoordinateController extends Controller
         $coordinate = $aid->symbol->coordinate()->findOrFail($id);
 
         $aid->symbol->coordinate()->detach($coordinate->id);
+
+        $currentCoordinate = $aid->symbol->coordinate()->first();
+
+        if($currentCoordinate)
+        {
+            $aid->symbol->coordinate()->updateExistingPivot(
+                $currentCoordinate->id,
+                [
+                    'state' => 'C'
+                ]
+            );
+        }
     }
 }

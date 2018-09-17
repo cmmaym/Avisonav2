@@ -19,6 +19,7 @@ class CreateSymbolCoordinateTable extends Migration
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
+            $table->string('state', 1)->comment('El estado puede ser C=Current(Actual) o A:Archived(Archivado)');
 
             $table->foreign('symbol_id')
                 ->references('id')->on('symbol')

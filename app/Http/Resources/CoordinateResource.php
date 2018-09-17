@@ -16,16 +16,13 @@ class CoordinateResource extends JsonResource
     {
         return [
             'id'                => $this->id,
-            'latitudeDegrees'   => $this->latitude_degrees,
-            'latitudeMinutes'   => $this->latitude_minutes,
-            'latitudeSeconds'   => $this->latitude_seconds,
-            'latitudeDir'       => $this->latitude_dir,
-            'longitudeDegrees'   => $this->longitude_degrees,
-            'longitudeMinutes'   => $this->longitude_minutes,
-            'longitudeSeconds'   => $this->longitude_seconds,
-            'longitudeDir'       => $this->longitude_dir,
+            'latitude'       => $this->latitude,
+            'longitude'       => $this->longitude,
             'createdAt'        => $this->created_at->format('Y-m-d'),
-            'updatedAt'        => $this->updated_at->format('Y-m-d')
+            'updatedAt'        => $this->updated_at->format('Y-m-d'),
+            $this->mergeWhen(!is_null($this->state), [
+                'state' => $this->state,
+            ]),
         ];
     }
 }
