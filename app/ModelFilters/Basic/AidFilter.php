@@ -38,7 +38,7 @@ class AidFilter extends ModelFilter
     }
     
     public function createdBy($user){
-        return $this->where('created_by', 'like', "%$user%");
+        return $this->where('aid.created_by', 'like', "%$user%");
     }
     
     public function location($name){
@@ -105,7 +105,7 @@ class AidFilter extends ModelFilter
         $this->join('symbol', 'symbol.id', '=', 'aid.symbol_id')
              ->join('symbol_lang', 'symbol_lang.symbol_id', '=', 'symbol.id')
              ->groupBy('aid.id')
-             ->orderBy('symbol.name', $input)
+             ->orderBy('name', $input)
              ->select('aid.*');
     }
 

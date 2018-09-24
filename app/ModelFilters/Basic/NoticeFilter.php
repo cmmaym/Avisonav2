@@ -86,7 +86,8 @@ class NoticeFilter extends ModelFilter
     {
         $input = $this->input('dir', 'asc');
 
-        $this->join('zone', 'notice.zone_id', '=', 'zone.id')
+        $this->join('location', 'notice.location_id', '=', 'location.id')
+             ->join('zone', 'location.zone_id', '=', 'zone.id')
              ->join('zone_lang', 'zone.id', '=', 'zone_lang.zone_id')
              ->groupBy('notice.number')
              ->orderBy('zone_lang.name', $input)
