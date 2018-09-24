@@ -17,15 +17,9 @@ class NoveltyFilter extends ModelFilter
             $query->where('name', 'like', "%$name%");
         });
     }
-
-    public function symbol($name){
-        $this->whereHas('symbol.symbolLang', function($query) use ($name) {
-            $query->where('name', 'like', "%$name%");
-        });
-    }
     
-    public function description($description){
-        $this->related('noveltyLang', 'description', 'like', "%$description%");
+    public function name($name){
+        $this->related('noveltyLang', 'name', 'like', "%$name%");
     }
 
     public function state($state)
@@ -65,10 +59,9 @@ class NoveltyFilter extends ModelFilter
     {
         $input = $this->input('dir', 'asc');
 
-        $this->join('symbol', 'novelty.symbol_id', '=', 'symbol.id')
-             ->join('symbol_lang', 'symbol.id', '=', 'symbol_lang.symbol_id')
+        $this->join('novelty_lang', 'novelty.id', '=', 'novelty_lang.novelty_id')
              ->groupBy('novelty.id')
-             ->orderBy('symbol_lang.name', $input)
+             ->orderBy('novelty_lang.name', $input)
              ->select('novelty.*');
     }
 

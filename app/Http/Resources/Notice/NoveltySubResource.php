@@ -24,16 +24,16 @@ class NoveltySubResource extends JsonResource
     {
 
         $self = $this;
-        $description = function() use ($self) {
-            return $self->noveltyLang->description;
+        $name = function() use ($self) {
+            return $self->noveltyLang->name;
         };
 
         return [
             'id'                        => $this->id,
+            'name'                      =>  $this->when(!is_null($this->noveltyLang), $name, null),
             'notice'                    => $this->notice->number,
             'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
             'characterType'             => new CharacterTypeResource($this->characterType),
-            'description'               =>  $this->when(!is_null($this->noveltyLang), $description, null),
             'symbol'                    => new SymbolResource($this->symbol),
             'state'                     => $this->state,
             'numItem'                   => $this->num_item,

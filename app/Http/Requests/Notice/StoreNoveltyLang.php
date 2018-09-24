@@ -24,7 +24,7 @@ class StoreNoveltyLang extends FormRequest
     public function rules()
     {
         return [
-            'description'               => 'required|max:500',
+            'name'               => 'required|max:100',
             'language'                  => 'required|exists:language,id',
         ];
     }

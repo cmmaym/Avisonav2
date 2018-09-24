@@ -5,17 +5,20 @@ namespace AvisoNavAPI\Http\Controllers\Notice;
 use AvisoNavAPI\Notice;
 use AvisoNavAPI\Symbol;
 use AvisoNavAPI\Novelty;
+use AvisoNavAPI\Language;
 use AvisoNavAPI\NoveltyLang;
 use Illuminate\Http\Request;
+use AvisoNavAPI\ChartEdition;
 use AvisoNavAPI\CharacterType;
+use AvisoNavAPI\SymbolNovelty;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Traits\Responser;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use AvisoNavAPI\ModelFilters\Basic\NoveltyFilter;
 use AvisoNavAPI\Http\Requests\Notice\StoreNovelty;
 use AvisoNavAPI\Http\Resources\Notice\NoveltyResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\ChartEdition;
 
 class NoticeNoveltyController extends Controller
 {
@@ -34,6 +37,7 @@ class NoticeNoveltyController extends Controller
                                             'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
                                             'parent'
                                        ])
+                                       ->orderBy('num_item', 'asc')
                                        ->paginateFilter($this->perPage());
 
         return NoveltyResource::collection($collection);
@@ -47,10 +51,13 @@ class NoticeNoveltyController extends Controller
      */
     public function store(StoreNovelty $request, Notice $notice)
     {
+        $name = $request->input('name');
         $noveltyType = $request->input('noveltyType');
         $characterType = CharacterType::find($request->input('characterType'));
         $symbol = Symbol::find($request->input('symbol'));
         $description = $request->input('description');
+
+        $language = Language::where('code','es')->firstOrFail();
 
         //Novedad a cancelar
         $parent = Novelty::find($request->input('parent'));
@@ -59,6 +66,10 @@ class NoticeNoveltyController extends Controller
         $novelty->novelty_type_id = $noveltyType;
         $novelty->character_type_id = $characterType->id;
         $novelty->state = 'A';
+
+        $hasSymbol = false;
+
+        $user = Auth::user();
 
         if($parent)
         {
@@ -74,23 +85,26 @@ class NoticeNoveltyController extends Controller
 
             if($symbol)
             {
+                $symbolId = $symbol->id;
                 //Buscamos la ultima novedad temporal y estado Abierta asociada al symbolo
                 $noveltyTemp = Novelty::whereHas('characterType', function($query) {
                                     $query->where('alias', 'T');
                                 })
+                                ->whereHas('symbol', function($query) use ($symbolId){
+                                    $query->where('symbol_id', $symbolId);
+                                })
                                 ->where('state', 'A')
-                                ->where('symbol_id', $symbol)
                                 ->first();
 
                 if($noveltyTemp && ($noveltyTemp->id !== $parent->id))
                 {
                     return $this->errorResponse('La novedad a cancelar no corresponde con la ultima novedad Temporal pendiente por cancelar relacionada a la Ayuda o Peligro seleccionado', 409);
-                }else if($parent->symbol && ($parent->symbol->id !== $symbol->id))
+                }else if($parent->symbol && ($parent->symbol->symbol->id !== $symbol->id))
                 {
                     return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
                 }
 
-                $novelty->symbol_id = $symbol->id;
+                $hasSymbol = true;
             }
 
             $novelty->parent_id = $parent->id;
@@ -100,12 +114,15 @@ class NoticeNoveltyController extends Controller
             $parent->save();
         }else if($symbol)
         {
+            $symbolId = $symbol->id;
             //Buscamos la ultima novedad temporal y estado Abierta asociada al symbolo
             $noveltyTemp = Novelty::whereHas('characterType', function($query) {
                                 $query->where('alias', 'T');
                             })
+                            ->whereHas('symbol', function($query) use ($symbolId){
+                                $query->where('symbol_id', $symbolId);
+                            })
                             ->where('state', 'A')
-                            ->where('symbol_id', $symbol->id)
                             ->first();
 
             if($noveltyTemp)
@@ -116,11 +133,26 @@ class NoticeNoveltyController extends Controller
                 return $this->errorResponse("La ayuda o peligro se encuentra en la novedad #$noveltyNum del aviso $noticeNumber pendiente por cancelar", 409);
             }
 
-            $novelty->symbol_id = $symbol->id;
+            $hasSymbol = true;
             $novelty->state = 'A';
         }
         
         $notice->novelty()->save($novelty);
+
+        if($hasSymbol)
+        {
+            $symbolNovelty = new SymbolNovelty();
+            $symbolNovelty->symbol_id = $symbol->id;
+
+            if($symbol->aid)
+            {
+                $symbolNovelty->height_id = $symbol->aid->height->id;
+                $symbolNovelty->nominal_scope_id = $symbol->aid->nominalScope->id;
+                $symbolNovelty->period_id = $symbol->aid->period->id;
+            }
+            
+            $novelty->symbol()->save($symbolNovelty);
+        }
 
         if($symbol)
         {
@@ -148,18 +180,39 @@ class NoticeNoveltyController extends Controller
             if($symbol->chart)
             {
                 $chartEditionId = $symbol->chart->pluck('chartEdition')->collapse()->pluck('id');
-                if ($chartEditionId) $novelty->chartEdition()->syncWithoutDetaching($chartEditionId);
+                if ($chartEditionId) 
+                    $novelty->chartEdition()->syncWithoutDetaching($chartEditionId, [
+                        'created_by' => $user->username,
+                        'updated_by' => $user->username,
+                    ]);
             }
 
         }
 
-        if($description)
+        if($name)
         {
             $noveltyLang = new NoveltyLang();
-            $noveltyLang->description = $description;
-            $noveltyLang->language_id = $request->input('language');
+            $noveltyLang->name = $name;
+            $noveltyLang->language_id = $language->id;
 
             $novelty->noveltyLang()->save($noveltyLang);
+        }else if($hasSymbol){
+            $dataLangs = $symbol->symbolLangs;
+
+            if($dataLangs)
+            {
+                $langs = [];
+                foreach($dataLangs as $item)
+                {
+                    $lng = new NoveltyLang();
+                    $lng->name = $item->name;
+                    $lng->language_id = $item->language_id;
+
+                    $langs[] = $lng;
+                }
+
+                $novelty->noveltyLangs()->saveMany($langs);
+            }
         }
 
         $this->generateNoveltySequence($notice->id);

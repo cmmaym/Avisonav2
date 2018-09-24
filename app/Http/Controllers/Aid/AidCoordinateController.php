@@ -2,15 +2,16 @@
 
 namespace AvisoNavAPI\Http\Controllers\Aid;
 
-use Illuminate\Http\Request;
-use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Aid;
-use AvisoNavAPI\ModelFilters\Basic\CoordinateFilter;
-use AvisoNavAPI\Traits\Filter;
-use AvisoNavAPI\Http\Resources\CoordinateResource;
-use AvisoNavAPI\Http\Requests\Coordinate\StoreCoordinate;
 use AvisoNavAPI\Coordinate;
+use Illuminate\Http\Request;
+use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Traits\Responser;
+use Illuminate\Support\Facades\Auth;
+use AvisoNavAPI\Http\Resources\CoordinateResource;
+use AvisoNavAPI\ModelFilters\Basic\CoordinateFilter;
+use AvisoNavAPI\Http\Requests\Coordinate\StoreCoordinate;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 
 class AidCoordinateController extends Controller
 {
@@ -41,6 +42,7 @@ class AidCoordinateController extends Controller
 
         $coordinate = new Coordinate($request->only(['latitude', 'longitude']));
 
+        $user = Auth::user();
         if($lastCoordinate)
         {
             $aid->symbol->coordinate()->updateExistingPivot(
@@ -51,7 +53,11 @@ class AidCoordinateController extends Controller
             );
         }
 
-        $aid->symbol->coordinate()->save($coordinate, ['state' => 'C']);
+        $aid->symbol->coordinate()->save($coordinate, [
+                'state' => 'C',
+                'created_by' => $user->username,
+                'updated_by' => $user->username,
+        ]);
 
         return new CoordinateResource($coordinate);
     }

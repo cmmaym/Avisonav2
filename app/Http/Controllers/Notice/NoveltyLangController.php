@@ -37,7 +37,7 @@ class NoveltyLangController extends Controller
      */
     public function store(StoreNoveltyLang $request, Novelty $novelty)
     {
-        $noveltyLang = new NoveltyLang($request->only(['description']));
+        $noveltyLang = new NoveltyLang($request->only(['name']));
         $noveltyLang->language_id = $request->input('language');
         
         $novelty->noveltyLangs()->save($noveltyLang);
@@ -65,7 +65,7 @@ class NoveltyLangController extends Controller
      */
     public function update(StoreNoveltyLang $request, $novelty, NoveltyLang $noveltyLang)
     {
-        $noveltyLang->fill($request->only(['description']));
+        $noveltyLang->fill($request->only(['name']));
         $noveltyLang->language_id = $request->input('language');
 
         if($noveltyLang->isClean()){

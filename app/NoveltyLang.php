@@ -4,13 +4,14 @@ namespace AvisoNavAPI;
 
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use AvisoNavAPI\Traits\Observable;
 
 class NoveltyLang extends Model
 {
-    use Filterable;
+    use Filterable, Observable;
     
     protected $table        = 'novelty_lang';
-    protected $fillable     = ['description'];
+    protected $fillable     = ['name'];
 
     public function novelty(){
         return $this->belongsTo(Novelty::class);

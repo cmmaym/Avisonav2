@@ -4,10 +4,11 @@ namespace AvisoNavAPI;
 
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use AvisoNavAPI\Traits\Observable;
 
 class Novelty extends Model
 {
-    use Filterable;
+    use Filterable, Observable;
 
     protected $table        = 'novelty';
     protected $fillable     = ['state'];
@@ -33,7 +34,7 @@ class Novelty extends Model
     }
 
     public function symbol(){
-        return $this->hasOne(Symbol::class);
+        return $this->hasOne(SymbolNovelty::class);
     }
 
     public function parent(){

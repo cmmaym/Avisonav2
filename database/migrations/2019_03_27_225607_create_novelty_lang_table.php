@@ -15,7 +15,7 @@ class CreateNoveltyLangTable extends Migration
     {
         Schema::create('novelty_lang', function (Blueprint $table) {
             $table->increments('id');
-            $table->mediumText('description')->nullable()->comment('Descripcion acerca de la novedad');
+            $table->string('name', 100);
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);

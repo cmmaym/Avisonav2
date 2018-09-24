@@ -17,7 +17,7 @@ class NoveltyLangResource extends JsonResource
     {
         return [
             'id'                => $this->id,
-            'description'       => $this->description,
+            'name'             => $this->name,
             'createdAt'        => $this->created_at->format('Y-m-d'),
             'updatedAt'        => $this->updated_at->format('Y-m-d'),
             'language'          => new LanguageResource($this->language)

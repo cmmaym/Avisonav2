@@ -3,11 +3,13 @@
 namespace AvisoNavAPI\Http\Controllers\Notice;
 
 use AvisoNavAPI\Notice;
+use AvisoNavAPI\Language;
 use AvisoNavAPI\NoticeLang;
 use Illuminate\Http\Request;
 use AvisoNavAPI\AvisoDetalle;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\ConsecutiveNotice;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use AvisoNavAPI\Http\Resources\AyudaResource;
@@ -16,7 +18,6 @@ use AvisoNavAPI\Http\Requests\Notice\StoreNotice;
 use AvisoNavAPI\Http\Resources\Notice\NoticeResource;
 use AvisoNavAPI\Http\Resources\Notice\NoticePublicResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\ConsecutiveNotice;
 
 class NoticeController extends Controller
 {
@@ -56,13 +57,14 @@ class NoticeController extends Controller
             
             $newConsec = str_pad($consecutiveNotice->number + 1, 3, '00', STR_PAD_LEFT);
 
+            $language = Language::where('code','es')->firstOrFail();
+
             $notice = new Notice();
             $notice->number = $newConsec;
             $year = (new \DateTime("now"))->format('Y');
             $notice->reports_numbers = $request->input('reportsNumbers');
             $notice->report_date = $request->input('reportDate');
             $notice->year = $year;
-            $notice->user = Auth::user()->username;
             $notice->location_id = $request->input('location');
             $notice->report_source_id = $request->input('reportSource');
             $notice->reporting_user_id = $request->input('reportingUser');
@@ -79,7 +81,7 @@ class NoticeController extends Controller
             {
                 $noticeLang = new NoticeLang();
                 $noticeLang->description = $description;
-                $noticeLang->language_id = $request->input('language');
+                $noticeLang->language_id = $language->id;
         
                 $notice->noticeLang()->save($noticeLang);
             }    
@@ -126,7 +128,6 @@ class NoticeController extends Controller
         $notice->fill($request->only(['state']));
         $notice->reports_numbers = $request->input('reportsNumbers');
         $notice->report_date = $request->input('reportDate');
-        $notice->user = Auth::user()->username;
         $notice->location_id = $request->input('location');
         $notice->report_source_id = $request->input('reportSource');
         $notice->reporting_user_id = $request->input('reportingUser');

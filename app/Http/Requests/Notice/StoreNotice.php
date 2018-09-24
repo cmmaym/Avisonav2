@@ -32,7 +32,6 @@ class StoreNotice extends FormRequest
             'lightList'                 => 'nullable|exists:light_list,id',
             'reportSource'              => 'required|exists:report_source,id',
             'reportingUser'             => 'required|exists:reporting_user,id',
-            'language'                  => 'sometimes|required|exists:language,id',
             'description'               => 'sometimes|nullable|max:500',
         ];
     }

@@ -15,7 +15,6 @@ class CreateNoveltyTable extends Migration
     {
         Schema::create('novelty', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('name', 100);
             $table->integer('notice_id')->unsigned();
             $table->integer('novelty_type_id')->unsigned();
             $table->integer('character_type_id')->unsigned();

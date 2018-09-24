@@ -32,7 +32,7 @@ class SymbolResource extends JsonResource
             'observation'       => $this->when(!is_null($this->symbolLang), $observation, null),
             'createdAt'         => $this->created_at->format('Y-m-d'),
             'updatedAt'         => $this->updated_at->format('Y-m-d'),
-            'symbolType'        => $this->symbolType->title,
+            // 'symbolType'        => $this->symbolType->title,
             // 'image'             => new ImageResource($this->symbol->image),
             'location'          => new LocationResource($this->location),
         ];

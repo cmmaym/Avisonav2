@@ -6,9 +6,9 @@ use EloquentFilter\ModelFilter;
 
 class NoveltyLangFilter extends ModelFilter
 {
-    public function description($description)
+    public function name($name)
     {
-        return $this->where('description', 'like', "%$description%");
+        return $this->where('name', 'like', "%$name%");
     }
     
     public function createdAt($createdAt)
@@ -33,9 +33,9 @@ class NoveltyLangFilter extends ModelFilter
         return $this->orderBy('id', $this->input('dir', 'desc'));
     }
 
-    public function sortByDescription()
+    public function sortByName()
     {
-        return $this->orderBy('description', $this->input('dir', 'asc'));
+        return $this->orderBy('name', $this->input('dir', 'asc'));
     }
     
     public function sortByCreatedAt()

@@ -5,10 +5,11 @@ namespace AvisoNavAPI;
 use AvisoNavAPI\Notice;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use AvisoNavAPI\Traits\Observable;
 
 class Symbol extends Model
 {
-    use Filterable;
+    use Filterable, Observable;
 
     protected $table        = 'symbol';
     

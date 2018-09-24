@@ -24,7 +24,7 @@ class StoreNoticeLang extends FormRequest
     public function rules()
     {
         return [
-            'description'               => 'required|max:500',
+            'name'                      => 'required',
             'language'                  => 'required|exists:language,id',
         ];
     }

@@ -7,10 +7,11 @@ use AvisoNavAPI\NoticeAid;
 use AvisoNavAPI\AvisoDetalle;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use AvisoNavAPI\Traits\Observable;
 
 class Notice extends Model
 {
-    use Filterable;
+    use Filterable, Observable;
 
     protected $table        = 'notice';
     protected $fillable     = ['state'];

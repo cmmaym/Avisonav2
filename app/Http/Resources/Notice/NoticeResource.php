@@ -44,7 +44,7 @@ class NoticeResource extends JsonResource
             'createdAt'                => $this->created_at->format('Y-m-d'),
             'updatedAt'                => $this->updated_at->format('Y-m-d'),
             'state'                     => $this->state,
-            'user'                      => $this->user,
+            'createdBy'                => $this->created_by,
             'description'               =>  $this->when(!is_null($this->noticeLang), $description, null),
             'location'                  => new LocationResource($this->location),
             'catalogOceanCoast'         => new CatalogOceanCoastResource($this->catalogOceanCoast),

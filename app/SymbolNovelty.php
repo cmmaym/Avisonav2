@@ -4,10 +4,11 @@ namespace AvisoNavAPI;
 
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use AvisoNavAPI\Traits\Observable;
 
 class SymbolNovelty extends Model
 {
-    use Filterable;
+    use Filterable, Observable;
 
     protected $table        = 'symbol_novelty';
 

@@ -7,8 +7,9 @@ use AvisoNavAPI\Chart;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Traits\Responser;
-use AvisoNavAPI\Http\Resources\Chart\ChartResource;
+use Illuminate\Support\Facades\Auth;
 use AvisoNavAPI\ModelFilters\Basic\ChartFilter;
+use AvisoNavAPI\Http\Resources\Chart\ChartResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 
 class AidChartController extends Controller
@@ -38,7 +39,12 @@ class AidChartController extends Controller
      */
     public function update(Aid $aid, Chart $chart)
     {
-        $aid->symbol->chart()->attach($chart->id);
+        $user = Auth::user();
+
+        $aid->symbol->chart()->attach($chart->id, [
+            'created_by' => $user->username,
+            'updated_by' => $user->username,
+        ]);
     }
 
     /**

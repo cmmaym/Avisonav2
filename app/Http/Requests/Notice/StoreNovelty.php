@@ -24,11 +24,10 @@ class StoreNovelty extends FormRequest
     public function rules()
     {
         return [
+            'name'                      => 'nullable|max:100',
             'noveltyType'               => 'required|exists:novelty_type,id',
             'characterType'             => 'required|exists:character_type,id',
             'symbol'                    => 'nullable|exists:symbol,id',
-            'language'                  => 'sometimes|required|exists:language,id',
-            'description'               => 'sometimes|nullable|max:500',
             'parent'                    => 'nullable|exists:novelty,id',
         ];
     }

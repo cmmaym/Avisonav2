@@ -4,10 +4,11 @@ namespace AvisoNavAPI;
 
 use Illuminate\Database\Eloquent\Model;
 use EloquentFilter\Filterable;
+use AvisoNavAPI\Traits\Observable;
 
 class Coordinate extends Model
 {
-    use Filterable;
+    use Filterable, Observable;
     
     protected   $table      =   'coordinate';
     protected $fillable     = ['latitude', 'longitude'];
