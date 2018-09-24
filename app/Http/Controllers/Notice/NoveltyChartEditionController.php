@@ -2,14 +2,15 @@
 
 namespace AvisoNavAPI\Http\Controllers\Notice;
 
-use Illuminate\Http\Request;
-use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Novelty;
+use Illuminate\Http\Request;
+use AvisoNavAPI\ChartEdition;
 use AvisoNavAPI\Traits\Filter;
+use AvisoNavAPI\Traits\Responser;
+use Illuminate\Support\Facades\Auth;
 use AvisoNavAPI\ModelFilters\Basic\ChartEditionFilter;
 use AvisoNavAPI\Http\Resources\Chart\ChartEditionResource;
-use AvisoNavAPI\ChartEdition;
-use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 
 class NoveltyChartEditionController extends Controller
 {
@@ -40,7 +41,12 @@ class NoveltyChartEditionController extends Controller
      */
     public function update(Novelty $novelty, ChartEdition $chartEdition)
     {
-        $novelty->chartEdition()->attach($chartEdition->id);
+        $user = Auth::user();
+        
+        $novelty->chartEdition()->attach($chartEdition->id, [
+            'created_by' => $user->username,
+            'updated_by' => $user->username,
+        ]);
     }
 
     /**

@@ -28,6 +28,10 @@ class NoveltyResource extends JsonResource
         $name = function() use ($self) {
             return $self->noveltyLang->name;
         };
+        
+        $symbol = function() use ($self) {
+            return $self->symbol->symbol;
+        };
 
         return [
             'id'                        => $this->id,
@@ -35,7 +39,7 @@ class NoveltyResource extends JsonResource
             'notice'                    => $this->notice->number,
             'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
             'characterType'             => new CharacterTypeResource($this->characterType),
-            'symbol'                    => new SymbolResource($this->symbol),
+            'symbol'                    => new SymbolResource($this->when(!is_null($this->symbol), $symbol, null)),
             'state'                     => $this->state,
             'numItem'                   => $this->num_item,
             'createdAt'                => $this->created_at->format('Y-m-d'),

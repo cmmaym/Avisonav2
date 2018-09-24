@@ -25,6 +25,7 @@ class EditionChartController extends Controller
     {
         $collection = ChartEdition::filter(request()->all(), ChartEditionFilter::class)
                                               ->with(['chart'])
+                                              ->where('state', 'C')
                                               ->paginateFilter($this->perPage());
 
         return ChartEditionResource::collection($collection);

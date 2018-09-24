@@ -156,26 +156,21 @@ class NoticeNoveltyController extends Controller
 
         if($symbol)
         {
-            $coordinate = $symbol->coordinate()->orderBy('created_at', 'desc')->first();
+            $coordinate = $symbol->coordinate()->where('state', 'C')->first();
 
-            if($coordinate) $novelty->coordinate()->attach($coordinate->id);
+            if($coordinate)
+            {
+                $novelty->coordinate()->attach($coordinate->id, [
+                    'created_by' => $user->username,
+                    'updated_by' => $user->username,
+                ]);
+            }
 
             $symbol->chart->load([
-                                'chartEdition' => function($query){
-                                    $query->leftJoin(DB::raw('
-                                        (
-                                            select chart_id, max(created_at) max_created_at
-                                            from chart_edition
-                                            group by chart_id
-                                        ) che
-                                    '), function($join){
-                                        $join->on('chart_edition.chart_id', '=', 'che.chart_id');
-                                        $join->on('chart_edition.created_at', '=', 'che.max_created_at');
-                                    })
-                                    ->select('chart_edition.*')
-                                    ->whereNotNull('che.chart_id');
-                                }
-                            ]);
+                'chartEdition' => function($query){
+                    $query->where('state', 'C');
+                }
+            ]);
        
             if($symbol->chart)
             {
@@ -259,6 +254,8 @@ class NoticeNoveltyController extends Controller
         $novelty->novelty_type_id = $noveltyType;
         $novelty->character_type_id = $characterType->id;
 
+        $hasSymbol = false;
+
         //Validamos si tiene una novedad por cancelar
         if($parent)
         {
@@ -283,13 +280,13 @@ class NoticeNoveltyController extends Controller
                 $parent->save();
             }
 
-            if($novelty->symbol && $symbol && ($novelty->symbol->id !== $symbol->id))
+            if($novelty->symbol && $symbol && ($novelty->symbol->symbol->id !== $symbol->id))
             {
                 $novelty->coordinate()->detach();
                 $novelty->chartEdition()->detach();
             }else if($novelty->symbol && !$symbol)
             {
-                $novelty->symbol_id = null;
+                $novelty->symbol()->delete();
             }
 
 
@@ -299,29 +296,18 @@ class NoticeNoveltyController extends Controller
             {
                 if($symbol)
                 {
-                    if($parent->symbol && ($symbol->id !== $parent->symbol->id))
+                    if($parent->symbol && ($symbol->id !== $parent->symbol->symbol->id))
                     {
                         return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
                     }
 
-                    $coordinate = $symbol->coordinate()->orderBy('created_at', 'desc')->first();
+                    $coordinate = $symbol->coordinate()->where('state', 'C')->first();
 
                     if($coordinate) $novelty->coordinate()->syncWithoutDetaching($coordinate->id);
 
                     $symbol->chart->load([
                         'chartEdition' => function($query){
-                            $query->leftJoin(DB::raw('
-                                (
-                                    select chart_id, max(created_at) max_created_at
-                                    from chart_edition
-                                    group by chart_id
-                                ) che
-                            '), function($join){
-                                $join->on('chart_edition.chart_id', '=', 'che.chart_id');
-                                $join->on('chart_edition.created_at', '=', 'che.max_created_at');
-                            })
-                            ->select('chart_edition.*')
-                            ->whereNotNull('che.chart_id');
+                            $query->where('state', 'C');
                         }
                     ]);
         
@@ -331,7 +317,7 @@ class NoticeNoveltyController extends Controller
                         if ($chartEditionId) $novelty->chartEdition()->syncWithoutDetaching($chartEditionId);
                     }
 
-                    $novelty->symbol_id = $symbol->id;
+                    $hasSymbol = true;
                 }else if($parent->symbol)
                 {
                     return $this->errorResponse('Debe seleccionar la ayuda o peligro asociado a la novedad a cancelar', 409);
@@ -348,29 +334,18 @@ class NoticeNoveltyController extends Controller
             {
                 if($symbol)
                 {
-                    if($parent->symbol && ($symbol->id !== $parent->symbol->id))
+                    if($parent->symbol && ($symbol->id !== $parent->symbol->symbol->id))
                     {
                         return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
                     }
 
-                    $coordinate = $symbol->coordinate()->orderBy('created_at', 'desc')->first();
+                    $coordinate = $symbol->coordinate()->where('state', 'C')->first();
 
                     if($coordinate) $novelty->coordinate()->syncWithoutDetaching($coordinate->id);
 
                     $symbol->chart->load([
                         'chartEdition' => function($query){
-                            $query->leftJoin(DB::raw('
-                                (
-                                    select chart_id, max(created_at) max_created_at
-                                    from chart_edition
-                                    group by chart_id
-                                ) che
-                            '), function($join){
-                                $join->on('chart_edition.chart_id', '=', 'che.chart_id');
-                                $join->on('chart_edition.created_at', '=', 'che.max_created_at');
-                            })
-                            ->select('chart_edition.*')
-                            ->whereNotNull('che.chart_id');
+                            $query->where('state', 'C');
                         }
                     ]);
         
@@ -380,7 +355,7 @@ class NoticeNoveltyController extends Controller
                         if ($chartEditionId) $novelty->chartEdition()->syncWithoutDetaching($chartEditionId);
                     }
 
-                    $novelty->symbol_id = $symbol->id;
+                    $hasSymbol = true;
                 }else if($parent->symbol)
                 {
                     return $this->errorResponse('Debe seleccionar la ayuda o peligro asociado a la novedad a cancelar', 409);
@@ -388,29 +363,18 @@ class NoticeNoveltyController extends Controller
 
             }else if(!$novelty->parent && $symbol)
             {
-                if($parent->symbol && ($symbol->id !== $parent->symbol->id))
+                if($parent->symbol && ($symbol->id !== $parent->symbol->symbol->id))
                 {
                     return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
                 }
 
-                $coordinate = $symbol->coordinate()->orderBy('created_at', 'desc')->first();
+                $coordinate = $symbol->coordinate()->where('state', 'C')->first();
 
                 if($coordinate) $novelty->coordinate()->syncWithoutDetaching($coordinate->id);
 
                 $symbol->chart->load([
                     'chartEdition' => function($query){
-                        $query->leftJoin(DB::raw('
-                            (
-                                select chart_id, max(created_at) max_created_at
-                                from chart_edition
-                                group by chart_id
-                            ) che
-                        '), function($join){
-                            $join->on('chart_edition.chart_id', '=', 'che.chart_id');
-                            $join->on('chart_edition.created_at', '=', 'che.max_created_at');
-                        })
-                        ->select('chart_edition.*')
-                        ->whereNotNull('che.chart_id');
+                        $query->where('state', 'C');
                     }
                 ]);
     
@@ -420,7 +384,7 @@ class NoticeNoveltyController extends Controller
                     if ($chartEditionId) $novelty->chartEdition()->syncWithoutDetaching($chartEditionId);
                 }
 
-                $novelty->symbol_id = $symbol->id;
+                $hasSymbol = true;
                 $novelty->parent_id = $parent->id;
                 
                 $parent->state = 'C';
@@ -449,15 +413,18 @@ class NoticeNoveltyController extends Controller
                 if(!$noveltyNext->symbol)
                 {
                     return $this->errorResponse("Debe primero especificar la ayuda o peligro en la novedad #$noveltyNextNumItem del aviso No $noveltyNextNoticeNumber", 409);
-                }else if($noveltyNext->symbol->id !== $symbol->id)
+                }else if($noveltyNext->symbol->symbol->id !== $symbol->id)
                 {
-                    $noveltyNextSymbolName = $noveltyNext->symbol->symbolLang()->first()->name;
+                    $noveltyNextSymbolName = $noveltyNext->symbol->symbol->symbolLang()->first()->name;
                     return $this->errorResponse("Debe seleccionar la ayuda o peligro de nombre $noveltyNextSymbolName, ya que es la que se encuentra en la novedad #$noveltyNextNumItem del aviso No $noveltyNextNoticeNumber", 409);
                 }
             }
 
+            $symbolId = $symbol->id;
             $noveltyTemp = Novelty::where('state', 'A')
-                                  ->where('symbol_id', $symbol->id)
+                                ->whereHas('symbol', function($query) use ($symbolId){
+                                    $query->where('symbol_id', $symbolId);
+                                })
                                   ->whereHas('characterType', function($query){
                                         $query->where('alias', 'T');
                                   })
@@ -473,22 +440,11 @@ class NoticeNoveltyController extends Controller
 
             $symbol->chart->load([
                 'chartEdition' => function($query){
-                    $query->leftJoin(DB::raw('
-                        (
-                            select chart_id, max(created_at) max_created_at
-                            from chart_edition
-                            group by chart_id
-                        ) che
-                    '), function($join){
-                        $join->on('chart_edition.chart_id', '=', 'che.chart_id');
-                        $join->on('chart_edition.created_at', '=', 'che.max_created_at');
-                    })
-                    ->select('chart_edition.*')
-                    ->whereNotNull('che.chart_id');
+                    $query->where('state', 'C');
                 }
             ]);
 
-            if($novelty->symbol && ($symbol->id !== $novelty->symbol->id))
+            if($novelty->symbol && ($symbol->id !== $novelty->symbol->symbol->id))
             {
                 $novelty->coordinate()->detach();
                 $novelty->chartEdition()->detach();
@@ -500,11 +456,11 @@ class NoticeNoveltyController extends Controller
                 if ($chartEditionId) $novelty->chartEdition()->syncWithoutDetaching($chartEditionId);
             }
 
-            $coordinate = $symbol->coordinate()->orderBy('created_at', 'desc')->first();
+            $coordinate = $symbol->coordinate()->where('state', 'C')->first();
 
             if($coordinate) $novelty->coordinate()->syncWithoutDetaching($coordinate->id);
 
-            $novelty->symbol_id = $symbol->id;
+            $hasSymbol = true;
         }
 
         if(!$symbol && !$parent)
@@ -513,7 +469,8 @@ class NoticeNoveltyController extends Controller
             {
                 $novelty->coordinate()->detach();
                 $novelty->chartEdition()->detach();
-                $novelty->symbol_id = null;
+
+                $novelty->symbol()->delete();
             }
 
             if($novelty->parent)
@@ -523,9 +480,56 @@ class NoticeNoveltyController extends Controller
                 $novelty->parent->save();
             }
         }
-        
-        if($novelty->isClean()){
-            return $this->errorResponse('Debe especificar por lo menos un valor diferente para actualizar', 409);
+
+        if($hasSymbol)
+        {
+            $symbolNovelty = null;
+
+            if($novelty->symbol)
+            {
+                $symbolNovelty = $novelty->symbol;
+                
+                $symbolNovelty->height_id = null;
+                $symbolNovelty->nominal_scope_id = null;
+                $symbolNovelty->period_id = null;
+            }else{
+                $symbolNovelty = new SymbolNovelty();
+            }
+            
+            $symbolNovelty->symbol_id = $symbol->id;
+            if($symbol->aid)
+            {
+                $symbolNovelty->height_id = $symbol->aid->height->id;
+                $symbolNovelty->nominal_scope_id = $symbol->aid->nominalScope->id;
+                $symbolNovelty->period_id = $symbol->aid->period->id;
+            }
+            
+            $novelty->symbol()->save($symbolNovelty);
+        }
+
+        if($novelty->noveltyLangs)
+        {
+            if($hasSymbol){
+
+                $novelty->noveltyLangs()->delete();
+
+                $dataLangs = $symbol->symbolLangs;
+    
+                if($dataLangs)
+                {
+                    $langs = [];
+                    foreach($dataLangs as $item)
+                    {
+                        $lng = new NoveltyLang();
+                        $lng->name = $item->name;
+                        $lng->language_id = $item->language_id;
+    
+                        $langs[] = $lng;
+                    }
+    
+                    $novelty->noveltyLangs()->saveMany($langs);
+                }
+            }    
         }
         
         $novelty->save();
