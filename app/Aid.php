@@ -55,7 +55,7 @@ class Aid extends Model
     
     public function height()
     {
-        return $this->hasOne(Height::class)->where('state', 'C');
+        return $this->hasOne(Height::class);
     }
 
     public function nominalScopeCollection()
@@ -65,7 +65,7 @@ class Aid extends Model
 
     public function nominalScope()
     {
-        return $this->hasOne(NominalScope::class)->where('state', 'C');
+        return $this->hasOne(NominalScope::class);
     }
     
     public function periodCollection()
@@ -75,7 +75,7 @@ class Aid extends Model
 
     public function period()
     {
-        return $this->hasOne(Period::class)->where('state', 'C');
+        return $this->hasOne(Period::class);
     }
 
 }

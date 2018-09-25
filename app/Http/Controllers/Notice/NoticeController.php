@@ -169,11 +169,29 @@ class NoticeController extends Controller
             'novelty.symbol.symbol.symbolLang' => $this->withLanguageQuery(),
             'novelty.symbol.symbol.aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
             'novelty.symbol.symbol.aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
-            'novelty.symbol.symbol.aid.topMark.topMarkLang' => $this->withLanguageQuery(),
+            'novelty.symbol.symbol.aid.topMark.topMarkLang' => $this->withLanguageQuery()
         ])
         ->where('number', '=', $number)
         ->where('state', '=', 'P')
         ->firstOrFail();
+
+        $notice->novelty->each(function($item){
+            if($item->symbol)
+            {
+                $sn = $item->symbol;
+                $item->load([
+                    'symbol.symbol.aid.height' => function($query) use ($sn){
+                        $query->where('id', $sn->height_id);
+                    },
+                    'symbol.symbol.aid.nominalScope' => function($query) use ($sn){
+                        $query->where('id', $sn->nominal_scope_id);
+                    },
+                    'symbol.symbol.aid.period' => function($query) use ($sn){
+                        $query->where('id', $sn->period_id);
+                    }
+                ]);
+            }
+        });
 
         return new NoticePublicResource($notice);
     }
