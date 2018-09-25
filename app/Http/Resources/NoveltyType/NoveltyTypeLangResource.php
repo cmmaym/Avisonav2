@@ -20,11 +20,7 @@ class NoveltyTypeLangResource extends JsonResource
             'name'              => $this->name,
             'createdAt'        => $this->created_at->format('Y-m-d'),
             'updatedAt'        => $this->updated_at->format('Y-m-d'),
-            'language'          => new LanguageResource($this->language),
-            'links'              => [
-                'self'  =>  route('noveltyType.noveltyTypeLang.show', ['noveltyTypeId' => $this->noveltyType->id, 'id' => $this->id]),
-                'noveltyType'  =>  route('noveltyType.show', ['noveltyTypeId' => $this->noveltyType->id]),
-            ],
+            'language'          => new LanguageResource($this->language)
         ];
     }
 }

@@ -21,11 +21,7 @@ class TopMarkLangResource extends JsonResource
             'description'       =>  $this->description,
             'createdAt'        =>  $this->created_at->format('Y-m-d'),
             'updatedAt'        =>  $this->updated_at->format('Y-m-d'),
-            'language'          => new LanguageResource($this->language),
-            'links'             => [
-                'self'  =>  route('topMark.topMarkLang.show', ['topMarkId' => $this->topMark->id, 'id' => $this->id]),
-                'topMark' => route('topMark.show', ['id' => $this->topMark->id])
-            ]
+            'language'          => new LanguageResource($this->language)
         ];
     }
 }

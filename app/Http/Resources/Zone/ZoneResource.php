@@ -28,11 +28,7 @@ class ZoneResource extends JsonResource
             'name'              =>  $this->when(!is_null($this->zoneLang), $name, null),
             'alias'             =>  $this->when(!is_null($this->zoneLang), $alias, null),
             'createdAt'        =>  $this->created_at->format('Y-m-d'),
-            'updatedAt'        =>  $this->updated_at->format('Y-m-d'),
-            'links'              => [
-                'self'      =>  route('zone.show', ['id' => $this->id]),
-                'zoneLang'  =>  route('zone.zoneLang.index', ['id' => $this->id])
-            ]
+            'updatedAt'        =>  $this->updated_at->format('Y-m-d')
         ];
     }
 }

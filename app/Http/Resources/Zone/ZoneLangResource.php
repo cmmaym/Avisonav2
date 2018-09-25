@@ -21,11 +21,7 @@ class ZoneLangResource extends JsonResource
             'alias'             =>  $this->alias,
             'createdAt'        =>  $this->created_at->format('Y-m-d'),
             'updatedAt'        =>  $this->updated_at->format('Y-m-d'),
-            'language'          => new LanguageResource($this->language),
-            'links'              => [
-                'self'  =>  route('zone.zoneLang.update', ['zoneId' => $this->zone->id, 'zoneLangId' => $this->id]),
-                'zona'  =>  route('zone.show', ['id' => $this->zone->id])
-            ]
+            'language'          => new LanguageResource($this->language)
         ];
     }
 }

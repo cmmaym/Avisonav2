@@ -20,11 +20,7 @@ class ChartResource extends JsonResource
             'number'            =>  $this->number,
             'purpose'           =>  $this->purpose,
             'createdAt'        =>  $this->created_at->format('Y-m-d'),
-            'updatedAt'        =>  $this->updated_at->format('Y-m-d'),
-            'user'              => $this->user,
-            'links'             => [
-                'self'  =>  route('chart.show', ['id' => $this->id])
-            ]
+            'updatedAt'        =>  $this->updated_at->format('Y-m-d')
         ];
     }
 

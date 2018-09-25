@@ -24,11 +24,7 @@ class AidTypeFormResource extends JsonResource
             'illustration'      => $this->illustration,
             'description'       => $this->when(!is_null($this->aidTypeFormLang), $description, null),
             'createdAt'        => $this->created_at->format('Y-m-d'),
-            'updatedAt'        => $this->updated_at->format('Y-m-d'),
-            'links'             => [
-                'self'          => route('aidTypeForm.show', ['id' => $this->id]),
-                'aidTypeFormLang'   => route('aidTypeForm.aidTypeFormLang.index', ['id' => $this->id])
-            ]
+            'updatedAt'        => $this->updated_at->format('Y-m-d')
         ];
 
     }

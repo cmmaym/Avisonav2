@@ -5,13 +5,16 @@ namespace AvisoNavAPI\Http\Resources\Notice;
 use AvisoNavAPI\Traits\Responser;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\AbstractPaginator;
-use AvisoNavAPI\Http\Resources\SymbolResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use AvisoNavAPI\Http\Resources\CoordinateResource;
+use AvisoNavAPI\Http\Resources\SymbolPublicResource;
 use AvisoNavAPI\Http\Resources\Notice\NoveltyResource;
+use AvisoNavAPI\Http\Resources\Notice\NoveltySubResource;
+use AvisoNavAPI\Http\Resources\Chart\ChartEditionResource;
 use AvisoNavAPI\Http\Resources\NoveltyType\NoveltyTypeResource;
 use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeResource;
 
-class NoveltySubResource extends JsonResource
+class NoveltyPublicResource extends JsonResource
 {
     use Responser;
     /**
@@ -27,22 +30,25 @@ class NoveltySubResource extends JsonResource
         $name = function() use ($self) {
             return $self->noveltyLang->name;
         };
-
+        
         $symbol = function() use ($self) {
             return $self->symbol->symbol;
         };
 
         return [
             'id'                        => $this->id,
-            'name'                      =>  $this->when(!is_null($this->noveltyLang), $name, null),
             'notice'                    => $this->notice->number,
+            'numItem'                   => $this->num_item,
+            'name'                       =>  $this->when(!is_null($this->noveltyLang), $name, null),
             'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
             'characterType'             => new CharacterTypeResource($this->characterType),
-            // 'symbol'                    => new SymbolResource($this->when(!is_null($this->symbol), $symbol, null)),
-            'state'                     => $this->state,
-            'numItem'                   => $this->num_item,
             'createdAt'                => $this->created_at->format('Y-m-d'),
-            'updatedAt'                => $this->updated_at->format('Y-m-d')
+            'updatedAt'                => $this->updated_at->format('Y-m-d'),
+            'coordinate'                => CoordinateResource::collection($this->coordinate),
+            'chartEdition'              => ChartEditionResource::collection($this->chartEdition),
+            'file'                      => NoveltyFileResource::collection($this->noveltyFile),
+            'symbol'                    => new SymbolPublicResource($this->when(!is_null($this->symbol), $symbol, null)),
+            'parent'                    => new NoveltySubPublicResource($this->parent)
         ];
     }
 }

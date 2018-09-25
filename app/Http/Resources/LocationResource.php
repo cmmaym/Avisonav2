@@ -21,10 +21,7 @@ class LocationResource extends JsonResource
             'subLocationName'     =>  $this->sub_location_name,
             'createdAt'             =>  $this->created_at->format('Y-m-d'),
             'updatedAt'             =>  $this->updated_at->format('Y-m-d'),
-            'zone'                  =>  new ZoneResource($this->zone),
-            'links'              => [
-                'self'  =>  route('location.show', ['id' => $this->id]),
-            ],
+            'zone'                  =>  new ZoneResource($this->zone)
         ];
     }
 }

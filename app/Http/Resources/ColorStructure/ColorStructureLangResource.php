@@ -21,11 +21,7 @@ class ColorStructureLangResource extends JsonResource
             'name'             =>  $this->name,
             'createdAt'        =>  $this->created_at->format('Y-m-d'),
             'updatedAt'        =>  $this->updated_at->format('Y-m-d'),
-            'language'          => new LanguageResource($this->language),
-            'links'             => [
-                'self'  =>  route('colorStructure.colorStructureLang.show', ['colorStructureId' => $this->colorStructure->id, 'id' => $this->id]),
-                'colorStructure' => route('colorStructure.show', ['id' => $this->colorStructure->id])
-            ]
+            'language'          => new LanguageResource($this->language)
         ];
     }
 }

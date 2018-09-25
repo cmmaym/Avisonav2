@@ -45,25 +45,12 @@ class NoticePublicResource extends JsonResource
             'id'                        => $this->id,
             'number'                    => $this->number,
             'year'                      => $this->year,
-            'reportsNumbers'           => $this->reports_numbers,
-            'reportDate'               => $this->report_date->format('Y-m-d'),
             'createdAt'                => $this->created_at->format('Y-m-d'),
             'updatedAt'                => $this->updated_at->format('Y-m-d'),
-            'state'                     => $this->state,
-            'user'                      => $this->user,
-            'parent'                    => null,
             'description'               =>  $this->when(!is_null($this->noticeLang), $description, null),
             'language'                 =>  $this->when(!is_null($this->noticeLang), $language, null),
-            'characterType'             => new CharacterTypeResource($this->characterType),
-            'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
             'location'                  => new LocationResource($this->location),
-            'catalogOceanCoast'         => new CatalogOceanCoastResource($this->catalogOceanCoast),
-            'lightList'                 => new LightListResource($this->lightList),
-            'reportSource'             => new ReportSourceResource($this->reportSource),
-            'reportingUser'            => new ReportingUserResource($this->reportingUser),
-            'aids'                     => AidPublicResource::collection($this->aid),
-            // 'chartEdition'             => ChartEditionResource::collection($this->chartEdition),
-            'files'                => NoticeFileResource::collection($this->noticeFile),
+            'novelty'                   => NoveltyPublicResource::collection($this->novelty)
         ];
     }
 }

@@ -24,12 +24,7 @@ class CharacterTypeResource extends JsonResource
             'name'              => $this->when(!is_null($this->characterTypeLang), $name, null),
             'alias'             => $this->alias,
             'createdAt'          => $this->created_at->format('Y-m-d'),
-            'updatedAt'           => $this->updated_at->format('Y-m-d'),
-            'state'             => $this->state,
-            'links'              => [
-                'self'  =>  route('characterType.show', ['id' => $this->id]),
-                'characterTypeLang' => route('characterType.characterTypeLang.index', ['id' => $this->id])
-            ]
+            'updatedAt'           => $this->updated_at->format('Y-m-d')
         ];
     }
 }

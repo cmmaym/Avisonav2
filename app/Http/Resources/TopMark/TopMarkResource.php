@@ -24,11 +24,7 @@ class TopMarkResource extends JsonResource
             'illustration'      => $this->illustration,
             'description'       => $this->when(!is_null($this->topMarkLang), $description, null),
             'createdAt'        =>  $this->created_at->format('Y-m-d'),
-            'updatedAt'        =>  $this->updated_at->format('Y-m-d'),
-            'links'             => [
-                'self'  =>  route('topMark.show', ['id' => $this->id]),
-                'topMarkLang' => route('topMark.topMarkLang.index', ['id' => $this->id])
-            ]
+            'updatedAt'        =>  $this->updated_at->format('Y-m-d')
         ];
     }
 }

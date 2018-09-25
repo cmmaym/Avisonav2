@@ -20,11 +20,7 @@ class AidTypeLangResource extends JsonResource
             'name'              => $this->name,
             'createdAt'        => $this->created_at->format('Y-m-d'),
             'updatedAt'        => $this->updated_at->format('Y-m-d'),
-            'language'          => new LanguageResource($this->language),
-            'links'             => [
-                'self'          => route('aidType.aidTypeLang.show', ['aidTypeId' => $this->aidType->id, 'id' => $this->id]),
-                'aidType'       => route('aidType.show', ['id' => $this->aidType->id])
-            ]
+            'language'          => new LanguageResource($this->language)
         ];
     }
 }

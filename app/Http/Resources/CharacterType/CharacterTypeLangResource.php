@@ -18,11 +18,7 @@ class CharacterTypeLangResource extends JsonResource
             'id'                => $this->id,
             'name'              => $this->name,
             'createdAt'        => $this->created_at->format('Y-m-d'),
-            'updatedAt'           => $this->updated_at->format('Y-m-d'),
-            'links'              => [
-                'self'  =>  route('characterType.characterTypeLang.show', ['characterTypeId' => $this->characterType->id,'id' => $this->id]),
-                'characterType'  =>  route('characterType.show', ['id' => $this->characterType->id]),
-            ]
+            'updatedAt'           => $this->updated_at->format('Y-m-d')
         ];
     }
 }

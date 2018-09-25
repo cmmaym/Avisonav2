@@ -163,21 +163,13 @@ class NoticeController extends Controller
         $notice = Notice::with([
             'noticeLang' => $this->withLanguageQuery(),
             'location.zone.zoneLang' => $this->withLanguageQuery(),
-            'catalogOceanCoast',
-            'lightList',
-            'reportSource',
-            'reportingUser',
-            'aid.symbol.coordinate',
-            'aid.symbol.symbolLang' => $this->withLanguageQuery(),
-            'aid.location.zone.zoneLang' => $this->withLanguageQuery(),
-            'aid.lightClass.lightClassLang' => $this->withLanguageQuery(),
-            'aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
-            'aid.topMark.topMarkLang' => $this->withLanguageQuery(),
-            'aid.aidType.aidTypeLang' => $this->withLanguageQuery(),
-            'aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
-            'aid.aidColorStructure.colorStructureLang' => $this->withLanguageQuery(),
-            'aid.aidColorLight.colorLightLang' => $this->withLanguageQuery(),
-            'chartEdition.chart'
+            'novelty.noveltyLang' => $this->withLanguageQuery(),
+            'novelty.noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
+            'novelty.characterType.characterTypeLang' => $this->withLanguageQuery(),
+            'novelty.symbol.symbol.symbolLang' => $this->withLanguageQuery(),
+            'novelty.symbol.symbol.aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
+            'novelty.symbol.symbol.aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
+            'novelty.symbol.symbol.aid.topMark.topMarkLang' => $this->withLanguageQuery(),
         ])
         ->where('number', '=', $number)
         ->where('state', '=', 'P')
