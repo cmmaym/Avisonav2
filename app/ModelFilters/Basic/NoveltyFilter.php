@@ -55,7 +55,7 @@ class NoveltyFilter extends ModelFilter
         return $this->orderBy('state', $this->input('dir', 'asc'));
     }
     
-    public function sortBySymbol()
+    public function sortByName()
     {
         $input = $this->input('dir', 'asc');
 
