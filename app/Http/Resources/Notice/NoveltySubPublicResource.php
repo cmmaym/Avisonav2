@@ -25,6 +25,7 @@ class NoveltySubPublicResource extends JsonResource
         return [
             'id'                        => $this->id,
             'notice'                    => $this->notice->number,
+            'year'                => $this->notice->year,
             'numItem'                   => $this->num_item,
             'createdAt'                => $this->created_at->format('Y-m-d'),
             'updatedAt'                => $this->updated_at->format('Y-m-d')
