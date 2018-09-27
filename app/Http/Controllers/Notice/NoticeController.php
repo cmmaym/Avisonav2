@@ -166,10 +166,6 @@ class NoticeController extends Controller
             'novelty.noveltyLang' => $this->withLanguageQuery(),
             'novelty.noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
             'novelty.characterType.characterTypeLang' => $this->withLanguageQuery(),
-            'novelty.symbol.symbol.symbolLang' => $this->withLanguageQuery(),
-            'novelty.symbol.symbol.aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
-            'novelty.symbol.symbol.aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
-            'novelty.symbol.symbol.aid.topMark.topMarkLang' => $this->withLanguageQuery()
         ])
         ->where('number', '=', $number)
         ->where('state', '=', 'P')
@@ -180,6 +176,10 @@ class NoticeController extends Controller
             {
                 $sn = $item->symbol;
                 $item->load([
+                    'symbol.symbol.symbolLang' => $this->withLanguageQuery(),
+                    'symbol.symbol.aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
+                    'symbol.symbol.aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
+                    'symbol.symbol.aid.topMark.topMarkLang' => $this->withLanguageQuery(),
                     'symbol.symbol.aid.height' => function($query) use ($sn){
                         $query->where('id', $sn->height_id);
                     },
