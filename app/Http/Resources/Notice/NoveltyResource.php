@@ -37,6 +37,7 @@ class NoveltyResource extends JsonResource
             'id'                        => $this->id,
             'name'                       =>  $this->when(!is_null($this->noveltyLang), $name, null),
             'notice'                    => $this->notice->number,
+            'noticeId'                  => $this->notice->id,
             'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
             'characterType'             => new CharacterTypeResource($this->characterType),
             'symbol'                    => new SymbolResource($this->when(!is_null($this->symbol), $symbol, null)),

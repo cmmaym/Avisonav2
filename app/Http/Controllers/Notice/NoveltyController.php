@@ -35,4 +35,16 @@ class NoveltyController extends Controller
 
         return NoveltyResource::collection($collection);
     }
+
+    public function getAllNovelty()
+    {
+        $collection = Novelty::filter(request()->all(), NoveltyFilter::class)
+                                       ->with([
+                                            'characterType.characterTypeLang' => $this->withLanguageQuery(),
+                                            'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
+                                       ])
+                                       ->paginateFilter($this->perPage());
+
+        return NoveltyResource::collection($collection);
+    }
 }

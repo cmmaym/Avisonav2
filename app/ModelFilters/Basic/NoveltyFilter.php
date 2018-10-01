@@ -21,6 +21,10 @@ class NoveltyFilter extends ModelFilter
     public function name($name){
         $this->related('noveltyLang', 'name', 'like', "%$name%");
     }
+    
+    public function notice($notice){
+        $this->related('notice', 'number', 'like', "%$notice%");
+    }
 
     public function state($state)
     {
@@ -62,6 +66,17 @@ class NoveltyFilter extends ModelFilter
         $this->join('novelty_lang', 'novelty.id', '=', 'novelty_lang.novelty_id')
              ->groupBy('novelty.id')
              ->orderBy('novelty_lang.name', $input)
+             ->select('novelty.*');
+    }
+    
+    public function sortByNotice()
+    {
+        $input = $this->input('dir', 'asc');
+
+        $this->join('notice', 'notice.id', '=', 'novelty.notice_id')
+             ->groupBy('novelty.id')
+             ->orderBy('notice.number', $input)
+             ->orderBy('novelty.num_item', 'asc')
              ->select('novelty.*');
     }
 

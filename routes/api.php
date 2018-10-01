@@ -249,6 +249,7 @@ Route::resource('symbol', 'Symbol\SymbolController')->only([
 ]);
 
 //Novelty
+Route::get('getAllNovelty', 'Notice\NoveltyController@getAllNovelty');
 Route::resource('novelty', 'Notice\NoveltyController')->only([
     'index'
 ]);
