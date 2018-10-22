@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+// use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Grimzy\LaravelMysqlSpatial\Schema\Blueprint;
 
 class CreateSymbolTable extends Migration
 {
@@ -18,6 +19,7 @@ class CreateSymbolTable extends Migration
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
+            $table->point('position')->nullable();
             $table->integer('symbol_type_id')->unsigned();
             $table->integer('image_id')->unsigned();
             $table->integer('location_id')->unsigned();

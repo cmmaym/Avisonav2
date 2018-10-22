@@ -5,13 +5,17 @@ namespace AvisoNavAPI;
 use AvisoNavAPI\Notice;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use AvisoNavAPI\Traits\Observable;
 
 class Symbol extends Model
 {
-    use Filterable, Observable;
+    use Filterable, Observable, SpatialTrait;
 
     protected $table        = 'symbol';
+    protected $spatialFields = [
+        'position'
+    ];
     
     public function symbolLang(){
         return $this->hasOne(SymbolLang::class);

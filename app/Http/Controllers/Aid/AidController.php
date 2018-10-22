@@ -17,6 +17,7 @@ use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Traits\Responser;
 use AvisoNavAPI\Symbol;
 use AvisoNavAPI\Language;
+use Grimzy\LaravelMysqlSpatial\Types\Geometry;
 
 class AidController extends Controller
 {
@@ -153,5 +154,28 @@ class AidController extends Controller
         $aid->symbol->delete();
 
         return new AidResource($aid);
+    }
+
+    public function getPosition($aid)
+    {
+        $aid = Aid::findOrFail($aid);
+        $geoJson = $aid->symbol->position;
+
+        return $geoJson;
+    }
+    
+    public function updatePosition(Request $request, $aid)
+    {
+        $aid = Aid::findOrFail($aid);
+        $symbol = $aid->symbol;
+        
+        $data = $request->getContent();
+        $geometry = Geometry::fromJson($data);
+
+        $symbol->position = $geometry->getGeometries()[0];
+
+        $symbol->save();
+
+        return $geometry->getGeometries()[0];
     }
 }

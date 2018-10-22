@@ -186,6 +186,9 @@ Route::resource('aid.period.sequenceFlashes', 'Aid\AidPeriodSequenceFlashesContr
     'index', 'store', 'update', 'destroy'
 ]);
 
+Route::get('aid/getPosition/{id}', 'Aid\AidController@getPosition');
+Route::put('aid/updatePosition/{id}', 'Aid\AidController@updatePosition');
+
 //AidTypeForm
 Route::resource('aidTypeForm', 'Aid\AidTypeFormController')->only([
     'index', 'store', 'show', 'update', 'destroy'
