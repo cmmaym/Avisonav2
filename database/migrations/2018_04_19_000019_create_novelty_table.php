@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+use Grimzy\LaravelMysqlSpatial\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateNoveltyTable extends Migration
@@ -23,6 +23,7 @@ class CreateNoveltyTable extends Migration
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
+            $table->geometry('spatial_data')->nullable();
             $table->integer('parent_id')->nullable()->unsigned();
 
             $table->foreign('notice_id')

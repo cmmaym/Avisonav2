@@ -4,14 +4,18 @@ namespace AvisoNavAPI;
 
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use AvisoNavAPI\Traits\Observable;
 
 class Novelty extends Model
 {
-    use Filterable, Observable;
+    use Filterable, Observable, SpatialTrait;
 
     protected $table        = 'novelty';
     protected $fillable     = ['state'];
+    protected $spatialFields = [
+        'spatial_data'
+    ];
 
     public function notice(){
         return $this->belongsTo(Notice::Class);

@@ -159,9 +159,9 @@ class AidController extends Controller
     public function getPosition($aid)
     {
         $aid = Aid::findOrFail($aid);
-        $geoJson = $aid->symbol->position;
+        $position = $aid->symbol->position;
 
-        return $geoJson;
+        return $position;
     }
     
     public function updatePosition(Request $request, $aid)

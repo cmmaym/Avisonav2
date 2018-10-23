@@ -4,12 +4,13 @@ namespace AvisoNavAPI\Http\Controllers\Notice;
 
 use AvisoNavAPI\Novelty;
 use Illuminate\Http\Request;
+use AvisoNavAPI\CharacterType;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Traits\Responser;
+use Grimzy\LaravelMysqlSpatial\Types\Geometry;
+use AvisoNavAPI\ModelFilters\Basic\NoveltyFilter;
 use AvisoNavAPI\Http\Resources\Notice\NoveltyResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\ModelFilters\Basic\NoveltyFilter;
-use AvisoNavAPI\CharacterType;
 
 class NoveltyController extends Controller
 {
@@ -46,5 +47,26 @@ class NoveltyController extends Controller
                                        ->paginateFilter($this->perPage());
 
         return NoveltyResource::collection($collection);
+    }
+
+    public function getSpatialData($noveltyId)
+    {
+        $novelty = Novelty::findOrFail($noveltyId);
+        $spatialData = $novelty->spatial_data;
+
+        return $spatialData;
+    }
+    
+    public function updateSpatialData(Request $request, $noveltyId)
+    {
+        $novelty = Novelty::findOrFail($noveltyId);
+        
+        $data = $request->getContent();
+        $geometry = Geometry::fromJson($data);
+
+        $novelty->spatial_data = $geometry;
+        $novelty->save();
+
+        return $geometry;
     }
 }

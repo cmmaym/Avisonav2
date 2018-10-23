@@ -272,3 +272,6 @@ Route::resource('novelty.chartEdition', 'Notice\NoveltyChartEditionController')-
 Route::resource('novelty.noveltyFile', 'Notice\NoveltyFileController')->only([
     'index', 'store', 'update', 'destroy'
 ]);
+
+Route::get('novelty/getSpatialData/{id}', 'Notice\NoveltyController@getSpatialData');
+Route::put('novelty/updateSpatialData/{id}', 'Notice\NoveltyController@updateSpatialData');

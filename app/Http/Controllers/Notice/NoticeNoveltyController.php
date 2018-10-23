@@ -158,15 +158,7 @@ class NoticeNoveltyController extends Controller
 
             if($symbol)
             {
-                $coordinate = $symbol->coordinate()->where('state', 'C')->first();
-
-                if($coordinate)
-                {
-                    $novelty->coordinate()->attach($coordinate->id, [
-                        'created_by' => $user->username,
-                        'updated_by' => $user->username,
-                    ]);
-                }
+                $novelty->spatial_data = $symbol->position;
 
                 $symbol->chart->load([
                     'chartEdition' => function($query){
@@ -184,6 +176,7 @@ class NoticeNoveltyController extends Controller
                         ]);
                 }
 
+                $novelty->save();
             }
 
             if($name)
@@ -289,7 +282,7 @@ class NoticeNoveltyController extends Controller
 
                 if($novelty->symbol && $symbol && ($novelty->symbol->symbol->id !== $symbol->id))
                 {
-                    $novelty->coordinate()->detach();
+                    $novelty->spatial_data = null;
                     $novelty->chartEdition()->detach();
                 }else if($novelty->symbol && !$symbol)
                 {
@@ -308,9 +301,7 @@ class NoticeNoveltyController extends Controller
                             return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
                         }
 
-                        $coordinate = $symbol->coordinate()->where('state', 'C')->first();
-
-                        if($coordinate) $novelty->coordinate()->syncWithoutDetaching($coordinate->id);
+                        $novelty->spatial_data = $symbol->position;
 
                         $symbol->chart->load([
                             'chartEdition' => function($query){
@@ -346,9 +337,7 @@ class NoticeNoveltyController extends Controller
                             return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
                         }
 
-                        $coordinate = $symbol->coordinate()->where('state', 'C')->first();
-
-                        if($coordinate) $novelty->coordinate()->syncWithoutDetaching($coordinate->id);
+                        $novelty->spatial_data = $symbol->position;
 
                         $symbol->chart->load([
                             'chartEdition' => function($query){
@@ -375,9 +364,7 @@ class NoticeNoveltyController extends Controller
                         return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
                     }
 
-                    $coordinate = $symbol->coordinate()->where('state', 'C')->first();
-
-                    if($coordinate) $novelty->coordinate()->syncWithoutDetaching($coordinate->id);
+                    $novelty->spatial_data = $symbol->position;
 
                     $symbol->chart->load([
                         'chartEdition' => function($query){
@@ -453,7 +440,7 @@ class NoticeNoveltyController extends Controller
 
                 if($novelty->symbol && ($symbol->id !== $novelty->symbol->symbol->id))
                 {
-                    $novelty->coordinate()->detach();
+                    $novelty->spatial_data = null;
                     $novelty->chartEdition()->detach();
                 }
 
@@ -463,9 +450,7 @@ class NoticeNoveltyController extends Controller
                     if ($chartEditionId) $novelty->chartEdition()->syncWithoutDetaching($chartEditionId);
                 }
 
-                $coordinate = $symbol->coordinate()->where('state', 'C')->first();
-
-                if($coordinate) $novelty->coordinate()->syncWithoutDetaching($coordinate->id);
+                $novelty->spatial_data = $symbol->position;
 
                 $hasSymbol = true;
             }
@@ -474,7 +459,7 @@ class NoticeNoveltyController extends Controller
             {
                 if($novelty->symbol)
                 {
-                    $novelty->coordinate()->detach();
+                    $novelty->spatial_data = null;
                     $novelty->chartEdition()->detach();
 
                     $novelty->symbol()->delete();
