@@ -215,32 +215,32 @@ class NoticeController extends Controller
         return response()->json($collection);
     }
 
-    public function getRecentNotice() 
-    {
-        $collection = Notice::with([
-                        'noticeLang' => $this->withLanguageQuery(),
-                        'location.zone.zoneLang' => $this->withLanguageQuery(),
-                        'catalogOceanCoast',
-                        'lightList',
-                        'reportSource',
-                        'reportingUser',
-                        'aid.symbol.coordinate',
-                        'aid.symbol.symbolLang' => $this->withLanguageQuery(),
-                        'aid.location.zone.zoneLang' => $this->withLanguageQuery(),
-                        'aid.lightClass.lightClassLang' => $this->withLanguageQuery(),
-                        'aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
-                        'aid.topMark.topMarkLang' => $this->withLanguageQuery(),
-                        'aid.aidType.aidTypeLang' => $this->withLanguageQuery(),
-                        'aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
-                        'aid.aidColorStructure.colorStructureLang' => $this->withLanguageQuery(),
-                        'aid.aidColorLight.colorLightLang' => $this->withLanguageQuery(),
-                        'chartEdition.chart'
-                    ])
-                    ->where('state', '=', 'P')
-                    ->orderBy('created_at', 'desc')
-                    ->take(5)
-                    ->get();
+    // public function getRecentNotice() 
+    // {
+    //     $collection = Notice::with([
+    //                     'noticeLang' => $this->withLanguageQuery(),
+    //                     'location.zone.zoneLang' => $this->withLanguageQuery(),
+    //                     'catalogOceanCoast',
+    //                     'lightList',
+    //                     'reportSource',
+    //                     'reportingUser',
+    //                     'aid.symbol.coordinate',
+    //                     'aid.symbol.symbolLang' => $this->withLanguageQuery(),
+    //                     'aid.location.zone.zoneLang' => $this->withLanguageQuery(),
+    //                     'aid.lightClass.lightClassLang' => $this->withLanguageQuery(),
+    //                     'aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
+    //                     'aid.topMark.topMarkLang' => $this->withLanguageQuery(),
+    //                     'aid.aidType.aidTypeLang' => $this->withLanguageQuery(),
+    //                     'aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
+    //                     'aid.aidColorStructure.colorStructureLang' => $this->withLanguageQuery(),
+    //                     'aid.aidColorLight.colorLightLang' => $this->withLanguageQuery(),
+    //                     'chartEdition.chart'
+    //                 ])
+    //                 ->where('state', '=', 'P')
+    //                 ->orderBy('created_at', 'desc')
+    //                 ->take(5)
+    //                 ->get();
 
-        return NoticePublicResource::collection($collection);
-    }
+    //     return NoticePublicResource::collection($collection);
+    // }
 }

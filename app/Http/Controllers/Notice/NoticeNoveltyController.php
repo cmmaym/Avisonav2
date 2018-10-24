@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Auth;
 use AvisoNavAPI\ModelFilters\Basic\NoveltyFilter;
 use AvisoNavAPI\Http\Requests\Notice\StoreNovelty;
 use AvisoNavAPI\Http\Resources\Notice\NoveltyResource;
+use Grimzy\LaravelMysqlSpatial\Types\GeometryCollection;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+
 
 class NoticeNoveltyController extends Controller
 {
@@ -158,7 +160,7 @@ class NoticeNoveltyController extends Controller
 
             if($symbol)
             {
-                $novelty->spatial_data = $symbol->position;
+                $novelty->spatial_data = new GeometryCollection([$symbol->position]);
 
                 $symbol->chart->load([
                     'chartEdition' => function($query){
@@ -301,7 +303,7 @@ class NoticeNoveltyController extends Controller
                             return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
                         }
 
-                        $novelty->spatial_data = $symbol->position;
+                        $novelty->spatial_data = new GeometryCollection([$symbol->position]);
 
                         $symbol->chart->load([
                             'chartEdition' => function($query){
@@ -337,7 +339,7 @@ class NoticeNoveltyController extends Controller
                             return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
                         }
 
-                        $novelty->spatial_data = $symbol->position;
+                        $novelty->spatial_data = new GeometryCollection([$symbol->position]);
 
                         $symbol->chart->load([
                             'chartEdition' => function($query){
@@ -364,7 +366,7 @@ class NoticeNoveltyController extends Controller
                         return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
                     }
 
-                    $novelty->spatial_data = $symbol->position;
+                    $novelty->spatial_data = new GeometryCollection([$symbol->position]);
 
                     $symbol->chart->load([
                         'chartEdition' => function($query){
@@ -450,7 +452,7 @@ class NoticeNoveltyController extends Controller
                     if ($chartEditionId) $novelty->chartEdition()->syncWithoutDetaching($chartEditionId);
                 }
 
-                $novelty->spatial_data = $symbol->position;
+                $novelty->spatial_data = new GeometryCollection([$symbol->position]);
 
                 $hasSymbol = true;
             }

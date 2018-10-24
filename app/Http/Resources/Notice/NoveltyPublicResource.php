@@ -44,11 +44,11 @@ class NoveltyPublicResource extends JsonResource
             'characterType'             => new CharacterTypeResource($this->characterType),
             'createdAt'                => $this->created_at->format('Y-m-d'),
             'updatedAt'                => $this->updated_at->format('Y-m-d'),
-            'coordinate'                => CoordinateResource::collection($this->coordinate),
             'chartEdition'              => ChartEditionResource::collection($this->chartEdition),
             'file'                      => NoveltyFileResource::collection($this->noveltyFile),
             'symbol'                    => new SymbolPublicResource($this->when(!is_null($this->symbol), $symbol, null)),
-            'parent'                    => new NoveltySubPublicResource($this->parent)
+            'parent'                    => new NoveltySubPublicResource($this->parent),
+            'spatialData'               => $this->spatial_data
         ];
     }
 }

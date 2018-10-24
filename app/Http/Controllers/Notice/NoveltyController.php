@@ -11,6 +11,7 @@ use Grimzy\LaravelMysqlSpatial\Types\Geometry;
 use AvisoNavAPI\ModelFilters\Basic\NoveltyFilter;
 use AvisoNavAPI\Http\Resources\Notice\NoveltyResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+use AvisoNavAPI\Http\Resources\Notice\NoveltyPublicResource;
 
 class NoveltyController extends Controller
 {
@@ -68,5 +69,55 @@ class NoveltyController extends Controller
         $novelty->save();
 
         return $geometry;
+    }
+
+    public function getCurrentNoveltys()
+    {
+        $collection = Novelty::select('novelty.id', 'spatial_data')
+                             ->join('notice', 'novelty.notice_id', 'notice.id')
+                             ->join('character_type', 'novelty.character_type_id', 'character_type.id')
+                             ->where('notice.state', '=', 'P')
+                             ->where('novelty.state', '=', 'A')
+                             ->where(function($query){
+                                 $query->where('character_type.alias', '=', 'T')
+                                       ->orWhere('character_type.alias', '=', 'G'); 
+                             })
+                             ->get();
+
+        return $collection;
+    }
+
+    public function getNovelty($noveltyId)
+    {
+        $novelty = Novelty::with([
+            'noveltyLang' => $this->withLanguageQuery(),
+            'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
+            'characterType.characterTypeLang' => $this->withLanguageQuery(),
+        ])
+        ->findOrFail($noveltyId);
+
+        $novelty->each(function($item){
+            if($item->symbol)
+            {
+                $sn = $item->symbol;
+                $item->load([
+                    'symbol.symbol.symbolLang' => $this->withLanguageQuery(),
+                    'symbol.symbol.aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
+                    'symbol.symbol.aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
+                    'symbol.symbol.aid.topMark.topMarkLang' => $this->withLanguageQuery(),
+                    'symbol.symbol.aid.height' => function($query) use ($sn){
+                        $query->where('id', $sn->height_id);
+                    },
+                    'symbol.symbol.aid.nominalScope' => function($query) use ($sn){
+                        $query->where('id', $sn->nominal_scope_id);
+                    },
+                    'symbol.symbol.aid.period' => function($query) use ($sn){
+                        $query->where('id', $sn->period_id);
+                    }
+                ]);
+            }
+        });
+
+        return new NoveltyPublicResource($novelty);
     }
 }

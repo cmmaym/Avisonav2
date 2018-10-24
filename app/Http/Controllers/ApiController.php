@@ -14,7 +14,9 @@ class ApiController extends Controller
                 'getNotice',
                 'getAllNoticeYear',
                 'getAllNoticeNumberByYear',
-                'getRecentNotice'
+                'getRecentNotice',
+                'getCurrentNoveltys',
+                'getNovelty'
             ],
         ]);
 
