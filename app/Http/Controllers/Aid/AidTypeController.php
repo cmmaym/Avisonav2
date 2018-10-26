@@ -2,14 +2,16 @@
 
 namespace AvisoNavAPI\Http\Controllers\Aid;
 
+use AvisoNavAPI\AidType;
+use AvisoNavAPI\Language;
+use AvisoNavAPI\AidTypeLang;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
-use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\AidType;
+use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\Http\Requests\Aid\StoreAidType;
 use AvisoNavAPI\ModelFilters\Basic\AidTypeFilter;
 use AvisoNavAPI\Http\Resources\Aid\AidTypeResource;
-use AvisoNavAPI\Http\Requests\Aid\StoreAidType;
-use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 
 class AidTypeController extends Controller
 {
@@ -39,11 +41,13 @@ class AidTypeController extends Controller
      */
     public function store(StoreAidType $request)
     {
+        $language = Language::where('code','es')->firstOrFail();
+
         $aidType = new AidType();
         $aidType->save();
 
         $aidTypeLang = new AidTypeLang($request->only(['name']));
-        $aidTypeLang->language_id = $request->input('language');
+        $aidTypeLang->language_id = $language->id;
 
         $aidType->aidTypeLang()->save($aidTypeLang);
 

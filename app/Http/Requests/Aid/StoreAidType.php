@@ -24,7 +24,7 @@ class StoreAidType extends FormRequest
     public function rules()
     {
         return [
-            'name'                          => 'sometimes|required|max:100',
+            'name'                          => 'required|max:100',
             'language'                      => 'sometimes|required|exists:language,id',
         ];
     }
