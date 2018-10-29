@@ -2,15 +2,16 @@
 
 namespace AvisoNavAPI\Http\Controllers\ColorLight;
 
+use AvisoNavAPI\Language;
 use AvisoNavAPI\ColorLight;
-use AvisoNavAPI\ColorLightLang;
 use AvisoNavAPI\Traits\Filter;
+use AvisoNavAPI\ColorLightLang;
+use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\ModelFilters\Basic\ColorLightFilter;
+use AvisoNavAPI\ModelFilters\Basic\ColorLightLangFilter;
+use AvisoNavAPI\Http\Requests\ColorLight\StoreColorLight;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\ColorLight\ColorLightResource;
-use AvisoNavAPI\ModelFilters\Basic\ColorLightFilter;
-use AvisoNavAPI\Http\Requests\ColorLight\StoreColorLight;
-use AvisoNavAPI\ModelFilters\Basic\ColorLightLangFilter;
-use AvisoNavAPI\Traits\Responser;
 
 class ColorLightController extends Controller
 {
@@ -40,11 +41,13 @@ class ColorLightController extends Controller
      */
     public function store(StoreColorLight $request)
     {
+        $language = Language::where('code','es')->firstOrFail();
+
         $colorLight = new ColorLight($request->only(['alias']));
         $colorLight->save();
 
         $colorLightLang = new ColorLightLang($request->only(['color']));
-        $colorLightLang->language_id = $request->input('language');
+        $colorLightLang->language_id = $language->id;
 
         $colorLight->colorLightLangs()->save($colorLightLang);
         

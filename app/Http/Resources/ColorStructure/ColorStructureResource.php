@@ -23,7 +23,8 @@ class ColorStructureResource extends JsonResource
             'id'                =>  $this->id,
             'name'             =>  $this->when(!is_null($this->colorStructureLang), $name, null),
             'createdAt'        =>  $this->created_at->format('Y-m-d'),
-            'updatedAt'        =>  $this->updated_at->format('Y-m-d')
+            'updatedAt'        =>  $this->updated_at->format('Y-m-d'),
+            'createdBy'         => $this->created_by
         ];
     }
 }

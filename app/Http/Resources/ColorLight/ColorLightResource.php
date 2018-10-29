@@ -35,10 +35,7 @@ class ColorLightResource extends JsonResource
             ]),
             'createdAt'        =>  $this->created_at->format('Y-m-d'),
             'updatedAt'        =>  $this->updated_at->format('Y-m-d'),
-            'links'             => [
-                'self'  =>  route('colorLight.show', ['id' => $this->id]),
-                'colorLightLang' => route('colorLight.colorLightLang.index', ['id' => $this->id])
-            ]
+            'createdBy'         => $this->created_by,
         ];
     }
 }

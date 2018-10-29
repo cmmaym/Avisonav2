@@ -14,6 +14,10 @@ class ColorStructureFilter extends ModelFilter
         return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
     }
 
+    public function createdBy($createdBy){
+        return $this->where('color_structure.created_by', 'like', "%$createdBy%");
+    }
+
     public function sort($column)
     {
         if(method_exists($this, $method = 'sortBy' . studly_case($column))) {

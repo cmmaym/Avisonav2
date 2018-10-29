@@ -25,8 +25,7 @@ class StoreColorLight extends FormRequest
     {
         return [
             'alias'       =>  'required|max:45',
-            'color'       =>  'sometimes|required|max:45',
-            'language'    =>  'required|exists:language,id',
+            'color'       =>  'required|max:45'
         ];
     }
 
@@ -40,7 +39,6 @@ class StoreColorLight extends FormRequest
         return [
             'required'              =>  'El campo :attribute es requerido',
             'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
-            'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
         ];
     }
 }

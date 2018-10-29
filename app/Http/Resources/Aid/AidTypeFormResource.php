@@ -21,10 +21,11 @@ class AidTypeFormResource extends JsonResource
 
         return [
             'id'                => $this->id,
-            'illustration'      => $this->illustration,
+            // 'illustration'      => $this->illustration,
             'description'       => $this->when(!is_null($this->aidTypeFormLang), $description, null),
             'createdAt'        => $this->created_at->format('Y-m-d'),
-            'updatedAt'        => $this->updated_at->format('Y-m-d')
+            'updatedAt'        => $this->updated_at->format('Y-m-d'),
+            'createdBy'         => $this->created_by
         ];
 
     }

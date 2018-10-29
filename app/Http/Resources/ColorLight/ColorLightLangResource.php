@@ -2,6 +2,7 @@
 
 namespace AvisoNavAPI\Http\Resources\ColorLight;
 
+use AvisoNavAPI\Http\Resources\LanguageResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ColorLightLangResource extends JsonResource
@@ -20,10 +21,7 @@ class ColorLightLangResource extends JsonResource
             'color'             =>  $this->color,
             'createdAt'        =>  $this->created_at->format('Y-m-d'),
             'updatedAt'        =>  $this->updated_at->format('Y-m-d'),
-            'links'             => [
-                'self'  =>  route('colorLight.colorLightLang.show', ['colorLightId' => $this->colorLight->id, 'id' => $this->id]),
-                'colorLight' => route('colorLight.show', ['id' => $this->colorLight->id])
-            ]
+            'language'          => new LanguageResource($this->language)
         ];
     }
 }

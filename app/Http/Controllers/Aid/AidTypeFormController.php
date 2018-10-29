@@ -2,6 +2,7 @@
 
 namespace AvisoNavAPI\Http\Controllers\Aid;
 
+use AvisoNavAPI\Language;
 use AvisoNavAPI\AidTypeForm;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
@@ -40,11 +41,13 @@ class AidTypeFormController extends Controller
      */
     public function store(StoreAidTypeForm $request)
     {
+        $language = Language::where('code','es')->firstOrFail();
+        
         $aidTypeForm = new AidTypeForm();
         $aidTypeForm->save();
 
         $aidTypeFormLang = new AidTypeFormLang($request->only(['description']));
-        $aidTypeFormLang->language_id = $request->input('language');
+        $aidTypeFormLang->language_id = $language->id;
 
         $aidTypeForm->aidTypeFormLang()->save($aidTypeFormLang);
 
@@ -75,27 +78,27 @@ class AidTypeFormController extends Controller
      */
     public function update(StoreAidTypeform $request, AidTypeform $aidTypeform)
     {
-        $aidTypeform->illustration = $request->input('illustration');
+        // $aidTypeform->illustration = $request->input('illustration');
         
-        if($aidTypeform->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
-        }
+        // if($aidTypeform->isClean()){
+        //     return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
+        // }
 
-        $aidTypeform->save();
+        // $aidTypeform->save();
 
-        return new AidTypeformResource($aidTypeform);
+        // return new AidTypeformResource($aidTypeform);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \AvisoNavAPI\AidTypeform $aidTypeform
+     * @param  \AvisoNavAPI\AidTypeForm $aidTypeform
      * @return \AvisoNavAPI\Http\Resources\Aid\AidTypeformResource
      */
-    public function destroy(AidTypeform $aidTypeform)
+    public function destroy(AidTypeForm $aidTypeForm)
     {
-        $aidTypeform->delete();
+        $aidTypeForm->delete();
 
-        return new AidTypeformResource($aidTypeform);
+        return new AidTypeFormResource($aidTypeForm);
     }
 }

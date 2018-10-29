@@ -4,10 +4,11 @@ namespace AvisoNavAPI;
 
 use Illuminate\Database\Eloquent\Model;
 use EloquentFilter\Filterable;
+use AvisoNavAPI\Traits\Observable;
 
 class ColorLightLang extends Model
 {
-    use Filterable;
+    use Filterable, Observable;
 
     protected $table        = 'color_light_lang';
     protected $fillable     = ['color'];

@@ -41,7 +41,7 @@ class AidTypeFormLangController extends Controller
         $aidTypeFormLang = new AidTypeFormLang($request->only('description'));
         $aidTypeFormLang->language_id = $request->input('language');
         
-        $aidTypeForm->aidTypeFormLangs()->save($aidTypeLang);
+        $aidTypeForm->aidTypeFormLangs()->save($aidTypeFormLang);
 
         return new AidTypeFormLangResource($aidTypeFormLang);
     }
@@ -68,7 +68,7 @@ class AidTypeFormLangController extends Controller
      */
     public function update(StoreAidTypeFormLang $request, AidTypeForm $aidTypeForm, AidTypeFormLang $aidTypeFormLang)
     {
-        $aidTypeFormLang->fill($request->only(['name']));
+        $aidTypeFormLang->fill($request->only(['description']));
         $aidTypeFormLang->language_id = $request->input('language');
 
         if($aidTypeFormLang->isClean()){

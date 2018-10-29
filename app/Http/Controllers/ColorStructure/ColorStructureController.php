@@ -2,15 +2,16 @@
 
 namespace AvisoNavAPI\Http\Controllers\ColorStructure;
 
-use AvisoNavAPI\ColorStructure;
-use AvisoNavAPI\ColorStructureLang;
+use AvisoNavAPI\Language;
 use AvisoNavAPI\Traits\Filter;
-use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\Http\Resources\ColorStructure\ColorStructureResource;
-use AvisoNavAPI\ModelFilters\Basic\ColorStructureFilter;
-use AvisoNavAPI\Http\Requests\ColorStructure\StoreColorStructure;
-use AvisoNavAPI\ModelFilters\Basic\ColorStructureLangFilter;
+use AvisoNavAPI\ColorStructure;
 use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\ColorStructureLang;
+use AvisoNavAPI\ModelFilters\Basic\ColorStructureFilter;
+use AvisoNavAPI\ModelFilters\Basic\ColorStructureLangFilter;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+use AvisoNavAPI\Http\Requests\ColorStructure\StoreColorStructure;
+use AvisoNavAPI\Http\Resources\ColorStructure\ColorStructureResource;
 
 class ColorStructureController extends Controller
 {
@@ -40,11 +41,13 @@ class ColorStructureController extends Controller
      */
     public function store(StoreColorStructure $request)
     {
+        $language = Language::where('code','es')->firstOrFail();
+        
         $colorStructure = new ColorStructure();
         $colorStructure->save();
 
         $colorStructureLang = new ColorStructureLang($request->only(['name']));
-        $colorStructureLang->language_id = $request->input('language');
+        $colorStructureLang->language_id = $language->id;
 
         $colorStructure->colorStructureLangs()->save($colorStructureLang);
         

@@ -24,8 +24,7 @@ class StoreColorStructure extends FormRequest
     public function rules()
     {
         return [
-            'name'       =>  'sometimes|required|max:45',
-            'language'   => 'sometimes|required|exists:language,id',
+            'name'       =>  'required|max:45',
         ];
     }
 
@@ -39,7 +38,6 @@ class StoreColorStructure extends FormRequest
         return [
             'required'              =>  'El campo :attribute es requerido',
             'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
-            'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
         ];
     }
 }
