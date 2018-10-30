@@ -3,13 +3,14 @@
 namespace AvisoNavAPI\Http\Controllers\Zone;
 
 use AvisoNavAPI\Zone;
+use AvisoNavAPI\Language;
 use AvisoNavAPI\ZoneLang;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Traits\Responser;
 use AvisoNavAPI\Http\Requests\Zone\StoreZone;
 use AvisoNavAPI\ModelFilters\Basic\ZoneFilter;
-use AvisoNavAPI\Http\Resources\Zone\ZoneResource;
 // use AvisoNavAPI\ModelFilters\Basic\ZoneLangFilter;
+use AvisoNavAPI\Http\Resources\Zone\ZoneResource;
 use AvisoNavAPI\Http\Resources\Zone\ZoneLangResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 
@@ -41,11 +42,13 @@ class ZoneController extends Controller
      */
     public function store(StoreZone $request)
     {
+        $language = Language::where('code','es')->firstOrFail();
+
         $zone = new Zone();
         $zone->save();
 
         $zoneLang = new ZoneLang($request->only(['name', 'alias']));
-        $zoneLang->language_id = $request->input('language');
+        $zoneLang->language_id = $language->id;
 
         $zone->zoneLangs()->save($zoneLang);
 
