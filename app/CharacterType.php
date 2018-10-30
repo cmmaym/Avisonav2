@@ -4,10 +4,10 @@ namespace AvisoNavAPI;
 
 use Illuminate\Database\Eloquent\Model;
 use EloquentFilter\Filterable;
-
+use AvisoNavAPI\Traits\Observable;
 class CharacterType extends Model
 {
-    use Filterable;
+    use Filterable, Observable;
     
     protected $table        = 'character_type';
     protected $fillable     = ['alias'];

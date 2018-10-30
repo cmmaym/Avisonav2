@@ -31,10 +31,7 @@ class LightClassResource extends JsonResource
             'illustration'      =>  $this->illustration,
             'createdAt'        =>  $this->created_at->format('Y-m-d'),
             'updatedAt'        =>  $this->updated_at->format('Y-m-d'),
-            'links'              => [
-                'self'  =>  route('lightClass.show', ['id' => $this->id]),
-                'lightClassLang' => route('lightClass.lightClassLang.index', ['id' => $this->id])
-            ]
+            'createdBy'         => $this->created_by
         ];
     }
 }

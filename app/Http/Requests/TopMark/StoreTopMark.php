@@ -24,9 +24,8 @@ class StoreTopMark extends FormRequest
     public function rules()
     {
         return [
-            'description'     => 'sometimes|required',
+            'description'     => 'required',
             'illustration'    => 'nullable',
-            'language'        => 'sometimes|required|exists:language,id',
         ];
     }
 

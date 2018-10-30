@@ -24,8 +24,7 @@ class StoreNoveltyType extends FormRequest
     public function rules()
     {
         return [
-            'name'         => 'sometimes|required|max:100',
-            'language'     => 'sometimes|required|exists:language,id',
+            'name'         => 'required|max:100',
         ];
     }
 

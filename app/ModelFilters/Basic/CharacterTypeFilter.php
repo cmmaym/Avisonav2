@@ -10,8 +10,16 @@ class CharacterTypeFilter extends ModelFilter
         return $this->related('characterTypeLang', 'name', 'like', "%$name%");
     }
 
+    public function alias($alias){
+        return $this->where('alias', 'like', "%$alias%");
+    }
+
     public function createdAt($createdAt){
         return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
+    }
+
+    public function createdBy($createdBy){
+        return $this->where('character_type.created_by', 'like', "%$createdBy%");
     }
 
     public function sort($column)
@@ -31,6 +39,11 @@ class CharacterTypeFilter extends ModelFilter
              ->groupBy('character_type.id')
              ->orderBy('character_type_lang.name', $input)
              ->select('character_type.*');
+    }
+
+    public function sortByAlias()
+    {
+        return $this->orderBy('alias', $this->input('dir', 'asc'));
     }
 
     public function sortByCreatedAt()

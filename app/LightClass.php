@@ -4,10 +4,11 @@ namespace AvisoNavAPI;
 
 use Illuminate\Database\Eloquent\Model;
 use EloquentFilter\Filterable;
+use AvisoNavAPI\Traits\Observable;
 
 class LightClass extends Model
 {
-    use Filterable;
+    use Filterable, Observable;
 
     protected $table        = 'light_class';
     protected $fillable     = ['alias'];

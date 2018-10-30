@@ -2,17 +2,18 @@
 
 namespace AvisoNavAPI\Http\Controllers\LightClass;
 
+use AvisoNavAPI\Language;
 use AvisoNavAPI\LightClass;
-use AvisoNavAPI\LightClassLang;
 use AvisoNavAPI\Traits\Filter;
+use AvisoNavAPI\LightClassLang;
+use AvisoNavAPI\Traits\Responser;
 use Illuminate\Support\Facades\DB;
-use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\Http\Resources\LightClass\LightClassResource;
 use AvisoNavAPI\ModelFilters\Basic\LightClassFilter;
-use AvisoNavAPI\Http\Requests\LightType\StoreLightClass;
 use AvisoNavAPI\ModelFilters\Basic\LightClassLangFilter;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\Http\Requests\LightClass\StoreLightClass;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+use AvisoNavAPI\Http\Resources\LightClass\LightClassResource;
 
 class LightClassController extends Controller
 {
@@ -42,11 +43,13 @@ class LightClassController extends Controller
      */
     public function store(StoreLightClass $request)
     {
+        $language = Language::where('code','es')->firstOrFail();
+
         $lightClass = new LightClass($request->only(['alias']));
         $lightClass->save();
 
         $lightClassLang = new LightClassLang($request->only(['class', 'description']));
-        $lightClassLang->language_id = $request->input('language');
+        $lightClassLang->language_id = $language->id;
 
         $lightClass->lightClassLang()->save($lightClassLang);
         

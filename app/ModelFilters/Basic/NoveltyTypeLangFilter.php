@@ -10,6 +10,10 @@ class NoveltyTypeLangFilter extends ModelFilter
         return $this->where('name', 'like', "%$name%");
     }
     
+    public function description($description){
+        return $this->where('description', 'like', "%$description%");
+    }
+    
     public function language($language){
         return $this->related('language', 'code', 'like', "%$language%");
     }

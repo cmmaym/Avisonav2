@@ -2,6 +2,7 @@
 
 namespace AvisoNavAPI\Http\Resources\CharacterType;
 
+use AvisoNavAPI\Http\Resources\LanguageResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CharacterTypeLangResource extends JsonResource
@@ -18,7 +19,8 @@ class CharacterTypeLangResource extends JsonResource
             'id'                => $this->id,
             'name'              => $this->name,
             'createdAt'        => $this->created_at->format('Y-m-d'),
-            'updatedAt'           => $this->updated_at->format('Y-m-d')
+            'updatedAt'           => $this->updated_at->format('Y-m-d'),
+            'language'          => new LanguageResource($this->language),
         ];
     }
 }

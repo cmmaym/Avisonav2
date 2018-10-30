@@ -16,6 +16,7 @@ class CreateNoveltyTypeLangTable extends Migration
         Schema::create('novelty_type_lang', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100)->comment('Nombre del tipo de aviso');
+            $table->mediumText('description')->nullable();
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);

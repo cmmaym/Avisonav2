@@ -4,10 +4,11 @@ namespace AvisoNavAPI;
 
 use Illuminate\Database\Eloquent\Model;
 use EloquentFilter\Filterable;
+use AvisoNavAPI\Traits\Observable;
 
 class LightClassLang extends Model
 {
-    use Filterable;
+    use Filterable, Observable;
 
     protected $table        = 'light_class_lang';
     protected $fillable     = ['class', 'description'];

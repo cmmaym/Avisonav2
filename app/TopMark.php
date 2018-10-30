@@ -4,10 +4,11 @@ namespace AvisoNavAPI;
 
 use Illuminate\Database\Eloquent\Model;
 use EloquentFilter\Filterable;
+use AvisoNavAPI\Traits\Observable;
 
 class TopMark extends Model
 {
-    use Filterable;
+    use Filterable, Observable;
     
     protected $table        = 'top_mark';
 

@@ -2,16 +2,17 @@
 
 namespace AvisoNavAPI\Http\Controllers\CharacterType;
 
+use AvisoNavAPI\Language;
 use AvisoNavAPI\CharacterType;
 use AvisoNavAPI\Traits\Filter;
-use AvisoNavAPI\CharacterTypeLang;
-use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeResource;
-use AvisoNavAPI\ModelFilters\Basic\CharacterTypeFilter;
-use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeLangResource;
-use AvisoNavAPI\ModelFilters\Basic\CharacterTypeLangFilter;
-use AvisoNavAPI\Http\Requests\CharacterType\StoreCharacterType;
 use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\CharacterTypeLang;
+use AvisoNavAPI\ModelFilters\Basic\CharacterTypeFilter;
+use AvisoNavAPI\ModelFilters\Basic\CharacterTypeLangFilter;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+use AvisoNavAPI\Http\Requests\CharacterType\StoreCharacterType;
+use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeResource;
+use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeLangResource;
 
 class CharacterTypeController extends Controller
 {
@@ -41,11 +42,13 @@ class CharacterTypeController extends Controller
      */
     public function store(StoreCharacterType $request)
     {
+        $language = Language::where('code','es')->firstOrFail();
+
         $characterType = new CharacterType($request->only(['alias']));
         $characterType->save();
 
         $characterTypeLang = new CharacterTypeLang($request->only(['name']));
-        $characterTypeLang->language_id = $request->input('language');
+        $characterTypeLang->language_id = $language->id;
 
         $characterType->characterTypeLangs()->save($characterTypeLang);
         
@@ -77,10 +80,6 @@ class CharacterTypeController extends Controller
     public function update(StoreCharacterType $request, CharacterType $characterType)
     {
         $characterType->fill($request->only(['alias']));
-        
-        if($characterType->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
-        }
 
         $characterType->save();
 

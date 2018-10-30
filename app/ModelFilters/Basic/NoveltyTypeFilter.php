@@ -9,9 +9,17 @@ class NoveltyTypeFilter extends ModelFilter
     public function name($name){
         return $this->related('noveltyTypeLang', 'name', 'like', "%$name%");
     }
+    
+    public function description($description){
+        return $this->related('noveltyTypeLang', 'description', 'like', "%$description%");
+    }
 
     public function createdAt($createdAt){
         return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
+    }
+
+    public function createdBy($createdBy){
+        return $this->where('novelty_type.created_by', 'like', "%$createdBy%");
     }
 
     public function sort($column)
@@ -30,6 +38,16 @@ class NoveltyTypeFilter extends ModelFilter
         $this->join('novelty_type_lang', 'novelty_type_lang.novelty_type_id', '=', 'novelty_type.id')
              ->groupBy('novelty_type.id')
              ->orderBy('novelty_type_lang.name', $input)
+             ->select('novelty_type.*');
+    }
+    
+    public function sortByDescription()
+    {
+        $input = $this->input('dir', 'asc');
+
+        $this->join('novelty_type_lang', 'novelty_type_lang.novelty_type_id', '=', 'novelty_type.id')
+             ->groupBy('novelty_type.id')
+             ->orderBy('novelty_type_lang.description', $input)
              ->select('novelty_type.*');
     }
 

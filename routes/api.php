@@ -99,7 +99,7 @@ Route::resource('lightClass.lightClassLang', 'lightClass\lightClassLangControlle
 
 //CharacterType
 Route::resource('characterType', 'CharacterType\CharacterTypeController')->only([
-    'index', 'show', 'store', 'destroy'
+    'index', 'show', 'store', 'update', 'destroy'
 ]);
 
 Route::resource('characterType.characterTypeLang', 'CharacterType\CharacterTypeLangController')->only([

@@ -40,6 +40,7 @@ class NoveltyTypeLangController extends Controller
     public function store(StoreNoveltyTypeLang $request, NoveltyType $noveltyType)
     {
         $noveltyTypeLang = new NoveltyTypeLang($request->only(['name']));
+        $noveltyTypeLang->description = ($request->input('description')) ? $request->input('description') : null;
         $noveltyTypeLang->language_id = $request->input('language');
 
         $noveltyType->noveltyTypeLangs()->save($noveltyTypeLang);
@@ -70,11 +71,8 @@ class NoveltyTypeLangController extends Controller
     public function update(StoreNoveltyTypeLang $request, NoveltyType $noveltyType, NoveltyTypeLang $noveltyTypeLang)
     {        
         $noveltyTypeLang->fill($request->only(['name']));
+        $noveltyTypeLang->description = ($request->input('description')) ? $request->input('description') : null;
         $noveltyTypeLang->language_id = $request->input('language');
-        
-        if($noveltyTypeLang->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
-        }
         
         $noveltyTypeLang->save();
 

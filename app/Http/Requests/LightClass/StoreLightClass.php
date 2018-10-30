@@ -25,9 +25,8 @@ class StoreLightClass extends FormRequest
     {
         return [
             'alias'           => 'required|max:45',
-            'description'     => 'sometimes|required',
-            'class'           => 'sometimes|required|max:100',
-            'language'        => 'sometimes|required|exists:language,id',
+            'description'     => 'required',
+            'class'           => 'required|max:100'
         ];
     }
 
@@ -41,7 +40,6 @@ class StoreLightClass extends FormRequest
         return [
             'required'              =>  'El campo :attribute es requerido',
             'max'                   =>  'El campo :attribute debe tener maximo :max caracteres',
-            'exists'                =>  'El valor seleccionado para el campo :attribute es invalido',
         ];
     }
 }

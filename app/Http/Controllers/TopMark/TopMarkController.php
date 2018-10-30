@@ -3,16 +3,17 @@
 namespace AvisoNavAPI\Http\Controllers\TopMark;
 
 use AvisoNavAPI\TopMark;
+use AvisoNavAPI\Language;
 use AvisoNavAPI\TopMarkLang;
 use AvisoNavAPI\Traits\Filter;
+use AvisoNavAPI\Traits\Responser;
 use Illuminate\Support\Facades\DB;
-use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\Http\Resources\TopMark\TopMarkResource;
 use AvisoNavAPI\ModelFilters\Basic\TopMarkFilter;
 use AvisoNavAPI\Http\Requests\TopMark\StoreTopMark;
 use AvisoNavAPI\ModelFilters\Basic\TopMarkLangFilter;
+use AvisoNavAPI\Http\Resources\TopMark\TopMarkResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 
 class TopMarkController extends Controller
 {
@@ -42,11 +43,13 @@ class TopMarkController extends Controller
      */
     public function store(StoreTopMark $request)
     {
+        $language = Language::where('code','es')->firstOrFail();
+        
         $topMark = new TopMark();
         $topMark->save();
 
         $topMarkLang = new TopMarkLang($request->only(['description']));
-        $topMarkLang->language_id = $request->input('language');
+        $topMarkLang->language_id = $language->id;
 
         $topMark->topMarkLang()->save($topMarkLang);
         
@@ -77,15 +80,15 @@ class TopMarkController extends Controller
      */
     public function update(StoreTopMark $request, TopMark $topMark)
     {
-        $topMark->illustration = $request->input('illustration');
+        // $topMark->illustration = $request->input('illustration');
         
-        if($topMark->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
-        }
+        // if($topMark->isClean()){
+        //     return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
+        // }
 
-        $topMark->save();
+        // $topMark->save();
 
-        return new TopMarkResource($topMark);
+        // return new TopMarkResource($topMark);
     }
 
     /**
