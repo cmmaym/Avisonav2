@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LightListResource extends JsonResource
+class ConsecutiveResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,9 @@ class LightListResource extends JsonResource
     {
         return [
             'id'        => $this->id,
-            'edition'   => $this->edition,
+            'number'    => $this->number,
             'year'      => $this->year,
-            'createdAt'  => $this->created_at->format('Y-m-d'),
+            'createdAt' => $this->created_at->format('Y-m-d'),
             'createdBy' => $this->created_by
         ];
     }

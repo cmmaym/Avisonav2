@@ -18,6 +18,7 @@ class CatalogOceanCoastResource extends JsonResource
             'id'        => $this->id,
             'edition'   => $this->edition,
             'year'      => $this->year,
+            'createdAt'   => $this->created_at->format('Y-m-d'),
             'createdBy' => $this->created_by
         ];
     }

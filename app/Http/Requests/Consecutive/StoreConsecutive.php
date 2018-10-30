@@ -1,10 +1,10 @@
 <?php
 
-namespace AvisoNavAPI\Http\Requests\Coordinate;
+namespace AvisoNavAPI\Http\Requests\Consecutive;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCoordinate extends FormRequest
+class StoreConsecutive extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class StoreCoordinate extends FormRequest
     public function rules()
     {
         return [
-            'latitude'           => 'required|numeric|between:-90,90',
-            'longitude'           => 'required|numeric|between:-180,180'
+            'number'        => 'required|numeric',
+            'year'          => 'required|numeric',
         ];
     }
 
@@ -38,6 +38,7 @@ class StoreCoordinate extends FormRequest
     {
         return [
             'required'              =>  'El campo :attribute es requerido',
+            'numeric'               =>  'El campo :attribute debe ser un numero',
         ];
     }
     
