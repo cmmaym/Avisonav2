@@ -36,12 +36,6 @@ Route::resource('language.notice', 'Language\LanguageNoticeController')->only([
     'show'
 ]);
 
-//Entity
-Route::resource('entity', 'Entity\EntityController')->only([
-    'index', 'show', 'store', 'update', 'destroy'
-]);
-
-
 //NoveltyType
 Route::resource('noveltyType', 'NoveltyType\NoveltyTypeController')->only([
     'index', 'show', 'store', 'destroy'
@@ -215,14 +209,14 @@ Route::resource('topMark', 'TopMark\TopMarkController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
 
+Route::resource('topMark.topMarkImage', 'TopMark\TopMarkImageController')->only([
+    'store', 'update'
+]);
+
 Route::resource('topMark.topMarkLang', 'TopMark\TopMarkLangController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
 
-//Coordinate
-Route::resource('coordinate', 'Coordinate\CoordinateController')->only([
-    'index', 'store', 'show', 'update', 'destroy'
-]);
 
 //Catalog Ocean Coast
 Route::resource('catalogOceanCoast', 'CatalogOceanCoast\CatalogOceanCoastController')->only([
@@ -263,10 +257,6 @@ Route::resource('novelty', 'Notice\NoveltyController')->only([
 ]);
 
 Route::resource('novelty.noveltyLang', 'Notice\NoveltyLangController')->only([
-    'index', 'store', 'update', 'destroy'
-]);
-
-Route::resource('novelty.coordinate', 'Notice\NoveltyCoordinateController')->only([
     'index', 'store', 'update', 'destroy'
 ]);
 
