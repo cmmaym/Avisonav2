@@ -65,10 +65,6 @@ class LightListController extends Controller
         $lightList->fill($request->only(['edition', 'year']));
         $lightList->save();
 
-        if($lightList->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
-        }
-
         return new LightListResource($lightList);
     }
 
@@ -78,7 +74,7 @@ class LightListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LightList $LightList)
+    public function destroy(LightList $lightList)
     {
         $lightList->delete();
 

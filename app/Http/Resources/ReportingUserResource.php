@@ -20,6 +20,7 @@ class ReportingUserResource extends JsonResource
             'rank'          => $this->rank,
             'createdAt'    => $this->created_at->format('Y-m-d'),
             'updatedAt'    => $this->updated_at->format('Y-m-d'),
+            'createdBy'     => $this->created_by,
             'reportSource'  => new ReportSourceResource($this->reportSource)
         ];
     }

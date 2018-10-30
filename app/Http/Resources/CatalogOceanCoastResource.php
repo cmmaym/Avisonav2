@@ -17,7 +17,8 @@ class CatalogOceanCoastResource extends JsonResource
         return [
             'id'        => $this->id,
             'edition'   => $this->edition,
-            'year'      => $this->year
+            'year'      => $this->year,
+            'createdBy' => $this->created_by
         ];
     }
 }

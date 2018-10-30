@@ -66,10 +66,6 @@ class ReportSourceController extends Controller
     {        
         $reportSource->fill($request->only(['name', 'alias']));
         
-        if($reportSource->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
-        }
-        
         $reportSource->save();
 
        return new ReportSourceResource($reportSource);

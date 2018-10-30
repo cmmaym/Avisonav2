@@ -74,10 +74,6 @@ class LocationController extends Controller
         $location->fill($request->only(['name','subLocationName']));
         $location->zone_id = $request->input('zone');
 
-        if($location->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
-        }
-
         $location->save();
 
         return new LocationResource($location);

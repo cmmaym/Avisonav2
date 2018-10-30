@@ -65,10 +65,6 @@ class CatalogOceanCoastController extends Controller
         $catalogOceanCoast->fill($request->only(['edition', 'year']));
         $catalogOceanCoast->save();
 
-        if($catalogOceanCoast->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
-        }
-
         return new CatalogOceanCoastResource($catalogOceanCoast);
     }
 

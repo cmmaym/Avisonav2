@@ -25,7 +25,6 @@ class StoreLocation extends FormRequest
     {
         return [
             'name'                  => 'required|max:100',
-            'subLocationName'       => 'nullable|max:100',
             'zone'                  => 'required|exists:zone,id'
         ];
     }

@@ -69,10 +69,6 @@ class ZoneLangController extends Controller
     {
         $zoneLang->fill($request->only(['name', 'alias']));
         $zoneLang->language_id = $request->input('language');
-        
-        if($zoneLang->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
-        }
 
         $zoneLang->save();
 

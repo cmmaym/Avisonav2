@@ -26,7 +26,7 @@ class StoreReportingUser extends FormRequest
         return [
             'name'              =>  'required|max:100',
             'rank'              =>  'required|max:45',
-            'reportSource'      =>  'required|exists:reportSource,id',
+            'reportSource'      =>  'required|exists:report_source,id',
         ];
     }
 
