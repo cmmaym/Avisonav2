@@ -209,8 +209,9 @@ Route::resource('topMark', 'TopMark\TopMarkController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
 
+Route::get('topMarkImage/{id}', 'TopMark\TopMarkImageController@show');
 Route::resource('topMark.topMarkImage', 'TopMark\TopMarkImageController')->only([
-    'store', 'update'
+    'store'
 ]);
 
 Route::resource('topMark.topMarkLang', 'TopMark\TopMarkLangController')->only([

@@ -24,7 +24,8 @@ class StoreTopMarkImage extends FormRequest
     public function rules()
     {
         return [
-            'file'           => 'required|file|image|max:10000'
+            // 'image'           => 'required|mimes:jpg,jpeg,png,gif,svg'
+            'image'           => 'sometimes|mimetypes:image/gif,image/jpeg,image/png,image/svg,image/svg+xml'
         ];
     }
 

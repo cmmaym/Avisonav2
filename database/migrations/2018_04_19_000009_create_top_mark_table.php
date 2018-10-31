@@ -15,7 +15,7 @@ class CreateTopMarkTable extends Migration
     {
         Schema::create('top_mark', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('illustration', 45)->nullable()->comment('Imagen de la marca de tope');
+            $table->string('image', 45)->nullable()->comment('Imagen de la marca de tope');
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
