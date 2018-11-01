@@ -21,7 +21,9 @@ class ImageResource extends JsonResource
         return [
             'id'                        => $this->id,
             'name'                      => $this->name,
-            'path'                      => asset('storage/'.$this->path)
+            'createdAt'                => $this->created_at->format('Y-m-d'),
+            'createdBy'                 => $this->created_by,
+            'image'                      => asset('storage/'.$this->image)
         ];
     }
 }

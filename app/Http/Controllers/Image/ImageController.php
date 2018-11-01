@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use AvisoNavAPI\Http\Resources\ImageResource;
 use AvisoNavAPI\ModelFilters\Basic\ImageFilter;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+use AvisoNavAPI\Http\Requests\Image\StoreImage;
 
 class ImageController extends Controller
 {
@@ -34,23 +35,64 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(StoreNoticeFile $request, Notice $notice)
-    // {
-    //     $name = $request->input('name');
-    //     $fileUpload = $request->file('file');
+    public function store(StoreImage $request)
+    {
+        $name = $request->input('name');
+        $fileUpload = $request->file('image');
 
-    //     $fileName = str_slug($name, '-').'-'.uniqid();
-    //     $extension = $fileUpload->getClientOriginalExtension();
-    //     $path = $fileUpload->storeAs('notice-files', $fileName.'.'.$extension, 'public');
+        $fileName = str_slug($name, '-').'-'.uniqid();
+        $extension = $fileUpload->getClientOriginalExtension();
+        $path = $fileUpload->storeAs('images', $fileName.'.'.$extension, 'public');
 
-    //     $noticeFile = new NoticeFile();
-    //     $noticeFile->name = $name;
-    //     $noticeFile->path = $path;
+        $image = new Image();
+        $image->name = $name;
+        $image->image = $path;
 
-    //     $notice->noticeFile()->save($noticeFile);
+        $image->save();
 
-    //     return new NoticeFileResource($noticeFile);
-    // }
+        return new ImageResource($image);
+    }
+
+    public function show(Image $image)
+    {
+        return new ImageResource($image);
+    }
+
+    public function getImage($imageId)
+    {
+        $image = Image::findOrFail($imageId);
+
+        if($image->image)
+        {
+            $path = public_path()."/storage/".$image->image;
+            
+            return response()->download($path);
+        }
+    }
+
+    public function update(StoreImage $request, $imageId)
+    {
+        $image = Image::findOrFail($imageId);
+
+        if($image->image)
+        {
+            Storage::disk('public')->delete($image->image);
+        }
+
+        $name = $request->input('name');
+        $fileUpload = $request->file('image');
+
+        $fileName = str_slug($name, '-').'-'.uniqid();
+        $extension = $fileUpload->getClientOriginalExtension();
+        $path = $fileUpload->storeAs('images', $fileName.'.'.$extension, 'public');
+
+        $image->name = $name;
+        $image->image = $path;
+
+        $image->save();
+
+        return new ImageResource($image);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -58,12 +100,12 @@ class ImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function destroy($notice, NoticeFile $noticeFile)
-    // {
-    //     $noticeFile->delete();
+    public function destroy(Image $image)
+    {
+        $image->delete();
 
-    //     Storage::disk('public')->delete($noticeFile->path);
+        Storage::disk('public')->delete($image->image);
 
-    //     return new NoticeFileResource($noticeFile);
-    // }
+        return new ImageResource($image);
+    }
 }

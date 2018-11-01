@@ -241,8 +241,10 @@ Route::resource('reportingUser', 'ReportingUser\ReportingUserController')->only(
 
 //Image
 Route::resource('image', 'Image\ImageController')->only([
-    'index', 'store', 'show', 'update', 'destroy'
+    'index', 'store', 'show', 'destroy'
 ]);
+Route::get('/image/getImage/{id}', 'Image\ImageController@getImage');
+Route::post('/image/update/{id}', 'Image\ImageController@update');
 
 //Symbol
 Route::resource('symbol', 'Symbol\SymbolController')->only([

@@ -16,7 +16,7 @@ class CreateImageTable extends Migration
         Schema::create('image', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name', 100)->comment('Nombre del archivo');
-            $table->mediumText('path')->comment('Ruta del archivo');
+            $table->mediumText('image')->comment('Ruta del archivo');
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
