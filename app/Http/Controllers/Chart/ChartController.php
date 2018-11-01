@@ -5,11 +5,12 @@ namespace AvisoNavAPI\Http\Controllers\Chart;
 use AvisoNavAPI\Chart;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
-use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+use AvisoNavAPI\Traits\Responser;
+use Grimzy\LaravelMysqlSpatial\Types\Geometry;
+use AvisoNavAPI\Http\Requests\Chart\StoreChart;
 use AvisoNavAPI\ModelFilters\Basic\ChartFilter;
 use AvisoNavAPI\Http\Resources\Chart\ChartResource;
-use AvisoNavAPI\Http\Requests\Chart\StoreChart;
-use AvisoNavAPI\Traits\Responser;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 
 class ChartController extends Controller
 {
@@ -79,5 +80,26 @@ class ChartController extends Controller
         $chart->delete();
 
         return new ChartResource($chart);
+    }
+
+    public function getSpatialData($chartId)
+    {
+        $chart = Chart::findOrFail($chartId);
+        $spatialData = $chart->area;
+
+        return $spatialData;
+    }
+    
+    public function updateSpatialData(Request $request, $chartId)
+    {
+        $chart = Chart::findOrFail($chartId);
+        
+        $data = $request->getContent();
+        $geometry = Geometry::fromJson($data);
+
+        $chart->area = $geometry;
+        $chart->save();
+
+        return $geometry;
     }
 }

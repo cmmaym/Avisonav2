@@ -114,6 +114,9 @@ Route::resource('chartEdition', 'Chart\EditionChartController')->only([
     'index'
 ]);
 
+Route::get('chart/getSpatialData/{id}', 'Chart\ChartController@getSpatialData');
+Route::put('chart/updateSpatialData/{id}', 'Chart\ChartController@updateSpatialData');
+
 
 //Notice
 Route::resource('notice', 'Notice\NoticeController')->only([
