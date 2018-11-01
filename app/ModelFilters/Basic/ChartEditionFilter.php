@@ -7,7 +7,7 @@ use EloquentFilter\ModelFilter;
 class ChartEditionFilter extends ModelFilter
 {
     public function scale($scale){
-        return $this->where('scale', 'like', "%$scale%");
+        return $this->related('chart', 'scale', 'like', "%$scale%");
     }
 
     public function edition($edition){

@@ -18,9 +18,11 @@ class ChartResource extends JsonResource
             'id'                =>  $this->id,
             'name'              =>  $this->name,
             'number'            =>  $this->number,
+            'scale'             =>  $this->scale,
             'purpose'           =>  $this->purpose,
-            'createdAt'        =>  $this->created_at->format('Y-m-d'),
-            'updatedAt'        =>  $this->updated_at->format('Y-m-d')
+            'createdAt'        =>   $this->created_at->format('Y-m-d'),
+            'createdBy'         => $this->created_by,
+            'area'              =>  $this->area
         ];
     }
 

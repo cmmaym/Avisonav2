@@ -14,6 +14,10 @@ class ChartFilter extends ModelFilter
         return $this->where('name', 'like', "%$name%");
     }
     
+    public function scale($scale){
+        return $this->where('scale', 'like', "%$scale%");
+    }
+    
     public function purpose($purpose){
         return $this->where('purpose', 'like', "%$purpose%");
     }
@@ -22,8 +26,8 @@ class ChartFilter extends ModelFilter
         return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
     }
 
-    public function scale($scale){
-        return $this->related('chartEdition', 'chart_edition.scale', 'like', "%$scale%");
+    public function createdBy($createdBy){
+        return $this->where('chart.created_by', 'like', "%$createdBy%");
     }
     
     public function edition($edition){
@@ -64,12 +68,7 @@ class ChartFilter extends ModelFilter
     }
 
     public function sortByScale(){
-        $input = $this->input('dir', 'asc');
-
-        $this->join('chart_edition', 'chart_edition.chart_id', '=', 'chart.id')
-             ->groupBy('chart.id')
-             ->orderBy('chart_edition.scale', $input)
-             ->select('chart.*');
+        return $this->orderBy('scale', $this->input('dir', 'asc'));
     }
     
     public function sortByEdition(){

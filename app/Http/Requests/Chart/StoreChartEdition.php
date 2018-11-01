@@ -13,7 +13,7 @@ class StoreChartEdition extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,6 @@ class StoreChartEdition extends FormRequest
     public function rules()
     {
         return [
-            'scale'         => 'required|max:45',
             'edition'       => 'required|numeric',
             'year'          => 'required|numeric',
         ];

@@ -37,7 +37,7 @@ class AidNominalScopeController extends Controller
      */
     public function store(StoreNominalScope $request, Aid $aid)
     {
-        $lastNominalScope = $aid->nominalScope;
+        $lastNominalScope = $aid->nominalScope()->where('state', '=', 'C')->first();
 
         $nominalScope = new NominalScope();
         $nominalScope->scope = $request->input('scope');

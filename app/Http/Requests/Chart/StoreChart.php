@@ -13,7 +13,7 @@ class StoreChart extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,9 +24,10 @@ class StoreChart extends FormRequest
     public function rules()
     {
         return [
-            'number'        => 'required|string|max:45',
-            'name'          => 'required|string|max:100',
-            'purpose'       => 'required|string|max:100',
+            'number'        => 'required|max:45',
+            'name'          => 'required|max:100',
+            'scale'         => 'required|max:100',
+            'purpose'       => 'required',
         ];
     }
 

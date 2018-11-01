@@ -37,7 +37,7 @@ class AidPeriodController extends Controller
      */
     public function store(StorePeriod $request, Aid $aid)
     {
-        $lastPeriod = $aid->period;
+        $lastPeriod = $aid->period()->where('state', '=', 'C')->first();
 
         $period = new Period();
         $period->time = $request->input('time');

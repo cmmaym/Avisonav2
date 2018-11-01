@@ -36,8 +36,7 @@ class ChartController extends Controller
      */
     public function store(StoreChart $request)
     {
-        $chart = new Chart($request->only(['number', 'name', 'purpose']));
-        $chart->user = Auth::user()->username;
+        $chart = new Chart($request->only(['number', 'name', 'scale', 'purpose']));
         $chart->save();
 
         return new ChartResource($chart);
@@ -63,13 +62,8 @@ class ChartController extends Controller
      */
     public function update(StoreChart $request, Chart $chart)
     {
-        $chart->fill($request->only(['number', 'name', 'purpose']));
-        $chart->user = Auth::user()->username;
+        $chart->fill($request->only(['number', 'name', 'scale', 'purpose']));
         $chart->save();
-
-        if($chart->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
-        }
 
         return new ChartResource($chart);
     }

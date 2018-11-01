@@ -38,9 +38,18 @@ class ChartEditionController extends Controller
      */
     public function store(StoreChartEdition $request, Chart $chart)
     {
-        $chartEdition = new ChartEdition($request->only(['scale', 'edition', 'year']));
+        $lastEdition = $chart->edition()->where('state', '=', 'C')->first();
+
+        $chartEdition = new ChartEdition($request->only(['edition', 'year']));
+        $chartEdition->state = 'C';
         
         $chart->chartEdition()->save($chartEdition);
+
+        if($lastEdition)
+        {
+            $lastEdition->state = 'A';
+            $lastEdition->save();
+        }
 
         return new ChartEditionResource($chartEdition);
     }
@@ -67,11 +76,7 @@ class ChartEditionController extends Controller
      */
     public function update(StoreChartEdition $request, Chart $chart, ChartEdition $chartEdition)
     {
-        $chartEdition->fill($request->only(['scale', 'edition', 'year']));
-
-        if($chartEdition->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
-        }
+        $chartEdition->fill($request->only(['edition', 'year']));
 
         $chartEdition->save();
 
@@ -82,12 +87,22 @@ class ChartEditionController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \AvisoNavAPI\Chart $chart
-     * @param  \AvisoNavAPI\ChartEdition $chartEdition
+     * @param  \AvisoNavAPI\ChartEdition $chartEditionId
      * @return \AvisoNavAPI\Http\Resources\Chart\ChartEditionResource
      */
-    public function destroy(Chart $chart, ChartEdition $chartEdition)
+    public function destroy(Chart $chart, $id)
     {
+        $chartEdition = $chart->chartEdition()->findOrFail($id);
+
         $chartEdition->delete();
+
+        $currentchartEdition = $chart->chartEdition()->orderBy('created_at', 'desc')->first();
+
+        if($currentchartEdition)
+        {
+            $currentchartEdition->state = 'C';
+            $currentchartEdition->save();
+        }
 
         return new ChartEditionResource($chartEdition);
     }

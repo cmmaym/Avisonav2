@@ -37,7 +37,7 @@ class AidHeightController extends Controller
      */
     public function store(StoreHeight $request, Aid $aid)
     {
-        $lastHeight = $aid->height;
+        $lastHeight = $aid->height()->where('state', '=', 'C')->first();
 
         $height = new Height();
         $height->structure_height = $request->input('structureHeight');
@@ -68,10 +68,6 @@ class AidHeightController extends Controller
         $height = $aid->height()->findOrFail($id);
         $height->structure_height = $request->input('structureHeight');
         $height->elevation = $request->input('elevation');
-
-        if($height->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
-        }
 
         $height->save();
 

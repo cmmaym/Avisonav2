@@ -21,6 +21,7 @@ class ChartEditionResource extends JsonResource
             'year'              => $this->year,
             'createdAt'         =>  $this->created_at->format('Y-m-d'),
             'updatedAt'         =>  $this->updated_at->format('Y-m-d'),
+            'state'             => $this->state,
             'chart'             => new ChartResource($this->chart)
         ];
     }
