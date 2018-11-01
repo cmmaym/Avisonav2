@@ -132,10 +132,7 @@ class AidController extends Controller
         $aid->top_mark_id = ($request->input('topMark')) ? $request->input('topMark') : null;
 
         $aid->symbol->location_id = $request->input('location');
-
-        if($aid->isClean()){
-            return $this->errorResponse('Debe espesificar por lo menos un valor diferente para actualizar', 409);
-        }
+        $aid->symbol->image_id = $request->input('image');
 
         $aid->symbol->save();
         $aid->save();
