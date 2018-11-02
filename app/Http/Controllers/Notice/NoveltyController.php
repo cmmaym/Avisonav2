@@ -12,6 +12,7 @@ use AvisoNavAPI\ModelFilters\Basic\NoveltyFilter;
 use AvisoNavAPI\Http\Resources\Notice\NoveltyResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\Notice\NoveltyPublicResource;
+use AvisoNavAPI\Chart;
 
 class NoveltyController extends Controller
 {
@@ -65,7 +66,7 @@ class NoveltyController extends Controller
         $data = $request->getContent();
         $geometry = Geometry::fromJson($data);
 
-        $novelty->spatial_data = $geometry;
+        $novelty->spatial_data = ($geometry->getGeometries()) ? $geometry : null;
         $novelty->save();
 
         return $geometry;
@@ -73,7 +74,7 @@ class NoveltyController extends Controller
 
     public function getCurrentNoveltys()
     {
-        $collection = Novelty::select('novelty.id', 'spatial_data')
+        $collection['novelty'] = Novelty::select('novelty.id', 'spatial_data')
                              ->join('notice', 'novelty.notice_id', 'notice.id')
                              ->join('character_type', 'novelty.character_type_id', 'character_type.id')
                              ->where('notice.state', '=', 'P')
@@ -83,6 +84,8 @@ class NoveltyController extends Controller
                                        ->orWhere('character_type.alias', '=', 'G'); 
                              })
                              ->get();
+
+        $collection['chart'] = Chart::select('number', 'area')->get();
 
         return $collection;
     }

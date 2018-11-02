@@ -169,10 +169,10 @@ class AidController extends Controller
         $data = $request->getContent();
         $geometry = Geometry::fromJson($data);
 
-        $symbol->position = $geometry->getGeometries()[0];
+        $symbol->position = ($geometry->getGeometries()) ? $geometry->getGeometries()[0] : null;
 
         $symbol->save();
 
-        return $geometry->getGeometries()[0];
+        return $symbol->position;
     }
 }

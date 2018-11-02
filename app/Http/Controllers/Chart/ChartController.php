@@ -97,7 +97,7 @@ class ChartController extends Controller
         $data = $request->getContent();
         $geometry = Geometry::fromJson($data);
 
-        $chart->area = $geometry;
+        $chart->area = ($geometry->getGeometries()) ? $geometry : null;
         $chart->save();
 
         return $geometry;
