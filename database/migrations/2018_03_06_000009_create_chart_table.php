@@ -18,7 +18,7 @@ class CreateChartTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('number', 45)->comment('Numero de la carta');
             $table->string('name', 100)->comment('Numero de la carta');
-            $table->mediumText()('purpose', 100)->comment('El proposito es la clasificacion segun el objetivo de la carta');
+            $table->mediumText('purpose')->comment('El proposito es la clasificacion segun el objetivo de la carta');
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);

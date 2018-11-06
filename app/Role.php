@@ -10,7 +10,7 @@ class Role extends Model
     use Filterable;
 
     protected $table        = 'role';
-    protected $fillable     = ['name', 'state'];
+    protected $fillable     = ['name'];
 
     public function permission()
     {

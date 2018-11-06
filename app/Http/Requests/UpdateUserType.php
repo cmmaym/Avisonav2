@@ -24,16 +24,16 @@ class UpdateUserType extends FormRequest
     public function rules()
     {
         return [
-            'num_ide'           => 'required|integer',
-            'username'          => 'required|unique:user,user_name,'.$this->user->id,
+            'numIde'           => 'required|integer',
+            'username'          => 'required|unique:user,username,'.$this->user->id,
             'name1'             => 'required',
             'name2'             => 'nullable',
-            'last_name1'        => 'required',
-            'last_name2'        => 'required',
+            'lastName1'        => 'required',
+            'lastName2'        => 'required',
             'email'             => 'required|email|unique:user,email,'.$this->user->id,
-            'password'          => 'present|confirmed|min:8',
+            'password'          => 'nullable|confirmed|min:8',
             'state'             => 'sometimes|in:A,I',
-            'role_id'           => 'required|exists:role,id'
+            'role'           => 'required|exists:role,id'
         ];
     }
 

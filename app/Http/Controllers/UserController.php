@@ -11,7 +11,8 @@ use AvisoNavAPI\Http\Resources\UserResource;
 use AvisoNavAPI\Http\Requests\UpdateUserType;
 use AvisoNavAPI\ModelFilters\Basic\UserFilter;
 
-class UserController extends Controller
+
+class UserController extends ApiController
 {
     use Filter;
 
@@ -35,9 +36,12 @@ class UserController extends Controller
      */
     public function store(UserType $request)
     {
-        $user = new User($request->only(['num_ide', 'username', 'name1', 'name2', 'last_name1', 'last_name2', 'email']));
+        $user = new User($request->only(['username', 'name1', 'name2', 'email']));
+        $user->num_ide = $request->input('numIde');
+        $user->last_name1 = $request->input('lastName1');
+        $user->last_name2 = $request->input('lastName2');
         $user->password = Hash::make($request->input('password'));
-        $user->role_id = $request->input('role_id');
+        $user->role_id = $request->input('role');
 
         $user->save();
 
@@ -64,14 +68,17 @@ class UserController extends Controller
      */
     public function update(UpdateUserType $request, User $user)
     {
-        $user->fill($request->only(['num_ide', 'username', 'name1', 'name2', 'last_name1', 'last_name2', 'email']));
+        $user->fill($request->only(['username', 'name1', 'name2', 'email']));
+        $user->num_ide = $request->input('numIde');
+        $user->last_name1 = $request->input('lastName1');
+        $user->last_name2 = $request->input('lastName2');
 
         if(!is_null($request->input('password')))
         {
             $user->password = Hash::make($request->input('password'));
         }
 
-        $user->role_id = $request->input('role_id');
+        $user->role_id = $request->input('role');
 
         $user->save();
 

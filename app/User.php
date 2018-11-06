@@ -4,12 +4,13 @@ namespace AvisoNavAPI;
 
 use EloquentFilter\Filterable;
 use Laravel\Passport\HasApiTokens;
+use AvisoNavAPI\Traits\Observable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens, Filterable;
+    use Notifiable, HasApiTokens, Filterable, Observable;
 
     protected $table = 'user';
 
@@ -19,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'num_ide', 'username', 'name1', 'name2', 'last_name1', 'last_name2', 'email', 'state',
+        'username', 'name1', 'name2', 'email', 'state',
     ];
 
     /**

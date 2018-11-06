@@ -24,12 +24,13 @@ class CreateUserTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->timestamps();
+            $table->string('created_by', 100);
+            $table->string('updated_by', 100);
             $table->enum('state', array('A','I'))->default('A')->comment('Estado del usuario. Puede ser Activo, Inactivo');
-            $table->integer('role_id');
+            $table->integer('role_id')->unsigned();
 
-            $table->foreign('id')
-                ->references('id')->on('role')
-                ->onDelete('cascade');
+            $table->foreign('role_id')
+                ->references('id')->on('role');
 
             $table->unique(['username'], 'username_UNIQUE');
             $table->unique(['email'], 'email_UNIQUE');

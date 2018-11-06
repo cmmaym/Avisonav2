@@ -15,14 +15,12 @@ class RoleTableSeeder extends Seeder
             [
                 'name'          => 'ROLE_ADMIN',
                 'created_at'    => new \DateTime('now'),
-                'updated_at'    => new \DateTime('now'),
-                'state'         => 'A'
+                'updated_at'    => new \DateTime('now')
             ],
             [
                 'name'          => 'ROLE_USER',
                 'created_at'    => new \DateTime('now'),
-                'updated_at'    => new \DateTime('now'),
-                'state'         => 'A'
+                'updated_at'    => new \DateTime('now')
             ],
         ]);
     }

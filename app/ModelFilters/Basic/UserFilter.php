@@ -16,24 +16,20 @@ class UserFilter extends ModelFilter
         return $this->where('username', 'like', "%$userName%");
     }
 
-    public function name1($name1)
+    public function name($name)
     {
-        return $this->where('name1', 'like', "%$name1%");
+        return $this->where(function($query) use ($name){
+            $query->where('name1', 'like', "%$name%")
+                  ->orWhere('name2', 'like', "%$name%");
+        });
     }
     
-    public function name2($name2)
+    public function lastName($lastName)
     {
-        return $this->where('name2', 'like', "%$name2%");
-    }
-    
-    public function lastName1($lastName1)
-    {
-        return $this->where('last_name1', 'like', "%$lastName1%");
-    }
-    
-    public function lastName2($lastName2)
-    {
-        return $this->where('last_name2', 'like', "%$lastName2%");
+        return $this->where(function($query) use ($lastName){
+            $query->where('last_name1', 'like', "%$lastName%")
+                  ->orWhere('last_name2', 'like', "%$lastName%");
+        });
     }
 
     public function email($email)
@@ -41,8 +37,16 @@ class UserFilter extends ModelFilter
         return $this->where('email', 'like', "%$email%");
     }
 
-    public function date($date){
-        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($date, $date));
+    public function createdAt($createdAt){
+        return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
+    }
+
+    public function createdBy($createdBy){
+        return $this->where('user.created_by', 'like', "%$createdBy%");
+    }
+    
+    public function state($state){
+        return $this->where('state', '=', $state);
     }
 
     public function sort($column)
@@ -64,32 +68,22 @@ class UserFilter extends ModelFilter
         return $this->orderBy('username', $this->input('dir', 'asc'));
     }
     
-    public function sortByName1()
+    public function sortByName()
     {
         return $this->orderBy('name1', $this->input('dir', 'asc'));
     }
     
-    public function sortByName2()
-    {
-        return $this->orderBy('name2', $this->input('dir', 'asc'));
-    }
-    
-    public function sortByLastName1()
+    public function sortByLastName()
     {
         return $this->orderBy('last_name1', $this->input('dir', 'asc'));
     }
-    
-    public function sortByLastName2()
-    {
-        return $this->orderBy('last_name2', $this->input('dir', 'asc'));
-    }
-    
+
     public function sortByEmail()
     {
         return $this->orderBy('email', $this->input('dir', 'asc'));
     }
 
-    public function sortByDate()
+    public function sortByCreatedAt()
     {
         return $this->orderBy('created_at', $this->input('dir', 'asc'));
     }

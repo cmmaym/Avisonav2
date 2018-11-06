@@ -27,6 +27,11 @@ Route::resource('user', 'UserController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
+//Role
+Route::resource('role', 'RoleController')->only([
+    'index'
+]);
+
 //Language
 Route::resource('language', 'Language\LanguageController')->only([
     'index', 'show', 'store', 'update', 'destroy'

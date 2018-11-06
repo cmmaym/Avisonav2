@@ -16,7 +16,6 @@ class CreateRoleTable extends Migration
         Schema::create('role', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name', 45)->comment('Nombre del rol');
-            $table->enum('state', array('A','I'))->default('A')->comment('Estado de la ayuda. Puede ser Activo, Inactivo');
             $table->timestamps();
         });
     }

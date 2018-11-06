@@ -24,16 +24,16 @@ class UserType extends FormRequest
     public function rules()
     {
         return [
-            'num_ide'           => 'required|integer',
-            'username'         => 'required|unique:user,user_name',
+            'numIde'           => 'required|numeric',
+            'username'         => 'required|unique:user,username',
             'name1'             => 'required',
             'name2'             => 'nullable',
-            'last_name1'        => 'required',
-            'last_name2'        => 'required',
+            'lastName1'        => 'required',
+            'lastName2'        => 'required',
             'email'             => 'required|email|unique:user,email',
             'password'          => 'required|confirmed|min:8',
             'state'             => 'sometimes|in:A,I',
-            'role_id'           => 'required|exists:role,id'
+            'role'           => 'required|exists:role,id'
         ];
     }
 
@@ -49,7 +49,8 @@ class UserType extends FormRequest
             'email'                 =>  'El email debe ser una direccion de email valida',
             'exists'                =>  'El valor ingresado en el campo :attribute no existe',
             'min'                   =>  'El campo :attribute debe tener minimo :min caracteres',
-            'unique'                =>  'El :attribute ya esta en uso'
+            'unique'                =>  'El :attribute ya esta en uso',
+            'password.confirmed' => 'La confirmación de la contraseña no coincide'
         ];
     }
 }

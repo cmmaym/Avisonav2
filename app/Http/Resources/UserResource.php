@@ -16,17 +16,18 @@ class UserResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-            'num_ide'       => $this->num_ide,
+            'numIde'       => $this->num_ide,
             'username'      => $this->username,
             'name1'         => $this->name1,
             'name2'         => $this->name2,
-            'last_name1'    => $this->last_name1,
-            'last_name2'    => $this->last_name2,
+            'lastName1'    => $this->last_name1,
+            'lastName2'    => $this->last_name2,
             'email'         => $this->email,
             'state'         => $this->state,
-            'links'         => [
-                'self'  => route('user.show', ['id' => $this->id])
-            ]
+            'role'          => new RoleResource($this->role),
+            'createdAt'         => $this->created_at->format('Y-m-d'),
+            'updatedAt'         => $this->updated_at->format('Y-m-d'),
+            'createdBy'     => $this->created_by
         ];
     }
 }

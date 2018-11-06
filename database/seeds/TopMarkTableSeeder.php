@@ -13,57 +13,57 @@ class TopMarkTableSeeder extends Seeder
     {
         DB::table('top_mark')->insert([
             [
-                'illustration'  => null,
+                'image'  => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'illustration'  => null,
+                'image'  => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'illustration'  => null,
+                'image'  => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'illustration'  => null,
+                'image'  => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'illustration'  => null,
+                'image'  => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'illustration'  => null,
+                'image'  => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'illustration'  => null,
+                'image'  => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'illustration'  => null,
+                'image'  => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'illustration'  => null,
+                'image'  => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'illustration'  => null,
+                'image'  => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ],
             [
-                'illustration'  => null,
+                'image'  => null,
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
             ]
