@@ -35,11 +35,16 @@ class NoveltyPublicResource extends JsonResource
             return $self->symbol->symbol;
         };
 
+        $description = function() use ($self) {
+            return $self->notice->noticeLang->description;
+        };
+
         return [
             'id'                        => $this->id,
             'notice'                    => $this->notice->number,
             'numItem'                   => $this->num_item,
             'name'                       =>  $this->when(!is_null($this->noveltyLang), $name, null),
+            'description'                =>  $this->when(!is_null($this->notice), $description, null),
             'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
             'characterType'             => new CharacterTypeResource($this->characterType),
             'createdAt'                => $this->created_at->format('Y-m-d'),

@@ -87,6 +87,14 @@ class NoticeNoveltyController extends Controller
                     return $this->errorResponse('Una novedad Temporal no puede ser cancelada por una novedad General', 409);
                 }
 
+                if($parent->symbol)
+                {
+                    if(!$symbol)
+                    {
+                        return $this->errorResponse('Debe seleccionar la ayuda o peligro asociado a la novedad a cancelar', 409);
+                    }
+                }
+
                 if($symbol)
                 {
                     $symbolId = $symbol->id;
@@ -275,10 +283,15 @@ class NoticeNoveltyController extends Controller
                 //y que no hayan seleccionado algun simbolo
                 if(!$novelty->parent && !$symbol)
                 {
+                    if($parent->symbol)
+                    {
+                        return $this->errorResponse('Debe seleccionar la ayuda o peligro asociado a la novedad a cancelar', 409);
+                    }
+
                     $novelty->parent_id = $parent->id;
                     $parent->state = 'C';
                     $novelty->state = 'A';
-        
+
                     $parent->save();
                 }
 

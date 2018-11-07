@@ -31,6 +31,11 @@ class NoveltyFilter extends ModelFilter
         return $this->where('state', $state);
     }
     
+    public function noveltyId($noveltyId)
+    {
+        return $this->where('id', '<>', $noveltyId);
+    }
+    
     public function createdAt($createdAt){
         return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
     }

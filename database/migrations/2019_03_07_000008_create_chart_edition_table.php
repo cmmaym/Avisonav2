@@ -15,7 +15,6 @@ class CreateChartEditionTable extends Migration
     {
         Schema::create('chart_edition', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('scale', 45)->comment('Escala de la carta');
             $table->integer('edition')->comment('Numero de edicion de la carta');
             $table->year('year');
             $table->timestamps();

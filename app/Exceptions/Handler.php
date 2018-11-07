@@ -87,16 +87,16 @@ class Handler extends ExceptionHandler
             return $this->errorResponse('No posee permisos para ejecutar esta acción', 403);
         }
         
-        // if($exception instanceof QueryException){
-        //     $code = $exception->errorInfo[1];
+        if($exception instanceof QueryException){
+            $code = $exception->errorInfo[1];
 
-        //     switch($code){
-        //         case 1062:
-        //             return $this->errorResponse('No se puede ingresar el registro porque ya existe', 409);
-        //         default:                    
-        //             return $this->errorResponse('No se pudo realizar la operación', 409);
-        //     }
-        // }
+            switch($code){
+                case 1062:
+                    return $this->errorResponse('No se puede ingresar el registro porque ya existe', 409);
+                default:                    
+                    return $this->errorResponse('No se pudo realizar la operación', 409);
+            }
+        }
 
         if($exception instanceof HttpException){            
             return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
