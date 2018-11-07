@@ -24,7 +24,7 @@ class LoginController extends Controller
      */
     public function authenticate(LoginType $request)
     {
-        $user = User::where('email', $request->input('email'))->first();
+        $user = User::where('username', $request->input('username'))->first();
         $scope = $user->role->permission->implode('name', ' ');
 
         if(strcmp($user->state, 'I') === 0)
@@ -32,7 +32,7 @@ class LoginController extends Controller
             throw new AuthenticationException();
         }
 
-        return $this->getToken('password', ['username' => $request->input('email'), 'password' => $request->input('password'), 'scope' => $scope]);
+        return $this->getToken('password', ['username' => $request->input('username'), 'password' => $request->input('password'), 'scope' => $scope]);
     }
     
     public function logout(Request $request)

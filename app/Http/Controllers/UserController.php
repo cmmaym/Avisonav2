@@ -42,6 +42,7 @@ class UserController extends ApiController
         $user->last_name2 = $request->input('lastName2');
         $user->password = Hash::make($request->input('password'));
         $user->role_id = $request->input('role');
+        $user->state = $request->input('state');
 
         $user->save();
 
@@ -72,6 +73,7 @@ class UserController extends ApiController
         $user->num_ide = $request->input('numIde');
         $user->last_name1 = $request->input('lastName1');
         $user->last_name2 = $request->input('lastName2');
+        $user->state = $request->input('state');
 
         if(!is_null($request->input('password')))
         {

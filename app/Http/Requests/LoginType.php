@@ -24,7 +24,7 @@ class LoginType extends FormRequest
     public function rules()
     {
         return [
-            'email'     => 'required|email|exists:user,email',
+            'username'     => 'required|exists:user,username',
             'password'  => 'required'
         ];
     }
@@ -38,7 +38,6 @@ class LoginType extends FormRequest
     {
         return [
             'required'              =>  'El campo :attribute es requerido',
-            'email'                 =>  'El email debe ser una direccion de email valida',
             'exists'                =>  'El valor ingresado en el campo :attribute no existe',
         ];
     }
