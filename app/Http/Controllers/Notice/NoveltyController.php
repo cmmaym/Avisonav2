@@ -13,6 +13,7 @@ use AvisoNavAPI\Http\Resources\Notice\NoveltyResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\Notice\NoveltyPublicResource;
 use AvisoNavAPI\Chart;
+use Illuminate\Support\Carbon;
 
 class NoveltyController extends Controller
 {
@@ -81,7 +82,13 @@ class NoveltyController extends Controller
                              ->where('novelty.state', '=', 'A')
                              ->where(function($query){
                                  $query->where('character_type.alias', '=', 'T')
-                                       ->orWhere('character_type.alias', '=', 'G'); 
+                                       ->orWhere(function($query){
+                                           $query->where(function($query){
+                                                    $query->where('character_type.alias', '=', 'G')
+                                                            ->orWhere('character_type.alias', '=', 'P');
+                                                        })
+                                                ->where('notice.created_at', '>=', Carbon::now()->subDays(30)->toDateString());
+                                       }); 
                              })
                              ->get();
 
@@ -96,6 +103,7 @@ class NoveltyController extends Controller
             'noveltyLang' => $this->withLanguageQuery(),
             'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
             'characterType.characterTypeLang' => $this->withLanguageQuery(),
+            'notice.noticeLang' => $this->withLanguageQuery(),
         ])
         ->findOrFail($noveltyId);
 
