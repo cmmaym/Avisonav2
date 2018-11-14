@@ -77,14 +77,6 @@ class AidFilter extends ModelFilter
         });
     }
 
-    public function latitud($latitud){
-        return $this->related('coordinate', DB::raw('CONCAT(latitude_degrees, latitude_minutes, latitude_seconds)'), 'like', "%$latitud%");
-    }
-    
-    public function longitud($longitud){
-        return $this->related('coordinate', DB::raw('CONCAT(longitude_degrees, longitude_minutes, longitude_seconds)'), 'like', "%$longitud%");
-    }
-
     public function createdAt($createdAt){
         return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
     }
@@ -204,26 +196,6 @@ class AidFilter extends ModelFilter
              ->join('aid_type_form_lang', 'aid_type_form_lang.aid_type_form_id', '=', 'aid_type_form.id')
              ->groupBy('aid.id')
              ->orderBy('aid_type_form_lang.name', $input)
-             ->select('aid.*');
-    }
-
-    public function sortByLatitud()
-    {
-        $input = $this->input('dir', 'asc');
-
-        $this->join('coordinate', 'coordinate.aid_id', '=', 'aid.id')
-             ->groupBy('aid.id')
-            ->orderBy(DB::raw('CONCAT(latitude_degrees, latitude_minutes, latitude_seconds)'), $input)
-             ->select('aid.*');
-    }
-    
-    public function sortByLongitud()
-    {
-        $input = $this->input('dir', 'asc');
-
-        $this->join('coordinate', 'coordinate.aid_id', '=', 'aid.id')
-             ->groupBy('aid.id')
-             ->orderBy(DB::raw('CONCAT(longitude_degrees, longitude_minutes, longitude_seconds)'), $input)
              ->select('aid.*');
     }
 

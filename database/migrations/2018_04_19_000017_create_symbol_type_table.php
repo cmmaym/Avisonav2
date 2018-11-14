@@ -16,9 +16,12 @@ class CreateSymbolTypeTable extends Migration
         Schema::create('symbol_type', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('title', 100);
+            $table->string('code', 5);
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
+
+            $table->unique(['code'], 'code_UNIQUE');
         });
     }
 

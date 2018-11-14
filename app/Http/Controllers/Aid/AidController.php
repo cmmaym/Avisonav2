@@ -3,21 +3,22 @@
 namespace AvisoNavAPI\Http\Controllers\Aid;
 
 use AvisoNavAPI\Aid;
-use AvisoNavAPI\SymbolLang;
+use AvisoNavAPI\Symbol;
+use AvisoNavAPI\Language;
 use AvisoNavAPI\Coordenada;
+use AvisoNavAPI\SymbolLang;
+use AvisoNavAPI\SymbolType;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
+use AvisoNavAPI\Traits\Responser;
 use AvisoNavAPI\CoordenadaDetalle;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use AvisoNavAPI\Http\Requests\Aid\StoreAid;
 use AvisoNavAPI\ModelFilters\Basic\AidFilter;
+use Grimzy\LaravelMysqlSpatial\Types\Geometry;
 use AvisoNavAPI\Http\Resources\Aid\AidResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
-use AvisoNavAPI\Traits\Responser;
-use AvisoNavAPI\Symbol;
-use AvisoNavAPI\Language;
-use Grimzy\LaravelMysqlSpatial\Types\Geometry;
 
 class AidController extends Controller
 {
@@ -56,9 +57,10 @@ class AidController extends Controller
         $symbolAid = DB::transaction(function () use ($request){
 
             $language = Language::where('code','es')->firstOrFail();
+            $symbolType = SymbolType::where('code', 'A1')->firstOrFail();
 
             $symbol = new Symbol();
-            $symbol->symbol_type_id = 1;
+            $symbol->symbol_type_id = $symbolType->id;
             $symbol->image_id = $request->input('image');
             $symbol->location_id = $request->input('location');
             $symbol->save();

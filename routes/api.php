@@ -212,6 +212,22 @@ Route::resource('aidType.aidTypeLang', 'Aid\AidTypeLangController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
 
+//Danger
+Route::resource('danger', 'Danger\DangerController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
+
+Route::resource('danger.dangerLang', 'Danger\DangerLangController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
+
+Route::resource('danger.chart', 'Danger\DangerChartController')->only([
+    'index', 'update', 'destroy'
+]);
+
+Route::get('danger/getPosition/{id}', 'Danger\DangerController@getPosition');
+Route::put('danger/updatePosition/{id}', 'Danger\DangerController@updatePosition');
+
 //TopMark
 Route::resource('topMark', 'TopMark\TopMarkController')->only([
     'index', 'store', 'show', 'update', 'destroy'
