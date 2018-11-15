@@ -3,6 +3,7 @@
 namespace AvisoNavAPI\Http\Controllers\Notice;
 
 use AvisoNavAPI\Notice;
+use AvisoNavAPI\Novelty;
 use AvisoNavAPI\Language;
 use AvisoNavAPI\NoticeLang;
 use Illuminate\Http\Request;
@@ -211,6 +212,77 @@ class NoticeController extends Controller
                            ->groupBy('number')
                            ->where('year', '=', $year)
                            ->get();
+
+        return response()->json($collection);
+    }
+
+    public function getTotalNoticeNovelty()
+    {
+        $consecutiveNotice = ConsecutiveNotice::orderBy('year', 'desc')->firstOrFail();
+        
+        DB::statement("SET lc_time_names = 'es_CO';");
+
+        $notice = DB::select("
+                SELECT MONTHNAME(m.merge_date) as name, IFNULL(n.total, 0) as total
+                FROM (
+                    SELECT '2000-01-01' AS merge_date, 0 as total
+                    UNION SELECT '2000-02-01' AS merge_date, 0 as total
+                    UNION SELECT '2000-03-01' AS merge_date, 0 as total
+                    UNION SELECT '2000-04-01' AS merge_date, 0 as total
+                    UNION SELECT '2000-05-01' AS merge_date, 0 as total
+                    UNION SELECT '2000-06-01' AS merge_date, 0 as total
+                    UNION SELECT '2000-07-01' AS merge_date, 0 as total
+                    UNION SELECT '2000-08-01' AS merge_date, 0 as total
+                    UNION SELECT '2000-09-01' AS merge_date, 0 as total
+                    UNION SELECT '2000-10-01' AS merge_date, 0 as total
+                    UNION SELECT '2000-11-01' AS merge_date, 0 as total
+                    UNION SELECT '2000-12-01' AS merge_date, 0 as total
+                        
+                ) as m
+                left join (
+                    SELECT MONTH(created_at) as month, count(id) as total
+                    FROM notice
+                    WHERE YEAR(created_at) = ?
+                    GROUP BY MONTH(created_at)
+                ) as n on n.month = MONTH(m.merge_date)
+                ORDER BY m.merge_date ASC",
+                [$consecutiveNotice->year]
+            );
+        
+        $novelty = DB::select("
+            SELECT MONTHNAME(m.merge_date) as name, IFNULL(n.total, 0) as total
+            FROM (
+                SELECT '2000-01-01' AS merge_date, 0 as total
+                UNION SELECT '2000-02-01' AS merge_date, 0 as total
+                UNION SELECT '2000-03-01' AS merge_date, 0 as total
+                UNION SELECT '2000-04-01' AS merge_date, 0 as total
+                UNION SELECT '2000-05-01' AS merge_date, 0 as total
+                UNION SELECT '2000-06-01' AS merge_date, 0 as total
+                UNION SELECT '2000-07-01' AS merge_date, 0 as total
+                UNION SELECT '2000-08-01' AS merge_date, 0 as total
+                UNION SELECT '2000-09-01' AS merge_date, 0 as total
+                UNION SELECT '2000-10-01' AS merge_date, 0 as total
+                UNION SELECT '2000-11-01' AS merge_date, 0 as total
+                UNION SELECT '2000-12-01' AS merge_date, 0 as total
+                    
+            ) as m
+            left join (
+                SELECT MONTH(created_at) as month, count(id) as total
+                FROM novelty
+                WHERE YEAR(created_at) = ?
+                GROUP BY MONTH(created_at)
+            ) as n on n.month = MONTH(m.merge_date)
+            ORDER BY m.merge_date ASC",
+            [$consecutiveNotice->year]
+        );
+
+        $collection = collect(['notice' => collect($notice), 'novelty' => collect($novelty)]);
+        
+        $collection->map(function($item){
+            $item->map(function($data){
+                $data->name = ucfirst($data->name);
+            });
+        });
 
         return response()->json($collection);
     }

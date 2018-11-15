@@ -140,6 +140,8 @@ Route::resource('notice.novelty', 'Notice\NoticeNoveltyController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
 
+Route::get('getTotalNoticeNovelty', 'Notice\NoticeController@getTotalNoticeNovelty');
+
 //Notice Public route
 Route::get('getNotice/{id}', 'Notice\NoticeController@getNotice');
 Route::get('getAllNoticeYear', 'Notice\NoticeController@getAllNoticeYear');
