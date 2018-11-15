@@ -299,3 +299,5 @@ Route::resource('novelty.noveltyFile', 'Notice\NoveltyFileController')->only([
 
 Route::get('novelty/getSpatialData/{id}', 'Notice\NoveltyController@getSpatialData');
 Route::put('novelty/updateSpatialData/{id}', 'Notice\NoveltyController@updateSpatialData');
+
+Route::get('prueba', 'Aid\AidController@export');

@@ -12,8 +12,10 @@ use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
 use AvisoNavAPI\Traits\Responser;
 use AvisoNavAPI\CoordenadaDetalle;
+use AvisoNavAPI\Exports\AidExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use AvisoNavAPI\Http\Requests\Aid\StoreAid;
 use AvisoNavAPI\ModelFilters\Basic\AidFilter;
 use Grimzy\LaravelMysqlSpatial\Types\Geometry;
@@ -176,5 +178,21 @@ class AidController extends Controller
         $symbol->save();
 
         return $symbol->position;
+    }
+
+    public function prueba()
+    {
+        $aid = Aid::with([
+                    'symbol',
+                    'symbol.symbolLang'
+                ])
+                ->get();
+
+        return $aid;
+    }
+
+    public function export()
+    {
+        return Excel::download(new AidExport, 'aid.xlsx');
     }
 }
