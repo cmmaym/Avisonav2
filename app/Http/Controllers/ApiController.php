@@ -17,7 +17,7 @@ class ApiController extends Controller
                 'getRecentNotice',
                 'getCurrentNoveltys',
                 'getNovelty',
-                'export'
+                'noticeNoveltyGTP'
             ],
         ]);
 

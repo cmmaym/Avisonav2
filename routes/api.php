@@ -301,3 +301,7 @@ Route::resource('novelty.noveltyFile', 'Notice\NoveltyFileController')->only([
 
 Route::get('novelty/getSpatialData/{id}', 'Notice\NoveltyController@getSpatialData');
 Route::put('novelty/updateSpatialData/{id}', 'Notice\NoveltyController@updateSpatialData');
+
+//Reports
+
+Route::get('report/noticeNoveltyGTP', 'Notice\ReportController@noticeNoveltyGTP');
