@@ -11,8 +11,10 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Concerns\WithEvents;
 
-class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAutoSize
+class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAutoSize, WithEvents
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -23,7 +25,32 @@ class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
             'symbol',
             'symbol.symbolLang',
             'lightClass',
-            'aidColorLight'
+            'aidColorLight',
+            'period' => function($query){
+                $query->where('state', '=', 'C');
+            },
+            'period.sequenceFlashes',
+            'height' => function($query){
+                $query->where('state', '=', 'C');
+            },
+            'nominalScope' => function($query){
+                $query->where('state', '=', 'C');
+            },
+            'aidTypeForm.aidTypeFormLang' => function($query){
+                $query->whereHas('language', function($query){
+                    $query->where('code', '=', 'es');
+                });
+            },
+            'colorStructurePattern.colorStructureLang' => function($query){
+                $query->whereHas('language', function($query){
+                    $query->where('code', '=', 'es');
+                });
+            },
+            'topMark.topMarkLang' => function($query){
+                $query->whereHas('language', function($query){
+                    $query->where('code', '=', 'es');
+                });
+            },
         ])
         ->get();
 
@@ -33,16 +60,90 @@ class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
     public function map($aid): array
     {
         $name = ($aid->symbol->symbolLang) ? $aid->symbol->symbolLang->name : null;
+        $aidObservation = ($aid->symbol->symbolLang) ? $aid->symbol->symbolLang->observation : null;
         $position = null;
+        $lightClass = $aid->lightClass->alias;
+        $period = null;
+        $flashGroup = null;
+        $colorLight = null;
+        $elevation = null;
+        $height = null;
+        $scope = null;
+        $form = null;
+        $colorStructure = null;
+        $topMark = null;
+        $sequenceFlashes = null;
         
         if($aid->symbol->position)
         {
-            $position = $this->dd2dmStringFormat([0, $aid->symbol->position->getLat()])[1].' '.$this->dd2dmStringFormat([$aid->symbol->position->getLng(), 0])[0];
+            $position = $this->dd2dmStringFormat([0, $aid->symbol->position->getLat()])[1]."\n".$this->dd2dmStringFormat([$aid->symbol->position->getLng(), 0])[0];
         }
+        
+        if($aid->period)
+        {
+            $period = $aid->period->time;
+            $flashGroup = $aid->period->flash_group;
+
+            if($aid->period->sequenceFlashes)
+            {
+                $sequenceFlashes = $aid->period->sequenceFlashes->map(function($item){
+                    return "FI ".$item->on." s, OC ".$item->off." s\n";
+                });
+
+                $sequenceFlashes = $sequenceFlashes->implode("");
+            }
+        }
+        
+        if($aid->height)
+        {
+            $elevation = $aid->height->elevation;
+            $height = $aid->height->structure_height;
+        }
+       
+        if($aid->nominalScope)
+        {
+            $scope = $aid->nominalScope->scope;
+        }
+        
+        if($aid->aidColorLight)
+        {
+            $colorLight = $aid->aidColorLight->map(function($item){
+                return $item->alias;
+            });
+
+            $colorLight = $colorLight->implode("");
+        }
+
+        if($aid->aidTypeForm && $aid->aidTypeForm->aidTypeFormLang)
+        {
+            $form = $aid->aidTypeForm->aidTypeFormLang->description;
+        }
+        
+        if($aid->colorStructurePattern && $aid->colorStructurePattern->colorStructureLang)
+        {
+            $colorStructure = $aid->colorStructurePattern->colorStructureLang->name;
+        }
+
+        if($aid->topMark && $aid->topMark->topMarkLang)
+        {
+            $topMark = $aid->topMark->topMarkLang->description;
+        }
+
+        $features = "$lightClass ($flashGroup) $colorLight $period s";
+
+        $description = "$form\n$colorStructure\n$height";
+        $description .= ($topMark) ? "\n$topMark" : null;
+
+        $observation = "$sequenceFlashes\n$aidObservation";
 
         return [
             $name,
-            $position
+            $position,
+            $features,
+            $elevation,
+            $scope,
+            $description,
+            $observation
         ];
     }
 
@@ -50,8 +151,37 @@ class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
     {
         return [
             'Nombre',
-            'Latitud (N) Longitud (W)',
-            'Características'
+            "Latitud (N)\nLongitud (W)",
+            'Características',
+            'Altitud (m)',
+            'Alcance (Mn)',
+            'Descripción',
+            'Observación'
+        ];
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class    => function(AfterSheet $event) {
+                // $event->sheet->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+
+                // $event->sheet->styleCells(
+                //     'B2:G8',
+                //     [
+                //         'borders' => [
+                //             'outline' => [
+                //                 'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+                //                 'color' => ['argb' => 'FFFF0000'],
+                //             ],
+                //         ]
+                //     ]
+                // );
+                $maxRow = $event->sheet->getHighestRow();
+                $event->sheet->getStyle('B1:B'.$maxRow)->getAlignment()->setWrapText(true);
+                $event->sheet->getStyle('F2:F'.$maxRow)->getAlignment()->setWrapText(true);
+                $event->sheet->getStyle('G2:G'.$maxRow)->getAlignment()->setWrapText(true);
+            },
         ];
     }
 
