@@ -29,8 +29,7 @@ class CreateSymbolNoveltyTable extends Migration
                   ->onDelete('cascade');
 
             $table->foreign('symbol_id')
-                  ->references('id')->on('symbol')
-                  ->onDelete('cascade');
+                  ->references('id')->on('symbol');
             
             $table->foreign('height_id')
                   ->references('id')->on('height');
