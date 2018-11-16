@@ -180,17 +180,6 @@ class AidController extends Controller
         return $symbol->position;
     }
 
-    public function prueba()
-    {
-        $aid = Aid::with([
-                    'symbol',
-                    'symbol.symbolLang'
-                ])
-                ->get();
-
-        return $aid;
-    }
-
     public function export()
     {
         return Excel::download(new AidExport, 'aid.xlsx');

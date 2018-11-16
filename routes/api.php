@@ -193,6 +193,8 @@ Route::resource('aid.period.sequenceFlashes', 'Aid\AidPeriodSequenceFlashesContr
     'index', 'store', 'update', 'destroy'
 ]);
 
+Route::get('export/aid', 'Aid\AidController@export');
+
 Route::get('aid/getPosition/{id}', 'Aid\AidController@getPosition');
 Route::put('aid/updatePosition/{id}', 'Aid\AidController@updatePosition');
 
@@ -299,5 +301,3 @@ Route::resource('novelty.noveltyFile', 'Notice\NoveltyFileController')->only([
 
 Route::get('novelty/getSpatialData/{id}', 'Notice\NoveltyController@getSpatialData');
 Route::put('novelty/updateSpatialData/{id}', 'Notice\NoveltyController@updateSpatialData');
-
-Route::get('prueba', 'Aid\AidController@export');

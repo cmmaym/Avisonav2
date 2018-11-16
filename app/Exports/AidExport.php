@@ -13,6 +13,11 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
+use \Maatwebsite\Excel\Sheet;
+
+Sheet::macro('styleCells', function (Sheet $sheet, string $cellRange, array $style) {
+    $sheet->getDelegate()->getStyle($cellRange)->applyFromArray($style);
+});
 
 class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAutoSize, WithEvents
 {
@@ -51,6 +56,11 @@ class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
                     $query->where('code', '=', 'es');
                 });
             },
+            'symbol.location.zone.zoneLang' => function($query){
+                $query->whereHas('language', function($query){
+                    $query->where('code', '=', 'es');
+                });
+            }
         ])
         ->get();
 
@@ -73,6 +83,7 @@ class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
         $colorStructure = null;
         $topMark = null;
         $sequenceFlashes = null;
+        $zone = null;
         
         if($aid->symbol->position)
         {
@@ -129,6 +140,11 @@ class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
             $topMark = $aid->topMark->topMarkLang->description;
         }
 
+        if($aid->symbol->location && $aid->symbol->location->zone && $aid->symbol->location->zone->zoneLang)
+        {
+            $zone = $aid->symbol->location->zone->zoneLang->name;
+        }
+
         $features = "$lightClass ($flashGroup) $colorLight $period s";
 
         $description = "$form\n$colorStructure\n$height";
@@ -143,7 +159,8 @@ class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
             $elevation,
             $scope,
             $description,
-            $observation
+            $observation,
+            $zone
         ];
     }
 
@@ -156,7 +173,8 @@ class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
             'Altitud (m)',
             'Alcance (Mn)',
             'Descripción',
-            'Observación'
+            'Observación',
+            'Zona'
         ];
     }
 
@@ -164,34 +182,43 @@ class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
     {
         return [
             AfterSheet::class    => function(AfterSheet $event) {
-                // $event->sheet->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
 
-                // $event->sheet->styleCells(
-                //     'B2:G8',
-                //     [
-                //         'borders' => [
-                //             'outline' => [
-                //                 'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-                //                 'color' => ['argb' => 'FFFF0000'],
-                //             ],
-                //         ]
-                //     ]
-                // );
+                $event->sheet->styleCells(
+                    'A1:G1',
+                    [
+                        'fill' => [
+                            'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                            'color' => array('rgb' => '3B8AC7' )
+                        ],
+                        'font'  => array(
+                            'color' =>   array('rgb' => 'FFFFFF'),
+                            'bold'  => true
+                        ),
+                        'alignment' => array(
+                            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                            'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
+                        )
+                    ]
+                );
+                
                 $maxRow = $event->sheet->getHighestRow();
+
+                $event->sheet->styleCells(
+                    'A2:G'.$maxRow,
+                    [
+                        'alignment' => array(
+                            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                            'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
+                        )
+                    ]
+                );
+
                 $event->sheet->getStyle('B1:B'.$maxRow)->getAlignment()->setWrapText(true);
                 $event->sheet->getStyle('F2:F'.$maxRow)->getAlignment()->setWrapText(true);
                 $event->sheet->getStyle('G2:G'.$maxRow)->getAlignment()->setWrapText(true);
             },
         ];
     }
-
-    // public function columnFormats(): array
-    // {
-    //     return [
-    //         'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-    //         'C' => NumberFormat::FORMAT_CURRENCY_EUR_SIMPLE,
-    //     ];
-    // }
 
     protected function dd2dm($xy)
     {
