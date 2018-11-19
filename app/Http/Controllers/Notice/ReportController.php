@@ -16,6 +16,8 @@ class ReportController extends Controller
      */
     public function noticeNoveltyGTP(Request $request)
     {
-        return Excel::download(new NoticeNoveltyGTPExport, 'Avisos y novedades por mes.xlsx');
+        $year = $request->input('year');
+
+        return Excel::download(new NoticeNoveltyGTPExport($year), 'Avisos y novedades por mes.xlsx');
     }
 }

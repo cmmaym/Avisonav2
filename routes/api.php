@@ -303,5 +303,4 @@ Route::get('novelty/getSpatialData/{id}', 'Notice\NoveltyController@getSpatialDa
 Route::put('novelty/updateSpatialData/{id}', 'Notice\NoveltyController@updateSpatialData');
 
 //Reports
-
 Route::get('report/noticeNoveltyGTP', 'Notice\ReportController@noticeNoveltyGTP');

@@ -20,14 +20,18 @@ Sheet::macro('styleCells', function (Sheet $sheet, string $cellRange, array $sty
 
 class NoticeNoveltyGTPExport implements FromCollection, WithMapping, WithHeadings, ShouldAutoSize, WithEvents
 {
+
+    public function __construct($year)
+    {
+        $this->year = $year;
+    }
+
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
         DB::statement("SET lc_time_names = 'es_CO';");
-
-        $year = '2018';
 
         $collection = DB::select("
                     SELECT MONTHNAME(m.merge_date) as mes,
@@ -75,7 +79,7 @@ class NoticeNoveltyGTPExport implements FromCollection, WithMapping, WithHeading
                     ) as nvp on nvp.month = MONTH(m.merge_date)
                     ORDER BY m.merge_date ASC
                 ",
-                [$year, $year, $year, $year]
+                [$this->year, $this->year, $this->year, $this->year]
             );
 
         return collect($collection);
@@ -129,7 +133,7 @@ class NoticeNoveltyGTPExport implements FromCollection, WithMapping, WithHeading
                 $maxRow = $event->sheet->getHighestRow();
 
                 $event->sheet->styleCells(
-                    'A2:G'.$maxRow,
+                    'A2:E'.$maxRow,
                     [
                         'alignment' => array(
                             'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
