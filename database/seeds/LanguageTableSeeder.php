@@ -14,7 +14,7 @@ class LanguageTableSeeder extends Seeder
     {
         DB::table('language')->insert([
             [
-                'name' => 'Spanish',
+                'name' => 'Español',
                 'code'  => 'es',
                 'created_at' => new \DateTime('now'),
                 'updated_at' => new \DateTime('now')
