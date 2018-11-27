@@ -20,6 +20,8 @@ class CreateConsecutiveNoticeTable extends Migration
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
+
+            $table->unique(['year'], 'year_UNIQUE');
         });
     }
 
