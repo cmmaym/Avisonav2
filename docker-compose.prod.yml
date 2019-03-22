@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  avisonav-api:
+    restart: always
+    env_file: .env
+    links:
+      - db
+    volumes:
+      - apistorage:/var/www/html/storage
+    networks:
+      - app-network
+
+  web:
+    restart: always
+    links:
+      - avisonav-api
+    ports:
+      - "80:80"
+    working_dir: /var/www
+    volumes:
+      - ./docker/prod/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./docker/prod/nginx/log/:/var/log/nginx/
+      - apistorage:/var/www:ro
+    networks:
+      - app-network
+
+  db:
+    image: mysql:5.7.25
+    container_name: db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: prueba
+    volumes:
+      - dbdata:/var/lib/mysql
+#        - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
+
+volumes:
+  dbdata:
+    driver: local
+  apistorage:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge

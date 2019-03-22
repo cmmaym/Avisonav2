@@ -11,7 +11,7 @@ class ColorLightTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('color_Light')->insert([
+        DB::table('color_light')->insert([
             [
                 'alias'         => 'W',
                 'created_at'    => new \DateTime('now'),

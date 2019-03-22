@@ -1,0 +1,61 @@
+version: "3"
+services:
+  avisonav-api:
+    build:
+      context: .
+      dockerfile: ./docker/dev/php/Dockerfile
+    image: laravel-dev
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/dev/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    expose:
+        - "9001"
+    env_file: .env
+
+  web:
+    restart: unless-stopped
+    links:
+      - avisonav-api
+    volumes:
+      - ./:/var/www
+      - ./docker/dev/nginx/conf.d:/etc/nginx/conf.d/
+      - ./docker/dev/nginx/log:/var/log/nginx/
+    environment:
+      - VIRTUAL_HOST=api.avisonav.local
+
+  db:
+    image: mysql:5.7.25
+    container_name: db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: prueba
+    volumes:
+      - dbdata:/var/lib/mysql
+#        - ./docker/dev/mysql/my.cnf:/etc/mysql/my.cnf
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_ARBITRARY=1
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+volumes:
+  dbdata:
+    driver: local
+
+networks:
+  default:
+    external:
+      name: reverse-proxy

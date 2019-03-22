@@ -28,9 +28,7 @@ class SymbolController extends Controller
         $collection = Symbol::filter(request()->all(), AidFilter::class)
                          ->with([
                              'symbolLang' => $this->withLanguageQuery(),
-                             'coordinate' => function($query){
-                                $query->orderBy('created_at', 'desc');
-                             }
+                             'symbolType'
                          ])
                          ->paginateFilter($this->perPage());
 

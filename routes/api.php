@@ -87,11 +87,11 @@ Route::resource('colorStructure.colorStructureLang', 'ColorStructure\ColorStruct
 
 
 //LightClass
-Route::resource('lightClass', 'lightClass\lightClassController')->only([
+Route::resource('lightClass', 'LightClass\LightClassController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 
-Route::resource('lightClass.lightClassLang', 'lightClass\lightClassLangController')->only([
+Route::resource('lightClass.lightClassLang', 'LightClass\LightClassLangController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
 

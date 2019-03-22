@@ -94,7 +94,7 @@ class AidFilter extends ModelFilter
     {
         $input = $this->input('dir', 'asc');
 
-        $this->join('symbol', 'symbol.id', '=', 'aid.symbol_id')
+        $this->join('aid', 'aid.symbol_id', '=', 'symbol.id')
              ->join('symbol_lang', 'symbol_lang.symbol_id', '=', 'symbol.id')
              ->groupBy('aid.id')
              ->orderBy('name', $input)

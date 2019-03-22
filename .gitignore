@@ -13,3 +13,9 @@ yarn-error.log
 .env
 /.project
 /resources/assets/js/avisonav-client
+docker/dev/nginx/log/access.log
+docker/dev/nginx/log/error.log
+docker/dev/nginx/log/nginx_error.log
+docker/prod/nginx/log/access.log
+docker/prod/nginx/log/error.log
+docker/prod/nginx/log/nginx_error.log
