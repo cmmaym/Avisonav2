@@ -29,7 +29,8 @@ class SymbolPublicResource extends JsonResource
             'createdAt'         => $this->created_at->format('Y-m-d'),
             'updatedAt'         => $this->updated_at->format('Y-m-d'),
             'image'             => new ImageResource($this->image),
-            'aidFeatures'       => new AidPublicResource($this->aid)
+            'aidFeatures'       => new AidPublicResource($this->aid),
+            'isLegacy'          => $this->is_legacy
         ];
     }
 }

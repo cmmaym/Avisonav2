@@ -10,7 +10,7 @@ use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 use AvisoNavAPI\Http\Resources\ReportingUserResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use AvisoNavAPI\ModelFilters\Basic\ReportingUserFilter;
-use AvisoNavAPI\Http\Requests\ReportingUser\StoreReportingUSer;
+use AvisoNavAPI\Http\Requests\ReportingUser\StoreReportingUser;
 use AvisoNavAPI\Traits\Responser;
 
 class ReportingUserController extends Controller

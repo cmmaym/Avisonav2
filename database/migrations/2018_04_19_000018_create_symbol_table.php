@@ -22,6 +22,7 @@ class CreateSymbolTable extends Migration
             $table->integer('symbol_type_id')->unsigned();
             $table->integer('image_id')->unsigned();
             $table->integer('location_id')->unsigned();
+            $table->boolean('is_legacy');
             
             $table->foreign('symbol_type_id')
                   ->references('id')->on('symbol_type');

@@ -28,6 +28,7 @@ class CreateNoticeTable extends Migration
             $table->integer('light_list_id')->unsigned()->nullable();
             $table->integer('report_source_id')->unsigned();
             $table->integer('reporting_user_id')->unsigned();
+            $table->boolean('is_legacy');
             
             $table->foreign('location_id')
                   ->references('id')->on('location');

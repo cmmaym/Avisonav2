@@ -28,6 +28,8 @@ class CreateAidTable extends Migration
             $table->integer('aid_type_id')->unsigned();
             $table->integer('aid_type_form_id')->unsigned();
             $table->integer('symbol_id')->unsigned();
+            $table->string('legacy_period', 255)->nullable();
+            $table->string('legacy_destello', 255)->nullable();
 
             $table->foreign('light_class_id')
                   ->references('id')->on('light_class');

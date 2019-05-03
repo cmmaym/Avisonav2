@@ -32,6 +32,8 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: prueba
+    ports:
+      - "3306:3306"
     volumes:
       - dbdata:/var/lib/mysql
 #        - ./docker/dev/mysql/my.cnf:/etc/mysql/my.cnf
@@ -42,7 +44,8 @@ services:
     ports:
       - "8080:80"
     environment:
-      - PMA_ARBITRARY=1
+#      - PMA_ARBITRARY=1
+      - PMA_HOST=db
 
   nginx-proxy:
     image: jwilder/nginx-proxy

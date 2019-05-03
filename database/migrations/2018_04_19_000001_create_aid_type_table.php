@@ -19,6 +19,7 @@ class CreateAidTypeTable extends Migration
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
+            $table->boolean('is_legacy');
         });
     }
 

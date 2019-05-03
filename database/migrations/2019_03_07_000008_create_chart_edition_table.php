@@ -22,6 +22,7 @@ class CreateChartEditionTable extends Migration
             $table->string('updated_by', 100);
             $table->string('state', 1)->comment('El estado puede ser C=Current(Actual) o A:Archived(Archivado)');
             $table->integer('chart_id')->unsigned();
+            $table->boolean('is_legacy');
 
             $table->foreign('chart_id')
                   ->references('id')->on('chart')

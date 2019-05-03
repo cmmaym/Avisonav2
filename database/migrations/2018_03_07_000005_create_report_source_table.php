@@ -15,13 +15,12 @@ class CreateReportSourceTable extends Migration
     {
         Schema::create('report_source', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('name', 100);
+            $table->string('name', 255);
             $table->string('alias', 45);
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
-
-            $table->unique(['name', 'alias'], 'name_alias_UNIQUE');
+            $table->boolean('is_legacy');
         });
     }
 

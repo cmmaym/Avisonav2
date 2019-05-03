@@ -25,6 +25,7 @@ class CreateNoveltyTable extends Migration
             $table->string('updated_by', 100);
             $table->geometry('spatial_data')->nullable();
             $table->integer('parent_id')->nullable()->unsigned();
+            $table->boolean('is_legacy');
 
             $table->foreign('notice_id')
                   ->references('id')->on('notice')

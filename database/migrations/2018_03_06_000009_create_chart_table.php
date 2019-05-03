@@ -24,6 +24,7 @@ class CreateChartTable extends Migration
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
             $table->geometry('area')->nullable();
+            $table->boolean('is_legacy');
             
             $table->unique(['number'], 'number_UNIQUE');
         });

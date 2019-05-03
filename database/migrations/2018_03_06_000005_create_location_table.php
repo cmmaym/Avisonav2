@@ -21,11 +21,10 @@ class CreateLocationTable extends Migration
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
             $table->integer('zone_id')->unsigned();
+            $table->boolean('is_legacy');
 
             $table->foreign('zone_id')
                   ->references('id')->on('zone');
-
-            $table->unique(['name', 'zone_id'], 'name_zone_UNIQUE');
         });
     }
 

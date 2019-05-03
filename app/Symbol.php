@@ -16,6 +16,9 @@ class Symbol extends Model
     protected $spatialFields = [
         'position'
     ];
+    protected $casts = [
+        'is_legacy' => 'boolean',
+    ];
     
     public function symbolLang(){
         return $this->hasOne(SymbolLang::class);

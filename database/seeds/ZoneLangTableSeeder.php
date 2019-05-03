@@ -43,6 +43,38 @@ class ZoneLangTableSeeder extends Seeder
                 'updated_at'    => new \DateTime('now'),
                 'language_id'   => 2,
                 'zone_id'       => 2
+            ],
+            [
+                'name'          => 'Aguas Maritimas Jurisdiccionales Colombianas',
+                'alias'         => 'AMJC',
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+                'language_id'   => 1,
+                'zone_id'       => 3
+            ],
+            [
+                'name'          => 'Colombian Jurisdictional Maritime Waters',
+                'alias'         => 'CJMW',
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+                'language_id'   => 2,
+                'zone_id'       => 3
+            ],
+            [
+                'name'          => 'General',
+                'alias'         => 'G',
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+                'language_id'   => 1,
+                'zone_id'       => 4
+            ],
+            [
+                'name'          => 'General',
+                'alias'         => 'G',
+                'created_at'    => new \DateTime('now'),
+                'updated_at'    => new \DateTime('now'),
+                'language_id'   => 2,
+                'zone_id'       => 4
             ]
         ]);
     }

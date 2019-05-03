@@ -104,30 +104,31 @@ class NoveltyController extends Controller
             'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
             'characterType.characterTypeLang' => $this->withLanguageQuery(),
             'notice.noticeLang' => $this->withLanguageQuery(),
-        ])
-        ->findOrFail($noveltyId);
+            'symbol.symbol.symbolLang' => $this->withLanguageQuery(),
+            'symbol.symbol.aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
+            'symbol.symbol.aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
+            'symbol.symbol.aid.topMark.topMarkLang' => $this->withLanguageQuery(),
+            ])
+            ->findOrFail($noveltyId);
+            
+            if($novelty->symbol){
 
-        $novelty->each(function($item){
-            if($item->symbol)
-            {
-                $sn = $item->symbol;
-                $item->load([
-                    'symbol.symbol.symbolLang' => $this->withLanguageQuery(),
-                    'symbol.symbol.aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
-                    'symbol.symbol.aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
-                    'symbol.symbol.aid.topMark.topMarkLang' => $this->withLanguageQuery(),
-                    'symbol.symbol.aid.height' => function($query) use ($sn){
-                        $query->where('id', $sn->height_id);
+                $height_id = $novelty->symbol->height_id;
+                $nominalScope_id = $novelty->symbol->nominal_scope_id;
+                $period_id = $novelty->symbol->period_id;
+                
+                $novelty->symbol->symbol->aid->load([
+                    'height' => function($query) use ($height_id){
+                        $query->where('id', $height_id);
                     },
-                    'symbol.symbol.aid.nominalScope' => function($query) use ($sn){
-                        $query->where('id', $sn->nominal_scope_id);
+                    'nominalScope' => function($query) use ($nominalScope_id){
+                        $query->where('id', $nominalScope_id);
                     },
-                    'symbol.symbol.aid.period' => function($query) use ($sn){
-                        $query->where('id', $sn->period_id);
-                    }
+                    'period' => function($query) use ($period_id){
+                        $query->where('id', $period_id);
+                    },
                 ]);
             }
-        });
 
         return new NoveltyPublicResource($novelty);
     }

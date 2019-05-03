@@ -159,7 +159,7 @@ class NoticeController extends Controller
         return new NoticeResource($notice);
     }
 
-    public function getNotice($number)
+    public function getNotice($number, $year)
     {
         $notice = Notice::with([
             'noticeLang' => $this->withLanguageQuery(),
@@ -169,6 +169,7 @@ class NoticeController extends Controller
             'novelty.characterType.characterTypeLang' => $this->withLanguageQuery(),
         ])
         ->where('number', '=', $number)
+        ->where('year', '=', $year)
         ->where('state', '=', 'P')
         ->firstOrFail();
 

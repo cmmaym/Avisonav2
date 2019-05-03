@@ -143,7 +143,7 @@ Route::resource('notice.novelty', 'Notice\NoticeNoveltyController')->only([
 Route::get('getTotalNoticeNovelty', 'Notice\NoticeController@getTotalNoticeNovelty');
 
 //Notice Public route
-Route::get('getNotice/{id}', 'Notice\NoticeController@getNotice');
+Route::get('getNotice/{id}/{year}', 'Notice\NoticeController@getNotice');
 Route::get('getAllNoticeYear', 'Notice\NoticeController@getAllNoticeYear');
 Route::get('getAllNoticeNumberByYear/{year}', 'Notice\NoticeController@getAllNoticeNumberByYear');
 Route::get('getRecentNotice', 'Notice\NoticeController@getRecentNotice');

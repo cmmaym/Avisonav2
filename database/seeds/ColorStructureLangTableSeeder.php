@@ -193,6 +193,34 @@ class ColorStructureLangTableSeeder extends Seeder
                 'updated_at'        => new \DateTime('now'),
                 'language_id'       => 2,
                 'color_structure_id'     => 13
+            ],
+            [
+                'name'             => 'Naranja',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_structure_id'     => 14
+            ],
+            [
+                'name'             => 'Orange',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_structure_id'     => 14
+            ],
+            [
+                'name'             => 'Ámbar',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 1,
+                'color_structure_id'     => 15
+            ],
+            [
+                'name'             => 'Amber',
+                'created_at'        => new \DateTime('now'),
+                'updated_at'        => new \DateTime('now'),
+                'language_id'       => 2,
+                'color_structure_id'     => 15
             ]
         ]);
     }

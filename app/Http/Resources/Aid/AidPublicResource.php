@@ -27,15 +27,17 @@ class AidPublicResource extends JsonResource
     {
         return [
             'id'                => $this->id,
-            'height'            => $this->height->structure_height,
-            'scope'             => $this->nominalScope->scope,
-            'period'            => $this->period->time,
+            'height'            => ($this->height) ? $this->height->elevation : null,
+            'scope'             => ($this->nominalScope) ? $this->nominalScope->scope : null,
+            'period'            => ($this->period) ? $this->period->time : null,
             'createdAt'        => $this->created_at->format('Y-m-d'),
             'updatedAt'        => $this->updated_at->format('Y-m-d'),
             'colorStructurePattern' => new ColorStructureResource($this->colorStructurePattern),
             'aidTypeForm'       => new AidTypeFormResource($this->aidTypeForm),
             'topMark'           => new TopMarkResource($this->topMark),
-            'sequenceFlashes'   => SequenceFlashesResource::collection($this->period->sequenceFlashes),
+            'sequenceFlashes'   => ($this->period) ? SequenceFlashesResource::collection($this->period->sequenceFlashes) : null,
+            'legacyPeriod'      => $this->legacy_period,
+            'legacyDestello'    => $this->legacy_destello
         ];
     }
 }
