@@ -288,32 +288,44 @@ class NoticeController extends Controller
         return response()->json($collection);
     }
 
-    // public function getRecentNotice() 
-    // {
-    //     $collection = Notice::with([
-    //                     'noticeLang' => $this->withLanguageQuery(),
-    //                     'location.zone.zoneLang' => $this->withLanguageQuery(),
-    //                     'catalogOceanCoast',
-    //                     'lightList',
-    //                     'reportSource',
-    //                     'reportingUser',
-    //                     'aid.symbol.coordinate',
-    //                     'aid.symbol.symbolLang' => $this->withLanguageQuery(),
-    //                     'aid.location.zone.zoneLang' => $this->withLanguageQuery(),
-    //                     'aid.lightClass.lightClassLang' => $this->withLanguageQuery(),
-    //                     'aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
-    //                     'aid.topMark.topMarkLang' => $this->withLanguageQuery(),
-    //                     'aid.aidType.aidTypeLang' => $this->withLanguageQuery(),
-    //                     'aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
-    //                     'aid.aidColorStructure.colorStructureLang' => $this->withLanguageQuery(),
-    //                     'aid.aidColorLight.colorLightLang' => $this->withLanguageQuery(),
-    //                     'chartEdition.chart'
-    //                 ])
-    //                 ->where('state', '=', 'P')
-    //                 ->orderBy('created_at', 'desc')
-    //                 ->take(5)
-    //                 ->get();
+    public function getRecentNotice() 
+    {
+        $collection = Notice::with([
+                        'noticeLang' => $this->withLanguageQuery(),
+                        'location.zone.zoneLang' => $this->withLanguageQuery(),
+                        'novelty.noveltyLang' => $this->withLanguageQuery(),
+                        'novelty.noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
+                        'novelty.characterType.characterTypeLang' => $this->withLanguageQuery(),
+                    ])
+                    ->where('state', '=', 'P')
+                    ->orderBy('created_at', 'desc')
+                    ->take(5)
+                    ->get();
+        
+        $collection->each(function($notice){
+            $notice->novelty->each(function($item){
+                if($item->symbol)
+                {
+                    $sn = $item->symbol;
+                    $item->load([
+                        'symbol.symbol.symbolLang' => $this->withLanguageQuery(),
+                        'symbol.symbol.aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
+                        'symbol.symbol.aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
+                        'symbol.symbol.aid.topMark.topMarkLang' => $this->withLanguageQuery(),
+                        'symbol.symbol.aid.height' => function($query) use ($sn){
+                            $query->where('id', $sn->height_id);
+                        },
+                        'symbol.symbol.aid.nominalScope' => function($query) use ($sn){
+                            $query->where('id', $sn->nominal_scope_id);
+                        },
+                        'symbol.symbol.aid.period' => function($query) use ($sn){
+                            $query->where('id', $sn->period_id);
+                        }
+                    ]);
+                }
+            });
+        });
 
-    //     return NoticePublicResource::collection($collection);
-    // }
+        return NoticePublicResource::collection($collection);
+    }
 }

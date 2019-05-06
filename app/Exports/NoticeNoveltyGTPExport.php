@@ -64,18 +64,21 @@ class NoticeNoveltyGTPExport implements FromCollection, WithMapping, WithHeading
                         FROM novelty
                         INNER JOIN character_type on character_type.id = novelty.character_type_id
                         WHERE character_type.alias = 'G' AND YEAR(novelty.created_at) = ?
+                        GROUP BY MONTH(novelty.created_at)
                     ) as nvg on nvg.month = MONTH(m.merge_date)
                     LEFT JOIN (
                         SELECT MONTH(novelty.created_at) as month, count(novelty.id) as total
                         FROM novelty
                         INNER JOIN character_type on character_type.id = novelty.character_type_id
                         WHERE character_type.alias = 'T' AND YEAR(novelty.created_at) = ?
+                        GROUP BY MONTH(novelty.created_at)
                     ) as nvt on nvt.month = MONTH(m.merge_date)
                     LEFT JOIN (
                         SELECT MONTH(novelty.created_at) as month, count(novelty.id) as total
                         FROM novelty
                         INNER JOIN character_type on character_type.id = novelty.character_type_id
                         WHERE character_type.alias = 'P' AND YEAR(novelty.created_at) = ?
+                        GROUP BY MONTH(novelty.created_at)
                     ) as nvp on nvp.month = MONTH(m.merge_date)
                     ORDER BY m.merge_date ASC
                 ",
