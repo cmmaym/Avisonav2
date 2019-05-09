@@ -11,6 +11,9 @@ class ColorStructure extends Model
     use Filterable, Observable;
     
     protected $table        = 'color_structure';
+    protected $casts = [
+        'is_legacy' => 'boolean',
+    ];
 
     public function colorStructureLangs()
     {
