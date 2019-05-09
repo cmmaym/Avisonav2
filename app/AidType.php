@@ -11,6 +11,9 @@ class AidType extends Model
     use Filterable, Observable;
 
     protected $table        = 'aid_type';
+    protected $casts = [
+        'is_legacy' => 'boolean',
+    ];
 
     public function aidTypeLangs()
     {

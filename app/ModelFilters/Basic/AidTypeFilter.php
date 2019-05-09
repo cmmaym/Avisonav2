@@ -40,4 +40,9 @@ class AidTypeFilter extends ModelFilter
     {
         return $this->orderBy('created_at', $this->input('dir', 'asc'));
     }
+
+    public function sortByAidType()
+    {
+        return $this->orderBy('is_legacy', $this->input('dir', 'asc'));
+    }
 }
