@@ -92,4 +92,8 @@ class ChartEditionFilter extends ModelFilter
     {
         return $this->orderBy('chart_edition.created_at', $this->input('dir', 'asc'));
     }
+
+    public function sortByIsLegacy(){
+        return $this->orderBy('is_legacy', $this->input('dir', 'asc'));
+    }
 }

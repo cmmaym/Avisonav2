@@ -11,6 +11,9 @@ class ChartEdition extends Model
 
     protected $table        = 'chart_edition';
     protected $fillable     = ['edition', 'year'];
+    protected $casts = [
+        'is_legacy' => 'boolean',
+    ];
 
     public function chart()
     {

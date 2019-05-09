@@ -22,7 +22,8 @@ class ChartEditionResource extends JsonResource
             'createdAt'         =>  $this->created_at->format('Y-m-d'),
             'updatedAt'         =>  $this->updated_at->format('Y-m-d'),
             'state'             => $this->state,
-            'chart'             => new ChartResource($this->chart)
+            'chart'             => new ChartResource($this->chart),
+            'isLegacy'          => $this->is_legacy
         ];
     }
 }

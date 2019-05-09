@@ -16,6 +16,9 @@ class Chart extends Model
     protected $spatialFields = [
         'area'
     ];
+    protected $casts = [
+        'is_legacy' => 'boolean',
+    ];
 
     public function chartEdition(){
         return $this->hasMany(ChartEdition::class);

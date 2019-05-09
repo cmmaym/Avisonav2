@@ -88,4 +88,8 @@ class ChartFilter extends ModelFilter
              ->orderBy('chart_edition.year', $input)
              ->select('chart.*');
     }
+
+    public function sortByIsLegacy(){
+        return $this->orderBy('is_legacy', $this->input('dir', 'asc'));
+    }
 }
