@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use AvisoNavAPI\ModelFilters\Basic\AidFilter;
 use AvisoNavAPI\Http\Resources\SymbolResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+use AvisoNavAPI\ModelFilters\Basic\SymbolFilter;
 
 class SymbolController extends Controller
 {
@@ -25,7 +26,7 @@ class SymbolController extends Controller
      */
     public function index()
     {
-        $collection = Symbol::filter(request()->all(), AidFilter::class)
+        $collection = Symbol::filter(request()->all(), SymbolFilter::class)
                          ->with([
                              'symbolLang' => $this->withLanguageQuery(),
                              'symbolType'

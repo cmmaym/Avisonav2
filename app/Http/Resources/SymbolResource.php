@@ -35,6 +35,7 @@ class SymbolResource extends JsonResource
             'symbolType'        => $this->symbolType->title,
             'image'             => new ImageResource($this->image),
             'location'          => new LocationResource($this->location),
+            'isLegacy'          => $this->is_legacy
         ];
     }
 }

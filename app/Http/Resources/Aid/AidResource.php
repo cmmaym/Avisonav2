@@ -56,6 +56,7 @@ class AidResource extends JsonResource
             'aidType'           => new AidTypeResource($this->aidType),
             'aidTypeForm'       => new AidTypeFormResource($this->aidTypeForm),
             'image'             => new ImageResource($this->symbol->image),
+            'isLegacy'          => $this->symbol->is_legacy
         ];
     }
 }
