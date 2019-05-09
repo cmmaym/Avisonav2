@@ -50,7 +50,8 @@ class NoticeResource extends JsonResource
             'catalogOceanCoast'         => new CatalogOceanCoastResource($this->catalogOceanCoast),
             'lightList'                 => new LightListResource($this->lightList),
             'reportSource'             => new ReportSourceResource($this->reportSource),
-            'reportingUser'            => new ReportingUserResource($this->reportingUser)
+            'reportingUser'            => new ReportingUserResource($this->reportingUser),
+            'isLegacy'                  => $this->is_legacy
         ];
     }
 }

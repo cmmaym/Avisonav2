@@ -16,6 +16,9 @@ class Notice extends Model
     protected $table        = 'notice';
     protected $fillable     = ['state'];
     protected $dates = ['report_date'];
+    protected $casts = [
+        'is_legacy' => 'boolean',
+    ];
 
     public function novelty()
     {

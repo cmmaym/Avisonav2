@@ -111,4 +111,9 @@ class NoticeFilter extends ModelFilter
              ->orderBy('reporting_user.name', $input)
              ->select('notice.*');
     }
+
+    public function sortByIsLegacy()
+    {
+        return $this->orderBy('is_legacy', $this->input('dir', 'asc'));
+    }
 }
