@@ -22,7 +22,8 @@ class LocationResource extends JsonResource
             'createdAt'             =>  $this->created_at->format('Y-m-d'),
             'updatedAt'             =>  $this->updated_at->format('Y-m-d'),
             'createdBy'             => $this->created_by,
-            'zone'                  =>  new ZoneResource($this->zone)
+            'zone'                  =>  new ZoneResource($this->zone),
+            'isLegacy'              => $this->is_legacy
         ];
     }
 }

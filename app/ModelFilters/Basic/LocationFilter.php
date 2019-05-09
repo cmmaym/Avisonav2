@@ -60,4 +60,9 @@ class LocationFilter extends ModelFilter
              ->orderBy('zone.name', $input)
              ->select('location.*');
     }
+
+    public function sortByIsLegacy()
+    {
+        return $this->orderBy('is_legacy', $this->input('dir', 'asc'));
+    }
 }
