@@ -11,6 +11,9 @@ class NoveltyType extends Model
     use Filterable, Observable;
 
     protected $table        = 'novelty_type';
+    protected $casts = [
+        'is_legacy' => 'boolean',
+    ];
     
     public function noveltyTypeLangs(){
         return $this->hasMany(NoveltyTypeLang::class);
