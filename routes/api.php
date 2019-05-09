@@ -147,6 +147,9 @@ Route::get('getNotice/{id}/{year}', 'Notice\NoticeController@getNotice');
 Route::get('getAllNoticeYear', 'Notice\NoticeController@getAllNoticeYear');
 Route::get('getAllNoticeNumberByYear/{year}', 'Notice\NoticeController@getAllNoticeNumberByYear');
 Route::get('getRecentNotice', 'Notice\NoticeController@getRecentNotice');
+Route::get('getDateFromLastFourWeek', 'Notice\NoticeController@getDateFromLastFourWeek');
+Route::get('getNoticeByDate', 'Notice\NoticeController@getNoticeByDate');
+Route::get('filterNotice', 'Notice\NoticeController@filterNotice');
 
 Route::resource('consecutive', 'Consecutive\ConsecutiveController')->only([
     'index', 'store', 'show', 'update', 'destroy'

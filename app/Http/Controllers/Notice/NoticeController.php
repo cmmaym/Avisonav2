@@ -19,6 +19,8 @@ use AvisoNavAPI\Http\Requests\Notice\StoreNotice;
 use AvisoNavAPI\Http\Resources\Notice\NoticeResource;
 use AvisoNavAPI\Http\Resources\Notice\NoticePublicResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use AvisoNavAPI\ModelFilters\NoticeFilter as AvisoNavAPINoticeFilter;
 
 class NoticeController extends Controller
 {
@@ -209,7 +211,7 @@ class NoticeController extends Controller
     
     public function getAllNoticeNumberByYear($year) 
     {
-        $collection = Notice::select('number')
+        $collection = Notice::select('number', 'year')
                            ->groupBy('number')
                            ->where('year', '=', $year)
                            ->get();
@@ -326,6 +328,121 @@ class NoticeController extends Controller
             });
         });
 
+        return NoticePublicResource::collection($collection);
+    }
+
+    public function getDateFromLastFourWeek(){
+
+        $collection = DB::select("
+                select week, date_format(dateStart, '%Y-%m-%d') dateStart, date_format(dateEnd, '%Y-%m-%d') dateEnd
+                from (
+                    select week(created_at, 1) week,
+                        adddate(created_at, INTERVAL  1-DAYOFWEEK(created_at) DAY) dateStart,
+                        adddate(created_at, INTERVAL  7-DAYOFWEEK(created_at) DAY) dateEnd
+                    from avisonav.notice a
+                    where a.created_at between date_sub(now(), interval 4 week) and now()
+                ) a
+                group by week, dateStart, dateEnd
+                order by week asc
+        ");
+        
+        return response()->json($collection);
+    }
+
+    public function getNoticeByDate(Request $request){
+
+        $startDate = $request->get('startDate');
+        $endDate = $request->get('endDate');
+
+        $collection = Notice::with([
+            'noticeLang' => $this->withLanguageQuery(),
+            'location.zone.zoneLang' => $this->withLanguageQuery(),
+            'novelty.noveltyLang' => $this->withLanguageQuery(),
+            'novelty.noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
+            'novelty.characterType.characterTypeLang' => $this->withLanguageQuery(),
+        ])
+        ->where('state', '=', 'P')
+        ->whereBetween('created_at', [$startDate, $endDate])
+        ->orderBy('created_at', 'asc')
+        ->get();
+
+        $collection->each(function($notice){
+            $notice->novelty->each(function($item){
+                if($item->symbol)
+                {
+                    $sn = $item->symbol;
+                    $item->load([
+                        'symbol.symbol.symbolLang' => $this->withLanguageQuery(),
+                        'symbol.symbol.aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
+                        'symbol.symbol.aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
+                        'symbol.symbol.aid.topMark.topMarkLang' => $this->withLanguageQuery(),
+                        'symbol.symbol.aid.height' => function($query) use ($sn){
+                            $query->where('id', $sn->height_id);
+                        },
+                        'symbol.symbol.aid.nominalScope' => function($query) use ($sn){
+                            $query->where('id', $sn->nominal_scope_id);
+                        },
+                        'symbol.symbol.aid.period' => function($query) use ($sn){
+                            $query->where('id', $sn->period_id);
+                        }
+                    ]);
+                }
+            });
+        });
+
+        if($collection->isEmpty()){
+            throw new NotFoundHttpException();
+        }
+
+        $data = [
+            'startDate' => $startDate,
+            'endDate'   => $endDate,
+            'data'      => NoticePublicResource::collection($collection)
+        ];
+
+        return $data;
+    }
+
+    public function filterNotice(){
+        $collection = Notice::filter(request()->all(), AvisoNavAPINoticeFilter::class)
+                            ->with([
+                                'noticeLang' => $this->withLanguageQuery(),
+                                'location.zone.zoneLang' => $this->withLanguageQuery(),
+                                'novelty.noveltyLang' => $this->withLanguageQuery(),
+                                'novelty.noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
+                                'novelty.characterType.characterTypeLang' => $this->withLanguageQuery()
+                            ])
+                            ->where('state', '=', 'P')
+                            ->paginateFilter($this->perPage());
+
+        $collection->each(function($notice){
+            $notice->novelty->each(function($item){
+                if($item->symbol)
+                {
+                    $sn = $item->symbol;
+                    $item->load([
+                        'symbol.symbol.symbolLang' => $this->withLanguageQuery(),
+                        'symbol.symbol.aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
+                        'symbol.symbol.aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
+                        'symbol.symbol.aid.topMark.topMarkLang' => $this->withLanguageQuery(),
+                        'symbol.symbol.aid.height' => function($query) use ($sn){
+                            $query->where('id', $sn->height_id);
+                        },
+                        'symbol.symbol.aid.nominalScope' => function($query) use ($sn){
+                            $query->where('id', $sn->nominal_scope_id);
+                        },
+                        'symbol.symbol.aid.period' => function($query) use ($sn){
+                            $query->where('id', $sn->period_id);
+                        }
+                    ]);
+                }
+            });
+        });
+
+        if($collection->isEmpty()){
+            throw new NotFoundHttpException();
+        }
+        
         return NoticePublicResource::collection($collection);
     }
 }

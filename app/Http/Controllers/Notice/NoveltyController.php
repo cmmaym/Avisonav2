@@ -47,7 +47,7 @@ class NoveltyController extends Controller
                                             'characterType.characterTypeLang' => $this->withLanguageQuery(),
                                             'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
                                        ])
-                                       ->where('state', 'A')
+                                       ->where('novelty.state', 'A')
                                        ->paginateFilter($this->perPage());
 
         return NoveltyResource::collection($collection);
