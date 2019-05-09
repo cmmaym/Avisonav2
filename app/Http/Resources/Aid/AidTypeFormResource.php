@@ -25,7 +25,8 @@ class AidTypeFormResource extends JsonResource
             'description'       => $this->when(!is_null($this->aidTypeFormLang), $description, null),
             'createdAt'        => $this->created_at->format('Y-m-d'),
             'updatedAt'        => $this->updated_at->format('Y-m-d'),
-            'createdBy'         => $this->created_by
+            'createdBy'         => $this->created_by,
+            'isLegacy'          => $this->is_legacy
         ];
 
     }
