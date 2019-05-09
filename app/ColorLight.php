@@ -12,6 +12,9 @@ class ColorLight extends Model
     
     protected $table        = 'color_light';
     protected $fillable     = ['alias'];
+    protected $casts = [
+        'is_legacy' => 'boolean',
+    ];
 
     public function colorLightLangs()
     {
