@@ -12,4 +12,7 @@ class ReportSource extends Model
 
     protected $table        = 'report_source';
     protected $fillable     = ['name', 'alias'];
+    protected $casts = [
+        'is_legacy' => 'boolean',
+    ];
 }

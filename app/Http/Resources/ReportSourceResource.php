@@ -20,7 +20,8 @@ class ReportSourceResource extends JsonResource
             'alias'         => $this->alias,
             'createdAt'    => $this->created_at->format('Y-m-d'),
             'updatedAt'    => $this->updated_at->format('Y-m-d'),
-            'createdBy'     => $this->created_by
+            'createdBy'     => $this->created_by,
+            'isLegacy'      => $this->is_legacy
         ];
     }
 }
