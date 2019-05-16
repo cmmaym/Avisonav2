@@ -16,6 +16,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Blanco',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_structure_id'     => 1
             ],
@@ -23,6 +25,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'White',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_structure_id'     => 1
             ],
@@ -30,6 +34,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Rojo',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_structure_id'     => 2
             ],
@@ -37,6 +43,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Red',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_structure_id'     => 2
             ],
@@ -44,6 +52,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Verde',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_structure_id'     => 3
             ],
@@ -51,6 +61,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Green',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_structure_id'     => 3
             ],
@@ -58,6 +70,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Negro',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_structure_id'     => 4
             ],
@@ -65,6 +79,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Black',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_structure_id'     => 4
             ],
@@ -72,6 +88,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Amarillo',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_structure_id'     => 5
             ],
@@ -79,6 +97,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Yellow',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_structure_id'     => 5
             ],
@@ -86,6 +106,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Negro sobre Amarillo',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_structure_id'     => 6
             ],
@@ -93,6 +115,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Black on Yellow',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_structure_id'     => 6
             ],
@@ -100,6 +124,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Rojo con una banda ancha horizontal verde',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_structure_id'     => 7
             ],
@@ -107,6 +133,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Red with a wide horizontal green band',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_structure_id'     => 7
             ],
@@ -114,6 +142,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Verde con una banda ancha horizontal roja',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_structure_id'     => 8
             ],
@@ -121,6 +151,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Green with a wide horizontal red band',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_structure_id'     => 8
             ],
@@ -128,6 +160,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Negro con una banda ancha horizontal amarilla',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_structure_id'     => 9
             ],
@@ -135,6 +169,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Black with a wide horizontal yellow band',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_structure_id'     => 9
             ],
@@ -142,6 +178,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Amarillo sobre negro',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_structure_id'     => 10
             ],
@@ -149,6 +187,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Yellow on black',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_structure_id'     => 10
             ],
@@ -156,6 +196,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Amarillo con una banda ancha horizontal negra',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_structure_id'     => 11
             ],
@@ -163,6 +205,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Yellow with a wide horizontal black band',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_structure_id'     => 11
             ],
@@ -170,6 +214,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Negro con una o varias bandas anchas horizontales rojas',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_structure_id'     => 12
             ],
@@ -177,6 +223,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Black with one or more wide red horizontal stripes',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_structure_id'     => 12
             ],
@@ -184,6 +232,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Franjas verticales rojas y blancas',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_structure_id'     => 13
             ],
@@ -191,6 +241,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Red and white vertical stripes',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_structure_id'     => 13
             ],
@@ -198,6 +250,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Naranja',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_structure_id'     => 14
             ],
@@ -205,6 +259,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Orange',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_structure_id'     => 14
             ],
@@ -212,6 +268,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Ámbar',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_structure_id'     => 15
             ],
@@ -219,6 +277,8 @@ class ColorStructureLangTableSeeder extends Seeder
                 'name'             => 'Amber',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_structure_id'     => 15
             ]

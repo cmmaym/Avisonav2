@@ -17,13 +17,17 @@ class LanguageTableSeeder extends Seeder
                 'name' => 'Español',
                 'code'  => 'es',
                 'created_at' => new \DateTime('now'),
-                'updated_at' => new \DateTime('now')
+                'updated_at' => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA'
             ],
             [
                 'name' => 'Ingles',
                 'code'  => 'en',
                 'created_at' => new \DateTime('now'),
-                'updated_at' => new \DateTime('now')
+                'updated_at' => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA'
             ]
         ]);
     }

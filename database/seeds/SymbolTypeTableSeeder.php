@@ -17,16 +17,16 @@ class SymbolTypeTableSeeder extends Seeder
                 'code'          => 'A1',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
-                'created_by'    => 'jmartinezd',
-                'updated_by'    => 'jmartinezd'
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA'
             ],
             [
                 'title' => 'Peligro a la navegación',
                 'code'          => 'D1',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
-                'created_by'    => 'jmartinezd',
-                'updated_by'    => 'jmartinezd'
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA'
             ]
         ]);
     }

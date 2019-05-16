@@ -16,19 +16,28 @@ class ReportSourceTableSeeder extends Seeder
                 'name'             => 'Grupo SEMAB',
                 'alias'             => 'SEMAB',
                 'created_at'        => new \DateTime('now'),
-                'updated_at'        => new \DateTime('now')
+                'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
+                'is_legacy'     => 0
             ],
             [
                 'name'             => 'Grupo SEMAC',
                 'alias'             => 'SEMAC',
                 'created_at'        => new \DateTime('now'),
-                'updated_at'        => new \DateTime('now')
+                'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
+                'is_legacy'     => 0
             ],
             [
                 'name'             => 'Grupo SEMAP',
                 'alias'             => 'SEMAP',
                 'created_at'        => new \DateTime('now'),
-                'updated_at'        => new \DateTime('now')
+                'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
+                'is_legacy'     => 0
             ]
         ]);
     }

@@ -25,7 +25,9 @@ class UserTableSeeder extends Seeder
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
                 'state'         => 'A',
-                'role_id'       => 1
+                'role_id'       => 1,
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
             ]
         ]);
     }

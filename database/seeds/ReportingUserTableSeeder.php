@@ -17,6 +17,8 @@ class ReportingUserTableSeeder extends Seeder
                 'rank'              => 'TS23',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'report_source_id'  => 1
             ]
         ]);

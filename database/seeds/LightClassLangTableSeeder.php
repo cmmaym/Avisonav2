@@ -17,6 +17,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Luz Fija',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'light_class_id'     => 1
             ],
@@ -25,6 +27,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Fixed',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'light_class_id'     => 1
             ],
@@ -33,6 +37,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Duración total de la luz mayor que la oscuridad.',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'light_class_id'     => 2
             ],
@@ -41,6 +47,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Total duration of light longer than total duration of darkness.',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'light_class_id'     => 2
             ],
@@ -49,6 +57,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Igual duración y oscuridad',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'light_class_id'     => 3
             ],
@@ -57,6 +67,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Duration of light and darkness equal',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'light_class_id'     => 3
             ],
@@ -65,6 +77,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Duración total de la luz menor que la de la oscuridad',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'light_class_id'     => 4
             ],
@@ -73,6 +87,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Total duration of light shorter than total duration of darkness',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'light_class_id'     => 4
             ],
@@ -81,6 +97,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Intervalos de repetición de 50 a 79 destellos por minuto generalmente entre 50 o 60',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'light_class_id'     => 5
             ],
@@ -89,6 +107,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Repetition rate of 50 to 79 usually either 50 or 60 - flashes per minute',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'light_class_id'     => 5
             ],
@@ -97,6 +117,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Luz centellante interrumpida',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'light_class_id'     => 6
             ],
@@ -105,6 +127,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Light interrupted quick',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'light_class_id'     => 6
             ],
@@ -113,6 +137,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Centellante muy rapido (intervalo de repetición de 80 a 159 centellos por minuto, generalmente de 100 a 120)',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'light_class_id'     => 7
             ],
@@ -121,6 +147,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Repetition rate of 80 to 159 -  Usually either 100 or 120 - flashes per min',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'light_class_id'     => 7
             ],
@@ -129,6 +157,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Luz centellante interrumpida rápida',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'light_class_id'     => 8
             ],
@@ -137,6 +167,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Light interrupted very quick',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'light_class_id'     => 8
             ],
@@ -145,6 +177,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Luz centellante ultrarápida(intervalo de repetición de 160 o más destellos por minuto, generalmente de 240 a 300)',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'light_class_id'     => 9
             ],
@@ -153,6 +187,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Ultra-fast dlashing light (repeat interval of 160 or more flashes per minute, generally 240 to 300)',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'light_class_id'     => 9
             ],
@@ -161,6 +197,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Centellante ultrarápido interrumpido',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'light_class_id'     => 10
             ],
@@ -169,6 +207,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Interrupted ultra quick',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'light_class_id'     => 10
             ],
@@ -177,6 +217,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Luz de señales morse',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'light_class_id'     => 11
             ],
@@ -185,6 +227,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Light Morse code',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'light_class_id'     => 11
             ],
@@ -193,6 +237,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Luz fija y destello',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'light_class_id'     => 12
             ],
@@ -201,6 +247,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Light fixed and flashing',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'light_class_id'     => 12
             ],
@@ -209,6 +257,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Luz alternada',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'light_class_id'     => 13
             ],
@@ -217,6 +267,8 @@ class LightClassLangTableSeeder extends Seeder
                 'description'       => 'Light alternating',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'light_class_id'     => 13
             ]

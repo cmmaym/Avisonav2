@@ -16,6 +16,8 @@ class CharacterTypeLangTableSeeder extends Seeder
                 'name'                  => 'General',
                 'created_at'            => new \DateTime('now'),
                 'updated_at'            => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'           => 1,
                 'character_type_id'     => 1
             ],
@@ -23,6 +25,8 @@ class CharacterTypeLangTableSeeder extends Seeder
                 'name'                  => 'General',
                 'created_at'            => new \DateTime('now'),
                 'updated_at'            => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'           => 2,
                 'character_type_id'     => 1
             ],
@@ -30,6 +34,8 @@ class CharacterTypeLangTableSeeder extends Seeder
                 'name'                  => 'Temporal',
                 'created_at'            => new \DateTime('now'),
                 'updated_at'            => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'           => 1,
                 'character_type_id'     => 2
             ],
@@ -37,6 +43,8 @@ class CharacterTypeLangTableSeeder extends Seeder
                 'name'                  => 'Temporary',
                 'created_at'            => new \DateTime('now'),
                 'updated_at'            => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'           => 2,
                 'character_type_id'     => 2
             ],
@@ -44,6 +52,8 @@ class CharacterTypeLangTableSeeder extends Seeder
                 'name'                  => 'Permanente',
                 'created_at'            => new \DateTime('now'),
                 'updated_at'            => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'           => 1,
                 'character_type_id'     => 3
             ],
@@ -51,6 +61,8 @@ class CharacterTypeLangTableSeeder extends Seeder
                 'name'                  => 'Permanent',
                 'created_at'            => new \DateTime('now'),
                 'updated_at'            => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'           => 2,
                 'character_type_id'     => 3
             ],

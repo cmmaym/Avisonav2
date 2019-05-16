@@ -16,16 +16,22 @@ class CharacterTypeTableSeeder extends Seeder
                 'alias'         => 'G',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA'
             ],
             [
                 'alias'         => 'T',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA'
             ],
             [
                 'alias'         => 'P',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA'
             ]
         ]);
     }

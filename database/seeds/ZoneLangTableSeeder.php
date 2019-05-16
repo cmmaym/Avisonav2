@@ -17,6 +17,8 @@ class ZoneLangTableSeeder extends Seeder
                 'alias'         => 'MCC',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'   => 1,
                 'zone_id'       => 1
             ],
@@ -25,6 +27,8 @@ class ZoneLangTableSeeder extends Seeder
                 'alias'         => 'CCS',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'   => 2,
                 'zone_id'     => 1
             ],
@@ -33,6 +37,8 @@ class ZoneLangTableSeeder extends Seeder
                 'alias'         => 'OPC',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'   => 1,
                 'zone_id'       => 2
             ],
@@ -41,6 +47,8 @@ class ZoneLangTableSeeder extends Seeder
                 'alias'         => 'CPO',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'   => 2,
                 'zone_id'       => 2
             ],
@@ -49,6 +57,8 @@ class ZoneLangTableSeeder extends Seeder
                 'alias'         => 'AMJC',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'   => 1,
                 'zone_id'       => 3
             ],
@@ -57,6 +67,8 @@ class ZoneLangTableSeeder extends Seeder
                 'alias'         => 'CJMW',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'   => 2,
                 'zone_id'       => 3
             ],
@@ -65,6 +77,8 @@ class ZoneLangTableSeeder extends Seeder
                 'alias'         => 'G',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'   => 1,
                 'zone_id'       => 4
             ],
@@ -73,6 +87,8 @@ class ZoneLangTableSeeder extends Seeder
                 'alias'         => 'G',
                 'created_at'    => new \DateTime('now'),
                 'updated_at'    => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'   => 2,
                 'zone_id'       => 4
             ]

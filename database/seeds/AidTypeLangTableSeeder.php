@@ -16,13 +16,17 @@ class AidTypeLangTableSeeder extends Seeder
                 'name'              => 'Faro',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
-                'aid_type_id'       => 1
+                'aid_type_id'       => 1,
             ],
             [
                 'name'              => 'Headlight',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'aid_type_id'       => 1
             ],
@@ -30,6 +34,8 @@ class AidTypeLangTableSeeder extends Seeder
                 'name'              => 'Boya',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'aid_type_id'       => 2
             ],
@@ -37,6 +43,8 @@ class AidTypeLangTableSeeder extends Seeder
                 'name'              => 'Buoy',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'aid_type_id'       => 2
             ],
@@ -44,6 +52,8 @@ class AidTypeLangTableSeeder extends Seeder
                 'name'              => 'Baliza',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'aid_type_id'       => 3
             ],
@@ -51,6 +61,8 @@ class AidTypeLangTableSeeder extends Seeder
                 'name'              => 'Beacon',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'aid_type_id'       => 3
             ],
@@ -58,6 +70,8 @@ class AidTypeLangTableSeeder extends Seeder
                 'name'              => 'Boyarin',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'aid_type_id'       => 4
             ],
@@ -65,6 +79,8 @@ class AidTypeLangTableSeeder extends Seeder
                 'name'              => 'Boyarin',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'aid_type_id'       => 4
             ],
@@ -72,6 +88,8 @@ class AidTypeLangTableSeeder extends Seeder
                 'name'              => 'Luz de sector',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'aid_type_id'       => 5
             ],
@@ -79,6 +97,8 @@ class AidTypeLangTableSeeder extends Seeder
                 'name'              => 'Sector light',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'aid_type_id'       => 5
             ],
@@ -86,6 +106,8 @@ class AidTypeLangTableSeeder extends Seeder
                 'name'              => 'Enfilación',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'aid_type_id'       => 6
             ],
@@ -93,6 +115,8 @@ class AidTypeLangTableSeeder extends Seeder
                 'name'              => 'Leading',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'aid_type_id'       => 6
             ],

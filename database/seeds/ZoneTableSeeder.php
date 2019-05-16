@@ -14,19 +14,27 @@ class ZoneTableSeeder extends Seeder
         DB::table('zone')->insert([
             [
                 'created_at'    => new \DateTime('now'),
-                'updated_at'    => new \DateTime('now')
+                'updated_at'    => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA'
             ],
             [
                 'created_at'    => new \DateTime('now'),
-                'updated_at'    => new \DateTime('now')
+                'updated_at'    => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA'
             ],
             [
                 'created_at'    => new \DateTime('now'),
-                'updated_at'    => new \DateTime('now')
+                'updated_at'    => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA'
             ],
             [
                 'created_at'    => new \DateTime('now'),
-                'updated_at'    => new \DateTime('now')
+                'updated_at'    => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA'
             ]
         ]);
     }

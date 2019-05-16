@@ -16,6 +16,10 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'Blanco',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_light_id'     => 1
             ],
@@ -23,6 +27,8 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'White',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_light_id'     => 1
             ],
@@ -30,6 +36,8 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'Rojo',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_light_id'     => 2
             ],
@@ -37,6 +45,8 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'Red',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_light_id'     => 2
             ],
@@ -44,6 +54,8 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'Verde',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_light_id'     => 3
             ],
@@ -51,6 +63,8 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'Green',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_light_id'     => 3
             ],
@@ -58,6 +72,8 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'Azul',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_light_id'     => 4
             ],
@@ -65,6 +81,8 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'Blue',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_type_id'     => 4
             ],
@@ -72,6 +90,8 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'Violeta',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_light_id'     => 5
             ],
@@ -79,6 +99,8 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'Violet',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_type_id'     => 5
             ],
@@ -86,6 +108,8 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'Amarillo',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_light_id'     => 6
             ],
@@ -93,6 +117,8 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'Yellow',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_type_id'     => 6
             ],
@@ -100,6 +126,8 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'Naranja',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_light_id'     => 7
             ],
@@ -107,6 +135,8 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'Orange',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_type_id'     => 7
             ],
@@ -114,6 +144,8 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'Ámbar',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 1,
                 'color_light_id'     => 8
             ],
@@ -121,6 +153,8 @@ class ColorLightLangTableSeeder extends Seeder
                 'color'             => 'Amber',
                 'created_at'        => new \DateTime('now'),
                 'updated_at'        => new \DateTime('now'),
+                'created_by'    => 'NAUTICA',
+                'updated_by'    => 'NAUTICA',
                 'language_id'       => 2,
                 'color_type_id'     => 8
             ]
