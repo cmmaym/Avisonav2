@@ -1,10 +1,10 @@
 version: '3'
 
 services:
-  avisonav-api:
+  api:
     image: avisonav-api
-    container_name: avisonav-api
+#    container_name: avisonav-api
 
   web:
     image: nginx:alpine
-    container_name: web
+#    container_name: avisonav-web

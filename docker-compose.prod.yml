@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  avisonav-api:
+  api:
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -9,29 +9,24 @@ services:
     env_file: .env
     volumes:
       - apistorage:/var/www/html/storage
-    networks:
-      - app-network
 
   web:
     restart: always
     links:
-      - avisonav-api
-    ports:
-      - "80:80"
+      - api
     working_dir: /var/www
     volumes:
       - ./docker/prod/nginx/conf.d/:/etc/nginx/conf.d/
       - ./docker/prod/nginx/log/:/var/log/nginx/
       - apistorage:/var/www:ro
-    networks:
-      - app-network
+    environment:
+      - VIRTUAL_HOST=avisonav-api.dimar.mil.co
 
 volumes:
-  dbdata:
-    driver: local
   apistorage:
     driver: local
 
 networks:
-  app-network:
-    driver: bridge
+  default:
+    external:
+      name: reverse-proxy
