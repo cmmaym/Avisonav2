@@ -22,8 +22,8 @@ RUN apk update && apk add --virtual .build-deps $PHPIZE_DEPS \
         pdo_mysql \
         zip \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && rm -rf /var/cache/apk/* \
-    && apk del .build-deps
+    && rm -rf /var/cache/apk/*
+#    && apk del .build-deps
 RUN addgroup -g 1000 -S www \
     && adduser -u 1000 -D -S -G www www
 
