@@ -44,7 +44,7 @@ class NoveltyPublicResource extends JsonResource
             'notice'                    => $this->notice->number,
             'numItem'                   => $this->num_item,
             'name'                       =>  $this->when(!is_null($this->noveltyLang), $name, null),
-            'description'                =>  $this->when(!is_null($this->notice), $description, null),
+            'description'                =>  $this->when(!is_null($this->notice->noticeLang), $description, null),
             'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
             'characterType'             => new CharacterTypeResource($this->characterType),
             'createdAt'                => $this->created_at->format('Y-m-d'),
