@@ -10,8 +10,6 @@ services:
     volumes:
       - ./:/var/www
       - ./docker/dev/php/local.ini:/usr/local/etc/php/conf.d/local.ini
-    expose:
-        - "9001"
     env_file: .env
 
   web:
@@ -26,7 +24,7 @@ services:
       - VIRTUAL_HOST=api.avisonav.local
 
   db:
-    image: mysql:5.7.25
+    image: mysql:8.0.16
     container_name: db
     command: --default-authentication-plugin=mysql_native_password
     restart: always
@@ -36,23 +34,25 @@ services:
       - "3306:3306"
     volumes:
       - dbdata:/var/lib/mysql
-#        - ./docker/dev/mysql/my.cnf:/etc/mysql/my.cnf
+#      - ./docker/dev/mysql/my.cnf:/etc/mysql/my.cnf
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
+    links:
+      - db
     ports:
       - "8080:80"
     environment:
 #      - PMA_ARBITRARY=1
       - PMA_HOST=db
 
-  nginx-proxy:
-    image: jwilder/nginx-proxy
-    ports:
-      - "80:80"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
+  # nginx-proxy:
+  #   image: jwilder/nginx-proxy
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - /var/run/docker.sock:/tmp/docker.sock:ro
 
 volumes:
   dbdata:
