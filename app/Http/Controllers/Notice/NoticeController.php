@@ -204,6 +204,7 @@ class NoticeController extends Controller
     {
         $collection = Notice::select('year')
                            ->groupBy('year')
+                           ->orderBy('year', 'desc')
                            ->get();
 
         return response()->json($collection);
@@ -343,7 +344,7 @@ class NoticeController extends Controller
                     where a.created_at between date_sub(now(), interval 4 week) and now()
                 ) a
                 group by week, dateStart, dateEnd
-                order by week asc
+                order by week desc
         ");
         
         return response()->json($collection);

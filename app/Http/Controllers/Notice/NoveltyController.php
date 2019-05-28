@@ -80,17 +80,16 @@ class NoveltyController extends Controller
                              ->join('notice', 'novelty.notice_id', 'notice.id')
                              ->join('character_type', 'novelty.character_type_id', 'character_type.id')
                              ->where('notice.state', '=', 'P')
-                             ->where('novelty.state', '=', 'A')
                              ->where(function($query){
                                  $query->where('character_type.alias', '=', 'T')
                                        ->orWhere(function($query){
                                            $query->where(function($query){
                                                     $query->where('character_type.alias', '=', 'G')
                                                             ->orWhere('character_type.alias', '=', 'P');
-                                                        })
-                                                ->where('notice.created_at', '>=', Carbon::now()->subDays(30)->toDateString());
+                                                        });
                                        }); 
                              })
+                             ->where('notice.created_at', '>=', Carbon::now()->subDays(30)->toDateString())
                              ->get();
 
         $collection['chart'] = Chart::select('number', 'area')->get();
