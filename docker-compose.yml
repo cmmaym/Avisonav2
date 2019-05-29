@@ -2,7 +2,7 @@ version: '3'
 
 services:
   api:
-    image: avisonav-api
+    image: api
 #    container_name: avisonav-api
 
   web:

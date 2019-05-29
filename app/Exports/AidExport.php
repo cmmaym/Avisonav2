@@ -62,6 +62,9 @@ class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
                 });
             }
         ])
+        ->whereHas('symbol', function($query){
+            $query->where('is_legacy', false);
+        })
         ->get();
 
         return $aid;

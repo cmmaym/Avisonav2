@@ -1,6 +1,6 @@
 version: "3"
 services:
-  avisonav-api:
+  api:
     build:
       context: .
       dockerfile: ./docker/dev/php/Dockerfile
@@ -15,7 +15,7 @@ services:
   web:
     restart: unless-stopped
     links:
-      - avisonav-api
+      - api
     volumes:
       - ./:/var/www
       - ./docker/dev/nginx/conf.d:/etc/nginx/conf.d/
