@@ -7,7 +7,11 @@ use EloquentFilter\ModelFilter;
 class LightClassFilter extends ModelFilter
 {
     public function class($class){
-        return $this->related('lightClassLang', 'class', 'like', "%$class%");
+        return $this->whereHas('lightClassLang', function($query) use ($class){
+                    $query->where('class', 'like', "%$class%")
+                          ->where('language.code', '=', 'es')
+                          ->join('language', 'language.id', '=', 'light_class_lang.language_id');
+        });
     }
 
     public function alias($alias){

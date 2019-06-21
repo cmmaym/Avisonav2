@@ -7,7 +7,11 @@ use EloquentFilter\ModelFilter;
 class AidTypeFilter extends ModelFilter
 {
     public function name($name){
-        return $this->related('aidTypeLang', 'name', 'like', "%$name%");
+        return $this->whereHas('aidTypeLang', function($query) use ($name){
+                    $query->where('aid_type_lang.name', 'like', "%$name%")
+                        ->where('language.code', '=', 'es')
+                        ->join('language', 'language.id', '=', 'aid_type_lang.language_id');
+        });
     }
 
     public function createdAt($createdAt){

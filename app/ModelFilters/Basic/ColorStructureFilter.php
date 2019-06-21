@@ -7,7 +7,11 @@ use EloquentFilter\ModelFilter;
 class ColorStructureFilter extends ModelFilter
 {
     public function name($name){
-        return $this->related('colorStructureLang', 'name', 'like', "%$name%");
+        return  $this->whereHas('colorStructureLang', function($query) use ($name){
+                        $query->where('color_structure_lang.name', 'like', "%$name%")
+                              ->where('language.code', '=', 'es')
+                              ->join('language', 'language.id', '=', 'color_structure_lang.language_id');
+        });
     }
 
     public function createdAt($createdAt){
