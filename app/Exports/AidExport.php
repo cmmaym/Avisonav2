@@ -148,7 +148,9 @@ class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
             $zone = $aid->symbol->location->zone->zoneLang->name;
         }
 
-        $features = "$lightClass ($flashGroup) $colorLight $period s";
+        $flashGroup = ($flashGroup > 1) ? "($flashGroup)" : "";
+        $period = ($period) ? "$period s" : "";
+        $features = "$lightClass $flashGroup $colorLight $period";
 
         $description = "$form\n$colorStructure\n$height";
         $description .= ($topMark) ? "\n$topMark" : null;

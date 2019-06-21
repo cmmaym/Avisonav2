@@ -16,7 +16,7 @@ class CreateAidColorLightTable extends Migration
         Schema::create('aid_color_light', function (Blueprint $table) {
             $table->integer('aid_id')->unsigned();
             $table->integer('color_light_id')->unsigned();
-            $table->integer('angle')->nullable()->comment('Angulo del sector de la luz');
+            $table->float('angle')->nullable()->comment('Angulo del sector de la luz');
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);

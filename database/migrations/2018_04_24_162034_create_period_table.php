@@ -15,7 +15,7 @@ class CreatePeriodTable extends Migration
     {
         Schema::create('period', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('time');
+            $table->decimal('time', 10, 2);
             $table->integer('flash_group');
             $table->timestamps();
             $table->string('created_by', 100);

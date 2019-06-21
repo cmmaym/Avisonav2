@@ -15,8 +15,8 @@ class CreateSequenceFlashesTable extends Migration
     {
         Schema::create('sequence_flashes', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('on')->comment('Encendido');
-            $table->float('off')->comment('Apagado');
+            $table->float('on', 3)->comment('Encendido');
+            $table->float('off', 3)->comment('Apagado');
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
