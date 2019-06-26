@@ -76,9 +76,11 @@ class NoveltyController extends Controller
 
     public function getCurrentNoveltys()
     {
-        $collection['novelty'] = Novelty::select('novelty.id', 'spatial_data')
+        $collection['novelty'] = Novelty::select('novelty.id', 'notice.number', 'novelty.num_item', 'novelty_lang.name' ,'spatial_data')
                              ->join('notice', 'novelty.notice_id', 'notice.id')
                              ->join('character_type', 'novelty.character_type_id', 'character_type.id')
+                             ->join('novelty_lang', 'novelty.id', 'novelty_lang.novelty_id')
+                             ->join('language', 'language.id', 'novelty_lang.language_id')
                              ->where('notice.state', '=', 'P')
                              ->where(function($query){
                                  $query->where('character_type.alias', '=', 'T')
@@ -90,6 +92,7 @@ class NoveltyController extends Controller
                                        }); 
                              })
                              ->where('notice.created_at', '>=', Carbon::now()->subDays(30)->toDateString())
+                             ->where('language.code', '=', 'es')
                              ->get();
 
         $collection['chart'] = Chart::select('number', 'area')->get();
