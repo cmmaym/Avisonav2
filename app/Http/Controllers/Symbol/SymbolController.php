@@ -29,7 +29,8 @@ class SymbolController extends Controller
         $collection = Symbol::filter(request()->all(), SymbolFilter::class)
                          ->with([
                              'symbolLang' => $this->withLanguageQuery(),
-                             'symbolType'
+                             'symbolType',
+                             'location'
                          ])
                          ->paginateFilter($this->perPage());
 
