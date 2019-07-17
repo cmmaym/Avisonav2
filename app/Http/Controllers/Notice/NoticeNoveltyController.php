@@ -111,10 +111,11 @@ class NoticeNoveltyController extends Controller
                     if($noveltyTemp && ($noveltyTemp->id !== $parent->id))
                     {
                         return $this->errorResponse('La novedad a cancelar no corresponde con la ultima novedad Temporal pendiente por cancelar relacionada a la Ayuda o Peligro seleccionado', 409);
-                    }else if($parent->symbol && ($parent->symbol->symbol->id !== $symbol->id))
+                    }/*Se ha comentado esta validacion debido a problemas de compatibildiad con los avisos generados en el avisonav viejo.
+                    else if($parent->symbol && ($parent->symbol->symbol->id !== $symbol->id))
                     {
                         return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
-                    }
+                    }*/
 
                     $hasSymbol = true;
                 }
@@ -311,10 +312,12 @@ class NoticeNoveltyController extends Controller
                 {
                     if($symbol)
                     {
+                        /*
+                        Se ha comentado esta validacion debido a problemas de compatibildiad con los avisos generados en el avisonav viejo.
                         if($parent->symbol && ($symbol->id !== $parent->symbol->symbol->id))
                         {
                             return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
-                        }
+                        }*/
 
                         $novelty->spatial_data = new GeometryCollection([$symbol->position]);
 
@@ -347,10 +350,12 @@ class NoticeNoveltyController extends Controller
                 {
                     if($symbol)
                     {
+                        /*
+                        Se ha comentado esta validacion debido a problemas de compatibildiad con los avisos generados en el avisonav viejo.
                         if($parent->symbol && ($symbol->id !== $parent->symbol->symbol->id))
                         {
                             return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
-                        }
+                        }*/
 
                         $novelty->spatial_data = new GeometryCollection([$symbol->position]);
 
@@ -374,10 +379,12 @@ class NoticeNoveltyController extends Controller
 
                 }else if(!$novelty->parent && $symbol)
                 {
+                    /*
+                    Se ha comentado esta validacion debido a problemas de compatibildiad con los avisos generados en el avisonav viejo.
                     if($parent->symbol && ($symbol->id !== $parent->symbol->symbol->id))
                     {
                         return $this->errorResponse('La ayuda o peligro seleccionado no corresponde con la ayuda o peligro asociado a la novedad a cancelar', 409);
-                    }
+                    }*/
 
                     $novelty->spatial_data = new GeometryCollection([$symbol->position]);
 
