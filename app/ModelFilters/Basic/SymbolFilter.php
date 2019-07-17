@@ -19,6 +19,16 @@ class SymbolFilter extends ModelFilter
         });
     }
 
+    public function location($location){
+        $this->related('location', 'location.name', 'like', "%$location%");
+    }
+
+    public function zone($zone){
+        $this->whereHas('location.zone.zoneLang', function($query) use ($zone) {
+            $query->where('name', 'like', "%$zone%");
+        });
+    }
+
     public function createdAt($createdAt){
         return $this->whereRaw("(STR_TO_DATE(created_at, '%Y-%m-%d') between ? and ?)", array($createdAt, $createdAt));
     }
@@ -49,6 +59,26 @@ class SymbolFilter extends ModelFilter
         $this->join('symbol_type', 'symbol_type.id', '=', 'symbol.symbol_type_id')
              ->groupBy('symbol.id')
              ->orderBy('symbol_type.title', $input)
+             ->select('symbol.*');
+    }
+
+    public function sortByLocation(){
+        $input = $this->input('dir', 'asc');
+
+        $this->join('location', 'location.id', '=', 'symbol.location_id')
+             ->orderBy('location.name', $input)
+             ->select('symbol.*');
+    }
+
+    public function sortByZone()
+    {
+        $input = $this->input('dir', 'asc');
+
+        $this->join('location', 'symbol.location_id', '=', 'location.id')
+             ->join('zone', 'location.zone_id', '=', 'zone.id')
+             ->join('zone_lang', 'zone.id', '=', 'zone_lang.zone_id')
+             ->groupBy('symbol.id')
+             ->orderBy('zone_lang.name', $input)
              ->select('symbol.*');
     }
 
