@@ -3,11 +3,8 @@
 namespace AvisoNavAPI\Http\Resources\Notice;
 
 use AvisoNavAPI\Traits\Responser;
-use Illuminate\Support\Collection;
-use Illuminate\Pagination\AbstractPaginator;
 use AvisoNavAPI\Http\Resources\SymbolResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use AvisoNavAPI\Http\Resources\Notice\NoveltyResource;
 use AvisoNavAPI\Http\Resources\Notice\NoveltySubResource;
 use AvisoNavAPI\Http\Resources\NoveltyType\NoveltyTypeResource;
 use AvisoNavAPI\Http\Resources\CharacterType\CharacterTypeResource;
@@ -37,6 +34,7 @@ class NoveltyResource extends JsonResource
             'id'                        => $this->id,
             'name'                       =>  $this->when(!is_null($this->noveltyLang), $name, null),
             'notice'                    => $this->notice->number,
+            'year'                      => $this->notice->year,
             'noticeId'                  => $this->notice->id,
             'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
             'characterType'             => new CharacterTypeResource($this->characterType),

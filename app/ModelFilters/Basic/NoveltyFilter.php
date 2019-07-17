@@ -26,14 +26,18 @@ class NoveltyFilter extends ModelFilter
         $this->related('notice', 'number', 'like', "%$notice%");
     }
 
+    public function year($year){
+        $this->related('notice', 'year', 'like', "%$year%");
+    }
+
     public function state($state)
     {
-        return $this->where('state', $state);
+        return $this->where('novelty.state', $state);
     }
     
     public function noveltyId($noveltyId)
     {
-        return $this->where('id', '<>', $noveltyId);
+        return $this->where('novelty.id', '<>', $noveltyId);
     }
     
     public function createdAt($createdAt){
@@ -61,7 +65,7 @@ class NoveltyFilter extends ModelFilter
     
     public function sortByState()
     {
-        return $this->orderBy('state', $this->input('dir', 'asc'));
+        return $this->orderBy('novelty.state', $this->input('dir', 'asc'));
     }
     
     public function sortByName()
@@ -81,6 +85,17 @@ class NoveltyFilter extends ModelFilter
         $this->join('notice', 'notice.id', '=', 'novelty.notice_id')
              ->groupBy('novelty.id')
              ->orderBy('notice.number', $input)
+             ->orderBy('novelty.num_item', 'asc')
+             ->select('novelty.*');
+    }
+
+    public function sortByYear()
+    {
+        $input = $this->input('dir', 'desc');
+
+        $this->join('notice', 'notice.id', '=', 'novelty.notice_id')
+             ->groupBy('novelty.id')
+             ->orderBy('notice.year', $input)
              ->orderBy('novelty.num_item', 'asc')
              ->select('novelty.*');
     }

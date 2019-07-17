@@ -2,18 +2,21 @@
 
 namespace AvisoNavAPI\Http\Controllers\Notice;
 
+use AvisoNavAPI\Chart;
+use AvisoNavAPI\Notice;
 use AvisoNavAPI\Novelty;
 use Illuminate\Http\Request;
 use AvisoNavAPI\CharacterType;
 use AvisoNavAPI\Traits\Filter;
+use Illuminate\Support\Carbon;
 use AvisoNavAPI\Traits\Responser;
 use Grimzy\LaravelMysqlSpatial\Types\Geometry;
 use AvisoNavAPI\ModelFilters\Basic\NoveltyFilter;
 use AvisoNavAPI\Http\Resources\Notice\NoveltyResource;
-use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+use AvisoNavAPI\ModelFilters\NoticeNoveltyFilter;
 use AvisoNavAPI\Http\Resources\Notice\NoveltyPublicResource;
-use AvisoNavAPI\Chart;
-use Illuminate\Support\Carbon;
+use AvisoNavAPI\Http\Controllers\ApiController as Controller;
+use AvisoNavAPI\Http\Resources\Notice\NoticePublicResource;
 
 class NoveltyController extends Controller
 {
@@ -31,7 +34,7 @@ class NoveltyController extends Controller
                                             'characterType.characterTypeLang' => $this->withLanguageQuery(),
                                             'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
                                        ])
-                                       ->where('state', 'A')
+                                       ->where('novelty.state', 'A')
                                        ->whereHas('characterType', function($query){
                                             $query->where('alias', '<>', 'P');
                                        })
