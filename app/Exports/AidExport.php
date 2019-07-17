@@ -87,6 +87,7 @@ class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
         $topMark = null;
         $sequenceFlashes = null;
         $zone = null;
+        $location = null;
         
         if($aid->symbol->position)
         {
@@ -145,6 +146,7 @@ class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
 
         if($aid->symbol->location && $aid->symbol->location->zone && $aid->symbol->location->zone->zoneLang)
         {
+            $location = $aid->symbol->location->name;
             $zone = $aid->symbol->location->zone->zoneLang->name;
         }
 
@@ -165,6 +167,7 @@ class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
             $scope,
             $description,
             $observation,
+            $location,
             $zone
         ];
     }
@@ -179,6 +182,7 @@ class AidExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
             'Alcance (Mn)',
             'Descripción',
             'Observación',
+            'Ubicación',
             'Zona'
         ];
     }
