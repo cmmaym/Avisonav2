@@ -25,6 +25,7 @@ class ReportSourceController extends Controller
     public function index()
     {        
         $collection = ReportSource::filter(request()->all(), ReportSourceFilter::class)
+                                     ->orderBy('is_legacy', 'asc')
                                      ->paginateFilter($this->perPage());
 
         return ReportSourceResource::collection($collection);

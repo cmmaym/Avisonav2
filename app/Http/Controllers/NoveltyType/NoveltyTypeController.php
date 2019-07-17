@@ -33,6 +33,7 @@ class NoveltyTypeController extends Controller
                                      ->with([
                                          'noveltyTypeLang' => $this->withLanguageQuery()
                                      ])
+                                     ->orderBy('is_legacy', 'asc')
                                      ->paginateFilter($this->perPage());
 
         return NoveltyTypeResource::collection($collection);

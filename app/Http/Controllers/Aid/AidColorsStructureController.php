@@ -24,7 +24,8 @@ class AidColorsStructureController extends Controller
     public function index(Aid $aid)
     {
         $collection = $aid->aidColorStructure()->filter(request()->all(), ColorStructureFilter::class)
-                                   ->paginateFilter($this->perPage());;
+                                   ->orderBy('is_legacy', 'asc') 
+                                   ->paginateFilter($this->perPage());
 
         return ColorStructureResource::collection($collection);
     }

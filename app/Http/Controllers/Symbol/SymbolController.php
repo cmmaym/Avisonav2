@@ -32,6 +32,7 @@ class SymbolController extends Controller
                              'symbolType',
                              'location'
                          ])
+                         ->orderBy('is_legacy', 'asc')
                          ->paginateFilter($this->perPage());
 
         return SymbolResource::collection($collection);

@@ -28,6 +28,7 @@ class ColorStructureController extends Controller
                                ->with([
                                    'colorStructureLang' => $this->withLanguageQuery()
                                 ])
+                                ->orderBy('is_legacy', 'asc')
                                ->paginateFilter($this->perPage());
 
         return ColorStructureResource::collection($collection);

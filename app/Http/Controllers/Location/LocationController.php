@@ -27,6 +27,7 @@ class LocationController extends Controller
                               ->with([
                                   'zone.zoneLang' => $this->withLanguageQuery()
                               ])
+                              ->orderBy('is_legacy', 'asc')
                               ->paginateFilter($this->perPage());
         
         return LocationResource::collection($collection);

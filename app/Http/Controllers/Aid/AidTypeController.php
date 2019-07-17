@@ -28,6 +28,7 @@ class AidTypeController extends Controller
                              ->with([
                                  'aidTypeLang' => $this->withLanguageQuery()
                              ])
+                             ->orderBy('is_legacy', 'asc')
                              ->paginateFilter($this->perPage());
 
         return AidTypeResource::collection($collection);
