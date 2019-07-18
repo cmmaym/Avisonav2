@@ -4,7 +4,7 @@ namespace AvisoNavAPI\Http\Resources\Chart;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ChartResource extends JsonResource
+class ChartPurposeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,17 +14,17 @@ class ChartResource extends JsonResource
      */
     public function toArray($request)
     {
+        $self= $this;
+        $purpose = function() use ($self){
+            return $self->chartPurposeLang->description;
+        };
+
         return [
             'id'                =>  $this->id,
-            'name'              =>  $this->name,
-            'number'            =>  $this->number,
-            'scale'             =>  $this->scale,
-            'purpose'           =>  $this->purpose,
+            'purpose'           =>  $this->when(!is_null($this->chartPurposeLang), $purpose, null),
             'createdAt'        =>   $this->created_at->format('Y-m-d'),
+            'updatedAt'         => $this->updated_at->format('Y-m-d'),
             'createdBy'         => $this->created_by,
-            'area'              =>  $this->area,
-            'purpose'           => new ChartPurposeResource($this->chartPurpose),
-            'isLegacy'          => $this->is_legacy
         ];
     }
 

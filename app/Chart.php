@@ -12,7 +12,7 @@ class Chart extends Model
     use Filterable, Observable, SpatialTrait;
 
     protected $table        = 'chart';
-    protected $fillable     = ['number', 'name', 'scale', 'purpose'];
+    protected $fillable     = ['number', 'name', 'scale'];
     protected $spatialFields = [
         'area'
     ];
@@ -26,6 +26,10 @@ class Chart extends Model
     
     public function edition(){
         return $this->hasOne(ChartEdition::class);
+    }
+
+    public function chartPurpose(){
+        return $this->belongsTo(ChartPurpose::class);
     }
 
 }

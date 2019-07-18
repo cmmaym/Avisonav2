@@ -19,7 +19,9 @@ class ChartFilter extends ModelFilter
     }
     
     public function purpose($purpose){
-        return $this->where('purpose', 'like', "%$purpose%");
+        return $this->whereHas('chartPurpose.chartPurposeLang', function($query) use ($purpose){
+                    $query->where('description', 'like', "%$purpose%");
+        });
     }
 
     public function createdAt($createdAt){
@@ -59,7 +61,13 @@ class ChartFilter extends ModelFilter
 
     public function sortByPurpose()
     {
-        return $this->orderBy('purpose', $this->input('dir', 'asc'));
+        $input = $this->input('dir', 'asc');
+
+        $this->join('chart_purpose', 'chart_purpose.id', '=', 'chart.chart_purpose_id')
+             ->join('chart_purpose_lang', 'chart_purpose_lang.chart_purpose_id', '=', 'chart_purpose.id')
+             ->groupBy('chart.id')
+             ->orderBy('chart_purpose_lang.description', $input)
+             ->select('chart.*');
     }
 
     public function sortByCreatedAt()

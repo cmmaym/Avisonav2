@@ -19,12 +19,16 @@ class CreateChartTable extends Migration
             $table->string('number', 45)->comment('Numero de la carta');
             $table->string('name', 100)->comment('Numero de la carta');
             $table->string('scale', 45)->comment('Escala de la carta');
-            $table->mediumText('purpose')->comment('El proposito es la clasificacion segun el objetivo de la carta');
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
             $table->geometry('area')->nullable();
+            $table->integer('chart_purpose_id');
             $table->boolean('is_legacy');
+
+            $table->foreign('chart_purpose_id')
+                  ->references('id')->on('chart_purpose')
+                  ->onDelete('cascade');
             
             $table->unique(['number'], 'number_UNIQUE');
         });

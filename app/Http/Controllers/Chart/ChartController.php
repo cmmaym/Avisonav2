@@ -46,7 +46,8 @@ class ChartController extends Controller
      */
     public function store(StoreChart $request)
     {
-        $chart = new Chart($request->only(['number', 'name', 'scale', 'purpose']));
+        $chart = new Chart($request->only(['number', 'name', 'scale']));
+        $chart->chart_purpose_id = $request->input('purpose');
         $chart->save();
 
         return new ChartResource($chart);
@@ -72,7 +73,8 @@ class ChartController extends Controller
      */
     public function update(StoreChart $request, Chart $chart)
     {
-        $chart->fill($request->only(['number', 'name', 'scale', 'purpose']));
+        $chart->fill($request->only(['number', 'name', 'scale']));
+        $chart->chart_purpose_id = $request->input('purpose');
         $chart->save();
 
         return new ChartResource($chart);

@@ -119,6 +119,14 @@ Route::resource('chartEdition', 'Chart\EditionChartController')->only([
     'index'
 ]);
 
+Route::resource('chartPurpose', 'Chart\ChartPurposeController')->only([
+    'index', 'show', 'store', 'destroy'
+]);
+
+Route::resource('chartPurpose.chartPurposeLang', 'Chart\ChartPurposeLangController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
+
 Route::get('chart/getSpatialData/{id}', 'Chart\ChartController@getSpatialData');
 Route::put('chart/updateSpatialData/{id}', 'Chart\ChartController@updateSpatialData');
 
