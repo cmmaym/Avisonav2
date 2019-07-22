@@ -129,7 +129,7 @@ Route::resource('chartPurpose.chartPurposeLang', 'Chart\ChartPurposeLangControll
 
 Route::get('chart/getSpatialData/{id}', 'Chart\ChartController@getSpatialData');
 Route::put('chart/updateSpatialData/{id}', 'Chart\ChartController@updateSpatialData');
-
+Route::get('getAllCharts', 'Chart\ChartController@getAllCharts');
 
 //Notice
 Route::resource('notice', 'Notice\NoticeController')->only([

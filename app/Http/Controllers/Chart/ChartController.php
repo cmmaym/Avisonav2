@@ -20,7 +20,8 @@ class ChartController extends Controller
     {
         $this->middleware('auth:api', [ 'except' => 
             [
-                'index'
+                'index',
+                'getAllCharts'
             ],
         ]);
     }
@@ -112,5 +113,15 @@ class ChartController extends Controller
         $chart->save();
 
         return $geometry;
+    }
+
+    public function getAllCharts(){
+        $charts = Chart::where('area', '<>', null)->get();
+
+        $collection = $charts->map(function($item){
+            return new ChartResource($item);
+        });
+
+        return $collection;
     }
 }

@@ -77,30 +77,16 @@ class NoveltyController extends Controller
         return $geometry;
     }
 
-    public function getCurrentNoveltys()
-    {
-        $collection['novelty'] = Novelty::select('novelty.id', 'notice.number', 'novelty.num_item', 'novelty_lang.name' ,'spatial_data')
-                             ->join('notice', 'novelty.notice_id', 'notice.id')
-                             ->join('character_type', 'novelty.character_type_id', 'character_type.id')
-                             ->join('novelty_lang', 'novelty.id', 'novelty_lang.novelty_id')
-                             ->join('language', 'language.id', 'novelty_lang.language_id')
-                             ->where('notice.state', '=', 'P')
-                             ->where(function($query){
-                                 $query->where('character_type.alias', '=', 'T')
-                                       ->orWhere(function($query){
-                                           $query->where(function($query){
-                                                    $query->where('character_type.alias', '=', 'G')
-                                                            ->orWhere('character_type.alias', '=', 'P');
-                                                        });
-                                       }); 
-                             })
-                             ->where('notice.created_at', '>=', Carbon::now()->subDays(30)->toDateString())
-                             ->where('language.code', '=', 'es')
-                             ->get();
+    public function getCurrentNoveltys(){
+        
+        $collection = Notice::filter(request()->all(), NoticeNoveltyFilter::class)
+                            ->with([
+                                'novelty',
+                                'novelty.noveltyLang'
+                            ])
+                            ->get();
 
-        $collection['chart'] = Chart::select('number', 'area')->get();
-
-        return $collection;
+        return NoticePublicResource::collection($collection);
     }
 
     public function getNovelty($noveltyId)
