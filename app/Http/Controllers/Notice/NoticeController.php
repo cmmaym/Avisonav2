@@ -215,6 +215,7 @@ class NoticeController extends Controller
         $collection = Notice::select('number', 'year')
                            ->groupBy('number')
                            ->where('year', '=', $year)
+                           ->where('notice.state', '=', 'P')
                            ->get();
 
         return response()->json($collection);
@@ -302,6 +303,7 @@ class NoticeController extends Controller
                     ])
                     ->where('state', '=', 'P')
                     ->orderBy('created_at', 'desc')
+                    ->orderBy('notice.number', 'desc')
                     ->take(5)
                     ->get();
         
@@ -335,16 +337,18 @@ class NoticeController extends Controller
     public function getDateFromLastFourWeek(){
 
         $collection = DB::select("
-                select week, date_format(dateStart, '%Y-%m-%d') dateStart, date_format(dateEnd, '%Y-%m-%d') dateEnd
-                from (
-                    select week(created_at, 1) week,
-                        adddate(created_at, INTERVAL  1-DAYOFWEEK(created_at) DAY) dateStart,
-                        adddate(created_at, INTERVAL  7-DAYOFWEEK(created_at) DAY) dateEnd
-                    from avisonav.notice a
-                    where a.created_at between date_sub(now(), interval 4 week) and now()
-                ) a
-                group by week, dateStart, dateEnd
-                order by week desc
+                            select week, 
+                                    dateStart, 
+                                    dateEnd
+                            from (
+                                select week(created_at, 1) week,
+                                    date_format(adddate(created_at, INTERVAL  1-DAYOFWEEK(created_at) DAY), '%Y-%m-%d') dateStart,
+                                    date_format(adddate(created_at, INTERVAL  7-DAYOFWEEK(created_at) DAY), '%Y-%m-%d') dateEnd
+                                from avisonav.notice a
+                                where a.created_at between date_sub(now(), interval 4 week) and now()
+                            ) a
+                            group by week, dateStart, dateEnd
+                            order by week desc
         ");
         
         return response()->json($collection);
