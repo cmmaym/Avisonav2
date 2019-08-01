@@ -4,6 +4,7 @@ namespace AvisoNavAPI\Http\Resources\Notice;
 
 use AvisoNavAPI\Traits\Responser;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,7 +22,7 @@ class NoveltyFileResource extends JsonResource
         return [
             'id'                        => $this->id,
             'name'                      => $this->name,
-            'path'                      => asset('storage/'.$this->path)
+            'path'                      => Storage::disk('public')->url($this->path)
         ];
     }
 }

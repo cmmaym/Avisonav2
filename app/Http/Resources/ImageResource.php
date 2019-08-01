@@ -4,6 +4,7 @@ namespace AvisoNavAPI\Http\Resources;
 
 use AvisoNavAPI\Traits\Responser;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,7 +24,7 @@ class ImageResource extends JsonResource
             'name'                      => $this->name,
             'createdAt'                => $this->created_at->format('Y-m-d'),
             'createdBy'                 => $this->created_by,
-            'image'                      => asset('storage/'.$this->image)
+            'image'                      => Storage::disk('public')->url($this->image)
         ];
     }
 }
