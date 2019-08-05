@@ -34,11 +34,15 @@ class NoticeNoveltyGTPExport implements FromCollection, WithMapping, WithHeading
         DB::statement("SET lc_time_names = 'es_CO';");
 
         $collection = DB::select("
-                    SELECT MONTHNAME(m.merge_date) as mes,
+                            SELECT MONTHNAME(m.merge_date) as mes,
                             IFNULL(n.total, 0) as notice,
                             IFNULL(nvg.total, 0) as general_novelty,
                             IFNULL(nvt.total, 0) as temporary_novelty,
-                            IFNULL(nvp.total, 0) as permanent_novelty
+                            IFNULL(nvp.total, 0) as permanent_novelty,
+                            IFNULL(a.total, 0) as total_MCC,
+                            IFNULL(b.total, 0) as total_OPC,
+                            IFNULL(c.total, 0) as total_General,
+                            IFNULL(d.total, 0) as total_AMJC
                     FROM (
                         SELECT '2000-01-01' AS merge_date, 0 as total
                         UNION SELECT '2000-02-01' AS merge_date, 0 as total
@@ -56,33 +60,72 @@ class NoticeNoveltyGTPExport implements FromCollection, WithMapping, WithHeading
                     LEFT JOIN (
                         SELECT MONTH(created_at) as month, count(id) as total
                         FROM notice
-                        WHERE YEAR(created_at) = ?
+                        WHERE year = ? and state='P'
                         GROUP BY MONTH(created_at)
                     ) as n on n.month = MONTH(m.merge_date)
                     LEFT JOIN (
                         SELECT MONTH(novelty.created_at) as month, count(novelty.id) as total
                         FROM novelty
+                        INNER JOIN notice n on n.id = novelty.notice_id
                         INNER JOIN character_type on character_type.id = novelty.character_type_id
-                        WHERE character_type.alias = 'G' AND YEAR(novelty.created_at) = ?
+                        WHERE character_type.alias = 'G' AND n.state='P' and YEAR(novelty.created_at) = ?
                         GROUP BY MONTH(novelty.created_at)
                     ) as nvg on nvg.month = MONTH(m.merge_date)
                     LEFT JOIN (
                         SELECT MONTH(novelty.created_at) as month, count(novelty.id) as total
                         FROM novelty
+                        INNER JOIN notice n on n.id = novelty.notice_id
                         INNER JOIN character_type on character_type.id = novelty.character_type_id
-                        WHERE character_type.alias = 'T' AND YEAR(novelty.created_at) = ?
+                        WHERE character_type.alias = 'T' AND n.state='P' AND YEAR(novelty.created_at) = ?
                         GROUP BY MONTH(novelty.created_at)
                     ) as nvt on nvt.month = MONTH(m.merge_date)
                     LEFT JOIN (
                         SELECT MONTH(novelty.created_at) as month, count(novelty.id) as total
                         FROM novelty
+                        INNER JOIN notice n on n.id = novelty.notice_id
                         INNER JOIN character_type on character_type.id = novelty.character_type_id
-                        WHERE character_type.alias = 'P' AND YEAR(novelty.created_at) = ?
+                        WHERE character_type.alias = 'P' AND n.state='P' AND YEAR(novelty.created_at) = ?
                         GROUP BY MONTH(novelty.created_at)
                     ) as nvp on nvp.month = MONTH(m.merge_date)
+                    left join (
+                        select MONTH(n.created_at) as month, count(n.id) as total, zl.alias zone
+                        from notice n
+                        inner join location l on l.id = n.location_id
+                        inner join zone z on z.id = l.zone_id
+                        inner join zone_lang zl on zl.zone_id = z.id and zl.language_id=1
+                        where year = ? and state = 'P' and zl.alias='MCC'
+                        GROUP BY MONTH(n.created_at), zl.alias
+                    ) a on a.month = MONTH(m.merge_date)
+                    left join (
+                        select MONTH(n.created_at) as month, count(n.id) as total, zl.alias zone
+                        from notice n
+                        inner join location l on l.id = n.location_id
+                        inner join zone z on z.id = l.zone_id
+                        inner join zone_lang zl on zl.zone_id = z.id and zl.language_id=1
+                        where year = ? and state = 'P' and zl.alias='OPC'
+                        GROUP BY MONTH(n.created_at), zl.alias
+                    ) b on b.month = MONTH(m.merge_date)
+                    left join (
+                        select MONTH(n.created_at) as month, count(n.id) as total, zl.alias zone
+                        from notice n
+                        inner join location l on l.id = n.location_id
+                        inner join zone z on z.id = l.zone_id
+                        inner join zone_lang zl on zl.zone_id = z.id and zl.language_id=1
+                        where year = ? and state = 'P' and zl.alias='G'
+                        GROUP BY MONTH(n.created_at), zl.alias
+                    ) c on c.month = MONTH(m.merge_date)
+                    left join (
+                        select MONTH(n.created_at) as month, count(n.id) as total, zl.alias zone
+                        from notice n
+                        inner join location l on l.id = n.location_id
+                        inner join zone z on z.id = l.zone_id
+                        inner join zone_lang zl on zl.zone_id = z.id and zl.language_id=1
+                        where year = ? and state = 'P' and zl.alias='AMJC'
+                        GROUP BY MONTH(n.created_at), zl.alias
+                    ) d on d.month = MONTH(m.merge_date)
                     ORDER BY m.merge_date ASC
                 ",
-                [$this->year, $this->year, $this->year, $this->year]
+                [$this->year, $this->year, $this->year, $this->year, $this->year, $this->year, $this->year, $this->year]
             );
 
         return collect($collection);
@@ -95,7 +138,11 @@ class NoticeNoveltyGTPExport implements FromCollection, WithMapping, WithHeading
             $data->notice,
             $data->general_novelty,
             $data->temporary_novelty,
-            $data->permanent_novelty
+            $data->permanent_novelty,
+            $data->total_MCC,
+            $data->total_OPC,
+            $data->total_General,
+            $data->total_AMJC
         ];
     }
 
@@ -106,7 +153,11 @@ class NoticeNoveltyGTPExport implements FromCollection, WithMapping, WithHeading
             'Avisos',
             'Novedades Generales',
             'Novedades Temporales',
-            'Novedades Permanentes'
+            'Novedades Permanentes',
+            'Total MCC',
+            'Total OPC',
+            'Total General',
+            'Total AMJC'
         ];
     }
 
@@ -116,7 +167,7 @@ class NoticeNoveltyGTPExport implements FromCollection, WithMapping, WithHeading
             AfterSheet::class    => function(AfterSheet $event) {
 
                 $event->sheet->styleCells(
-                    'A1:E1',
+                    'A1:I1',
                     [
                         'fill' => [
                             'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
@@ -136,7 +187,7 @@ class NoticeNoveltyGTPExport implements FromCollection, WithMapping, WithHeading
                 $maxRow = $event->sheet->getHighestRow();
 
                 $event->sheet->styleCells(
-                    'A2:E'.$maxRow,
+                    'A2:I'.$maxRow,
                     [
                         'alignment' => array(
                             'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
