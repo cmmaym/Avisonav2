@@ -20,6 +20,7 @@ use AvisoNavAPI\Http\Requests\Aid\StoreAid;
 use AvisoNavAPI\ModelFilters\Basic\AidFilter;
 use Grimzy\LaravelMysqlSpatial\Types\Geometry;
 use AvisoNavAPI\Http\Resources\Aid\AidResource;
+use AvisoNavAPI\Http\Resources\Aid\AidMapResource;
 use AvisoNavAPI\Http\Controllers\ApiController as Controller;
 
 class AidController extends Controller
@@ -183,5 +184,18 @@ class AidController extends Controller
     public function export()
     {
         return Excel::download(new AidExport, 'aid.xlsx');
+    }
+
+    public function getAllAid(){
+        $collection = Aid::with([
+                             'symbol.symbolLang' => $this->withLanguageQuery(),
+                             'symbol.location.zone.zoneLang' => $this->withLanguageQuery()
+                         ])
+                         ->whereHas("symbol", function($query){
+                            $query->where("is_legacy", true);
+                         })
+                         ->get();
+
+        return AidMapResource::collection($collection);
     }
 }

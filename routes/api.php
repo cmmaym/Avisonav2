@@ -208,6 +208,7 @@ Route::get('export/aid', 'Aid\AidController@export');
 
 Route::get('aid/getPosition/{id}', 'Aid\AidController@getPosition');
 Route::put('aid/updatePosition/{id}', 'Aid\AidController@updatePosition');
+Route::get('getAllAid', 'Aid\AidController@getAllAid');
 
 //AidTypeForm
 Route::resource('aidTypeForm', 'Aid\AidTypeFormController')->only([
