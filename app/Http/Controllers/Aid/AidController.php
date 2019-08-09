@@ -189,10 +189,26 @@ class AidController extends Controller
     public function getAllAid(){
         $collection = Aid::with([
                              'symbol.symbolLang' => $this->withLanguageQuery(),
-                             'symbol.location.zone.zoneLang' => $this->withLanguageQuery()
+                             'symbol.location.zone.zoneLang' => $this->withLanguageQuery(),
+                             'height'   => function($query){
+                                $query->where('state', 'C');
+                             },
+                             'nominalScope' => function($query){
+                                $query->where('state', 'C');
+                             },
+                             'period' => function($query){
+                                $query->where('state', 'C');
+                             },
+                             'period.sequenceFlashes',
+                             'lightClass.lightClassLang' => $this->withLanguageQuery(),
+                             'colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
+                             'topMark.topMarkLang' => $this->withLanguageQuery(),
+                             'aidType.aidTypeLang' => $this->withLanguageQuery(),
+                             'aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
+                             'symbol.chart'
                          ])
                          ->whereHas("symbol", function($query){
-                            $query->where("is_legacy", true);
+                            $query->where("is_legacy", false);
                          })
                          ->get();
 
