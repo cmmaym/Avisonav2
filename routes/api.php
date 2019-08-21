@@ -158,6 +158,7 @@ Route::get('getRecentNotice', 'Notice\NoticeController@getRecentNotice');
 Route::get('getDateFromLastFourWeek', 'Notice\NoticeController@getDateFromLastFourWeek');
 Route::get('getNoticeByDate', 'Notice\NoticeController@getNoticeByDate');
 Route::get('filterNotice', 'Notice\NoticeController@filterNotice');
+Route::get('getNoticeById/{id}', 'Notice\NoticeController@getNoticeById');
 
 Route::resource('consecutive', 'Consecutive\ConsecutiveController')->only([
     'index', 'store', 'show', 'update', 'destroy'

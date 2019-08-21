@@ -451,4 +451,41 @@ class NoticeController extends Controller
         
         return NoticePublicResource::collection($collection);
     }
+
+    public function getNoticeById($id)
+    {
+        $notice = Notice::with([
+            'noticeLang' => $this->withLanguageQuery(),
+            'location.zone.zoneLang' => $this->withLanguageQuery(),
+            'novelty.noveltyLang' => $this->withLanguageQuery(),
+            'novelty.noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
+            'novelty.characterType.characterTypeLang' => $this->withLanguageQuery(),
+        ])
+        ->where('id', '=', $id)
+        ->firstOrFail();
+
+        $notice->novelty->each(function($item){
+            if($item->symbol)
+            {
+                $sn = $item->symbol;
+                $item->load([
+                    'symbol.symbol.symbolLang' => $this->withLanguageQuery(),
+                    'symbol.symbol.aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
+                    'symbol.symbol.aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),
+                    'symbol.symbol.aid.topMark.topMarkLang' => $this->withLanguageQuery(),
+                    'symbol.symbol.aid.height' => function($query) use ($sn){
+                        $query->where('id', $sn->height_id);
+                    },
+                    'symbol.symbol.aid.nominalScope' => function($query) use ($sn){
+                        $query->where('id', $sn->nominal_scope_id);
+                    },
+                    'symbol.symbol.aid.period' => function($query) use ($sn){
+                        $query->where('id', $sn->period_id);
+                    }
+                ]);
+            }
+        });
+
+        return new NoticePublicResource($notice);
+    }
 }
