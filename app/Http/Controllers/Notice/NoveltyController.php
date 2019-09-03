@@ -103,7 +103,7 @@ class NoveltyController extends Controller
             ])
             ->findOrFail($noveltyId);
             
-            if($novelty->symbol){
+            if($novelty->symbol && $novelty->symbol->symbol->aid){
 
                 $height_id = $novelty->symbol->height_id;
                 $nominalScope_id = $novelty->symbol->nominal_scope_id;
