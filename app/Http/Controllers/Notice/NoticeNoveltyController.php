@@ -60,6 +60,8 @@ class NoticeNoveltyController extends Controller
             $characterType = CharacterType::find($request->input('characterType'));
             $symbol = Symbol::find($request->input('symbol'));
             $description = $request->input('description');
+            $isLightPropertiesVisible = $request->input('isLightPropertiesVisible');
+
 
             $language = Language::where('code','es')->firstOrFail();
 
@@ -162,6 +164,7 @@ class NoticeNoveltyController extends Controller
                     $symbolNovelty->height_id = $symbol->aid->height()->where('state', 'C')->firstOrFail()->id;
                     $symbolNovelty->nominal_scope_id = $symbol->aid->nominalScope()->where('state', 'C')->firstOrFail()->id;
                     $symbolNovelty->period_id = $symbol->aid->period()->where('state', 'C')->firstOrFail()->id;
+                    $symbolNovelty->is_light_properties_visible = $isLightPropertiesVisible;
                 }
                 
                 $novelty->symbol()->save($symbolNovelty);
@@ -257,6 +260,7 @@ class NoticeNoveltyController extends Controller
             $noveltyType = $request->input('noveltyType');
             $characterType = CharacterType::find($request->input('characterType'));
             $symbol = Symbol::find($request->input('symbol'));
+            $isLightPropertiesVisible = $request->input('isLightPropertiesVisible');
 
             //Novedad a cancelar
             $parent = Novelty::find($request->input('parent'));
@@ -506,6 +510,7 @@ class NoticeNoveltyController extends Controller
                     $symbolNovelty->height_id = null;
                     $symbolNovelty->nominal_scope_id = null;
                     $symbolNovelty->period_id = null;
+                    $symbolNovelty->is_light_properties_visible = null;
                 }else{
                     $symbolNovelty = new SymbolNovelty();
                 }
@@ -516,6 +521,7 @@ class NoticeNoveltyController extends Controller
                     $symbolNovelty->height_id = $symbol->aid->height()->where('state', 'C')->firstOrFail()->id;
                     $symbolNovelty->nominal_scope_id = $symbol->aid->nominalScope()->where('state', 'C')->firstOrFail()->id;
                     $symbolNovelty->period_id = $symbol->aid->period()->where('state', 'C')->firstOrFail()->id;
+                    $symbolNovelty->is_light_properties_visible = $isLightPropertiesVisible;
                 }
                 
                 $novelty->symbol()->save($symbolNovelty);

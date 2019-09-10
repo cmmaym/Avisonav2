@@ -11,6 +11,9 @@ class SymbolNovelty extends Model
     use Filterable, Observable;
 
     protected $table        = 'symbol_novelty';
+    protected $casts = [
+        'is_light_properties_visible' => 'boolean',
+    ];
 
     public function novelty(){
         return $this->belongsTo(Novelty::class);

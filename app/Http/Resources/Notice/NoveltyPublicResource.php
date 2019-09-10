@@ -30,14 +30,12 @@ class NoveltyPublicResource extends JsonResource
         $name = function() use ($self) {
             return $self->noveltyLang->name;
         };
-        
-        $symbol = function() use ($self) {
-            return $self->symbol->symbol;
-        };
 
         $description = function() use ($self) {
             return $self->notice->noticeLang->description;
         };
+
+        $symbol = !is_null($this->symbol) ? (new SymbolPublicResource($this->symbol->symbol))->setIsLightPropertiesVisible($this->symbol->is_light_properties_visible) : null;
 
         return [
             'id'                        => $this->id,
@@ -51,9 +49,9 @@ class NoveltyPublicResource extends JsonResource
             'updatedAt'                => $this->updated_at->format('Y-m-d'),
             'chartEdition'              => ChartEditionResource::collection($this->chartEdition),
             'file'                      => NoveltyFileResource::collection($this->noveltyFile),
-            'symbol'                    => new SymbolPublicResource($this->when(!is_null($this->symbol), $symbol, null)),
+            'symbol'                    => $symbol,
             'parent'                    => new NoveltySubPublicResource($this->parent),
-            'spatialData'               => $this->spatial_data
+            'spatialData'               => $this->spatial_data,
         ];
     }
 }

@@ -20,6 +20,7 @@ class CreateSymbolNoveltyTable extends Migration
             $table->integer('height_id')->unsigned()->nullable();
             $table->integer('nominal_scope_id')->unsigned()->nullable();
             $table->integer('period_id')->unsigned()->nullable();
+            $table->boolean('is_light_properties_visible')->nullable();
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);

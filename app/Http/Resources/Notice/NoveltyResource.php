@@ -30,6 +30,8 @@ class NoveltyResource extends JsonResource
             return $self->symbol->symbol;
         };
 
+        // dd($this->symbol);
+
         return [
             'id'                        => $this->id,
             'name'                       =>  $this->when(!is_null($this->noveltyLang), $name, null),
@@ -39,6 +41,7 @@ class NoveltyResource extends JsonResource
             'noveltyType'               => new NoveltyTypeResource($this->noveltyType),
             'characterType'             => new CharacterTypeResource($this->characterType),
             'symbol'                    => new SymbolResource($this->when(!is_null($this->symbol), $symbol, null)),
+            'isLightPropertiesVisible'  => !is_null($this->symbol) && $this->symbol->is_light_properties_visible,
             'state'                     => $this->state,
             'numItem'                   => $this->num_item,
             'createdAt'                => $this->created_at->format('Y-m-d'),
