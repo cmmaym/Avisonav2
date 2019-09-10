@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class SymbolFilter extends ModelFilter
 {
+
+    public function id($id){
+        $this->where('id', '=', $id);
+    }
+
     public function name($name){
         $this->whereHas('symbolLang', function($query) use ($name){
             $query->where('name', 'like', "%$name%");
