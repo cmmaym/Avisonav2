@@ -162,6 +162,49 @@ class NoticeController extends Controller
         return new NoticeResource($notice);
     }
 
+    public function confirmNoticeRevision($noticeId){
+        $notice = Notice::where('id', '=', $noticeId)
+                        ->firstOrFail();
+
+        $user = Auth::user();
+
+        $allowedRoles = ['ROLE_ADMIN', 'ROLE_REVISOR'];
+        if(!in_array($user->role->name, $allowedRoles)){
+            return $this->errorResponse('No tiene permisos para esta acción', 409);
+        }
+        
+        $notice->review_user = $user->username;
+        $notice->review_date = new \DateTime("now");
+
+        $notice->save();
+
+        return new NoticeResource($notice);
+    }
+
+    public function deleteNoticeRevision($noticeId){
+        $notice = Notice::where('id', '=', $noticeId)
+                        ->firstOrFail();
+
+        $user = Auth::user();
+
+        $allowedRoles = ['ROLE_ADMIN', 'ROLE_REVISOR'];
+
+        if(!in_array($user->role->name, $allowedRoles)){
+            return $this->errorResponse('No tiene permisos para realizar esta acción', 409);
+        }
+
+        if($notice->review_user !== $user->username){
+            return $this->errorResponse('No tiene permisos para realizar esta acción', 409);
+        }
+
+        $notice->review_user = null;
+        $notice->review_date = null;
+
+        $notice->save();
+
+        return new NoticeResource($notice);
+    }
+
     public function getNotice($number, $year)
     {
         $notice = Notice::with([

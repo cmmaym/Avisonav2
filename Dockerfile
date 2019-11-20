@@ -16,12 +16,16 @@ RUN apk update && apk add --virtual .build-deps $PHPIZE_DEPS \
         freetype-dev \
         libjpeg-turbo-dev \
         libpng-dev \
+        wkhtmltopdf \
     && docker-php-ext-install -j$(nproc) \
         bcmath \
         gd \
         pdo_mysql \
         zip \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && apk --no-cache add msttcorefonts-installer fontconfig \
+    && update-ms-fonts \
+    && fc-cache -f \
     && rm -rf /var/cache/apk/*
 #    && apk del .build-deps
 RUN addgroup -g 1000 -S www \

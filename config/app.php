@@ -149,6 +149,7 @@ return [
         Clockwork\Support\Laravel\ClockworkServiceProvider::class,
         Grimzy\LaravelMysqlSpatial\SpatialServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Barryvdh\Snappy\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -213,7 +214,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Clockwork' => Clockwork\Support\Laravel\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
     ],
 
 ];

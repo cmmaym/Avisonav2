@@ -19,7 +19,8 @@ class ApiController extends Controller
                 'getNovelty',
                 'getDateFromLastFourWeek',
                 'getNoticeByDate',
-                'filterNotice'
+                'filterNotice',
+                'noticePDF'
             ],
         ]);
 

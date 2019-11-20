@@ -26,6 +26,7 @@ class CreateUserTable extends Migration
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
+            $table->mediumText('firma_path')->comment('Ruta de imagen de la firma');
             $table->enum('state', array('A','I'))->default('A')->comment('Estado del usuario. Puede ser Activo, Inactivo');
             $table->integer('role_id')->unsigned();
 

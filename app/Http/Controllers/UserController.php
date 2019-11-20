@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
 use Illuminate\Support\Facades\Hash;
 use AvisoNavAPI\Http\Requests\UserType;
+use Illuminate\Support\Facades\Storage;
 use AvisoNavAPI\Http\Resources\UserResource;
 use AvisoNavAPI\Http\Requests\UpdateUserType;
 use AvisoNavAPI\ModelFilters\Basic\UserFilter;
@@ -44,6 +45,11 @@ class UserController extends ApiController
         $user->role_id = $request->input('role');
         $user->state = $request->input('state');
 
+        $firmUpload = $request->file('firm');
+        $path = $firmUpload->storeAs('firmas', uniqid().'.'.$firmUpload->getClientOriginalExtension(), 'public');
+
+        $user->firm_path = $path;
+
         $user->save();
 
         return new UserResource($user);
@@ -67,8 +73,10 @@ class UserController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserType $request, User $user)
+    public function update(UpdateUserType $request, $id)
     {
+        $user = User::where('id', '=', $id)->firstOrFail();
+        
         $user->fill($request->only(['username', 'name1', 'name2', 'email']));
         $user->num_ide = $request->input('numIde');
         $user->last_name1 = $request->input('lastName1');
@@ -79,6 +87,16 @@ class UserController extends ApiController
         {
             $user->password = Hash::make($request->input('password'));
         }
+
+        if($user->firm_path)
+        {
+            Storage::disk('public')->delete($user->firm_path);
+        }
+
+        $firmUpload = $request->file('firm');
+        $path = $firmUpload->storeAs('firmas', uniqid().'.'.$firmUpload->getClientOriginalExtension(), 'public');
+
+        $user->firm_path = $path;
 
         $user->role_id = $request->input('role');
 

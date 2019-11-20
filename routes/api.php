@@ -24,8 +24,9 @@ Route::post('/logout', 'LoginController@logout')->middleware('auth:api');
 
 Route::get('user/me', 'UserController@me')->middleware('auth:api');
 Route::resource('user', 'UserController')->only([
-    'index', 'show', 'store', 'update', 'destroy'
+    'index', 'show', 'store', 'destroy'
 ]);
+Route::post('user/{id}', 'UserController@update');
 
 //Role
 Route::resource('role', 'RoleController')->only([
@@ -148,6 +149,8 @@ Route::resource('notice.novelty', 'Notice\NoticeNoveltyController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
 
+Route::put('confirmNoticeRevision/{id}', 'Notice\NoticeController@confirmNoticeRevision');
+Route::put('deleteNoticeRevision/{id}', 'Notice\NoticeController@deleteNoticeRevision');
 Route::get('getTotalNoticeNovelty', 'Notice\NoticeController@getTotalNoticeNovelty');
 
 //Notice Public route
@@ -317,3 +320,8 @@ Route::put('novelty/updateSpatialData/{id}', 'Notice\NoveltyController@updateSpa
 
 //Reports
 Route::get('report/noticeNoveltyGTP', 'Notice\ReportController@noticeNoveltyGTP');
+Route::get('report/noticePDF', 'Notice\ReportController@noticePDF');
+
+//Report Parameter
+Route::get('reportParameter', 'Notice\ReportParameterController@getReportParameter');
+Route::post('reportParameter', 'Notice\ReportParameterController@update');

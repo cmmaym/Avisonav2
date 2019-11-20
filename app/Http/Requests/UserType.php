@@ -33,7 +33,8 @@ class UserType extends FormRequest
             'email'             => 'required|email|unique:user,email',
             'password'          => 'required|confirmed|min:8',
             'state'             => 'sometimes|in:A,I',
-            'role'           => 'required|exists:role,id'
+            'role'           => 'required|exists:role,id',
+            'firm'              => 'required|mimetypes:image/gif,image/jpeg,image/png,image/svg,image/svg+xml',
         ];
     }
 

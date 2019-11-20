@@ -51,7 +51,9 @@ class NoticeResource extends JsonResource
             'lightList'                 => new LightListResource($this->lightList),
             'reportSource'             => new ReportSourceResource($this->reportSource),
             'reportingUser'            => new ReportingUserResource($this->reportingUser),
-            'isLegacy'                  => $this->is_legacy
+            'isLegacy'                  => $this->is_legacy,
+            'reviewUser'                => $this->review_user,
+            'reviewDate'                => $this->review_date ? $this->review_date->format('Y-m-d') : null
         ];
     }
 }

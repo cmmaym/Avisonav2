@@ -15,7 +15,7 @@ class Notice extends Model
 
     protected $table        = 'notice';
     protected $fillable     = ['state'];
-    protected $dates = ['report_date'];
+    protected $dates = ['report_date', 'review_date', 'publication_date'];
     protected $casts = [
         'is_legacy' => 'boolean',
     ];
@@ -51,5 +51,13 @@ class Notice extends Model
 
     public function noticeLang(){
         return $this->hasOne(NoticeLang::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'created_by', 'username');
+    }
+
+    public function reviewUser(){
+        return $this->belongsTo(User::class, 'review_user', 'username');
     }
 }

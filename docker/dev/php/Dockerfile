@@ -6,6 +6,7 @@ RUN apk update && apk add \
         freetype-dev \
         libjpeg-turbo-dev \
         libpng-dev \
+        wkhtmltopdf \
     && apk add --no-cache $PHPIZE_DEPS \
     && docker-php-ext-install -j$(nproc) \
         bcmath \
@@ -14,7 +15,10 @@ RUN apk update && apk add \
         zip \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && pecl install xdebug-2.6.0 \
-    && docker-php-ext-enable xdebug
+    && docker-php-ext-enable xdebug \
+    && apk --no-cache add msttcorefonts-installer fontconfig \
+    && update-ms-fonts \
+    && fc-cache -f
 
 RUN addgroup -g 1000 -S www \
     && adduser -u 1000 -D -S -G www www

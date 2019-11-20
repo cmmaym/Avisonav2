@@ -27,7 +27,8 @@ class UserResource extends JsonResource
             'role'          => new RoleResource($this->role),
             'createdAt'         => $this->created_at->format('Y-m-d'),
             'updatedAt'         => $this->updated_at->format('Y-m-d'),
-            'createdBy'     => $this->created_by
+            'createdBy'     => $this->created_by,
+            'firm'          => $this->firm_path ? asset('storage/'.$this->firm_path) : null,
         ];
     }
 }

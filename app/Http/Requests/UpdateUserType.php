@@ -25,12 +25,12 @@ class UpdateUserType extends FormRequest
     {
         return [
             'numIde'           => 'required|integer',
-            'username'          => 'required|unique:user,username,'.$this->user->id,
+            'username'          => 'required|unique:user,username,'.$this->route()->parameter('id'),
             'name1'             => 'required',
             'name2'             => 'nullable',
             'lastName1'        => 'required',
             'lastName2'        => 'required',
-            'email'             => 'required|email|unique:user,email,'.$this->user->id,
+            'email'             => 'required|email|unique:user,email,'.$this->route()->parameter('id'),
             'password'          => 'nullable|confirmed|min:8',
             'state'             => 'sometimes|in:A,I',
             'role'           => 'required|exists:role,id'

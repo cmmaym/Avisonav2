@@ -48,6 +48,14 @@ class NoticeFilter extends ModelFilter
         return $this->related('reportingUser', 'reporting_user.name', 'like', "%$reportingUser%");
     }
 
+    public function createdBy($createdBy){
+        return $this->where('created_by', 'like', "%$createdBy%");
+    }
+
+    public function reviewUser($reviewUser){
+        return $this->where('review_user', 'like', "%$reviewUser%");
+    }
+
     public function sort($column)
     {
         if(method_exists($this, $method = 'sortBy' . studly_case($column))) {
