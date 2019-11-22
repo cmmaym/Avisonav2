@@ -38,7 +38,7 @@ class AidPublicResource extends JsonResource
             'flashGroup'        => ($this->period && $this->is_light_properties_visible) ? $this->period->flash_group : null,
             'createdAt'        => $this->created_at->format('Y-m-d'),
             'updatedAt'        => $this->updated_at->format('Y-m-d'),
-            'lightClass'        => $this->is_light_properties_visible ? new  LightClassResource($this->lightClass) : null,
+            'lightClass'        => $this->is_light_properties_visible && $this->lightClass ? new  LightClassResource($this->lightClass) : null,
             'colorStructurePattern' => new ColorStructureResource($this->colorStructurePattern),
             'colorLight'        => $this->is_light_properties_visible ? ColorLightResource::collection($this->aidColorLight) :  [],
             'aidTypeForm'       => new AidTypeFormResource($this->aidTypeForm),

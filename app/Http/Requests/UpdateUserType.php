@@ -31,7 +31,7 @@ class UpdateUserType extends FormRequest
             'lastName1'        => 'required',
             'lastName2'        => 'required',
             'email'             => 'required|email|unique:user,email,'.$this->route()->parameter('id'),
-            'password'          => 'nullable|confirmed|min:8',
+            'password'          => 'nullable|min:8|confirmed',
             'state'             => 'sometimes|in:A,I',
             'role'           => 'required|exists:role,id'
         ];

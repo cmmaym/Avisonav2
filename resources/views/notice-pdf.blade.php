@@ -189,7 +189,7 @@
             }
 
             .info-notice__row5 > div > img{
-                width: 400pt;
+                max-width: 400pt;
                 max-height: 50pt;
             }
                 .info-notice__row9 > div > span{
@@ -212,13 +212,20 @@
                 }
             
             .firmas{
-                margin-top: 30pt;
             }
 
             .firmas__row1{
                 display: flex;
                 width: 100%;
                 justify-content: space-between;
+                margin-top: 90pt;
+            }
+
+            .firmas__row2{
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                margin-top: 100pt;
             }
                 .firmas__row1 > div,
                 .firmas__row2 > div{
@@ -226,23 +233,19 @@
                     display: flex;
                     flex-direction: column;
                     align-items: center;
+                    height: 100pt;
                 }
-                    .firmas__row1 > div > div,
-                    .firmas__row2 > div > div{
+                    .firmas__row1 > div > div + div,
+                    .firmas__row2 > div > div + div{
                         width: 70%;
                         height: 0.5pt;
                         background: #000;
                     }
-            .firmas__row2{
-                display: flex;
-                width: 100%;
-                justify-content: center;
-                margin-top: 30pt;
-            }
 
-            .firmas__row1 > div > img,
-            .firmas__row2 > div > img {
-                width: 400pt;
+            .firmas__row1 img,
+            .firmas__row2 img {
+                height: 70pt;
+                max-width: 100%;
             }
 
         .novelty{
@@ -533,19 +536,25 @@
         @endphp
         <div class="firmas__row1">
             <div>
-                <img src="{{ $firmaPerson1 }}"/>
+                <div>
+                    <img src="{{ $firmaPerson1 }}"/>
+                </div>
                 <div></div>
                 <span>Responsable Avisos a los navegantes</span>
             </div>
             <div>
-                <img src="{{ $firmaPerson2 }}"/>
+                <div>
+                    <img src="{{ $firmaPerson2 }}"/>
+                </div>
                 <div></div>
                 <span>Responsable Sección Náutica</span>
             </div>
         </div>
         <div class="firmas__row2">
             <div>
-                <img src="{{ $firmaPerson3 }}"/>
+                <div>
+                    <img src="{{ $firmaPerson3 }}"/>
+                </div>
                 <div></div>
                 <span>Responsable Área de Hidrografia</span>
             </div>

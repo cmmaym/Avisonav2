@@ -3,6 +3,7 @@
 namespace AvisoNavAPI\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class UserResource extends JsonResource
 {
@@ -28,7 +29,7 @@ class UserResource extends JsonResource
             'createdAt'         => $this->created_at->format('Y-m-d'),
             'updatedAt'         => $this->updated_at->format('Y-m-d'),
             'createdBy'     => $this->created_by,
-            'firm'          => $this->firm_path ? asset('storage/'.$this->firm_path) : null,
+            'firm'          => $this->firm_path ? Storage::disk('public')->url($this->firm_path) : null,
         ];
     }
 }
