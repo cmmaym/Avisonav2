@@ -96,6 +96,7 @@ class NoveltyController extends Controller
             'noveltyType.noveltyTypeLang' => $this->withLanguageQuery(),
             'characterType.characterTypeLang' => $this->withLanguageQuery(),
             'notice.noticeLang' => $this->withLanguageQuery(),
+            'notice.location.zone.zoneLang' => $this->withLanguageQuery(),
             'symbol.symbol.symbolLang' => $this->withLanguageQuery(),
             'symbol.symbol.aid.colorStructurePattern.colorStructureLang' => $this->withLanguageQuery(),
             'symbol.symbol.aid.aidTypeForm.aidTypeFormLang' => $this->withLanguageQuery(),

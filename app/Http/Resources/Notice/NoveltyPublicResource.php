@@ -5,6 +5,7 @@ namespace AvisoNavAPI\Http\Resources\Notice;
 use AvisoNavAPI\Traits\Responser;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\AbstractPaginator;
+use AvisoNavAPI\Http\Resources\LocationResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use AvisoNavAPI\Http\Resources\CoordinateResource;
 use AvisoNavAPI\Http\Resources\SymbolPublicResource;
@@ -40,6 +41,7 @@ class NoveltyPublicResource extends JsonResource
         return [
             'id'                        => $this->id,
             'notice'                    => $this->notice->number,
+            'location'                  => new LocationResource($this->notice->location),
             'numItem'                   => $this->num_item,
             'name'                       =>  $this->when(!is_null($this->noveltyLang), $name, ''),
             'description'                =>  $this->when(!is_null($this->notice->noticeLang), $description, ''),
