@@ -22,8 +22,8 @@ services:
       - ./:/var/www
       - ./docker/dev/nginx/conf.d:/etc/nginx/conf.d/
       - ./docker/dev/nginx/log:/var/log/nginx/
-    environment:
-      - VIRTUAL_HOST=api.avisonav.local
+    ports:
+      - "80:80"
 
   db:
     image: mysql:8.0.16
@@ -59,8 +59,3 @@ services:
 volumes:
   dbdata:
     driver: local
-
-networks:
-  default:
-    external:
-      name: reverse-proxy

@@ -348,7 +348,7 @@ class NoticeController extends Controller
                     ->where('state', '=', 'P')
                     ->orderBy('created_at', 'desc')
                     ->orderBy('notice.number', 'desc')
-                    ->take(5)
+                    ->take(7)
                     ->get();
         
         $collection->each(function($notice){
@@ -389,7 +389,7 @@ class NoticeController extends Controller
                         date_format(adddate(created_at, INTERVAL(2-DAYOFWEEK(created_at)) DAY), '%Y-%m-%d') dateStart,
                         date_format(adddate(created_at, INTERVAL(8-DAYOFWEEK(created_at)) DAY), '%Y-%m-%d') dateEnd
                 from avisonav.notice n, (select @max_created_at:=(select max(created_at) from avisonav.notice)) x
-                where n.created_at >= date_sub(@max_created_at, interval 4 week) and n.created_at <= @max_created_at
+                where n.created_at >= date_sub(@max_created_at, interval 7 week) and n.created_at <= @max_created_at
                 ) x
                 group by week(x.dateStart, 1), x.dateStart, x.dateEnd
                 order by week(x.dateStart, 1) desc;"

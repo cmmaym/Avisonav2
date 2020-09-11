@@ -24,6 +24,24 @@ class NoticeFilter extends ModelFilter
         });
     }
 
+    public function noveltyName($noveltyName){
+        $this->whereHas('novelty.noveltyLang', function($query) use ($noveltyName) {
+            $query->where('name', 'like', "%$noveltyName%");
+        });
+    }
+
+    public function noveltyType($noveltyType){
+        $this->whereHas('novelty.noveltyType.noveltyTypeLang', function($query) use ($noveltyType) {
+            $query->where('name', 'like', "%$noveltyType%");
+        });
+    }
+
+    public function characterType($characterType){
+        $this->whereHas('novelty.characterType.characterTypeLang', function($query) use ($characterType) {
+            $query->where('alias', $characterType);
+        });
+    }
+
     public function chart($chart){
         $this->whereHas('novelty.chartEdition.chart', function($query) use($chart){
             $query->where('number', $chart);

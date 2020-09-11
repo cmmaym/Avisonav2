@@ -19,14 +19,9 @@ services:
       - ./docker/prod/nginx/conf.d/:/etc/nginx/conf.d/
       - ./docker/prod/nginx/log/:/var/log/nginx/
       - apistorage:/var/www:ro
-    environment:
-      - VIRTUAL_HOST=avisonav-api.dimar.mil.co
+    ports:
+      - 8088:80
 
 volumes:
   apistorage:
     driver: local
-
-networks:
-  default:
-    external:
-      name: reverse-proxy
