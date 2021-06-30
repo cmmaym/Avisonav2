@@ -26,10 +26,8 @@ class StoreReportParameter extends FormRequest
         return [
             'namePerson1'           => 'required|max:100',
             'namePerson2'           => 'required|max:100',
-            'namePerson3'           => 'required|max:100',
             'firmPerson1'           => 'required|mimetypes:image/gif,image/jpeg,image/png,image/svg,image/svg+xml',
             'firmPerson2'           => 'required|mimetypes:image/gif,image/jpeg,image/png,image/svg,image/svg+xml',
-            'firmPerson3'           => 'required|mimetypes:image/gif,image/jpeg,image/png,image/svg,image/svg+xml'
         ];
     }
 

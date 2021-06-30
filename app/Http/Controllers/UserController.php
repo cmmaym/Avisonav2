@@ -2,6 +2,7 @@
 
 namespace AvisoNavAPI\Http\Controllers;
 
+use AvisoNavAPI\Http\Requests\ConfigUserType;
 use AvisoNavAPI\User;
 use Illuminate\Http\Request;
 use AvisoNavAPI\Traits\Filter;
@@ -121,5 +122,37 @@ class UserController extends ApiController
     public function me(Request $request)
     {
         return new UserResource($request->user());
+    }
+
+    public function configUser(ConfigUserType $request){
+        $user = $request->user();
+
+        $user->fill($request->only(['name1', 'name2', 'email']));
+        $user->num_ide = $request->input('numIde');
+        $user->last_name1 = $request->input('lastName1');
+        $user->last_name2 = $request->input('lastName2');
+
+        if($user->role->name == "ROLE_RH"){
+            $user->sign_automatically = $request->input('sign_automatically');
+        }
+
+        if(!is_null($request->input('password')))
+        {
+            $user->password = Hash::make($request->input('password'));
+        }
+
+        if($user->firm_path)
+        {
+            Storage::disk('public')->delete($user->firm_path);
+        }
+
+        $firmUpload = $request->file('firm');
+        $path = $firmUpload->storeAs('firmas', uniqid().'.'.$firmUpload->getClientOriginalExtension(), 'public');
+
+        $user->firm_path = $path;
+
+        $user->save();
+
+        return new UserResource($user);
     }
 }

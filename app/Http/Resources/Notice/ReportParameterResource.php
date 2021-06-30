@@ -21,10 +21,8 @@ class ReportParameterResource extends JsonResource
             'id'                        => $this->id,
             'namePerson1'               => $this->name_person1,
             'namePerson2'               => $this->name_person2,
-            'namePerson3'               => $this->name_person3,
             'firmPerson1'               => $this->firm_person1 ? Storage::disk('public')->url($this->firm_person1) : null,
             'firmPerson2'               => $this->firm_person2 ? Storage::disk('public')->url($this->firm_person2) : null,
-            'firmPerson3'               => $this->firm_person3 ? Storage::disk('public')->url($this->firm_person3) : null,
         ];
     }
 }

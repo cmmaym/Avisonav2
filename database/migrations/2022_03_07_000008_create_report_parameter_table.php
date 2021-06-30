@@ -19,8 +19,6 @@ class CreateReportParameterTable extends Migration
             $table->mediumText('firm_person1')->comment('Ruta de imagen de la firma Responsable Avisos a los navegantes');
             $table->string('name_person2', 100)->comment('Nombre del Responsable Sección Náutica');
             $table->mediumText('firm_person2')->comment('Ruta de imagen de la firma Responsable Sección Náutica');
-            $table->string('name_person2', 100)->comment('Nombre del Responsable Área de Hidrografia');
-            $table->mediumText('firm_person2')->comment('Ruta de imagen de la firma Responsable Área de Hidrografia');
             $table->timestamps();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);

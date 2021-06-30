@@ -32,6 +32,10 @@ class User extends Authenticatable
         'password'
     ];
 
+    protected $casts = [
+        'sign_automatically' => 'boolean',
+    ];
+
     public function role()
     {
         return $this->belongsTo(Role::class);
@@ -40,5 +44,10 @@ class User extends Authenticatable
     public function findForPassport($username)
     {
         return $this->where('username', $username)->first();
+    }
+
+    public function getName2Attribute($value)
+    {
+        return $value == 'null' ? '' : $value;
     }
 }

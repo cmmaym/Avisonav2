@@ -4,6 +4,8 @@ namespace AvisoNavAPI\Http\Controllers\Notice;
 
 use AvisoNavAPI\Notice;
 use AvisoNavAPI\Novelty;
+use AvisoNavAPI\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use AvisoNavAPI\ReportParameter;
 use AvisoNavAPI\Traits\Responser;
@@ -54,6 +56,10 @@ class ReportController extends Controller
             return $this->errorResponse('El aviso no ha sido revisado', 409);
         }
 
+        if(!$notice->rh_user){
+            return $this->errorResponse('El aviso no ha sido aprobado', 409);
+        }
+
         $noticeLangs['es'] = $notice->noticeLangs()->whereHas('language', function($query){ $query->where('code', '=', 'es'); })->first();
         $noticeLangs['en'] = $notice->noticeLangs()->whereHas('language', function($query){ $query->where('code', '=', 'en'); })->first();
 
@@ -85,8 +91,18 @@ class ReportController extends Controller
         $notice->observation = $observation;
 
         $firmas = ReportParameter::firstOrFail();
+        $rhUser = User::whereHas('role', function(Builder $query){
+                            $query->where('name', 'like', '%ROLE_RH%');
+                        })
+                        ->where('state', 'A')
+                        ->orderBy('created_at', 'desc')->first();
 
-        $pdf = PDF::loadView('notice-pdf', ['notice' => $notice, 'firmas' => $firmas]);
+
+        $pdf = PDF::loadView('notice-pdf', [
+                'notice' => $notice,
+                'firmas' => $firmas,
+                'rhUser' => $rhUser,
+        ]);
 
         return $pdf->inline();
     //    return $pdf->download('chart.pdf');

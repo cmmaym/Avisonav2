@@ -24,6 +24,8 @@ class CreateNoticeTable extends Migration
             $table->string('updated_by', 100);
             $table->string('review_user', 100);
             $table->dateTime('review_date');
+            $table->string('rh_user', 100);
+            $table->dateTime('rh_date_user_confirm');
             $table->string('state', 1)->comment('Estado del aviso. Puede ser G(Guardado), P(Publicado)');
             $table->integer('location_id')->unsigned();
             $table->integer('catalog_ocean_coast_id')->unsigned()->nullable();

@@ -29,6 +29,7 @@ class CreateUserTable extends Migration
             $table->mediumText('firma_path')->comment('Ruta de imagen de la firma');
             $table->enum('state', array('A','I'))->default('A')->comment('Estado del usuario. Puede ser Activo, Inactivo');
             $table->integer('role_id')->unsigned();
+            $table->boolean('sign_automatically')->nullable();
 
             $table->foreign('role_id')
                 ->references('id')->on('role');

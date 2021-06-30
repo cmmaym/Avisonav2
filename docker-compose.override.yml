@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/dev/php/Dockerfile
-    image: laravel-dev
+    image: avisonav-api-dev
     restart: unless-stopped
     working_dir: /var/www
     volumes:
@@ -23,7 +23,7 @@ services:
       - ./docker/dev/nginx/conf.d:/etc/nginx/conf.d/
       - ./docker/dev/nginx/log:/var/log/nginx/
     ports:
-      - "80:80"
+      - "8081:80"
 
   db:
     image: mysql:8.0.16
@@ -37,24 +37,6 @@ services:
     volumes:
       - dbdata:/var/lib/mysql
 #      - ./docker/dev/mysql/my.cnf:/etc/mysql/my.cnf
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    links:
-      - db
-    ports:
-      - "8080:80"
-    environment:
-#      - PMA_ARBITRARY=1
-      - PMA_HOST=db
-
-  # nginx-proxy:
-  #   image: jwilder/nginx-proxy
-  #   ports:
-  #     - "80:80"
-  #   volumes:
-  #     - /var/run/docker.sock:/tmp/docker.sock:ro
 
 volumes:
   dbdata:

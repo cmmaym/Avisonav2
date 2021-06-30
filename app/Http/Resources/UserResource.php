@@ -30,6 +30,7 @@ class UserResource extends JsonResource
             'updatedAt'         => $this->updated_at->format('Y-m-d'),
             'createdBy'     => $this->created_by,
             'firm'          => $this->firm_path ? Storage::disk('public')->url($this->firm_path) : null,
+            'sign_automatically' => $this->sign_automatically
         ];
     }
 }

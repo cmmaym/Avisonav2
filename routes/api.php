@@ -27,6 +27,7 @@ Route::resource('user', 'UserController')->only([
     'index', 'show', 'store', 'destroy'
 ]);
 Route::post('user/{id}', 'UserController@update');
+Route::post('config/user', 'UserController@configUser');
 
 //Role
 Route::resource('role', 'RoleController')->only([
@@ -151,6 +152,8 @@ Route::resource('notice.novelty', 'Notice\NoticeNoveltyController')->only([
 
 Route::put('confirmNoticeRevision/{id}', 'Notice\NoticeController@confirmNoticeRevision');
 Route::put('deleteNoticeRevision/{id}', 'Notice\NoticeController@deleteNoticeRevision');
+Route::put('confirmNoticeByRH/{id}', 'Notice\NoticeController@confirmNoticeByRH');
+Route::put('deleteConfirmNoticeByRH/{id}', 'Notice\NoticeController@deleteConfirmNoticeByRH');
 Route::get('getTotalNoticeNovelty', 'Notice\NoticeController@getTotalNoticeNovelty');
 
 //Notice Public route

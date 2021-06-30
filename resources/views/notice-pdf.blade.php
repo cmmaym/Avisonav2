@@ -532,7 +532,7 @@
         @php
             $firmaPerson1 = $firmas->firm_person1 ? storage_path('app/public/'.$firmas->firm_person1) : null;
             $firmaPerson2 = $firmas->firm_person2 ? storage_path('app/public/'.$firmas->firm_person2) : null;
-            $firmaPerson3 = $firmas->firm_person3 ? storage_path('app/public/'.$firmas->firm_person3) : null;
+            $firmaPerson3 = $rhUser->firm_path ? storage_path('app/public/'.$rhUser->firm_path) : null;
         @endphp
         <div class="firmas__row1">
             <div>

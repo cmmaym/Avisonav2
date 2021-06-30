@@ -23,11 +23,9 @@ class ReportParameterController extends Controller
 
         $reportParameter->name_person1 = $storeReportParameter->input('namePerson1');
         $reportParameter->name_person2 = $storeReportParameter->input('namePerson2');
-        $reportParameter->name_person3 = $storeReportParameter->input('namePerson3');
 
         $firmPerson1Upload = $storeReportParameter->file('firmPerson1');
         $firmPerson2Upload = $storeReportParameter->file('firmPerson2');
-        $firmPerson3Upload = $storeReportParameter->file('firmPerson3');
 
         if($reportParameter->firm_person1)
         {
@@ -39,18 +37,11 @@ class ReportParameterController extends Controller
             Storage::disk('public')->delete($reportParameter->firm_person2);
         }
 
-        if($reportParameter->firm_person3)
-        {
-            Storage::disk('public')->delete($reportParameter->firm_person3);
-        }
-
         $path1 = $firmPerson1Upload->storeAs('firmas', uniqid().'.'.$firmPerson1Upload->getClientOriginalExtension(), 'public');
         $path2 = $firmPerson2Upload->storeAs('firmas', uniqid().'.'.$firmPerson2Upload->getClientOriginalExtension(), 'public');
-        $path3 = $firmPerson3Upload->storeAs('firmas', uniqid().'.'.$firmPerson3Upload->getClientOriginalExtension(), 'public');
 
         $reportParameter->firm_person1 = $path1;
         $reportParameter->firm_person2 = $path2;
-        $reportParameter->firm_person3 = $path3;
         
         $reportParameter->save();
 

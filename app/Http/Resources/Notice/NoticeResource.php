@@ -53,7 +53,9 @@ class NoticeResource extends JsonResource
             'reportingUser'            => new ReportingUserResource($this->reportingUser),
             'isLegacy'                  => $this->is_legacy,
             'reviewUser'                => $this->review_user,
-            'reviewDate'                => $this->review_date ? $this->review_date->format('Y-m-d') : null
+            'reviewDate'                => $this->review_date ? $this->review_date->format('Y-m-d') : null,
+            'rh_user'                   => $this->rh_user,
+            'rh_date_user_confirm'      => $this->rh_date_user_confirm ? $this->rh_date_user_confirm->format('Y-m-d') : null
         ];
     }
 }
