@@ -11,6 +11,7 @@ services:
       - apistorage:/var/www/html/storage
 
   web:
+    image: nginx:alpine
     restart: always
     links:
       - api
