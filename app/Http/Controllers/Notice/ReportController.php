@@ -30,6 +30,7 @@ class ReportController extends Controller
 
     public function noticePDF(Request $request){
 
+        $format = $request->input('format');
         $number = $request->input('number');
         $year = $request->input('year');
         $sourceReviewAidList = filter_var($request->input('sourceReviewAidList'), FILTER_VALIDATE_BOOLEAN);
@@ -97,8 +98,9 @@ class ReportController extends Controller
                         ->where('state', 'A')
                         ->orderBy('created_at', 'desc')->first();
 
+        $view = $format === 'M14' ? 'notice-format-m14-pdf' : 'notice-pdf' ;
 
-        $pdf = PDF::loadView('notice-pdf', [
+        $pdf = PDF::loadView($view, [
                 'notice' => $notice,
                 'firmas' => $firmas,
                 'rhUser' => $rhUser,
