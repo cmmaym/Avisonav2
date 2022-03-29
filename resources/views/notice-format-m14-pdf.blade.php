@@ -550,7 +550,7 @@
                     <img src="{{ $firmaPerson2 }}"/>
                 </div>
                 <div></div>
-                <span>Responsable Sección Náutica</span>
+                <span>Responsable Área Náutica</span>
             </div>
         </div>
         <div class="firmas__row2">
@@ -559,7 +559,7 @@
                     <img src="{{ $firmaPerson3 }}"/>
                 </div>
                 <div></div>
-                <span>Responsable Área de Hidrografia</span>
+                <span>Responsable Sección de Hidrografia</span>
             </div>
         </div>
     </div>
@@ -738,8 +738,8 @@
             <div class="novelty__tnovedad border-right">Novelty Type</div>
             <div class="novelty__position border-right">Position (WGS-84)</div>
             <div class="novelty__feature border-right">Characteristics light</div>
-            <div class="novelty__alt-scope border-right">Height (m) / Scope (mn)</div>
-            <div class="novelty__color-form border-right">Color / Form</div>
+            <div class="novelty__alt-scope border-right">Height (m) / Coverage (nm)</div>
+            <div class="novelty__color-form border-right">Color / Shape</div>
             <div class="novelty__topmark border-right">Top Mark</div>
             <div class="novelty__state">State</div>
         </div>
