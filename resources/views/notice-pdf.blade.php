@@ -217,6 +217,29 @@
             .firmas__row1{
                 display: flex;
                 width: 100%;
+                justify-content: center;
+                margin-top: 90pt;
+            }
+
+            .firmas__row1 > div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .firmas__row1 > div > div + div {
+                width: 300px;
+                height: 0.5pt;
+                background: #000;
+            }
+
+            .firmas__row1 img {
+                height: 70pt;
+                max-width: 100%;
+            }
+
+            /*.firmas__row1{
+                display: flex;
+                width: 100%;
                 justify-content: space-between;
                 margin-top: 90pt;
             }
@@ -246,7 +269,7 @@
             .firmas__row2 img {
                 height: 70pt;
                 max-width: 100%;
-            }
+            }*/
 
         .novelty{
             margin-top: 10pt;
@@ -530,18 +553,18 @@
     </div>
     <div class="firmas">
         @php
-            $firmaPerson1 = $firmas->firm_person1 ? storage_path('app/public/'.$firmas->firm_person1) : null;
+            //$firmaPerson1 = $firmas->firm_person1 ? storage_path('app/public/'.$firmas->firm_person1) : null;
             $firmaPerson2 = $firmas->firm_person2 ? storage_path('app/public/'.$firmas->firm_person2) : null;
-            $firmaPerson3 = $rhUser->firm_path ? storage_path('app/public/'.$rhUser->firm_path) : null;
+            //$firmaPerson3 = $rhUser->firm_path ? storage_path('app/public/'.$rhUser->firm_path) : null;
         @endphp
         <div class="firmas__row1">
-            <div>
+            {{--<div>
                 <div>
                     <img src="{{ $firmaPerson1 }}"/>
                 </div>
                 <div></div>
                 <span>Responsable Avisos a los navegantes</span>
-            </div>
+            </div>--}}
             <div>
                 <div>
                     <img src="{{ $firmaPerson2 }}"/>
@@ -550,7 +573,7 @@
                 <span>Responsable Sección Náutica</span>
             </div>
         </div>
-        <div class="firmas__row2">
+        {{--<div class="firmas__row2">
             <div>
                 <div>
                     <img src="{{ $firmaPerson3 }}"/>
@@ -558,7 +581,7 @@
                 <div></div>
                 <span>Responsable Área de Hidrografia</span>
             </div>
-        </div>
+        </div>--}}
     </div>
     <!-- Pagina 2 -->
     <div class="header general-border" style="page-break-before: always;">

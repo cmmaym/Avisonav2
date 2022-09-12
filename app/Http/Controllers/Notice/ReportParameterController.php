@@ -21,26 +21,26 @@ class ReportParameterController extends Controller
 
         $reportParameter = ReportParameter::firstOrFail();
 
-        $reportParameter->name_person1 = $storeReportParameter->input('namePerson1');
+        //$reportParameter->name_person1 = $storeReportParameter->input('namePerson1');
         $reportParameter->name_person2 = $storeReportParameter->input('namePerson2');
 
-        $firmPerson1Upload = $storeReportParameter->file('firmPerson1');
+        //$firmPerson1Upload = $storeReportParameter->file('firmPerson1');
         $firmPerson2Upload = $storeReportParameter->file('firmPerson2');
 
-        if($reportParameter->firm_person1)
+        /*if($reportParameter->firm_person1)
         {
             Storage::disk('public')->delete($reportParameter->firm_person1);
-        }
+        }*/
 
         if($reportParameter->firm_person2)
         {
             Storage::disk('public')->delete($reportParameter->firm_person2);
         }
 
-        $path1 = $firmPerson1Upload->storeAs('firmas', uniqid().'.'.$firmPerson1Upload->getClientOriginalExtension(), 'public');
+        //$path1 = $firmPerson1Upload->storeAs('firmas', uniqid().'.'.$firmPerson1Upload->getClientOriginalExtension(), 'public');
         $path2 = $firmPerson2Upload->storeAs('firmas', uniqid().'.'.$firmPerson2Upload->getClientOriginalExtension(), 'public');
 
-        $reportParameter->firm_person1 = $path1;
+        //$reportParameter->firm_person1 = $path1;
         $reportParameter->firm_person2 = $path2;
         
         $reportParameter->save();
