@@ -238,7 +238,7 @@
                 }
 
                 .firmas__row1 img {
-                    height: 70pt;
+                    height: 200pt;
                     max-width: 100%;
                 }
 
