@@ -152,8 +152,8 @@ Route::resource('notice.novelty', 'Notice\NoticeNoveltyController')->only([
 
 Route::put('confirmNoticeRevision/{id}', 'Notice\NoticeController@confirmNoticeRevision');
 Route::put('deleteNoticeRevision/{id}', 'Notice\NoticeController@deleteNoticeRevision');
-Route::put('confirmNoticeByRH/{id}', 'Notice\NoticeController@confirmNoticeByRH');
-Route::put('deleteConfirmNoticeByRH/{id}', 'Notice\NoticeController@deleteConfirmNoticeByRH');
+Route::put('confirmNoticeByRN/{id}', 'Notice\NoticeController@confirmNoticeByRN');
+Route::put('deleteConfirmNoticeByRN/{id}', 'Notice\NoticeController@deleteConfirmNoticeByRN');
 Route::get('getTotalNoticeNovelty', 'Notice\NoticeController@getTotalNoticeNovelty');
 
 //Notice Public route

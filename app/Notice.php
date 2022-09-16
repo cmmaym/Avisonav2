@@ -15,7 +15,7 @@ class Notice extends Model
 
     protected $table        = 'notice';
     protected $fillable     = ['state'];
-    protected $dates = ['report_date', 'review_date', 'publication_date', 'rh_date_user_confirm'];
+    protected $dates = ['report_date', 'review_date', 'publication_date', 'rn_date_user_confirm'];
     protected $casts = [
         'is_legacy' => 'boolean',
     ];
@@ -61,7 +61,7 @@ class Notice extends Model
         return $this->belongsTo(User::class, 'review_user', 'username');
     }
 
-    public function rhUser(){
-        return $this->belongsTo(User::class, 'rh_user', 'username');
+    public function rnUser(){
+        return $this->belongsTo(User::class, 'rn_user', 'username');
     }
 }

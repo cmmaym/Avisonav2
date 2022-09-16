@@ -54,8 +54,8 @@ class NoticeResource extends JsonResource
             'isLegacy'                  => $this->is_legacy,
             'reviewUser'                => $this->review_user,
             'reviewDate'                => $this->review_date ? $this->review_date->format('Y-m-d') : null,
-            'rh_user'                   => $this->rh_user,
-            'rh_date_user_confirm'      => $this->rh_date_user_confirm ? $this->rh_date_user_confirm->format('Y-m-d') : null
+            'rn_user'                   => $this->rn_user,
+            'rn_date_user_confirm'      => $this->rn_date_user_confirm ? $this->rn_date_user_confirm->format('Y-m-d') : null
         ];
     }
 }

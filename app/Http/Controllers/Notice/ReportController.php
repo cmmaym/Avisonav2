@@ -57,7 +57,7 @@ class ReportController extends Controller
             return $this->errorResponse('El aviso no ha sido revisado', 409);
         }
 
-        if(!$notice->rh_user){
+        if(!$notice->rn_user){
             return $this->errorResponse('El aviso no ha sido aprobado', 409);
         }
 
@@ -92,18 +92,12 @@ class ReportController extends Controller
         $notice->observation = $observation;
 
         $firmas = ReportParameter::firstOrFail();
-        $rhUser = User::whereHas('role', function(Builder $query){
-                            $query->where('name', 'like', '%ROLE_RH%');
-                        })
-                        ->where('state', 'A')
-                        ->orderBy('created_at', 'desc')->first();
 
         $view = $format === 'M14' ? 'notice-format-m14-pdf' : 'notice-pdf' ;
 
         $pdf = PDF::loadView($view, [
                 'notice' => $notice,
                 'firmas' => $firmas,
-                'rhUser' => $rhUser,
         ]);
 
         return $pdf->inline();
