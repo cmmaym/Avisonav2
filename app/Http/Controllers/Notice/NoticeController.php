@@ -171,18 +171,6 @@ class NoticeController extends Controller
 
         $user = Auth::user();
 
-        $rhUser = User::whereHas('role', function(Builder $query){
-                           $query->where('name', 'like', '%ROLE_RH%');
-                        })
-                        ->where('state', 'A')
-                        ->orderBy('created_at', 'desc')->first();
-        if($rhUser){
-            if($rhUser->sign_automatically){
-                $notice->rh_user = $rhUser->username;
-                $notice->rh_date_user_confirm = new \DateTime("now");
-            }
-        }
-
         $allowedRoles = ['ROLE_ADMIN', 'ROLE_REVISOR'];
         if(!in_array($user->role->name, $allowedRoles)){
             return $this->errorResponse('No tiene permisos para esta acción', 409);
@@ -222,40 +210,40 @@ class NoticeController extends Controller
         return new NoticeResource($notice);
     }
 
-    public function confirmNoticeByRH($noticeId){
+    public function confirmNoticeByRN($noticeId){
         $notice = Notice::where('id', '=', $noticeId)
             ->firstOrFail();
 
         $user = Auth::user();
 
-        if($user->role->name != "ROLE_RH"){
+        if($user->role->name != "ROLE_RN"){
             return $this->errorResponse('No tiene permisos para esta acción', 409);
         }
 
-        $notice->rh_user = $user->username;
-        $notice->rh_date_user_confirm = new \DateTime("now");
+        $notice->rn_user = $user->username;
+        $notice->rn_date_user_confirm = new \DateTime("now");
 
         $notice->save();
 
         return new NoticeResource($notice);
     }
 
-    public function deleteConfirmNoticeByRH($noticeId){
+    public function deleteConfirmNoticeByRN($noticeId){
         $notice = Notice::where('id', '=', $noticeId)
             ->firstOrFail();
 
         $user = Auth::user();
 
-        if($user->role->name != "ROLE_RH"){
+        if($user->role->name != "ROLE_RN"){
             return $this->errorResponse('No tiene permisos para esta acción', 409);
         }
 
-        if($notice->rh_user !== $user->username){
+        if($notice->rn_user !== $user->username){
             return $this->errorResponse('No tiene permisos para realizar esta acción', 409);
         }
 
-        $notice->rh_user = null;
-        $notice->rh_date_user_confirm = null;
+        $notice->rn_user = null;
+        $notice->rn_date_user_confirm = null;
 
         $notice->save();
 

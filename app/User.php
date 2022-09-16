@@ -32,10 +32,6 @@ class User extends Authenticatable
         'password'
     ];
 
-    protected $casts = [
-        'sign_automatically' => 'boolean',
-    ];
-
     public function role()
     {
         return $this->belongsTo(Role::class);

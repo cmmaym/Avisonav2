@@ -132,10 +132,6 @@ class UserController extends ApiController
         $user->last_name1 = $request->input('lastName1');
         $user->last_name2 = $request->input('lastName2');
 
-        if($user->role->name == "ROLE_RH"){
-            $user->sign_automatically = $request->input('sign_automatically');
-        }
-
         if(!is_null($request->input('password')))
         {
             $user->password = Hash::make($request->input('password'));
